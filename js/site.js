@@ -51,7 +51,7 @@ function setFooterPlayerSourse(el) {
 
 function setCurrentPageGenres() {
     try {
-        let ctrl = (loc + 'GetHtmlGenresPage');
+        let ctrl = (loc + 'GetPartialGenresPage');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
@@ -75,7 +75,7 @@ function setCurrentPageGenres() {
 
 function setCurrentPageAlbums() {
     try {
-        let ctrl = (loc + 'GetHtmlAlbumsPage');
+        let ctrl = (loc + 'GetPartialAlbumsPage');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
@@ -125,7 +125,7 @@ function setCurrentPageCompositions() {
 function setCurrentPageCompositionByID(el) {
     try {
         let id = el.children[0].value;
-        let ctrl = (loc + 'GetHtmlCompositionPageByID/?id=' + id);
+        let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
@@ -150,7 +150,7 @@ function setCurrentPageCompositionByID(el) {
 function setCurrentPageAlbumByID(el) {
     try {
         let id = el.children[0].value;
-        let ctrl = (loc + 'GetHtmlAlbumPageByID/?id=' + id);
+        let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
@@ -174,7 +174,7 @@ function setCurrentPageAlbumByID(el) {
 
 function setCurrentPageSignUp() {
     try {
-        let ctrl = (loc + 'GetHtmlSignUpPage'); // https://localhost:5001/GetHtmlSignUpPage
+        let ctrl = (loc + 'GetPartialSignUpPage'); // https://localhost:5001/GetHtmlSignUpPage
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
