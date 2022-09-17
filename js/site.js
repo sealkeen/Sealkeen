@@ -3,8 +3,9 @@
 
 // Write your Javascript code.
 
-function setFooterPlayerSourse(el)
-{
+const loc = "https://8a2b-37-144-215-79.eu.ngrok.io/";
+
+function setFooterPlayerSourse(el) {
     try {
         console.log(el.children[2].value); //el.children[2] = <data>
         console.log("currentSrc bottom = " + $("#player-source-element").currentSrc);
@@ -21,24 +22,22 @@ function setFooterPlayerSourse(el)
         //alert(document.getElementById("player-source-element").src);
         //let a = document.getElementsByClassName("audio-source-class");
         //let c = a.length;
-        let loc = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`;
         // add trailing slash
-        loc = loc.replace(/\/$|$/, '/');
-        let ctrl = (/*el.baseURI*/loc + 'GetHtmlPlayer/?id=' + source);
+        let ctrl = ( /*el.baseURI*/ loc + 'GetHtmlPlayer/?id=' + source);
         if ($("#player-source-element") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
+                success: function(response) {
                     console.log('Ajax returned: ' + response);
                     $("#player-audio-div").html('');
                     $("#player-audio-div").append(response);
                     plr = $("#player-audio-element").get(0);
                     plr.play();
                 },
-                error: function (error_) {
+                error: function(error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -52,8 +51,6 @@ function setFooterPlayerSourse(el)
 
 function setCurrentPageGenres() {
     try {
-        let loc = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`;
-        loc = loc.replace(/\/$|$/, '/'); // add trailing slash
         let ctrl = (loc + 'GetHtmlGenresPage');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -61,12 +58,12 @@ function setCurrentPageGenres() {
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
+                success: function(response) {
                     console.log('Ajax returned: ' + response);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
-                error: function (error_) {
+                error: function(error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -78,8 +75,6 @@ function setCurrentPageGenres() {
 
 function setCurrentPageAlbums() {
     try {
-        let loc = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`;
-        loc = loc.replace(/\/$|$/, '/'); // add trailing slash
         let ctrl = (loc + 'GetHtmlAlbumsPage');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -87,12 +82,12 @@ function setCurrentPageAlbums() {
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
+                success: function(response) {
                     console.log('Ajax returned: ' + response);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
-                error: function (error_) {
+                error: function(error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -104,25 +99,23 @@ function setCurrentPageAlbums() {
 
 function setCurrentPageCompositions() {
     try {
-        let loc = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`;
-        loc = loc.replace(/\/$|$/, '/'); // add trailing slash
-        let ctrl = (loc + 'GetHtmlCompositionsPage');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    console.log('Ajax returned: ' + response);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
+        // let ctrl = (loc + 'GetHtmlCompositionsPage');
+        // if ($("#page-body-container") != undefined) {
+        //     $.ajax({ //$.get({ //
+        //         url: ctrl,
+        //         type: 'GET',
+        //         contentType: 'html',
+        //         /*data: ("_ViewPlayer=" + source),*/
+        //         success: function (response) {
+        //             console.log('Ajax returned: ' + response);
+        //             $("#page-body-container").html('');
+        //             $("#page-body-container").append(response);
+        //         },
+        //         error: function (error_) {
+        //             console.log("Ajax error: " + error_);
+        //         }
+        //     });
+        // }
     } catch (e) {
         alert(e)
     }
@@ -132,8 +125,6 @@ function setCurrentPageCompositions() {
 function setCurrentPageCompositionByID(el) {
     try {
         let id = el.children[0].value;
-        let loc = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`;
-        loc = loc.replace(/\/$|$/, '/'); // add trailing slash
         let ctrl = (loc + 'GetHtmlCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -141,12 +132,12 @@ function setCurrentPageCompositionByID(el) {
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
+                success: function(response) {
                     console.log('Ajax returned: ' + response);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
-                error: function (error_) {
+                error: function(error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -159,8 +150,6 @@ function setCurrentPageCompositionByID(el) {
 function setCurrentPageAlbumByID(el) {
     try {
         let id = el.children[0].value;
-        let loc = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`;
-        loc = loc.replace(/\/$|$/, '/'); // add trailing slash
         let ctrl = (loc + 'GetHtmlAlbumPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -168,12 +157,12 @@ function setCurrentPageAlbumByID(el) {
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
+                success: function(response) {
                     console.log('Ajax returned: ' + response);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
-                error: function (error_) {
+                error: function(error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -185,21 +174,19 @@ function setCurrentPageAlbumByID(el) {
 
 function setCurrentPageSignUp() {
     try {
-        let loc = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`; // https://localhost:5001
-        loc = loc.replace(/\/$|$/, '/');               // https://localhost:5001/ add trailing slash 
-        let ctrl = (loc + 'GetHtmlSignUpPage');  // https://localhost:5001/GetHtmlSignUpPage
+        let ctrl = (loc + 'GetHtmlSignUpPage'); // https://localhost:5001/GetHtmlSignUpPage
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
+                success: function(response) {
                     console.log('Ajax returned: ' + response);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
-                error: function (error_) {
+                error: function(error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
