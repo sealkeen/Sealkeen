@@ -1,4 +1,4 @@
-﻿import urls from './api'
+﻿import urls from './api.js'
 
 export default function (message) {
     $.ajax({
