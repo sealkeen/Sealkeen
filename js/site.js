@@ -558,8 +558,7 @@ export function setCurrentPageAlbumByID(el) {
 
 export function setCurrentPageRegister(event) {
     try {
-        return;
-        //event.preventDefault();
+        event.preventDefault();
         let ctrl = (loc + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -589,8 +588,7 @@ export function setCurrentPageRegister(event) {
 
 export function setCurrentPageLogin(event) {
     try {
-        return;
-        //event.preventDefault();
+        event.preventDefault();
         let ctrl = (loc + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
