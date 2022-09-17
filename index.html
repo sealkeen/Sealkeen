@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediaStreamer.WebApplication</title>
+    <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css?v=104" />
+    <link rel="stylesheet" href="./css/site.css?v=102" />
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            /*color: white;*/
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div id="top-page-container" class="container">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li id="nav-lnk-compositions" class="nav-item" onclick="setCurrentPageCompositions()">
+                            <a class="nav-link text-dark" @*asp-area="" asp-page="/Index" *@>Home</a>
+                        </li>
+                        <li id="nav-lnk-albums" class="nav-item" onclick="setCurrentPageAlbums()">
+                            <a class="nav-link text-dark" @*asp-area="" asp-page="/AlbumsPage" *@>Albums</a>
+                        </li>
+                        <li id="nav-lnk-genres" class="nav-item" onclick="setCurrentPageGenres()">
+                            <a class="nav-link text-dark" @*asp-area="" asp-page="/GenresPage" *@>Genres</a>
+                        </li>
+                        <li id="nav-lnk-sign-up" class="nav-item" onclick="setCurrentPageSignUp()">
+                            <a class="nav-link text-dark" @*asp-area="" asp-page="/GenresPage" *@>Sign up</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div>
+            <main id="page-body-container" role="main" class="pb-3">
+                <script type="module" src="./js/signup.js" asp-append-version="true"></script>
+
+                <div>
+                    <div class="sign-up-form-container" onclick="form_onclick()">
+                        <form class="card sign-up-form" id="sign-up-form">
+                            <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                                <a>Create Account</a>
+                            </div>
+                            <div class="form-group sign-up-form-group">
+                                <label>Username</label>
+                                <input class="form-control" type="text" placeholder="enter your username" id="txt-username" />
+                                <small class="form-control-small">Error message</small>
+                            </div>
+
+                            <div class="form-group sign-up-form-group">
+                                <label>Email</label>
+                                <input class="form-control" type="email" placeholder="enter your email" id="txt-email" />
+                                <small class="form-control-small">Error message</small>
+                            </div>
+
+                            <div class="form-group sign-up-form-group">
+                                <label>Password</label>
+                                <input class="form-control" type="password" placeholder="password" id="txt-password" />
+                                <small class="form-control-small">Error message</small>
+                            </div>
+                            <div class="form-group sign-up-form-group">
+                                <label>Password check</label>
+                                <input class="form-control" type="password" placeholder="password" id="txt-password-check" />
+                                <small class="form-control-small">Error message</small>
+                            </div>
+                            <div class="form-group form-button-group sign-up-form-group">
+                                <button class="btn btn-primary form-control">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+            <center>
+                <a class="btm-footer2">
+                    &copy; Sealkeen - 2022 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
+                </a>
+            </center>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="navbar-expand-sm border-top">
+            <audio id="player" controls="controls" height="80" width="100%">
+                <source class="audio-source-class" id="player-source-element" type="audio/mp3" />
+                </audio>
+            <partial name="PlayerComponent" model="Model." />
+        </div>
+    </footer>
+
+    <script src="./lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="./js/site.js" asp-append-version="true"></script>
+    <script src="./css/" asp-append-version="true"></script>
+</body>
+
+</html>
