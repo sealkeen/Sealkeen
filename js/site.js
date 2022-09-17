@@ -68,6 +68,24 @@ export function toggleBodyBackground()
     }
 }
 
+export function bindPlayerButtons() {
+    console.log('binding player buttons...');
+    document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
+        console.log("clicked");
+
+        let id = "";
+        if (_trackQueue.isEmpty()) {
+            console.log('Empty');
+            id = GetCurrentCompositionsId();
+        }
+        else {
+            console.log('Not Empty');
+        }
+
+        setNextComposition(id);
+    });
+}
+
 $(document).ready(function () {
     bindPlayerButtons();
     //addButtonOnClickHandlers();
@@ -106,7 +124,7 @@ $(document).ready(function () {
 
 export function setArtistSongNameAsync() {
     let compId = GetCurrentCompositionsId();
-    let ctrl = (/*el.baseURI*/loc + 'GetArtistSongName/?id=' + compId);
+    let ctrl = (loc + 'GetArtistSongName/?id=' + compId);
     
     if ($(".track-artist-song-name") != undefined) {
         $.ajax({ //$.get({ //
@@ -127,91 +145,83 @@ export function setArtistSongNameAsync() {
     }
 }
 
-export function bindPlayerButtons() {
-    console.log('binding player buttons...');
-    document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
-        console.log("clicked");
-
-        let id = "";
-        if (_trackQueue.isEmpty()) {
-            console.log('Empty');
-            id = GetCurrentCompositionsId();
-        }
-        else {
-            console.log('Not Empty');
-            //let result = _trackQueue.dequeue();
-            //console.log('%j', result);
-            //id = result;
-        }
-
-        setNextComposition(id);
-    });
-}
-
 export function setTitleByArtistAndTitle(el) {
-    let artist = el;
-    let song = el;
-    let songInfo = el;
-    if (!event.target.classList.contains('card-body')) {
-        songInfo = el.parentNode;
-    }
+    try {
+        let artist = el;
+        let song = el;
+        let songInfo = el;
+        if (!event.target.classList.contains('card-body')) {
+            songInfo = el.parentNode;
+        }
 
-    artist = songInfo.querySelector('.card-title')?.firstChild?.nodeValue;
-    song = songInfo.querySelector('.card-text')?.firstChild?.nodeValue;
+        artist = songInfo.querySelector('.card-title')?.firstChild?.nodeValue;
+        song = songInfo.querySelector('.card-text')?.firstChild?.nodeValue;
 
-    if (!isEmpty(artist) && !isEmpty(song))
-        document.title = `${artist} – ${song}`;
+        if (!isEmpty(artist) && !isEmpty(song))
+            document.title = `${artist} – ${song}`;
+    } catch (e) {
+        console.log(e);
+    } 
 }
 
 export function GetCurrentCompositionsId() { 
-    let audioSrc = $("#player-audio-element").get(0).children[0];
-    console.log('GetCurrentCompId = ' + audioSrc.src.substring(audioSrc.src.length - (13 + loc.length)).toString().replace('.io', '').replace('/GetAudio?Id=', ''));
-    if (audioSrc.src === undefined || audioSrc.src === null)
-        return undefined;
-    // cropping [ 'https://localhost:5001/GetAudio?Id=' ]
-    // leaving [ 'f648ef94-bfb7-44a2-82d3-d68bca5a49a8' ]
-    return audioSrc.src.substring(audioSrc.src.length - (13 + loc.length).toString()).replace('.io', '').replace('/GetAudio?Id=', '');
+    try {
+        let audioSrc = $("#player-audio-element").get(0).children[0];
+        console.log('GetCurrentCompId = ' + audioSrc.src.substring(audioSrc.src.length - (13 + loc.length)).toString().replace('.io', '').replace('/GetAudio?Id=', ''));
+        if (audioSrc.src === undefined || audioSrc.src === null)
+            return undefined;
+        // cropping [ 'https://localhost:5001/GetAudio?Id=' ]
+        // leaving [ 'f648ef94-bfb7-44a2-82d3-d68bca5a49a8' ]
+        let result = audioSrc.src.substring(audioSrc.src.length - (13 + loc.length).toString()).replace('.io', '').replace('/GetAudio?Id=', '');
+        console.log('GetCurrentCompositionsId(): %j', result);
+
+        return result;
+    } catch (e) {
+        console.log(e);
+    } 
 }
 
 export function setNextComposition(compId) {
-    if (compId === undefined || compId === null)
-        return;
+    try {
+        if (compId === undefined || compId === null)
+            return;
+        let path = 'GetHtmlNextTrackPlayer/?id=';
+        if (!_trackQueue.isEmpty()) {
+            compId = _trackQueue.dequeue().id;
+            path = 'GetHtmlStreamPlayer/?url=';
+        }
+        let ctrl = (loc + path + compId);
+        if ($("#player-source-element") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
 
-    let path = 'GetHtmlNextTrackPlayer/?id=';
-    if (!_trackQueue.isEmpty()) {
-        compId = _trackQueue.dequeue().id;
-        path = 'GetHtmlStreamPlayer/?url=';
-    }
+                    console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
+                    $("#player-audio-div").html('');
+                    $("#player-audio-div").append(response);
+                    let plr = $("#player-audio-element").get(0);
+                    plr.play();
+                    bindPlayerButtons();
+                    setArtistSongNameAsync();
+                    displayQueuedTracks(_trackQueue);
 
-    let ctrl = (/*el.baseURI*/loc + path + compId);
-    if ($("#player-source-element") != undefined) {
-        $.ajax({ //$.get({ //
-            url: ctrl,
-            type: 'GET',
-            contentType: 'html',
-            /*data: ("_ViewPlayer=" + source),*/
-            success: function (response) {
-
-                console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
-                $("#player-audio-div").html('');
-                $("#player-audio-div").append(response);
-                let plr = $("#player-audio-element").get(0);
-                plr.play();
-                bindPlayerButtons();
-                setArtistSongNameAsync();
-                displayQueuedTracks(_trackQueue);
-
-                plr.onended = function () {
-                    let id = GetCurrentCompositionsId() ?? compId;
-                    setNextComposition(id);
-                };
-            },
-            error: function (error_) {
-                displayQueuedTracks(_trackQueue);
-                console.log("Ajax error: " + error_);
-            }
-        });
-    }
+                    plr.onended = function () {
+                        let id = GetCurrentCompositionsId() ?? compId;
+                        setNextComposition(id);
+                    };
+                },
+                error: function (error_) {
+                    displayQueuedTracks(_trackQueue);
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        console.log(e);
+    } 
 }
 
 export function setFooterPlayerSourse(el)
@@ -219,13 +229,11 @@ export function setFooterPlayerSourse(el)
     try {
         let source = el;
         let songInfo = el;
-        if (!event.target.classList.contains('card-body')) {
-            songInfo = el.parentNode;
-        }
+        if (!event.target.classList.contains('card-body')) { songInfo = el.parentNode; }
         source = songInfo.querySelector('data').value; //data
         setTitleByArtistAndTitle(el);
 
-        let ctrl = (/*el.baseURI*/loc + 'GetHtmlStreamPlayer/?url=' + source);
+        let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
         if ($("#player-source-element") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
@@ -268,7 +276,7 @@ export function setCurrentPageCompositions(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/CompositionsPage');
+                    window.history.pushState(null, null, '/Sealkeen/CompositionsPage');
                     LogMessageRequest('setCurrentPageCompositions(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response); 
@@ -296,7 +304,7 @@ export function setCurrentPageAlbums(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/AlbumsPage');
+                    window.history.pushState(null, null, '/Sealkeen/AlbumsPage');
                     console.log('setCurrentPageAlbums(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -323,7 +331,7 @@ export function setCurrentPageGenres(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/GenresPage');
+                    window.history.pushState(null, null, '/Sealkeen/GenresPage');
                     console.log('setCurrentPageGenres(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -342,8 +350,6 @@ export function setCurrentPageGenres(event) {
 export function setCurrentPageArtists(event) {
     try {
         event.preventDefault();
-        let loc = `${location.protocol}//${location.host}`;
-        loc = loc.replace(/\/$|$/, '/'); // add trailing slash
         let ctrl = (loc + 'GetPartialArtistsPage');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -352,7 +358,7 @@ export function setCurrentPageArtists(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/ArtistsPage');
+                    window.history.pushState(null, null, '/Sealkeen/ArtistsPage');
                     console.log('setCurrentPageAudio(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -481,7 +487,7 @@ export function setCurrentPageRegister(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Identity/Account/Register');
+                    window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -507,7 +513,7 @@ export function setCurrentPageLogin(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Identity/Account/Login');
+                    window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -533,7 +539,7 @@ export function setCurrentPageSignUp(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/GetPartialSignUpPage');
+                    window.history.pushState(null, null, '/Sealkeen/GetPartialSignUpPage');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -585,7 +591,7 @@ export function setCurrentPageManageAccount(event) {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Identity/Account/Manage');
+                    window.history.pushState(null, null, '/Sealkeen/Identity/Account/Manage');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
