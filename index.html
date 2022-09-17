@@ -21,7 +21,7 @@
 </head>
 
 <body class="body">
-    <div id="top-page-container" class="container">
+    <div id="top-page-container">
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
@@ -30,17 +30,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li id="nav-lnk-compositions" class="nav-item" onclick="setCurrentPageCompositions()">
-                            <a class="nav-link text-dark" @*asp-area="" asp-page="/Index" *@>Home</a>
+                        <li id="nav-lnk-compositions" class="nav-item">
+                            <a class="nav-link text-dark" >Home</a>
                         </li>
-                        <li id="nav-lnk-albums" class="nav-item" onclick="setCurrentPageAlbums()">
-                            <a class="nav-link text-dark" @*asp-area="" asp-page="/AlbumsPage" *@>Albums</a>
+                        <li id="nav-lnk-albums" class="nav-item">
+                            <a class="nav-link text-dark">Albums</a>
                         </li>
-                        <li id="nav-lnk-genres" class="nav-item" onclick="setCurrentPageGenres()">
-                            <a class="nav-link text-dark" @*asp-area="" asp-page="/GenresPage" *@>Genres</a>
+                        <li id="nav-lnk-genres" class="nav-item">
+                            <a class="nav-link text-dark">Genres</a>
                         </li>
-                        <li id="nav-lnk-sign-up" class="nav-item" onclick="setCurrentPageSignUp()">
-                            <a class="nav-link text-dark" @*asp-area="" asp-page="/GenresPage" *@>Sign up</a>
+                        <li id="nav-lnk-sign-up" class="nav-item">
+                            <a class="nav-link text-dark">Sign up</a>
                         </li>
                     </ul>
                 </div>

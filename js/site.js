@@ -68,53 +68,186 @@ export function toggleBodyBackground()
     }
 }
 
-export function setFooterPlayerSourse(el) {
+$(document).ready(function () {
+    bindPlayerButtons();
+    //addButtonOnClickHandlers();
+    _trackQueue.onchange = () => {
+        displayQueuedTracks(_trackQueue);
+    };
+    const container = document.querySelector('#page-body-container');
+    container.onmousedown = () => {
+        if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
+            $('#ctxmenu').innerHTML = '';
+        }
+    }
+
+    container.addEventListener('click', function (e) {
+        // But only alert for elements that have an alert-button class
+        //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
+        let target = e.target;
+        if (containsClasses(target, 'card-text', 'card-title')) {
+            target = e.target.parentNode;
+        }
+
+        if (target.classList.contains('card-body-composition')) {
+            setFooterPlayerSourse(e.target)
+        }
+        if (target.classList.contains('album-card-div')) {
+            setCurrentPageCompositionByID(e.target);
+        }
+        if (target.classList.contains('genre-card-div')) {
+            setCurrentPageAlbumByID(e.target);
+        }
+        if (target.classList.contains('artist-card-div')) {
+            setCurrentPageCompositionByArtistID(e.target);
+        }
+    });
+});
+
+export function setArtistSongNameAsync() {
+    let compId = GetCurrentCompositionsId();
+    let ctrl = (/*el.baseURI*/loc + 'GetArtistSongName/?id=' + compId);
+    
+    if ($(".track-artist-song-name") != undefined) {
+        $.ajax({ //$.get({ //
+            url: ctrl,
+            type: 'GET',
+            contentType: 'html',
+            /*data: ("_ViewPlayer=" + source),*/
+            success: function (response) {
+                console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
+                $(".track-artist-song-name").html('');
+                $(".track-artist-song-name").append(response);
+                document.title = (response);
+            },
+            error: function (error_) {
+                console.log("Ajax error: " + error_);
+            }
+        });
+    }
+}
+
+export function bindPlayerButtons() {
+    console.log('binding player buttons...');
+    document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
+        console.log("clicked");
+
+        let id = "";
+        if (_trackQueue.isEmpty()) {
+            console.log('Empty');
+            id = GetCurrentCompositionsId();
+        }
+        else {
+            console.log('Not Empty');
+            //let result = _trackQueue.dequeue();
+            //console.log('%j', result);
+            //id = result;
+        }
+
+        setNextComposition(id);
+    });
+}
+
+export function setTitleByArtistAndTitle(el) {
+    let artist = el;
+    let song = el;
+    let songInfo = el;
+    if (!event.target.classList.contains('card-body')) {
+        songInfo = el.parentNode;
+    }
+
+    artist = songInfo.querySelector('.card-title')?.firstChild?.nodeValue;
+    song = songInfo.querySelector('.card-text')?.firstChild?.nodeValue;
+
+    if (!isEmpty(artist) && !isEmpty(song))
+        document.title = `${artist} – ${song}`;
+}
+
+export function GetCurrentCompositionsId() { 
+    let audioSrc = $("#player-audio-element").get(0).children[0];
+    console.log('GetCurrentCompId = ' + audioSrc.src.substring(audioSrc.src.length - (13 + loc.length)).toString().replace('.io', '').replace('/GetAudio?Id=', ''));
+    if (audioSrc.src === undefined || audioSrc.src === null)
+        return undefined;
+    // cropping [ 'https://localhost:5001/GetAudio?Id=' ]
+    // leaving [ 'f648ef94-bfb7-44a2-82d3-d68bca5a49a8' ]
+    return audioSrc.src.substring(audioSrc.src.length - (13 + loc.length).toString()).replace('.io', '').replace('/GetAudio?Id=', '');
+}
+
+export function setNextComposition(compId) {
+    if (compId === undefined || compId === null)
+        return;
+
+    let path = 'GetHtmlNextTrackPlayer/?id=';
+    if (!_trackQueue.isEmpty()) {
+        compId = _trackQueue.dequeue().id;
+        path = 'GetHtmlStreamPlayer/?url=';
+    }
+
+    let ctrl = (/*el.baseURI*/loc + path + compId);
+    if ($("#player-source-element") != undefined) {
+        $.ajax({ //$.get({ //
+            url: ctrl,
+            type: 'GET',
+            contentType: 'html',
+            /*data: ("_ViewPlayer=" + source),*/
+            success: function (response) {
+
+                console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
+                $("#player-audio-div").html('');
+                $("#player-audio-div").append(response);
+                let plr = $("#player-audio-element").get(0);
+                plr.play();
+                bindPlayerButtons();
+                setArtistSongNameAsync();
+                displayQueuedTracks(_trackQueue);
+
+                plr.onended = function () {
+                    let id = GetCurrentCompositionsId() ?? compId;
+                    setNextComposition(id);
+                };
+            },
+            error: function (error_) {
+                displayQueuedTracks(_trackQueue);
+                console.log("Ajax error: " + error_);
+            }
+        });
+    }
+}
+
+export function setFooterPlayerSourse(el)
+{
     try {
-        console.log(el.children[2].value); //el.children[2] = <data>
-        console.log("currentSrc bottom = " + $("#player-source-element").currentSrc);
-        console.log("src bottom = " + $("#player-source-element").attr('src'));
-        let source = el.children[0].value;
-        let ctrl = ( /*el.baseURI*/ loc + 'GetHtmlPlayer/?id=' + source);
+        let source = el;
+        let songInfo = el;
+        if (!event.target.classList.contains('card-body')) {
+            songInfo = el.parentNode;
+        }
+        source = songInfo.querySelector('data').value; //data
+        setTitleByArtistAndTitle(el);
+
+        let ctrl = (/*el.baseURI*/loc + 'GetHtmlStreamPlayer/?url=' + source);
         if ($("#player-source-element") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function(response) {
-                    console.log('Ajax returned: ' + response);
+                success: function (response) {
+                    console.log('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
                     $("#player-audio-div").html('');
                     $("#player-audio-div").append(response);
-                    plr = $("#player-audio-element").get(0);
+                    let plr = $("#player-audio-element").get(0);
                     plr.play();
+                    bindPlayerButtons();
+
+                    displayQueuedTracks(_trackQueue);
+                    plr.onended = function () {
+                        console.log('Calling get next composition from ID: ', source);
+                        setNextComposition(source);
+                    };
                 },
-                error: function(error_) {
-                    console.log("Ajax error: " + error_);
-                }
-            });
-
-        }
-
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageGenres() {
-    try {
-        let ctrl = (loc + 'GetPartialGenresPage');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function(response) {
-                    console.log('Ajax returned: ' + response);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function(error_) {
+                error: function (error_) {
+                    displayQueuedTracks(_trackQueue);
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -124,33 +257,10 @@ export function setCurrentPageGenres() {
     }
 }
 
-export function setCurrentPageAlbums() {
+export function setCurrentPageCompositions(event) {
     try {
-        let ctrl = (loc + 'GetPartialAlbumsPage');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function(response) {
-                    console.log('Ajax returned: ' + response);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function(error_) {
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageCompositions() {
-    try {
-        let ctrl = (loc + 'GetHtmlCompositionsPage');
+        event.preventDefault();
+        let ctrl = (loc + 'GetPartialCompositionsPage');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
@@ -158,7 +268,127 @@ export function setCurrentPageCompositions() {
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    console.log('Ajax returned: ' + response);
+                    window.history.pushState(null, null, '/CompositionsPage');
+                    LogMessageRequest('setCurrentPageCompositions(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response); 
+
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageAlbums(event) {
+    try {
+        event.preventDefault();
+        
+        let ctrl = (loc + 'GetPartialAlbumsPage');
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    window.history.pushState(null, null, '/AlbumsPage');
+                    console.log('setCurrentPageAlbums(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageGenres(event) {
+    try {
+        event.preventDefault();
+        let ctrl = (loc + 'GetPartialGenresPage');
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    window.history.pushState(null, null, '/GenresPage');
+                    console.log('setCurrentPageGenres(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageArtists(event) {
+    try {
+        event.preventDefault();
+        let loc = `${location.protocol}//${location.host}`;
+        loc = loc.replace(/\/$|$/, '/'); // add trailing slash
+        let ctrl = (loc + 'GetPartialArtistsPage');
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    window.history.pushState(null, null, '/ArtistsPage');
+                    console.log('setCurrentPageAudio(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageCompositionByArtistID(el) {
+    try {
+        let id = el;
+        if (!event.target.classList.contains('card-body')) {
+            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
+            id = el.parentNode.children[0].value;
+        }
+        else {
+            console.log('contains card-body. el.children[0].value');
+            id = el.children[0].value;
+        }
+
+        let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    LogMessageRequest('setCurrentPageCompositionByArtistID(el): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
@@ -174,7 +404,16 @@ export function setCurrentPageCompositions() {
 
 export function setCurrentPageCompositionByID(el) {
     try {
-        let id = el.children[0].value;
+        let id = el;
+        if (!event.target.classList.contains('card-body')) {
+            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
+            id = el.parentNode.children[0].value;
+        }
+        else {
+            console.log('contains card-body. el.children[0].value');
+            id = el.children[0].value;
+        }
+
         let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -182,12 +421,12 @@ export function setCurrentPageCompositionByID(el) {
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function(response) {
-                    console.log('Ajax returned: ' + response);
+                success: function (response) {
+                    LogMessageRequest('setCurrentPageCompositionByID(el): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
-                error: function(error_) {
+                error: function (error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -199,7 +438,15 @@ export function setCurrentPageCompositionByID(el) {
 
 export function setCurrentPageAlbumByID(el) {
     try {
-        let id = el.children[0].value;
+        let id = el;
+        if (!event.target.classList.contains('card-body')) {
+            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
+            id = el.parentNode.children[0].value;
+        }
+        else {
+            console.log('contains card-body. el.children[0].value');
+            id = el.children[0].value;
+        }
         let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -207,12 +454,13 @@ export function setCurrentPageAlbumByID(el) {
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function(response) {
-                    console.log('Ajax returned: ' + response);
+                success: function (response) {
+                    console.log('setCurrentPageAlbumByID(el): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
+
                 },
-                error: function(error_) {
+                error: function (error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -222,21 +470,127 @@ export function setCurrentPageAlbumByID(el) {
     }
 }
 
-export function setCurrentPageSignUp() {
+export function setCurrentPageRegister(event) {
     try {
-        let ctrl = (loc + 'GetPartialSignUpPage'); // https://localhost:5001/GetHtmlSignUpPage
+        event.preventDefault();
+        let ctrl = (loc + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
                 /*data: ("_ViewPlayer=" + source),*/
-                success: function(response) {
-                    console.log('Ajax returned: ' + response);
+                success: function (response) {
+                    window.history.pushState(null, null, '/Identity/Account/Register');
+                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
                 },
-                error: function(error_) {
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageLogin(event) {
+    try {
+        event.preventDefault();
+        let ctrl = (loc + 'Account/Login');
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    window.history.pushState(null, null, '/Identity/Account/Login');
+                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageSignUp(event) {
+    try {
+        event.preventDefault();
+        let ctrl = (loc + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    window.history.pushState(null, null, '/GetPartialSignUpPage');
+                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageIndex(event) {
+    try {
+        event.preventDefault();
+        let ctrl = (loc + 'IndexPartial');
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    //window.location = loc;
+                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
+    } catch (e) {
+        alert(e)
+    }
+}
+
+export function setCurrentPageManageAccount(event) {
+    try {
+        event.preventDefault();
+        let ctrl = (loc + 'Manage/Index');
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    window.history.pushState(null, null, '/Identity/Account/Manage');
+                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+                },
+                error: function (error_) {
                     console.log("Ajax error: " + error_);
                 }
             });
