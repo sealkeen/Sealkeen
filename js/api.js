@@ -5,7 +5,7 @@ export default {
         {
             return 'http://localhost:8080/'
         } else 
-            return 'https://8a2b-37-144-215-79.eu.ngrok.io/'
+            return 'https://4af8-37-144-215-79.eu.ngrok.io/'
     },
     getPostfix() {
         if (!(window.location.href.indexOf("github.io") > -1))
