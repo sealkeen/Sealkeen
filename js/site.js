@@ -3,7 +3,7 @@
 
 // Write your Javascript code.
 
-const loc = "https://8a2b-37-144-215-79.eu.ngrok.io/";
+const loc = "https://cors.io/?8a2b-37-144-215-79.eu.ngrok.io/";
 
 function setFooterPlayerSourse(el) {
     try {
