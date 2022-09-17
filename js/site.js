@@ -18,8 +18,7 @@ document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurre
 document.querySelector('#nav-lnk-background')?.addEventListener('click', toggleBodyBackground);
 
 const _trackQueue = newQueue();
-
-const loc = urls.loc;
+const loc = urls.getLocation();
 
 document.oncontextmenu = function (e) {
     let target = e.target;
@@ -131,6 +130,10 @@ export function setArtistSongNameAsync() {
             url: ctrl,
             type: 'GET',
             contentType: 'html',
+            xhrFields: {
+               withCredentials: true
+            },
+            crossDomain: true,
             /*data: ("_ViewPlayer=" + source),*/
             success: function (response) {
                 console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
@@ -196,6 +199,10 @@ export function setNextComposition(compId) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
 
@@ -239,6 +246,10 @@ export function setFooterPlayerSourse(el)
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     console.log('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
@@ -274,6 +285,10 @@ export function setCurrentPageCompositions(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/CompositionsPage');
@@ -302,6 +317,10 @@ export function setCurrentPageAlbums(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/AlbumsPage');
@@ -329,6 +348,10 @@ export function setCurrentPageGenres(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/GenresPage');
@@ -356,6 +379,10 @@ export function setCurrentPageArtists(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/ArtistsPage');
@@ -392,6 +419,10 @@ export function setCurrentPageCompositionByArtistID(el) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     LogMessageRequest('setCurrentPageCompositionByArtistID(el): Ajax returned key count: ' + Object.keys(response).length);
@@ -426,6 +457,10 @@ export function setCurrentPageCompositionByID(el) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     LogMessageRequest('setCurrentPageCompositionByID(el): Ajax returned key count: ' + Object.keys(response).length);
@@ -459,6 +494,10 @@ export function setCurrentPageAlbumByID(el) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     console.log('setCurrentPageAlbumByID(el): Ajax returned key count: ' + Object.keys(response).length);
@@ -485,6 +524,10 @@ export function setCurrentPageRegister(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
@@ -511,6 +554,10 @@ export function setCurrentPageLogin(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
@@ -537,6 +584,10 @@ export function setCurrentPageSignUp(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/GetPartialSignUpPage');
@@ -563,6 +614,10 @@ export function setCurrentPageIndex(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     //window.location = loc;
@@ -589,6 +644,10 @@ export function setCurrentPageManageAccount(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
+                xhrFields: {
+                   withCredentials: true
+                },
+                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     window.history.pushState(null, null, '/Sealkeen/Identity/Account/Manage');

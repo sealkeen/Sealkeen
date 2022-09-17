@@ -19,7 +19,6 @@
         }
     </style>
 </head>
-
 <body class="body">
     <div id="top-page-container">
         <header>
@@ -30,6 +29,9 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
+                        <li id="nav-lnk-artists" class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Artists" asp-action="ArtistsPage">Artists</a>
+                        </li>
                         <li id="nav-lnk-compositions" class="nav-item">
                             <a class="nav-link text-dark" >Home</a>
                         </li>
@@ -41,6 +43,9 @@
                         </li>
                         <li id="nav-lnk-sign-up" class="nav-item">
                             <a class="nav-link text-dark">Sign up</a>
+                        </li>
+                        <li id="nav-lnk-background" class="nav-item">
+                            <a class="nav-link text-dark">Background</a>
                         </li>
                     </ul>
                 </div>
