@@ -291,7 +291,7 @@ export function setCurrentPageCompositions(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/CompositionsPage');
+                    //window.history.pushState(null, null, '/Sealkeen/CompositionsPage');
                     LogMessageRequest('setCurrentPageCompositions(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response); 
@@ -323,7 +323,7 @@ export function setCurrentPageAlbums(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/AlbumsPage');
+                    //window.history.pushState(null, null, '/Sealkeen/AlbumsPage');
                     console.log('setCurrentPageAlbums(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -354,7 +354,7 @@ export function setCurrentPageGenres(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/GenresPage');
+                    //window.history.pushState(null, null, '/Sealkeen/GenresPage');
                     console.log('setCurrentPageGenres(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -385,7 +385,7 @@ export function setCurrentPageArtists(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/ArtistsPage');
+                    //window.history.pushState(null, null, '/Sealkeen/ArtistsPage');
                     console.log('setCurrentPageAudio(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -530,7 +530,7 @@ export function setCurrentPageRegister(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
+                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -560,7 +560,7 @@ export function setCurrentPageLogin(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
+                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -590,7 +590,7 @@ export function setCurrentPageSignUp(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/GetPartialSignUpPage');
+                    //window.history.pushState(null, null, '/Sealkeen/GetPartialSignUpPage');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
@@ -650,7 +650,7 @@ export function setCurrentPageManageAccount(event) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    window.history.pushState(null, null, '/Sealkeen/Identity/Account/Manage');
+                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Manage');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);

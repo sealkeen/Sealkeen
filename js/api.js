@@ -3,8 +3,15 @@ export default {
     getLocation() {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
-            return 'https://localhost:443/'
+            return 'http://localhost:8080/'
         } else 
             return 'https://8a2b-37-144-215-79.eu.ngrok.io/'
+    },
+    getPostfix() {
+        if (!(window.location.href.indexOf("github.io") > -1))
+        {
+            return ''
+        } else 
+            return '/Sealkeen'
     }
 }
