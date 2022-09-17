@@ -93,11 +93,12 @@
         </div>
     </div>
     <footer class="footer">
-        <div class="navbar-expand-sm border-top">
-            <audio id="player" controls="controls" height="80" width="100%">
-                <source class="audio-source-class" id="player-source-element" type="audio/mp3" />
-                </audio>
-            <partial name="PlayerComponent" model="Model." />
+        <div id="player-audio-div">
+            <div class="track-artist-song-name">Unknown – null</div>
+            <audio id="player-audio-element" controls="controls" height="80" width="100%">
+                <source id="player-source-element" src="" type="audio/mp3">
+            </audio>
+            <button class="footer-next-track-btn">next</button>
         </div>
     </footer>
 

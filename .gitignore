@@ -16,6 +16,7 @@ Wallpaper
 # Node modules
 vueapp/node_modules
 node_modules
+css/vscorecssjson.txt
 
 node_modules/
 package.json

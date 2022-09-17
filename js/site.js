@@ -2,27 +2,15 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your Javascript code.
-
-const loc = "https://8a2b-37-144-215-79.eu.ngrok.io/";
+import urls from './api'
+const loc = urls.loc;
 
 function setFooterPlayerSourse(el) {
     try {
         console.log(el.children[2].value); //el.children[2] = <data>
         console.log("currentSrc bottom = " + $("#player-source-element").currentSrc);
         console.log("src bottom = " + $("#player-source-element").attr('src'));
-        //document.getElementById("player-source-element").src = el.children[2].value;
-        //document.getElementById("player-source-element").currentSrc = el.children[2].currentSrc; 
-        //alert(el.children[2].currentSrc);
-        //let plr = $("#player-audio-element");
         let source = el.children[0].value;
-        //$('.audio-source-class').attr('src', source);
-
-        //var source2 = $('.audio-source-class').attr('src');
-        //var elmnts = $('.audio-source-class');
-        //alert(document.getElementById("player-source-element").src);
-        //let a = document.getElementsByClassName("audio-source-class");
-        //let c = a.length;
-        // add trailing slash
         let ctrl = ( /*el.baseURI*/ loc + 'GetHtmlPlayer/?id=' + source);
         if ($("#player-source-element") != undefined) {
             $.ajax({ //$.get({ //
@@ -99,28 +87,27 @@ function setCurrentPageAlbums() {
 
 function setCurrentPageCompositions() {
     try {
-        // let ctrl = (loc + 'GetHtmlCompositionsPage');
-        // if ($("#page-body-container") != undefined) {
-        //     $.ajax({ //$.get({ //
-        //         url: ctrl,
-        //         type: 'GET',
-        //         contentType: 'html',
-        //         /*data: ("_ViewPlayer=" + source),*/
-        //         success: function (response) {
-        //             console.log('Ajax returned: ' + response);
-        //             $("#page-body-container").html('');
-        //             $("#page-body-container").append(response);
-        //         },
-        //         error: function (error_) {
-        //             console.log("Ajax error: " + error_);
-        //         }
-        //     });
-        // }
+        let ctrl = (loc + 'GetHtmlCompositionsPage');
+        if ($("#page-body-container") != undefined) {
+            $.ajax({ //$.get({ //
+                url: ctrl,
+                type: 'GET',
+                contentType: 'html',
+                /*data: ("_ViewPlayer=" + source),*/
+                success: function (response) {
+                    console.log('Ajax returned: ' + response);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(response);
+                },
+                error: function (error_) {
+                    console.log("Ajax error: " + error_);
+                }
+            });
+        }
     } catch (e) {
         alert(e)
     }
 }
-
 
 function setCurrentPageCompositionByID(el) {
     try {
