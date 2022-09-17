@@ -17,8 +17,49 @@ document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPa
 document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
 document.querySelector('#nav-lnk-background')?.addEventListener('click', toggleBodyBackground);
 
+
 const _trackQueue = newQueue();
 const loc = urls.getLocation();
+
+$(document).ready(function () {
+    bindPlayerButtons();
+    //addButtonOnClickHandlers();
+    _trackQueue.onchange = () => {
+        displayQueuedTracks(_trackQueue);
+    };
+    const container = document.querySelector('#page-body-container');
+    container.onmousedown = () => {
+        if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
+            $('#ctxmenu').innerHTML = '';
+        }
+    }
+
+    container.addEventListener('click', function (e) {
+        // But only alert for elements that have an alert-button class
+        //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
+        let target = e.target;
+        if (containsClasses(target, 'card-text', 'card-title')) {
+            target = e.target.parentNode;
+        }
+        if (target.classList.contains('card-body-composition')) {
+            setFooterPlayerSourse(e.target)
+        }
+        if (target.classList.contains('album-card-div')) {
+            setCurrentPageCompositionByID(e.target);
+        }
+        if (target.classList.contains('genre-card-div')) {
+            setCurrentPageAlbumByID(e.target);
+        }
+        if (target.classList.contains('artist-card-div')) {
+            setCurrentPageCompositionByArtistID(e.target);
+        }
+        if (target.classList.contains('btn-default')) {
+            $('.btn-default').onclick = (e) => { e.preventDefault(); };
+            urls.getInDevelopmentMessage();
+        }
+    });
+});
+
 
 document.oncontextmenu = function (e) {
     let target = e.target;
@@ -517,7 +558,8 @@ export function setCurrentPageAlbumByID(el) {
 
 export function setCurrentPageRegister(event) {
     try {
-        event.preventDefault();
+        return;
+        //event.preventDefault();
         let ctrl = (loc + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -547,7 +589,8 @@ export function setCurrentPageRegister(event) {
 
 export function setCurrentPageLogin(event) {
     try {
-        event.preventDefault();
+        return;
+        //event.preventDefault();
         let ctrl = (loc + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //

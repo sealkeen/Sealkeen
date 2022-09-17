@@ -13,5 +13,9 @@ export default {
             return ''
         } else 
             return '/Sealkeen'
+    },
+    getInDevelopmentMessage()
+    {
+        alert('В разработке (развёртывается на удалённый ресурс)');
     }
 }
