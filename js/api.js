@@ -3,7 +3,7 @@ export default {
     getLocation() {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
-            return 'http://localhost:8080/'
+            return 'http://localhost:5000/'
         } else 
             return 'https://4af8-37-144-215-79.eu.ngrok.io/'
     },
@@ -16,6 +16,6 @@ export default {
     },
     getInDevelopmentMessage()
     {
-        alert('В разработке (развёртывается на удалённый ресурс)');
+        //alert('В разработке (развёртывается на удалённый ресурс)');
     }
 }

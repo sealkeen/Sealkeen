@@ -560,6 +560,7 @@ export function setCurrentPageAlbumByID(el) {
 export function setCurrentPageRegister(event) {
     try {
         event.preventDefault();
+        alert('Loading: ' + loc + 'Account/Register');
         let ctrl = (loc + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -569,20 +570,33 @@ export function setCurrentPageRegister(event) {
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
+                    // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action');
-                    $('#__AjaxAntiForgeryForm').submit(function () {
-                        setRegisterAntiForgeryOnClick();
+                    $('#__AjaxAntiForgeryForm').removeAttr('action', urls.getLocation() + 'Account/Register');
+                    $('#__AjaxAntiForgeryForm').removeAttr('method', '');
+                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
+                    $('.btn-default').removeAttr('type');
+                    $('#__AjaxAntiForgeryForm').submit(function (e) {
+                        //e.preventDefault();
                     });
+                    $('.btn-default').onclick = setRegisterAntiForgeryOnClick;
+
+                    
+                    let btn = document.createElement("button");
+                    btn.id = 'btn-submit-onclick';
+                    btn.className = 'btn btn-primary form-control';
+                    btn.onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
+
+                    document.body.appendChild(btn);
                 },
                 error: function (error_) {
-                    console.log("Ajax error: " + error_);
+                    
                 }
             });
         }
     } catch (e) {
+        console.log(e);
         alert(e)
     }
 }
@@ -590,7 +604,7 @@ export function setCurrentPageRegister(event) {
 export function setCurrentPageLogin(event) {
     try {
         event.preventDefault();
-        console.log('Loading: ' + loc + 'Account/Login');
+        alert('Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -600,13 +614,24 @@ export function setCurrentPageLogin(event) {
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
+                    // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action');
-                    $('#__AjaxAntiForgeryForm').submit(function () {
-                        setLoginAntiForgeryOnClick();
+                    $('#__AjaxAntiForgeryForm').removeAttr('action', urls.getLocation() + 'Account/Login');
+                    $('#__AjaxAntiForgeryForm').removeAttr('method', '');
+                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
+                    $('.btn-default').removeAttr('type');
+                    $('#__AjaxAntiForgeryForm').submit(function (e) {
+                        setLoginAntiForgeryOnClick(e)
                     });
+                    $('.btn-default').onclick = setLoginAntiForgeryOnClick;
+
+                    let btn = document.createElement("button");
+                    btn.id = 'btn-submit-onclick';
+                    btn.className = 'btn btn-primary form-control';
+                    btn.onclick = (e) => {setLoginAntiForgeryOnClick(e)}
+                    
+                    document.body.appendChild(btn);
                 },
                 error: function (error_) {
                     console.log("Ajax error: " + error_);
@@ -614,6 +639,7 @@ export function setCurrentPageLogin(event) {
             });
         }
     } catch (e) {
+        console.log(e);
         alert(e)
     }
 }

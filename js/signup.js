@@ -20,7 +20,7 @@ function form_onclick() {
 }
 
 function checkInputs() {
-    alert('js ver = 105.12');
+    alert('Данный функционал находится на стадии реализации. js ver = 106.12');
     // get the values from the inputs
     const usernameValue = username.value.trim();
     const emailValue = email.value.trim();
