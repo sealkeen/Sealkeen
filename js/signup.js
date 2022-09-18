@@ -1,12 +1,13 @@
 // JS module for User sign up form inputs
 // Interaction logic for -> SignUpPage.cshtml
-// import { LogMessageRequest } from './logging.js';
+import { LogMessageRequest } from './logging.js';
+import { setRegisterAntiForgeryOnClick, setLoginAntiForgeryOnClick } from './Account/verification.js';
 
 const form = document.getElementById('sign-up-form');
-const username = document.getElementById('txt-username');
-const email = document.getElementById('txt-email');
-const password = document.getElementById('txt-password');
-const passwordCheck = document.getElementById('txt-password-check');
+const username = document.getElementById('UserName');
+const email = document.getElementById('Email');
+const password = document.getElementById('Password');
+const passwordCheck = document.getElementById('ConfirmPassword');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -27,53 +28,67 @@ function checkInputs() {
     const passwordValue = password.value.trim();
     const passwordCheckValue = passwordCheck.value.trim();
 
-    checkUsername(usernameValue);
-    checkEmail(emailValue);
-    checkPassword(passwordValue);
-    checkPasswordRepeat(passwordValue, passwordCheckValue);
+    if( checkUsername(usernameValue) && checkEmail(emailValue) &&
+        checkPassword(passwordValue) && checkPasswordRepeat(passwordValue, passwordCheckValue) 
+    ) {
+        setLoginAntiForgeryOnClick();
+    }
+
     LogMessageRequest('Ok, all is fine. JS Returned');
 }
 
 function checkUsername(value) {
     //alert('username... value is: ' + value);
-    if (value === '') //console.log('username: blank');
+    if (value === '') { //console.log('username: blank');
         setErrorFor(username, 'Username cannot be blank'); // show error 
-    else
+        return false;
+    } else {
         setSuccessFor(username); // add success class
+        return true;
+    }
     //alert('username: ok');
 }
 
 function checkEmail(mlValue) {
     //alert('email... value is: ' + mlValue);
-    if (mlValue === '')
+    if (mlValue === '') { 
         setErrorFor(email, 'Email cannot be blank');
-    else if (!isValidEmail(mlValue))
+        return false;
+    } else if (!isValidEmail(mlValue)) {
         setErrorFor(email, 'Email is not valid');
-    else
+        return false;
+    } else {
         setSuccessFor(email);
+        return true;
+    }
     //alert('email: ok');
 }
 
 function checkPassword(value) {
-    console.log('password... value is: ' + value);
+    //console.log('password... value is: ' + value);
     if (value === '') {
         setErrorFor(password, 'Password cannot be empty');
+        return false;
     } else {
         setSuccessFor(password);
+        console.log('password: ok');
+        return true;
     }
-    console.log('password: ok');
 }
 
 function checkPasswordRepeat(origin, repeat) {
-    console.log('passwordChk... value is: ' + repeat);
+    //console.log('passwordChk... value is: ' + repeat);
     if (repeat === '') {
         setErrorFor(passwordCheck, 'Password cannot be empty');
+        return false;
     } else if (origin !== repeat) {
         setErrorFor(passwordCheck, 'Passwords should match');
+        return false;
     } else {
         setSuccessFor(passwordCheck);
+        console.log('passwordChk: ok');
+        return true;
     }
-    console.log('passwordChk: ok');
 }
 
 function setErrorFor(input, message) {

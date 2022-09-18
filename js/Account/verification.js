@@ -29,12 +29,12 @@ export function setLoginAntiForgeryOnClick() {
             data: JSON.stringify({
                 'UserName': username ?? "undefined",
                 'Password': password ?? "undefined",
-                __RequestVerificationToken: token, 
+                __RequestVerificationToken: token,
                 'RememberMe': rememberMe
             }),
             success: function (result) {
                 console.log('%j', result)
-                alert(result);
+                alert('Успешный вход.');
             },
             error: function (xhr, ajaxOptions, thrownError){
                 console.log(xhr, ajaxOptions, thrownError);
@@ -42,7 +42,7 @@ export function setLoginAntiForgeryOnClick() {
         });
         return false;
     } catch (e) {
-        console.log('%j' ,e);
+        console.log('%j', e);
         alert(e);
     }
 }
@@ -63,7 +63,7 @@ export function setRegisterAntiForgeryOnClick() {
             dataType: 'json',
             contentType:'text/html',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             // xhrFields: {
             //     withCredentials: true
@@ -78,7 +78,7 @@ export function setRegisterAntiForgeryOnClick() {
             }),
             success: function (result) {
                 console.log('%j', result)
-                alert(result);
+                alert('Успешная регистрация.');
             },
             error: function (xhr, ajaxOptions, thrownError){
                 console.log(xhr, ajaxOptions, thrownError);
