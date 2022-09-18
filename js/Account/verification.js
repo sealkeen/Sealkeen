@@ -55,7 +55,7 @@ export function setRegisterAntiForgeryOnClick() {
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
         $.ajax({
-            url: urls.getLocation() + 'Account/LoginCors',
+            url: urls.getLocation() + 'Account/Register',
             type: 'POST',
             dataType: 'json',
             contentType:'text/html',
