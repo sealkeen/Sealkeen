@@ -12,13 +12,9 @@ const passwordCheck = document.getElementById('ConfirmPassword');
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    checkInputs();
+    if(checkInputs())
+        setRegisterAntiForgeryOnClick();
 });
-
-function form_onclick() {
-    //alert('form_onclick');
-    console.log('form_onclick');
-}
 
 function checkInputs() {
     alert('Данный функционал находится на стадии реализации. js ver = 106.12');
@@ -31,10 +27,12 @@ function checkInputs() {
     if( checkUsername(usernameValue) && checkEmail(emailValue) &&
         checkPassword(passwordValue) && checkPasswordRepeat(passwordValue, passwordCheckValue) 
     ) {
-        setLoginAntiForgeryOnClick();
+        LogMessageRequest('Ok, all is fine. JS Returned');
+        return true;
+    } else {
+        return false;
     }
 
-    LogMessageRequest('Ok, all is fine. JS Returned');
 }
 
 function checkUsername(value) {
