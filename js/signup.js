@@ -3,13 +3,13 @@
 import { LogMessageRequest } from './logging.js';
 import { setRegisterAntiForgeryOnClick, setLoginAntiForgeryOnClick } from './Account/verification.js';
 
-const form = document.getElementById('sign-up-form');
+const button = document.getElementById('form-btn-default');
 const username = document.getElementById('UserName');
 const email = document.getElementById('Email');
 const password = document.getElementById('Password');
 const passwordCheck = document.getElementById('ConfirmPassword');
 
-form.addEventListener('submit', (e) => {
+button.addEventListener('click', (e) => {
     e.preventDefault();
 
     if(checkInputs())
