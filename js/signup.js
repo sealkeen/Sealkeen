@@ -32,7 +32,6 @@ function checkInputs() {
     } else {
         return false;
     }
-
 }
 
 function checkUsername(value) {

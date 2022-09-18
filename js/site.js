@@ -580,13 +580,13 @@ export function setCurrentPageRegister(event) {
                     $('#__AjaxAntiForgeryForm').submit(function (e) {
                         //e.preventDefault();
                     });
-                    $('.btn-default').onclick = setRegisterAntiForgeryOnClick;
+                    $('.btn-default').onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
 
                     
-                    let btn = document.createElement("button");
-                    btn.id = 'btn-submit-onclick';
-                    btn.className = 'btn btn-primary form-control';
-                    btn.onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
+                    //let btn = document.createElement("button");
+                    //btn.id = 'btn-submit-onclick';
+                    //btn.className = 'btn btn-primary form-control';
+                    //btn.onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
 
                     document.body.appendChild(btn);
                 },
@@ -624,12 +624,12 @@ export function setCurrentPageLogin(event) {
                     $('#__AjaxAntiForgeryForm').submit(function (e) {
                         setLoginAntiForgeryOnClick(e)
                     });
-                    $('.btn-default').onclick = setLoginAntiForgeryOnClick;
+                    $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
 
-                    let btn = document.createElement("button");
-                    btn.id = 'btn-submit-onclick';
-                    btn.className = 'btn btn-primary form-control';
-                    btn.onclick = (e) => {setLoginAntiForgeryOnClick(e)}
+                    //let btn = document.createElement("button");
+                    //btn.id = 'btn-submit-onclick';
+                    //btn.className = 'btn btn-primary form-control';
+                    //btn.onclick = (e) => {setLoginAntiForgeryOnClick(e)}
                     
                     document.body.appendChild(btn);
                 },
