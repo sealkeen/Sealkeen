@@ -1,7 +1,7 @@
 ﻿import urls from './api.js'
 
 export function LogMessageRequest(message) {
-    if(urls.isGitHub())
+    if(urls.isGithub())
         return;
 
     $.ajax({
