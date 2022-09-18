@@ -9,6 +9,8 @@ import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, dis
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
 import colorHandlers from './StyleHandlers/color-handlers.js'
 import { checkInputs } from './signup.js'
+import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp, setCurrentPageMockData } from './Router/click-handlers.js'
+import { setTitleByArtistAndTitle } from './Page/event-handlers.js'
 
 document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
 document.querySelector('#nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
@@ -180,24 +182,6 @@ export function setArtistSongNameAsync() {
     }
 }
 
-export function setTitleByArtistAndTitle(el) {
-    try {
-        let artist = el;
-        let song = el;
-        let songInfo = el;
-        if (!event.target.classList.contains('card-body')) {
-            songInfo = el.parentNode;
-        }
-
-        artist = songInfo.querySelector('.card-title')?.firstChild?.nodeValue;
-        song = songInfo.querySelector('.card-text')?.firstChild?.nodeValue;
-
-        if (!isEmpty(artist) && !isEmpty(song))
-            document.title = `${artist} – ${song}`;
-    } catch (e) {
-        console.log(e);
-    } 
-}
 
 export function GetCurrentCompositionsId() { 
     try {
@@ -298,6 +282,18 @@ export function setFooterPlayerSourse(el)
                     };
                 },
                 error: function (error_) {
+                    console.log('1')
+                    if (source.includes('http')) {
+                        //<source id="player-source-element" src="null" type="audio/mp3"></source>
+                        let src = document.createElement('source');
+                        src.setAttribute('id', "player-source-element");
+                        src.setAttribute('src', source);
+                        src.setAttribute('type', 'audio/mp3');
+                        $("#player-audio-element").html('');
+                        $("#player-audio-element").append(src);
+                        $("#player-audio-element").load();
+                        $("#player-audio-element").play();
+                    }
                     displayQueuedTracks(_trackQueue);
                     console.log("Ajax error: " + error_);
                 }
@@ -330,6 +326,7 @@ export function setCurrentPageCompositions(event) {
 
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -362,6 +359,7 @@ export function setCurrentPageAlbums(event) {
 
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -393,6 +391,7 @@ export function setCurrentPageGenres(event) {
 
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -424,6 +423,7 @@ export function setCurrentPageArtists(event) {
 
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -462,6 +462,7 @@ export function setCurrentPageCompositionByArtistID(el) {
                     $("#page-body-container").append(response);
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -500,6 +501,7 @@ export function setCurrentPageCompositionByID(el) {
                     $("#page-body-container").append(response);
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -538,6 +540,7 @@ export function setCurrentPageAlbumByID(el) {
 
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
@@ -585,7 +588,8 @@ export function setCurrentPageRegister(event) {
                     //document.body.appendChild(btn);
                 },
                 error: function (error_) {
-                    
+                    setCurrentPageMockData();
+                    console.log("Ajax error: " + error_);
                 }
             });
         }
@@ -628,102 +632,13 @@ export function setCurrentPageLogin(event) {
                     //document.body.appendChild(btn);
                 },
                 error: function (error_) {
+                    setCurrentPageMockData();
                     console.log("Ajax error: " + error_);
                 }
             });
         }
     } catch (e) {
         console.log(e);
-        alert(e)
-    }
-}
-
-export function setCurrentPageSignUp(event) {
-    try {
-        event.preventDefault();
-        let ctrl = (loc + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/GetPartialSignUpPage');
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageIndex(event) {
-    try {
-        event.preventDefault();
-        let ctrl = (loc + 'IndexPartial');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.location = loc;
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageManageAccount(event) {
-    try {
-        event.preventDefault();
-        let ctrl = (loc + 'Manage/Index');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Manage');
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
         alert(e)
     }
 }
