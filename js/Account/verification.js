@@ -82,13 +82,19 @@ export function setRegisterAntiForgeryOnClick() {
             },
             error: function (err){
                 try {
-                    console.log('err: %j', err);
-                    console.log('err.responseText: %j', $(err.responseText));
-                    console.log('$(err.responseText)[1]: %j', $(err.responseText)[1]);
-                    console.log('$($(err.responseText)[1]).text() %j', $($(err.responseText)[1]).text());
-                    var parsed = JSON.parse(err.responseText);
-                    console.log('JSON.parse(err.responseText) %j', parsed);
-                    //$($(err.responseText)[1]).text();
+                    //console.log('err: %j', err);
+                    //console.log('err.responseText: %j', $(err.responseText));
+                    
+                    //$.each($(err.responseText), function(i){
+                    var nodes = $(err.responseText).find('#page-body-container')
+                    if(nodes != undefined && Object.entries(nodes).length > 0) {
+                        $("#page-body-container").html('');
+                        $("#page-body-container").append(...nodes);
+                        $("#page-body-container").css("background-color: ", "rgba(255, 255, 255)");
+                        $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
+                    } else {
+                        console.log('ajax response error');
+                    }
                 } catch (e) {
                     console.log('try-catch-ajax-error' + e);
                 }
