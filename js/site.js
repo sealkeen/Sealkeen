@@ -5,7 +5,7 @@
 import urls from './api.js'
 import { LogMessageRequest } from './logging.js';
 import newQueue from './Utils/Queue.js';
-import { colorHandlers } from './../StyleHandlers/color-handlers.js'
+import { colorHandlers } from './StyleHandlers/color-handlers.js'
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks } from './utilities.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
 
