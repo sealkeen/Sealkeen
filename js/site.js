@@ -18,7 +18,6 @@ document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPa
 document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
 document.querySelector('#nav-lnk-background')?.addEventListener('click', toggleBodyBackground);
 
-
 const _trackQueue = newQueue();
 const loc = urls.getLocation();
 
@@ -560,7 +559,7 @@ export function setCurrentPageAlbumByID(el) {
 export function setCurrentPageRegister(event) {
     try {
         event.preventDefault();
-        alert('Loading: ' + loc + 'Account/Register');
+        console.log('Loading: ' + loc + 'Account/Register');
         let ctrl = (loc + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
@@ -608,7 +607,7 @@ export function setCurrentPageRegister(event) {
 export function setCurrentPageLogin(event) {
     try {
         event.preventDefault();
-        alert('Loading: ' + loc + 'Account/Login');
+        console.log('Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
