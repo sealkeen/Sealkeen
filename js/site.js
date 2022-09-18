@@ -587,8 +587,7 @@ export function setCurrentPageRegister(event) {
                     //btn.id = 'btn-submit-onclick';
                     //btn.className = 'btn btn-primary form-control';
                     //btn.onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
-
-                    document.body.appendChild(btn);
+                    //document.body.appendChild(btn);
                 },
                 error: function (error_) {
                     
@@ -630,8 +629,7 @@ export function setCurrentPageLogin(event) {
                     //btn.id = 'btn-submit-onclick';
                     //btn.className = 'btn btn-primary form-control';
                     //btn.onclick = (e) => {setLoginAntiForgeryOnClick(e)}
-                    
-                    document.body.appendChild(btn);
+                    //document.body.appendChild(btn);
                 },
                 error: function (error_) {
                     console.log("Ajax error: " + error_);
