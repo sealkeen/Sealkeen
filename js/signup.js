@@ -16,7 +16,7 @@ button.addEventListener('click', (e) => {
         setRegisterAntiForgeryOnClick();
 });
 
-function checkInputs() {
+export function checkInputs() {
     alert('Данный функционал находится на стадии реализации. js ver = 106.12');
     // get the values from the inputs
     const usernameValue = username.value.trim();
@@ -34,7 +34,7 @@ function checkInputs() {
     }
 }
 
-function checkUsername(value) {
+export function checkUsername(value) {
     //alert('username... value is: ' + value);
     if (value === '') { //console.log('username: blank');
         setErrorFor(username, 'Username cannot be blank'); // show error 
@@ -46,7 +46,7 @@ function checkUsername(value) {
     //alert('username: ok');
 }
 
-function checkEmail(mlValue) {
+export function checkEmail(mlValue) {
     //alert('email... value is: ' + mlValue);
     if (mlValue === '') { 
         setErrorFor(email, 'Email cannot be blank');
@@ -61,7 +61,7 @@ function checkEmail(mlValue) {
     //alert('email: ok');
 }
 
-function checkPassword(value) {
+export function checkPassword(value) {
     //console.log('password... value is: ' + value);
     if (value === '') {
         setErrorFor(password, 'Password cannot be empty');
@@ -73,7 +73,7 @@ function checkPassword(value) {
     }
 }
 
-function checkPasswordRepeat(origin, repeat) {
+export function checkPasswordRepeat(origin, repeat) {
     //console.log('passwordChk... value is: ' + repeat);
     if (repeat === '') {
         setErrorFor(passwordCheck, 'Password cannot be empty');
@@ -88,7 +88,7 @@ function checkPasswordRepeat(origin, repeat) {
     }
 }
 
-function setErrorFor(input, message) {
+export function setErrorFor(input, message) {
     const group = input.parentElement;
     const small = group.querySelector('small');
     small.innerText = message; // add error message inside small
@@ -97,13 +97,13 @@ function setErrorFor(input, message) {
     console.log('set error for func completed ok');
 }
 
-function setSuccessFor(input) {
+export function setSuccessFor(input) {
     const group = input.parentElement; // .form-control
     const small = group.querySelector('small');
     input.className = 'form-control form-control-success';
     small.className = 'form-control-small';
 }
 
-function isValidEmail(ml) {
+export function isValidEmail(ml) {
     return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(ml);
 }
