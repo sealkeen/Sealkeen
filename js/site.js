@@ -5,6 +5,7 @@
 import urls from './api.js'
 import { LogMessageRequest } from './logging.js';
 import newQueue from './Utils/Queue.js';
+import { colorHandlers } from './../StyleHandlers/color-handlers.js'
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks } from './utilities.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
 
@@ -16,7 +17,7 @@ document.querySelector('#nav-lnk-artists')?.addEventListener('click', setCurrent
 document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageSignUp);
 document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
 document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
-document.querySelector('#nav-lnk-background')?.addEventListener('click', toggleBodyBackground);
+document.querySelector('#nav-lnk-background')?.addEventListener('click', colorHandlers.toggleBodyBackground);
 
 const _trackQueue = newQueue();
 const loc = urls.getLocation();
@@ -95,17 +96,6 @@ document.oncontextmenu = function (e) {
     if (target.classList.contains('album-card-div')) { }
     if (target.classList.contains('genre-card-div')) { }
     if (target.classList.contains('artist-card-div')) { }
-}
-
-export function toggleBodyBackground()
-{
-    if ($('body').hasClass('white')) {
-        $('body').toggleClass('white');
-        //$('body').css('background-color', 'white');
-    } else {
-        $('body').toggleClass('white');
-        //$('body').css('background-color', 'grey');
-    }
 }
 
 export function bindPlayerButtons() {
