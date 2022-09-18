@@ -573,8 +573,9 @@ export function setCurrentPageRegister(event) {
                     // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action', urls.getLocation() + 'Account/Register');
-                    $('#__AjaxAntiForgeryForm').removeAttr('method', '');
+                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
+                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
+                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
                     $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
                     $('.btn-default').removeAttr('type');
                     $('#__AjaxAntiForgeryForm').submit(function (e) {
@@ -616,8 +617,9 @@ export function setCurrentPageLogin(event) {
                     // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action', urls.getLocation() + 'Account/Login');
-                    $('#__AjaxAntiForgeryForm').removeAttr('method', '');
+                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
+                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
+                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
                     $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
                     $('.btn-default').removeAttr('type');
                     $('#__AjaxAntiForgeryForm').submit(function (e) {
