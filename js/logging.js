@@ -1,6 +1,6 @@
 ﻿import urls from './api.js'
 
-export default function (message) {
+export function LogMessageRequest(message) {
     $.ajax({
         headers: {
             'Content-Type': 'application/json'
