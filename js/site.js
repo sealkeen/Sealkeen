@@ -3,11 +3,11 @@
 
 // Write your Javascript code.
 import urls from './api.js'
-import { LogMessageRequest } from './logging.js';
 import newQueue from './Utils/Queue.js';
-import { colorHandlers } from './StyleHandlers/color-handlers.js'
+import { LogMessageRequest } from './logging.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks } from './utilities.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
+import colorHandlers from './StyleHandlers/color-handlers.js'
 
 document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
 document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
