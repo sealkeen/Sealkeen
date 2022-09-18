@@ -4,8 +4,9 @@
 // Write your Javascript code.
 import urls from './api.js'
 import LogMessageRequest from './logging.js';
-import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks } from './utilities.js';
 import newQueue from './Utils/Queue.js';
+import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks } from './utilities.js';
+import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
 
 document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
 document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
@@ -565,16 +566,16 @@ export function setCurrentPageRegister(event) {
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
+                    $('#__AjaxAntiForgeryForm').removeAttr('action');
+                    $('#__AjaxAntiForgeryForm').submit(function () {
+                        setRegisterAntiForgeryOnClick();
+                    });
                 },
                 error: function (error_) {
                     console.log("Ajax error: " + error_);
@@ -589,22 +590,23 @@ export function setCurrentPageRegister(event) {
 export function setCurrentPageLogin(event) {
     try {
         event.preventDefault();
+        console.log('Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             $.ajax({ //$.get({ //
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
                     console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(response);
+                    $('#__AjaxAntiForgeryForm').removeAttr('action');
+                    $('#__AjaxAntiForgeryForm').submit(function () {
+                        setLoginAntiForgeryOnClick();
+                    });
                 },
                 error: function (error_) {
                     console.log("Ajax error: " + error_);

@@ -11,7 +11,7 @@ export default {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
             return ''
-        } else 
+        } else
             return '/Sealkeen'
     },
     getInDevelopmentMessage()
