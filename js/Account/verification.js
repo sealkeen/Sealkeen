@@ -80,8 +80,18 @@ export function setRegisterAntiForgeryOnClick() {
                 console.log('%j', result)
                 alert('Успешная регистрация.');
             },
-            error: function (xhr, ajaxOptions, thrownError){
-                console.log(xhr, ajaxOptions, thrownError);
+            error: function (err){
+                try {
+                    console.log('err: %j', err);
+                    console.log('err.responseText: %j', $(err.responseText));
+                    console.log('$(err.responseText)[1]: %j', $(err.responseText)[1]);
+                    console.log('$($(err.responseText)[1]).text() %j', $($(err.responseText)[1]).text());
+                    var parsed = JSON.parse(err.responseText);
+                    console.log('JSON.parse(err.responseText) %j', parsed);
+                    //$($(err.responseText)[1]).text();
+                } catch (e) {
+                    console.log('try-catch-ajax-error' + e);
+                }
             }
         });
         return false;
