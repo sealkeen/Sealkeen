@@ -19,6 +19,9 @@ export function setLoginAntiForgeryOnClick() {
             type: 'POST',
             dataType: 'json',
             contentType:'text/html',
+            headers: {
+              'Content-Type': 'application/json',
+            },
             // xhrFields: {
             //     withCredentials: true
             // },
@@ -55,10 +58,13 @@ export function setRegisterAntiForgeryOnClick() {
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
         $.ajax({
-            url: urls.getLocation() + 'Account/Register',
+            url: urls.getLocation() + 'Account/RegisterCors',
             type: 'POST',
             dataType: 'json',
             contentType:'text/html',
+            headers: {
+              'Content-Type': 'application/json',
+            },
             // xhrFields: {
             //     withCredentials: true
             // },
