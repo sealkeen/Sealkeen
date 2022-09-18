@@ -1,5 +1,4 @@
-
-export default{ 
+export default { 
     toggleBodyBackground()
     {
         if ($('body').hasClass('white')) {
