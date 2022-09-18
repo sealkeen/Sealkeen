@@ -583,7 +583,11 @@ export function setCurrentPageRegister(event) {
                     });
                     $('.btn-default').onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
 
-                    
+                    const button = document.getElementById('form-btn-default');
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if(checkInputs()) setRegisterAntiForgeryOnClick();
+                    });
                     //let btn = document.createElement("button");
                     //btn.id = 'btn-submit-onclick';
                     //btn.className = 'btn btn-primary form-control';
