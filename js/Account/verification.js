@@ -27,10 +27,10 @@ export function setLoginAntiForgeryOnClick() {
             // },
             // crossDomain: true,
             data: JSON.stringify({
-                'Input.UserName': username ?? "undefined",
-                'Input.Password': password ?? "undefined",
+                'UserName': username ?? "undefined",
+                'Password': password ?? "undefined",
                 __RequestVerificationToken: token, 
-                'Input.RememberMe': rememberMe
+                'RememberMe': rememberMe
             }),
             success: function (result) {
                 console.log('%j', result)
@@ -70,10 +70,10 @@ export function setRegisterAntiForgeryOnClick() {
             // },
             // crossDomain: true,
             data: JSON.stringify({ 
-                'Input.UserName': username ?? "undefined",
-                'Input.Email': email ?? "undefined",
-                'Input.Password': password ?? "undefined",
-                'Input.ConfirmPassword': cPassword,
+                'UserName': username ?? "undefined",
+                'Email': email ?? "undefined",
+                'Password': password ?? "undefined",
+                'ConfirmPassword': cPassword,
                 __RequestVerificationToken: token
             }),
             success: function (result) {
