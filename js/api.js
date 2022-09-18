@@ -17,5 +17,9 @@ export default {
     getInDevelopmentMessage()
     {
         //alert('В разработке (развёртывается на удалённый ресурс)');
+    },
+    isGithub()
+    {
+        return (window.location.href.indexOf("github.io") > -1);
     }
 }
