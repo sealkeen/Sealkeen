@@ -1,11 +1,12 @@
 import urls from './../api.js'
 import { getCookie } from './../utilities.js'
+import { toggleBodyBackground } from './StyleHandlers/color-handlers.js'
 
 export function setLoginAntiForgeryOnClick() {
     try {
-        let c = getCookie('.AspNetCore.Antiforgery');
-        console.log('%j', c);
-        console.log(c);
+        //let c = getCookie('.AspNetCore.Antiforgery');
+        //console.log('%j', c);
+        //console.log(c);
 
         $('#__AjaxAntiForgeryForm').removeAttr('action');
         let username = $('#UserName').val();
@@ -36,8 +37,25 @@ export function setLoginAntiForgeryOnClick() {
                 console.log('%j', result)
                 alert('Успешный вход.');
             },
-            error: function (xhr, ajaxOptions, thrownError){
-                console.log(xhr, ajaxOptions, thrownError);
+            error: function (err){
+                try {
+                    //console.log('err: %j', err);
+                    //console.log('err.responseText: %j', $(err.responseText));
+                    
+                    //$.each($(err.responseText), function(i){
+                    var nodes = $(err.responseText).find('#page-body-container')
+                    if(nodes != undefined && Object.entries(nodes).length > 0) {
+                        $("#page-body-container").html('');
+                        $("#page-body-container").append(...nodes);
+                        $("#page-body-container").css("background-color: ", "rgba(255, 255, 255)");
+                        $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
+                        toggleBodyBackground();
+                    } else {
+                        console.log('ajax response error');
+                    }
+                } catch (e) {
+                    console.log('try-catch-ajax-error' + e);
+                }
             }
         });
         return false;
@@ -92,6 +110,7 @@ export function setRegisterAntiForgeryOnClick() {
                         $("#page-body-container").append(...nodes);
                         $("#page-body-container").css("background-color: ", "rgba(255, 255, 255)");
                         $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
+                        toggleBodyBackground();
                     } else {
                         console.log('ajax response error');
                     }
