@@ -9,12 +9,12 @@ import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, dis
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
 import colorHandlers from './StyleHandlers/color-handlers.js'
 
-document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
+document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageRegister);
 document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
 document.querySelector('#nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
 document.querySelector('#nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
 document.querySelector('#nav-lnk-artists')?.addEventListener('click', setCurrentPageArtists);
-document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageSignUp);
+document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
 document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
 document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
 document.querySelector('#nav-lnk-background')?.addEventListener('click', colorHandlers.toggleBodyBackground);
