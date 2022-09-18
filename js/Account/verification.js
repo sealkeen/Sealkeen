@@ -1,6 +1,6 @@
 import urls from './../api.js'
 import { getCookie } from './../utilities.js'
-import { toggleBodyBackground } from './StyleHandlers/color-handlers.js'
+import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function setLoginAntiForgeryOnClick() {
     try {
