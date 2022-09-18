@@ -1,10 +1,9 @@
 ﻿import urls from './api.js'
-import {isGitHub} from './api.js'
 
 export function LogMessageRequest(message) {
-    if(isGitHub())
+    if(urls.isGitHub())
         return;
-        
+
     $.ajax({
         headers: {
             'Content-Type': 'application/json'
