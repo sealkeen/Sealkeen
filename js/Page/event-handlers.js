@@ -18,3 +18,30 @@ export function setTitleByArtistAndTitle(el) {
         console.log(e);
     } 
 }
+
+export function setArtistSongNameAsync() {
+    let compId = GetCurrentCompositionsId();
+    let ctrl = (loc + 'GetArtistSongName/?id=' + compId);
+    
+    if ($(".track-artist-song-name") != undefined) {
+        $.ajax({ //$.get({ //
+            url: ctrl,
+            type: 'GET',
+            contentType: 'html',
+            xhrFields: {
+               withCredentials: true
+            },
+            crossDomain: true,
+            /*data: ("_ViewPlayer=" + source),*/
+            success: function (response) {
+                console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
+                $(".track-artist-song-name").html('');
+                $(".track-artist-song-name").append(response);
+                document.title = (response);
+            },
+            error: function (error_) {
+                console.log("Ajax error: " + error_);
+            }
+        });
+    }
+}

@@ -5,12 +5,15 @@
 import urls from './api.js'
 import newQueue from './Utils/Queue.js';
 import { LogMessageRequest } from './logging.js';
-import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks } from './utilities.js';
+import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks, sleep, safePlay, safeSwitchTrack } from './utilities.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
 import colorHandlers from './StyleHandlers/color-handlers.js'
 import { checkInputs } from './signup.js'
-import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp, setCurrentPageMockData } from './Router/click-handlers.js'
-import { setTitleByArtistAndTitle } from './Page/event-handlers.js'
+import { onAjaxLoadError } from './Errors/ajax-errors.js'
+import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp, setCurrentPageArtists, setCurrentPageCompositionByArtistID, setCurrentPageMockData, 
+    setCurrentPageCompositions, setCurrentPageAlbums, setCurrentPageGenres, setCurrentPageCompositionByID, setCurrentPageAlbumByID, setCurrentPageRegister, setCurrentPageLogin } 
+from './Router/click-handlers.js'
+import { setTitleByArtistAndTitle, setArtistSongNameAsync } from './Page/event-handlers.js'
 
 document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
 document.querySelector('#nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
@@ -139,7 +142,6 @@ $(document).ready(function () {
         if (containsClasses(target, 'card-text', 'card-title')) {
             target = e.target.parentNode;
         }
-
         if (target.classList.contains('card-body-composition')) {
             setFooterPlayerSourse(e.target)
         }
@@ -155,32 +157,6 @@ $(document).ready(function () {
     });
 });
 
-export function setArtistSongNameAsync() {
-    let compId = GetCurrentCompositionsId();
-    let ctrl = (loc + 'GetArtistSongName/?id=' + compId);
-    
-    if ($(".track-artist-song-name") != undefined) {
-        $.ajax({ //$.get({ //
-            url: ctrl,
-            type: 'GET',
-            contentType: 'html',
-            xhrFields: {
-               withCredentials: true
-            },
-            crossDomain: true,
-            /*data: ("_ViewPlayer=" + source),*/
-            success: function (response) {
-                console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
-                $(".track-artist-song-name").html('');
-                $(".track-artist-song-name").append(response);
-                document.title = (response);
-            },
-            error: function (error_) {
-                console.log("Ajax error: " + error_);
-            }
-        });
-    }
-}
 
 
 export function GetCurrentCompositionsId() { 
@@ -193,7 +169,6 @@ export function GetCurrentCompositionsId() {
         // leaving [ 'f648ef94-bfb7-44a2-82d3-d68bca5a49a8' ]
         let result = audioSrc.src.substring(audioSrc.src.length - (13 + loc.length).toString()).replace('.io', '').replace('/GetAudio?Id=', '');
         console.log('GetCurrentCompositionsId(): %j', result);
-
         return result;
     } catch (e) {
         console.log(e);
@@ -221,7 +196,6 @@ export function setNextComposition(compId) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-
                     console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                     $("#player-audio-div").html('');
                     $("#player-audio-div").append(response);
@@ -236,9 +210,8 @@ export function setNextComposition(compId) {
                         setNextComposition(id);
                     };
                 },
-                error: function (error_) {
-                    displayQueuedTracks(_trackQueue);
-                    console.log("Ajax error: " + error_);
+                error: async function (error_) {
+                    onAjaxLoadError(compId, error_, safeSwitchTrack);
                 }
             });
         }
@@ -247,7 +220,7 @@ export function setNextComposition(compId) {
     } 
 }
 
-export function setFooterPlayerSourse(el)
+export async function setFooterPlayerSourse(el)
 {
     try {
         let source = el;
@@ -258,7 +231,7 @@ export function setFooterPlayerSourse(el)
 
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
         if ($("#player-source-element") != undefined) {
-            $.ajax({ //$.get({ //
+            await $.ajax({ //$.get({ //
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
@@ -281,364 +254,12 @@ export function setFooterPlayerSourse(el)
                         setNextComposition(source);
                     };
                 },
-                error: function (error_) {
-                    console.log('1')
-                    if (source.includes('http')) {
-                        //<source id="player-source-element" src="null" type="audio/mp3"></source>
-                        let src = document.createElement('source');
-                        src.setAttribute('id', "player-source-element");
-                        src.setAttribute('src', source);
-                        src.setAttribute('type', 'audio/mp3');
-                        $("#player-audio-element").html('');
-                        $("#player-audio-element").append(src);
-                        $("#player-audio-element").load();
-                        $("#player-audio-element").play();
-                    }
-                    displayQueuedTracks(_trackQueue);
-                    console.log("Ajax error: " + error_);
+                error: async function (error_) {
+                    onAjaxLoadError(source, error_, safePlay);
                 }
             });
         }
     } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageCompositions(event) {
-    try {
-        event.preventDefault();
-        let ctrl = (loc + 'GetPartialCompositionsPage');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/CompositionsPage');
-                    LogMessageRequest('setCurrentPageCompositions(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response); 
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageAlbums(event) {
-    try {
-        event.preventDefault();
-        
-        let ctrl = (loc + 'GetPartialAlbumsPage');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/AlbumsPage');
-                    console.log('setCurrentPageAlbums(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageGenres(event) {
-    try {
-        event.preventDefault();
-        let ctrl = (loc + 'GetPartialGenresPage');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/GenresPage');
-                    console.log('setCurrentPageGenres(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageArtists(event) {
-    try {
-        event.preventDefault();
-        let ctrl = (loc + 'GetPartialArtistsPage');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/ArtistsPage');
-                    console.log('setCurrentPageAudio(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageCompositionByArtistID(el) {
-    try {
-        let id = el;
-        if (!event.target.classList.contains('card-body')) {
-            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
-            id = el.parentNode.children[0].value;
-        }
-        else {
-            console.log('contains card-body. el.children[0].value');
-            id = el.children[0].value;
-        }
-
-        let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    LogMessageRequest('setCurrentPageCompositionByArtistID(el): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageCompositionByID(el) {
-    try {
-        let id = el;
-        if (!event.target.classList.contains('card-body')) {
-            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
-            id = el.parentNode.children[0].value;
-        }
-        else {
-            console.log('contains card-body. el.children[0].value');
-            id = el.children[0].value;
-        }
-
-        let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    LogMessageRequest('setCurrentPageCompositionByID(el): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageAlbumByID(el) {
-    try {
-        let id = el;
-        if (!event.target.classList.contains('card-body')) {
-            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
-            id = el.parentNode.children[0].value;
-        }
-        else {
-            console.log('contains card-body. el.children[0].value');
-            id = el.children[0].value;
-        }
-        let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    console.log('setCurrentPageAlbumByID(el): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        alert(e)
-    }
-}
-
-export function setCurrentPageRegister(event) {
-    try {
-        event.preventDefault();
-        console.log('Loading: ' + loc + 'Account/Register');
-        let ctrl = (loc + 'Account/Register');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
-                    // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
-                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
-                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
-                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
-                    $('.btn-default').removeAttr('type');
-                    $('#__AjaxAntiForgeryForm').submit(function (e) {
-                        //e.preventDefault();
-                    });
-                    $('.btn-default').onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
-
-                    const button = document.getElementById('form-btn-default');
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        if(checkInputs()) setRegisterAntiForgeryOnClick();
-                    });
-                    //let btn = document.createElement("button");
-                    //btn.id = 'btn-submit-onclick';
-                    //btn.className = 'btn btn-primary form-control';
-                    //btn.onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
-                    //document.body.appendChild(btn);
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        console.log(e);
-        alert(e)
-    }
-}
-
-export function setCurrentPageLogin(event) {
-    try {
-        event.preventDefault();
-        console.log('Loading: ' + loc + 'Account/Login');
-        let ctrl = (loc + 'Account/Login');
-        if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
-                    // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
-                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
-                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
-                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
-                    $('.btn-default').removeAttr('type');
-                    $('#__AjaxAntiForgeryForm').submit(function (e) {
-                        setLoginAntiForgeryOnClick(e)
-                    });
-                    $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
-
-                    //let btn = document.createElement("button");
-                    //btn.id = 'btn-submit-onclick';
-                    //btn.className = 'btn btn-primary form-control';
-                    //btn.onclick = (e) => {setLoginAntiForgeryOnClick(e)}
-                    //document.body.appendChild(btn);
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
-            });
-        }
-    } catch (e) {
-        console.log(e);
-        alert(e)
+        console.log(e)
     }
 }

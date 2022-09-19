@@ -1,4 +1,6 @@
-﻿export function isEmpty (val) {
+﻿import { setArtistSongNameAsync, setTitleByArtistAndTitle } from './Page/event-handlers.js'
+
+export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
 
@@ -55,7 +57,7 @@ export function getWebEntityObject(el) {
 }
 
 export function displayQueuedTracks(_trackQueue) {
-    console.log('%j', _trackQueue);
+    console.log('displayQueuedTracks %j', _trackQueue);
     let queue = $('#footer-track-query')[0];
     if (queue === undefined) {
         queue = document.createElement("div");
@@ -73,4 +75,63 @@ export function getCookie(name) {
     function escape(s) { return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, '\\$1'); }
     var match = document.cookie.match(RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)'));
     return match ? match[1] : null;
+}
+
+export function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function safePlay()
+{
+    try {
+        var playPromise = document.querySelector("#player-audio-element")?.play();
+        if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                // Automatic playback started!
+                // Show playing UI.
+                // We can now safely pause video...
+                // $("#player-audio-element").pause();
+            })
+            .catch(error => {
+                // Auto-play was prevented
+                // Show paused UI.
+                console.log('player returned error on play, autoplay prevented.');
+            });
+        }
+    } catch(error) {
+        console.log('Player returned exception on try load or play %j', error);
+    }
+}
+
+export function safeSwitchTrack()
+{
+    try {
+        var playPromise = document.querySelector("#player-audio-element")?.load();
+        if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    var playPromise = document.querySelector("#player-audio-element")?.load();
+                    if (playPromise !== undefined) {
+                            playPromise.then(_ => {
+                            // Automatic load started!
+                            // Show playing UI.
+                            // We can now safely pause video...
+                            setArtistSongNameAsync();
+                            // $("#player-audio-element").pause();
+                        })
+                        .catch(error => {
+                            // Auto-play was prevented
+                            // Show paused UI.
+                            console.log('player returned error on PLAY(), autoplay prevented.');
+                        });
+                    }
+            })
+            .catch(error => {
+                // Auto-play was prevented
+                // Show paused UI.
+                console.log('player returned error on LOAD, autoplay prevented.');
+            });
+        }
+    } catch(error) {
+        console.log('Player returned exception on try LOAD or PLAY %j', error);
+    }
 }
