@@ -4,11 +4,12 @@
 // Write your Javascript code.
 import urls from './api.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
-import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
+import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
+    displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
 
 import colorHandlers from './StyleHandlers/color-handlers.js'
 import { checkInputs } from './signup.js'
-import { onAjaxLoadError } from './Errors/ajax-errors.js'
+import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
 import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp, setCurrentPageArtists, setCurrentPageCompositionByArtistID, setCurrentPageMockData, 
     setCurrentPageCompositions, setCurrentPageAlbums, setCurrentPageGenres, setCurrentPageCompositionByID, setCurrentPageAlbumByID, setCurrentPageRegister, setCurrentPageLogin } 
 from './Router/click-handlers.js'
@@ -161,13 +162,8 @@ export function setNextComposition(compId) {
         if (compId === undefined || compId === null)
             return;
         if(compId.includes('docs.google')) {
-            let src = document.createElement('source');
-            src.setAttribute('id', "player-source-element");
-            src.setAttribute('src', compId);
-            src.setAttribute('type', 'audio/mp3');
-            $("#player-audio-element").html('');
-            $("#player-audio-element").append(src);
-            
+            onAjaxSwitchPageError(compId, {}, safeSwitchTrack);
+            return;
         }
         let path = 'GetHtmlNextTrackPlayer/?id=';
         if (!_trackQueue.isEmpty()) {
@@ -202,7 +198,7 @@ export function setNextComposition(compId) {
                     };
                 },
                 error: async function (error_) {
-                    onAjaxLoadError(compId, error_, safeSwitchTrack);
+                    onAjaxSwitchPageError(compId, error_, safeSwitchTrack);
                 }
             });
         }

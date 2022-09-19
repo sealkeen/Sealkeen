@@ -113,6 +113,7 @@ export function safeSwitchTrack()
         var playPromise = document.querySelector("#player-audio-element")?.load();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
+                console.log('safeLoadOK: safePlaying...');
                 safePlay();
             })
             .catch(error => {
