@@ -39,7 +39,7 @@ export function ConvertToDOM()
     display4.className = 'display-4 stroke-shadow';
     display4.innerHTML = 'Server unavailable. Loaded mock data (playable).';
     textcenter.appendChild(display4);
-    cardcolumns.appendChild(textcenter);
+    center.appendChild(textcenter);
 
     takeStore().forEach(element => {
         let card = document.createElement("div")
