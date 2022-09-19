@@ -125,3 +125,19 @@ export function safeSwitchTrack()
         console.log('Player returned exception on try LOAD or PLAY %j', error);
     }
 }
+
+export function GetCurrentCompositionsId() { 
+    try {
+        let audioSrc = $("#player-audio-element").get(0).children[0];
+        console.log('GetCurrentCompId = ' + audioSrc.src.substring(audioSrc.src.length - (13 + loc.length)).toString().replace('.io', '').replace('/GetAudio?Id=', ''));
+        if (audioSrc.src === undefined || audioSrc.src === null)
+            return undefined;
+        // cropping [ 'https://localhost:5001/GetAudio?Id=' ]
+        // leaving [ 'f648ef94-bfb7-44a2-82d3-d68bca5a49a8' ]
+        let result = audioSrc.src.substring(audioSrc.src.length - (13 + loc.length).toString()).replace('.io', '').replace('/GetAudio?Id=', '');
+        console.log('GetCurrentCompositionsId(): %j', result);
+        return result;
+    } catch (e) {
+        console.log(e);
+    } 
+}
