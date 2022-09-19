@@ -1,4 +1,6 @@
-﻿export default function newQueue() {
+﻿export var _trackQueue = newQueue();
+
+export function newQueue() {
     const queue = {
         headIdx: 0,
         tailIdx: 0,
@@ -34,5 +36,10 @@
         onchange: () => { }
     };
     return queue;
+}
+
+export function peekObjectsArtistsAndTitles()
+{
+    return 'Queue: ' + _trackQueue.elts?.map(a => a.artist + ' - ' + a.title).join(', ');
 }
 

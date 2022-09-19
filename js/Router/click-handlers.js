@@ -1,4 +1,7 @@
 import urls from './../api.js'
+import { LogMessageRequest } from '.././logging.js';
+import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../Account/verification.js'
+
 const loc = urls.getLocation();
 
 export function setCurrentPageIndex(event) {

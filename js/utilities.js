@@ -1,4 +1,5 @@
 ﻿import { setArtistSongNameAsync, setTitleByArtistAndTitle } from './Page/event-handlers.js'
+import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
@@ -63,11 +64,11 @@ export function displayQueuedTracks(_trackQueue) {
         queue = document.createElement("div");
         queue.id = "footer-track-query";
         queue.className = "footer-track-query";
-        queue.innerHTML = _trackQueue.peekObjectsArtistsAndTitles();
+        queue.innerHTML = peekObjectsArtistsAndTitles();
         let footer = $('.footer');
         footer[0].insertBefore(queue, footer[0].firstChild);
     } else {
-        queue.innerHTML = _trackQueue.peekObjectsArtistsAndTitles();
+        queue.innerHTML = peekObjectsArtistsAndTitles();
     }
 }
 
@@ -83,6 +84,7 @@ export function sleep(ms) {
 
 export function safePlay()
 {
+    console.log('safePlay()')
     try {
         var playPromise = document.querySelector("#player-audio-element")?.play();
         if (playPromise !== undefined) {
@@ -105,25 +107,13 @@ export function safePlay()
 
 export function safeSwitchTrack()
 {
+    console.log('safeSwitchTrack()')
+    displayQueuedTracks();
     try {
         var playPromise = document.querySelector("#player-audio-element")?.load();
         if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    var playPromise = document.querySelector("#player-audio-element")?.load();
-                    if (playPromise !== undefined) {
-                            playPromise.then(_ => {
-                            // Automatic load started!
-                            // Show playing UI.
-                            // We can now safely pause video...
-                            setArtistSongNameAsync();
-                            // $("#player-audio-element").pause();
-                        })
-                        .catch(error => {
-                            // Auto-play was prevented
-                            // Show paused UI.
-                            console.log('player returned error on PLAY(), autoplay prevented.');
-                        });
-                    }
+            playPromise.then(_ => {
+                safePlay();
             })
             .catch(error => {
                 // Auto-play was prevented

@@ -3,7 +3,7 @@
 
 // Write your Javascript code.
 import urls from './api.js'
-import newQueue from './Utils/Queue.js';
+import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import { LogMessageRequest } from './logging.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks, sleep, safePlay, safeSwitchTrack } from './utilities.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
@@ -25,7 +25,6 @@ document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPa
 document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
 document.querySelector('#nav-lnk-background')?.addEventListener('click', colorHandlers.toggleBodyBackground);
 
-const _trackQueue = newQueue();
 const loc = urls.getLocation();
 
 $(document).ready(function () {
@@ -157,8 +156,6 @@ $(document).ready(function () {
     });
 });
 
-
-
 export function GetCurrentCompositionsId() { 
     try {
         let audioSrc = $("#player-audio-element").get(0).children[0];
@@ -179,6 +176,15 @@ export function setNextComposition(compId) {
     try {
         if (compId === undefined || compId === null)
             return;
+        if(compId.includes('docs.google')) {
+            let src = document.createElement('source');
+            src.setAttribute('id', "player-source-element");
+            src.setAttribute('src', compId);
+            src.setAttribute('type', 'audio/mp3');
+            $("#player-audio-element").html('');
+            $("#player-audio-element").append(src);
+            
+        }
         let path = 'GetHtmlNextTrackPlayer/?id=';
         if (!_trackQueue.isEmpty()) {
             compId = _trackQueue.dequeue().id;
@@ -206,8 +212,9 @@ export function setNextComposition(compId) {
                     displayQueuedTracks(_trackQueue);
 
                     plr.onended = function () {
+                        console.log('id is :' + id);
                         let id = GetCurrentCompositionsId() ?? compId;
-                        setNextComposition(id);
+                        setNextComposition(id); 
                     };
                 },
                 error: async function (error_) {
