@@ -1,4 +1,6 @@
 import { isEmpty, GetCurrentCompositionsId } from './../utilities.js'
+import urls from './../api.js'
+const loc = urls.getLocation();
 
 export function setTitleByArtistAndTitle(el) {
     try {

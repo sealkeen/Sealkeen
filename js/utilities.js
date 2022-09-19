@@ -88,20 +88,20 @@ export function safePlay()
     try {
         var playPromise = document.querySelector("#player-audio-element")?.play();
         if (playPromise !== undefined) {
-                playPromise.then(_ => {
+            playPromise.then(_ => {
                 // Automatic playback started!
                 // Show playing UI.
                 // We can now safely pause video...
-                // $("#player-audio-element").pause();
+                console.log('safePlay ok()');
             })
             .catch(error => {
                 // Auto-play was prevented
                 // Show paused UI.
-                console.log('player returned error on play, autoplay prevented.');
+                console.log('safePlay err: player returned error on play, autoplay prevented.');
             });
         }
     } catch(error) {
-        console.log('Player returned exception on try load or play %j', error);
+        console.log('safePlay err: Player returned exception on try load or play %j', error);
     }
 }
 
@@ -118,11 +118,11 @@ export function safeSwitchTrack()
             .catch(error => {
                 // Auto-play was prevented
                 // Show paused UI.
-                console.log('player returned error on LOAD, autoplay prevented.');
+                console.log('safeSwitchTrack() err: player returned error on LOAD, autoplay prevented.');
             });
         }
     } catch(error) {
-        console.log('Player returned exception on try LOAD or PLAY %j', error);
+        console.log('safeSwitchTrack() err: Player returned exception on try LOAD or PLAY %j', error);
     }
 }
 
