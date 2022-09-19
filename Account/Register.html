@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MediaStreamer.WebApplication</title>
-    <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./css/site.css" />
+    <link rel="stylesheet" href="./../lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./../css/site.css" />
     <style>
         .footer {
             position: fixed;
@@ -61,52 +61,45 @@
         </header>
         <div>
             <main id="page-body-container" role="main" class="pb-3">
-                <script type="module" src="./js/signup.js" asp-append-version="true"></script>
-                <div class="text-center">
-                    <h1 class="display-4 stroke-shadow">Welcome</h1>
-                    <p class="stroke-shadow-h3">Learn about building Web apps with ASP.NET Core</a>.</p>
-                </div>
-                <div>
-                    <div class="sign-up-form-container">
-                        <form class="card sign-up-form" id="sign-up-form">
-                            <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                                <a>Create Account</a>
+                <h2 class="stroke-shadow">Register</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form id="__AjaxAntiForgeryForm" onsubmit="return false" referrerpolicy="no-referrer">
+                            <h4 class="stroke-shadow-h3">Create a new account.</h4>
+                            <hr>
+                            <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+                            </ul></div>           
+                            <div class="form-group">
+                                <label for="UserName">UserName</label>
+                                <input class="form-control" type="text" data-val="true" data-val-required="The UserName field is required." id="UserName" name="UserName" value="">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
                             </div>
-                            <div class="form-group sign-up-form-group">
-                                <label>Username</label>
-                                <input class="form-control" type="text" placeholder="enter your username" id="txt-username" />
-                                <small class="form-control-small">Error message</small>
+                            <div class="form-group">
+                                <label for="Email">Email</label>
+                                <input class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Email" name="Email" value="">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
                             </div>
-
-                            <div class="form-group sign-up-form-group">
-                                <label>Email</label>
-                                <input class="form-control" type="email" placeholder="enter your email" id="txt-email" />
-                                <small class="form-control-small">Error message</small>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input class="form-control" type="password" data-val="true" data-val-length="The Password must be at least 6 and at max 100 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="Password" maxlength="100" name="Password">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
                             </div>
-
-                            <div class="form-group sign-up-form-group">
-                                <label>Password</label>
-                                <input class="form-control" type="password" placeholder="password" id="txt-password" />
-                                <small class="form-control-small">Error message</small>
+                            <div class="form-group">
+                                <label for="ConfirmPassword">Confirm password</label>
+                                <input class="form-control" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="ConfirmPassword" name="ConfirmPassword">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
                             </div>
-                            <div class="form-group sign-up-form-group">
-                                <label>Password check</label>
-                                <input class="form-control" type="password" placeholder="password" id="txt-password-check" />
-                                <small class="form-control-small">Error message</small>
-                            </div>
-                            <div class="form-group form-button-group sign-up-form-group">
-                                <button class="btn btn-primary form-control">Sign Up</button>
-                            </div>
-                        </form>
+                            <button id="form-btn-default" class="btn btn-default">Register</button>
+                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HEs8K_x0ONDkDooDQ9Qiu3tWxrh-d8J8XbrJ_MngvovtBdNKofrhgpt402qRUGjK740lN875pLTeptLHMG-qkxwC8nUiiYuD-BnTi7GVcBWMH__idNEGD90lBwHO4l7ajTwGN7mLjYhbEyK2JDFO2c"></form>
                     </div>
                 </div>
             </main>
-            <center>
-                <a class="btm-footer2">
-                    &copy; Sealkeen - 2022 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
-                </a>
-            </center>
         </div>
+        <center>
+            <a class="btm-footer2">
+                © Sealkeen - 2022 - MediaStreamer.WebApplication </a><a asp-area="" asp-page="/Privacy">Privacy</a>
+            
+        </center>
     </div>
     <footer class="footer">
         <div id="player-audio-div">
@@ -118,9 +111,9 @@
         </div>
     </footer>
 
-    <script src="./lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script type="module" src="./js/site.js" asp-append-version="true"></script>
+    <script src="./../lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="./../lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script type="module" src="./../js/site.js" asp-append-version="true"></script>
 </body>
 
 </html>
