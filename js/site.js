@@ -4,9 +4,8 @@
 // Write your Javascript code.
 import urls from './api.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
-import { LogMessageRequest } from './logging.js';
-import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks, sleep, safePlay, safeSwitchTrack } from './utilities.js';
-import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './Account/verification.js'
+import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
+
 import colorHandlers from './StyleHandlers/color-handlers.js'
 import { checkInputs } from './signup.js'
 import { onAjaxLoadError } from './Errors/ajax-errors.js'
@@ -156,21 +155,6 @@ $(document).ready(function () {
     });
 });
 
-export function GetCurrentCompositionsId() { 
-    try {
-        let audioSrc = $("#player-audio-element").get(0).children[0];
-        console.log('GetCurrentCompId = ' + audioSrc.src.substring(audioSrc.src.length - (13 + loc.length)).toString().replace('.io', '').replace('/GetAudio?Id=', ''));
-        if (audioSrc.src === undefined || audioSrc.src === null)
-            return undefined;
-        // cropping [ 'https://localhost:5001/GetAudio?Id=' ]
-        // leaving [ 'f648ef94-bfb7-44a2-82d3-d68bca5a49a8' ]
-        let result = audioSrc.src.substring(audioSrc.src.length - (13 + loc.length).toString()).replace('.io', '').replace('/GetAudio?Id=', '');
-        console.log('GetCurrentCompositionsId(): %j', result);
-        return result;
-    } catch (e) {
-        console.log(e);
-    } 
-}
 
 export function setNextComposition(compId) {
     try {

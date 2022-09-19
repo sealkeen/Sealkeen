@@ -1,4 +1,4 @@
-import { isEmpty } from './../utilities.js'
+import { isEmpty, GetCurrentCompositionsId } from './../utilities.js'
 
 export function setTitleByArtistAndTitle(el) {
     try {
