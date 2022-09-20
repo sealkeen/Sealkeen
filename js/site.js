@@ -34,6 +34,7 @@ $(document).ready(function () {
         displayQueuedTracks(_trackQueue);
     };
     const container = document.querySelector('#page-body-container');
+
     container.onmousedown = () => {
         if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
             $('#ctxmenu').innerHTML = '';
@@ -80,11 +81,11 @@ document.oncontextmenu = function (e) {
         cmiQueueSelected.id = 'ctxmenu-button';
         cmiQueueSelected.innerHTML = "Enqueue";
         menu.id = "ctxmenu"
-        menu.style = `top:${e.pageY - 10}px;left:${e.pageX - 40}px`
+        menu.style = `top:${e.clientY}px;left:${e.clientX}px`
 
         cmiQueueSelected.onclick = () => { _trackQueue.enqueue(getWebEntityObject(e)); };
         menu.onfocusout = () => menu.outerHTML = '';
-        menu.onfocusout = () => menu.outerHTML = ''
+        menu.onmouseleave = () => menu.outerHTML = ''
         menu.innerHTML = '';
         menu.style.opacity = 100;
         menu.appendChild(cmiQueueSelected);
