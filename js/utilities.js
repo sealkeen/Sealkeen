@@ -97,6 +97,7 @@ export function safePlay()
             .catch(error => {
                 // Auto-play was prevented
                 // Show paused UI.
+                (async () => { await sleep(500); safePlay()})();
                 console.log('safePlay err: player returned error on play, autoplay prevented.');
             });
         }
@@ -114,11 +115,12 @@ export function safeSwitchTrack()
         if (playPromise !== undefined) {
             playPromise.then(_ => {
                 console.log('safeLoadOK: safePlaying...');
-                safePlay();
-            })
+
+                safePlay()
+            })  
             .catch(error => {
                 // Auto-play was prevented
-                // Show paused UI.
+                (async () => { await sleep(500); safePlay()})();
                 console.log('safeSwitchTrack() err: player returned error on LOAD, autoplay prevented.');
             });
         }
