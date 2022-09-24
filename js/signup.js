@@ -9,7 +9,7 @@ const email = document.getElementById('Email');
 const password = document.getElementById('Password');
 const passwordCheck = document.getElementById('ConfirmPassword');
 
-button.addEventListener('click', (e) => {
+button?.addEventListener('click', (e) => {
     e.preventDefault();
 
     if(checkInputs())

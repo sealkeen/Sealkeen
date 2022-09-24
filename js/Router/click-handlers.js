@@ -2,6 +2,7 @@ import urls from './../api.js'
 import { LogMessageRequest } from '.././logging.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../Account/verification.js'
 import { checkInputs } from './../signup.js'
+import { CreateDOMFromJSON } from './../Store/mock-data.js'
 
 const loc = urls.getLocation();
 
@@ -133,7 +134,7 @@ export function setCurrentPageMockData()
 export async function setCurrentPageCompositions(event) {
     try {
         event.preventDefault();
-        let ctrl = (loc + 'GetPartialCompositionsPage');
+        let ctrl = (loc + 'GetJSONCompositionsPage');
         if ($("#page-body-container") != undefined) {
             var ftchComps = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -149,15 +150,18 @@ export async function setCurrentPageCompositions(event) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then((response) => {
                 if(response.ok)
-                    return response.text();
+                    return response;
                 else
                     throw new Error('Fetch error.');
             })
-            .then((responseText) => {
+            .then(async (response) => {
+                let data = await response.json();
+                console.log('handling response text');
+                let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)
+                $("#page-body-container").append(trackDom);
+                console.log('%j', trackDom)
+                console.log(trackDom)
             })
             .catch((error) => {
                 setCurrentPageMockData();
