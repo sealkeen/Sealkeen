@@ -1,6 +1,7 @@
 import urls from './../api.js'
 import { getCookie } from './../utilities.js'
 import colorHandlers from './../StyleHandlers/color-handlers.js'
+import { setCurrentPageArtists } from './../Router/click-handlers.js'
 
 export function setLoginAntiForgeryOnClick(e) {
     try {
@@ -12,7 +13,7 @@ export function setLoginAntiForgeryOnClick(e) {
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
         var stLgnAntFrgNClk = 
-        fetch(urls.getLocation() + 'Account/Login', {
+        fetch(urls.getLocation() + 'Account/LoginCors', {
             method: 'POST',
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -32,6 +33,7 @@ export function setLoginAntiForgeryOnClick(e) {
             if(result.ok) {
                 console.log('%j', result)
                 alert('Успешный вход.');
+                setCurrentPageArtists(e);
             } else {
                 alert('Ошибка входа');
             }

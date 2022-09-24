@@ -250,7 +250,7 @@ export async function setCurrentPageGenres(event) {
 
 export async function setCurrentPageArtists(event) {
     try {
-        event.preventDefault();
+        //event.preventDefault();
         let ctrl = (loc + 'GetPartialArtistsPage');
         if ($("#page-body-container") != undefined) {
             var ftchArts = await fetch(ctrl, {

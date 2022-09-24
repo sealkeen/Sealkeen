@@ -17,7 +17,7 @@ button.addEventListener('click', (e) => {
 });
 
 export function checkInputs() {
-    alert('Данный функционал находится на стадии реализации. js ver = 106.12');
+    // alert('Данный функционал находится на стадии реализации. js ver = 106.12');
     // get the values from the inputs
     const usernameValue = username.value.trim();
     const emailValue = email?.value.trim();
@@ -47,6 +47,8 @@ export function checkUsername(value) {
 }
 
 export function checkEmail(mlValue) {
+    if(email == null)
+        return true;
     //alert('email... value is: ' + mlValue);
     if (mlValue === '') { 
         setErrorFor(email, 'Email cannot be blank');
@@ -74,6 +76,8 @@ export function checkPassword(value) {
 }
 
 export function checkPasswordRepeat(origin, repeat) {
+    if(passwordCheck == null)
+        return true;
     //console.log('passwordChk... value is: ' + repeat);
     if (repeat === '') {
         setErrorFor(passwordCheck, 'Password cannot be empty');
