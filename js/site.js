@@ -14,7 +14,9 @@ import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp,
     setCurrentPageCompositions, setCurrentPageAlbums, setCurrentPageGenres, setCurrentPageCompositionByID, setCurrentPageAlbumByID, setCurrentPageRegister, setCurrentPageLogin } 
 from './Router/click-handlers.js'
 import { setTitleByArtistAndTitle, setArtistSongNameAsync } from './Page/event-handlers.js'
+import { getNext } from './Store/mock-data.js';
 
+document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
 document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
 document.querySelector('#nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
 document.querySelector('#nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
@@ -22,7 +24,6 @@ document.querySelector('#nav-lnk-artists')?.addEventListener('click', setCurrent
 document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageRegister);
 document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
 document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
-document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
 document.querySelector('#nav-lnk-background')?.addEventListener('click', colorHandlers.toggleBodyBackground);
 
 const loc = urls.getLocation();
@@ -163,6 +164,12 @@ export function setNextComposition(compId) {
         if (compId === undefined || compId === null)
             return;
         if(compId.includes('docs.google')) {
+            if(_trackQueue.isEmpty()) {
+                console.log('setNextComposition: Query=empty');
+                compId = getNext(compId);
+            } else {
+                console.log('setNextComposition: Query NOT empty');
+            }
             onAjaxSwitchPageError(compId, {}, safeSwitchTrack);
             return;
         }

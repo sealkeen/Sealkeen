@@ -1,5 +1,8 @@
 ﻿import { setArtistSongNameAsync, setTitleByArtistAndTitle } from './Page/event-handlers.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
+import urls from './api.js'
+
+const loc = urls.getLocation();
 
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
@@ -116,7 +119,7 @@ export function safeSwitchTrack()
             playPromise.then(_ => {
                 console.log('safeLoadOK: safePlaying...');
 
-                safePlay()
+                (async () => { await sleep(500); safePlay()})();
             })  
             .catch(error => {
                 // Auto-play was prevented

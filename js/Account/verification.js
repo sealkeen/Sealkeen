@@ -15,49 +15,41 @@ export function setLoginAntiForgeryOnClick() {
         let rememberMe = true;
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
-        $.ajax({
-            url: urls.getLocation() + 'Account/LoginCors',
-            type: 'POST',
-            dataType: 'json',
-            contentType:'text/html',
+        var stLgnAntFrgNClk = fetch(urls.getLocation() + 'Account/LoginCors', {
+            method: 'POST',
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
             },
-            // xhrFields: {
-            //     withCredentials: true
-            // },
-            // crossDomain: true,
-            data: JSON.stringify({
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({
                 'UserName': username ?? "undefined",
                 'Password': password ?? "undefined",
-                __RequestVerificationToken: token,
+                //__RequestVerificationToken: token,
                 'RememberMe': rememberMe
-            }),
-            success: function (result) {
-                console.log('%j', result)
-                alert('Успешный вход.');
-            },
-            error: function (err){
-                try {
-                    //console.log('err: %j', err);
-                    //console.log('err.responseText: %j', $(err.responseText));
-                    
-                    //$.each($(err.responseText), function(i){
-                    var nodes = $(err.responseText).find('#page-body-container')
-                    if(nodes != undefined && Object.entries(nodes).length > 0) {
-                        $("#page-body-container").html('');
-                        $("#page-body-container").append(...nodes);
-                        $("#page-body-container").css("background-color: ", "rgba(255, 255, 255)");
-                        $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
-                        colorHandlers.toggleBodyBackground();
-                    } else {
-                        console.log('ajax response error');
-                    }
-                } catch (e) {
-                    console.log('try-catch-ajax-error' + e);
+            })
+        }).then(result => {
+            console.log('%j', result)
+            alert('Успешный вход.');
+        }).catch(err => {
+            try {
+                var nodes = $(err.responseText).find('#page-body-container')
+                if(nodes != undefined && Object.entries(nodes).length > 0) {
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(...nodes);
+                    $("#page-body-container").css("background-color: ", "rgba(255, 255, 255)");
+                    $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
+                    colorHandlers.toggleBodyBackground();
+                } else {
+                    console.log('ajax response error');
                 }
+            } catch (e) {
+                console.log('try-catch-ajax-error' + e);
             }
-        });
+        })
         return false;
     } catch (e) {
         console.log('%j', e);
@@ -100,10 +92,6 @@ export function setRegisterAntiForgeryOnClick() {
             },
             error: function (err){
                 try {
-                    //console.log('err: %j', err);
-                    //console.log('err.responseText: %j', $(err.responseText));
-                    
-                    //$.each($(err.responseText), function(i){
                     var nodes = $(err.responseText).find('#page-body-container')
                     if(nodes != undefined && Object.entries(nodes).length > 0) {
                         $("#page-body-container").html('');

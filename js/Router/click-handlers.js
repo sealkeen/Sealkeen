@@ -1,32 +1,41 @@
 import urls from './../api.js'
 import { LogMessageRequest } from '.././logging.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../Account/verification.js'
+import { checkInputs } from './../signup.js'
 
 const loc = urls.getLocation();
 
-export function setCurrentPageIndex(event) {
+export async function setCurrentPageIndex(event) {
     try {
         event.preventDefault();
         let ctrl = (urls.loc + 'IndexPartial');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchIndx = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.location = loc;
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                console.log('fetch error. Doing nothing with it.')
             });
         }
     } catch (e) {
@@ -34,29 +43,38 @@ export function setCurrentPageIndex(event) {
     }
 }
 
-export function setCurrentPageManageAccount(event) {
+export async function setCurrentPageManageAccount(event) {
     try {
         event.preventDefault();
         let ctrl = (urls.loc + 'Manage/Index');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchMngAcc = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Manage');
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -64,29 +82,38 @@ export function setCurrentPageManageAccount(event) {
     }
 }
 
-export function setCurrentPageSignUp(event) {
+export async function setCurrentPageSignUp(event) {
     try {
         event.preventDefault();
         let ctrl = (urls.loc + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchSignUp = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/GetPartialSignUpPage');
-                    console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -103,31 +130,38 @@ export function setCurrentPageMockData()
 
 
 // TODO: separate
-export function setCurrentPageCompositions(event) {
+export async function setCurrentPageCompositions(event) {
     try {
         event.preventDefault();
         let ctrl = (loc + 'GetPartialCompositionsPage');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchComps = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/CompositionsPage');
-                    LogMessageRequest('setCurrentPageCompositions(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response); 
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -135,32 +169,39 @@ export function setCurrentPageCompositions(event) {
     }
 }
 
-export function setCurrentPageAlbums(event) {
+export async function setCurrentPageAlbums(event) {
     try {
         event.preventDefault();
         
         let ctrl = (loc + 'GetPartialAlbumsPage');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchAlb = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/AlbumsPage');
-                    console.log('setCurrentPageAlbums(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -168,31 +209,38 @@ export function setCurrentPageAlbums(event) {
     }
 }
 
-export function setCurrentPageGenres(event) {
+export async function setCurrentPageGenres(event) {
     try {
         event.preventDefault();
         let ctrl = (loc + 'GetPartialGenresPage');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchGnrs = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/GenresPage');
-                    console.log('setCurrentPageGenres(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -200,31 +248,38 @@ export function setCurrentPageGenres(event) {
     }
 }
 
-export function setCurrentPageArtists(event) {
+export async function setCurrentPageArtists(event) {
     try {
         event.preventDefault();
         let ctrl = (loc + 'GetPartialArtistsPage');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchArts = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/ArtistsPage');
-                    console.log('setCurrentPageAudio(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -232,7 +287,7 @@ export function setCurrentPageArtists(event) {
     }
 }
 
-export function setCurrentPageCompositionByArtistID(el) {
+export async function setCurrentPageCompositionByArtistID(el) {
     try {
         let id = el;
         if (!event.target.classList.contains('card-body')) {
@@ -246,24 +301,33 @@ export function setCurrentPageCompositionByArtistID(el) {
 
         let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchCmpsById = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    LogMessageRequest('setCurrentPageCompositionByArtistID(el): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -271,7 +335,7 @@ export function setCurrentPageCompositionByArtistID(el) {
     }
 }
 
-export function setCurrentPageCompositionByID(el) {
+export async function setCurrentPageCompositionByID(el) {
     try {
         let id = el;
         if (!event.target.classList.contains('card-body')) {
@@ -285,24 +349,33 @@ export function setCurrentPageCompositionByID(el) {
 
         let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchPartCmpsById = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    LogMessageRequest('setCurrentPageCompositionByID(el): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -310,7 +383,7 @@ export function setCurrentPageCompositionByID(el) {
     }
 }
 
-export function setCurrentPageAlbumByID(el) {
+export async function setCurrentPageAlbumByID(el) {
     try {
         let id = el;
         if (!event.target.classList.contains('card-body')) {
@@ -323,25 +396,33 @@ export function setCurrentPageAlbumByID(el) {
         }
         let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
+            var ftchPartAlbmsById = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    console.log('setCurrentPageAlbumByID(el): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-
-                },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -349,47 +430,54 @@ export function setCurrentPageAlbumByID(el) {
     }
 }
 
-export function setCurrentPageRegister(event) {
+export async function setCurrentPageRegister(event) {
     try {
         event.preventDefault();
         console.log('Loading: ' + loc + 'Account/Register');
         let ctrl = (loc + 'Account/Register');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Register');
-                    // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
-                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
-                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
-                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
-                    $('.btn-default').removeAttr('type');
-                    $('#__AjaxAntiForgeryForm').submit(function (e) {
-                        //e.preventDefault();
-                    });
-                    $('.btn-default').onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
-
-                    const button = document.getElementById('form-btn-default');
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        if(checkInputs()) setRegisterAntiForgeryOnClick();
-                    });
-                    //let btn = document.createElement("button");
-                    //btn.id = 'btn-submit-onclick';
-                    //btn.className = 'btn btn-primary form-control';
-                    //btn.onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
-                    //document.body.appendChild(btn);
+            var ftchPartRegister = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)                    
+                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
+                $('#__AjaxAntiForgeryForm').removeAttr('method');                    
+                $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
+                $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
+                $('.btn-default').removeAttr('type');
+                $('#__AjaxAntiForgeryForm').submit(function (e) {
+                    //e.preventDefault();
+                });
+                $('.btn-default').onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
+
+                const button = document.getElementById('form-btn-default');
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if(checkInputs()) setRegisterAntiForgeryOnClick();
+                });
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
@@ -397,42 +485,48 @@ export function setCurrentPageRegister(event) {
     }
 }
 
-export function setCurrentPageLogin(event) {
+export async function setCurrentPageLogin(event) {
     try {
         event.preventDefault();
         console.log('Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + 'Account/Login');
         if ($("#page-body-container") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                /*data: ("_ViewPlayer=" + source),*/
-                success: function (response) {
-                    //window.history.pushState(null, null, '/Sealkeen/Identity/Account/Login');
-                    // console.log('setCurrentPageSignUp(): Ajax returned key count: ' + Object.keys(response).length);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(response);
-                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
-                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
-                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
-                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
-                    $('.btn-default').removeAttr('type');
-                    $('#__AjaxAntiForgeryForm').submit(function (e) {
-                        setLoginAntiForgeryOnClick(e)
-                    });
-                    $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
-
-                    //let btn = document.createElement("button");
-                    //btn.id = 'btn-submit-onclick';
-                    //btn.className = 'btn btn-primary form-control';
-                    //btn.onclick = (e) => {setLoginAntiForgeryOnClick(e)}
-                    //document.body.appendChild(btn);
+            var ftchPartLgn = await fetch(ctrl, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                error: function (error_) {
-                    setCurrentPageMockData();
-                    console.log("Ajax error: " + error_);
-                }
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((response) => {
+                if(response.ok)
+                    return response.text();
+                else
+                    throw new Error('Fetch error.');
+            })
+            .then((responseText) => {
+                $("#page-body-container").html('');
+                $("#page-body-container").append(responseText);
+                console.log('%j', responseText)
+                console.log(responseText)                    
+                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
+                $('#__AjaxAntiForgeryForm').removeAttr('method');                    
+                $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
+                $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
+                $('.btn-default').removeAttr('type');
+                $('#__AjaxAntiForgeryForm').submit(function (e) {
+                    setLoginAntiForgeryOnClick(e)
+                });
+                $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                console.log('fetch error. Setting up mock data.')
             });
         }
     } catch (e) {
