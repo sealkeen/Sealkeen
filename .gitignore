@@ -34,6 +34,7 @@ package-lock.json
 *.v2
 =======
 *.[Vv]2
+.vscode
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

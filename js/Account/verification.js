@@ -2,7 +2,7 @@ import urls from './../api.js'
 import { getCookie } from './../utilities.js'
 import colorHandlers from './../StyleHandlers/color-handlers.js'
 
-export function setLoginAntiForgeryOnClick() {
+export function setLoginAntiForgeryOnClick(e) {
     try {
         //let c = getCookie('.AspNetCore.Antiforgery');
         //console.log('%j', c);
@@ -28,12 +28,16 @@ export function setLoginAntiForgeryOnClick() {
             body: JSON.stringify({
                 'UserName': username ?? "undefined",
                 'Password': password ?? "undefined",
-                //__RequestVerificationToken: token,
+                __RequestVerificationToken: token,
                 'RememberMe': rememberMe
             })
         }).then(result => {
-            console.log('%j', result)
-            alert('Успешный вход.');
+            if(result.ok) {
+                console.log('%j', result)
+                alert('Успешный вход.');
+            } else {
+                alert('Ошибка входа');
+            }
         }).catch(err => {
             try {
                 var nodes = $(err.responseText).find('#page-body-container')
@@ -75,10 +79,10 @@ export function setRegisterAntiForgeryOnClick() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            // xhrFields: {
-            //     withCredentials: true
-            // },
-            // crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
             data: JSON.stringify({ 
                 'UserName': username ?? "undefined",
                 'Email': email ?? "undefined",

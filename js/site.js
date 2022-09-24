@@ -62,8 +62,8 @@ $(document).ready(function () {
             setCurrentPageCompositionByArtistID(e.target);
         }
         if (target.classList.contains('btn-default')) {
-            $('.btn-default').onclick = (e) => { e.preventDefault(); };
-            urls.getInDevelopmentMessage();
+            //$('.btn-default').onclick = (e) => { e.preventDefault(); };
+            //urls.getInDevelopmentMessage();
         }
     });
 });
