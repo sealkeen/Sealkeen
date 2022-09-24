@@ -20,12 +20,12 @@ export function checkInputs() {
     alert('Данный функционал находится на стадии реализации. js ver = 106.12');
     // get the values from the inputs
     const usernameValue = username.value.trim();
-    const emailValue = email.value.trim();
+    const emailValue = email?.value.trim();
     const passwordValue = password.value.trim();
-    const passwordCheckValue = passwordCheck.value.trim();
+    const passwordCheckValue = passwordCheck?.value.trim();
 
-    if( checkUsername(usernameValue) && checkEmail(emailValue) &&
-        checkPassword(passwordValue) && checkPasswordRepeat(passwordValue, passwordCheckValue) 
+    if( checkUsername(usernameValue) && checkPassword(passwordValue) 
+        && checkEmail(emailValue) &&checkPasswordRepeat(passwordValue, passwordCheckValue) 
     ) {
         LogMessageRequest('Ok, all is fine. JS Returned');
         return true;
@@ -89,8 +89,15 @@ export function checkPasswordRepeat(origin, repeat) {
 }
 
 export function setErrorFor(input, message) {
-    const group = input.parentElement;
-    const small = group.querySelector('small');
+    if(input == undefined)
+        return
+    let group = input.parentElement;
+    let small = group.querySelector('small')
+    console.log('err, small: %j', small)
+    if(small == undefined) {
+        small = document.createElement('small');
+        group.appendChild(small);
+    }
     small.innerText = message; // add error message inside small
     small.className = 'form-control-small.error';
     input.className = 'form-control form-control-error';
@@ -98,8 +105,15 @@ export function setErrorFor(input, message) {
 }
 
 export function setSuccessFor(input) {
-    const group = input.parentElement; // .form-control
-    const small = group.querySelector('small');
+    if(input == undefined)
+        return
+    let group = input.parentElement; // .form-control
+    let small = group.querySelector('small')
+    console.log('suc, small: %j', small)
+    if(small == undefined) {
+        small = document.createElement('small');
+        group.appendChild(small);
+    }
     input.className = 'form-control form-control-success';
     small.className = 'form-control-small';
 }

@@ -4,10 +4,6 @@ import colorHandlers from './../StyleHandlers/color-handlers.js'
 
 export function setLoginAntiForgeryOnClick(e) {
     try {
-        //let c = getCookie('.AspNetCore.Antiforgery');
-        //console.log('%j', c);
-        //console.log(c);
-
         $('#__AjaxAntiForgeryForm').removeAttr('action');
         let username = $('#UserName').val();
         console.log('Username: ' + username);
@@ -15,7 +11,8 @@ export function setLoginAntiForgeryOnClick(e) {
         let rememberMe = true;
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
-        var stLgnAntFrgNClk = fetch(urls.getLocation() + 'Account/LoginCors', {
+        var stLgnAntFrgNClk = 
+        fetch(urls.getLocation() + 'Account/Login', {
             method: 'POST',
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -40,7 +37,7 @@ export function setLoginAntiForgeryOnClick(e) {
             }
         }).catch(err => {
             try {
-                var nodes = $(err.responseText).find('#page-body-container')
+                var nodes = $(err.text()/*responseText*/).find('#page-body-container')
                 if(nodes != undefined && Object.entries(nodes).length > 0) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(...nodes);

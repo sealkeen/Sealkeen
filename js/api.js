@@ -34,3 +34,24 @@ const urls = {
             return 'https://1d80-37-144-214-133.eu.ngrok.io/'
     }
 }
+
+// if-url-exist.js v1
+export function ifUrlExist(url, callback) {
+    let request = new XMLHttpRequest;
+    request.open('GET', url, true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.setRequestHeader('Accept', '*/*');
+    request.onprogress = function(event) {
+        let status = event.target.status;
+        let statusFirstNumber = (status).toString()[0];
+        switch (statusFirstNumber) {
+            case '2':
+                request.abort();
+                return callback(true);
+            default:
+                request.abort();
+                return callback(false);
+        };
+    };
+    request.send('');
+};
