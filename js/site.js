@@ -8,6 +8,7 @@ import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject,
     displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
 
 import colorHandlers from './StyleHandlers/color-handlers.js'
+import { closeNav, openNav } from './StyleHandlers/side-nav-handlers.js'
 import { checkInputs } from './signup.js'
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
 import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp, setCurrentPageArtists, setCurrentPageCompositionByArtistID, setCurrentPageMockData, 
@@ -68,7 +69,6 @@ $(document).ready(function () {
     });
 });
 
-
 document.oncontextmenu = function (e) {
     let target = e.target;
     if (containsClasses(target, 'card-text', 'card-title')) {
@@ -122,42 +122,6 @@ export function bindPlayerButtons() {
         setNextComposition(id);
     });
 }
-
-$(document).ready(function () {
-    bindPlayerButtons();
-    //addButtonOnClickHandlers();
-    _trackQueue.onchange = () => {
-        displayQueuedTracks(_trackQueue);
-    };
-    const container = document.querySelector('#page-body-container');
-    container.onmousedown = () => {
-        if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
-            $('#ctxmenu').innerHTML = '';
-        }
-    }
-
-    container.addEventListener('click', function (e) {
-        // But only alert for elements that have an alert-button class
-        //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
-        let target = e.target;
-        if (containsClasses(target, 'card-text', 'card-title')) {
-            target = e.target.parentNode;
-        }
-        if (target.classList.contains('card-body-composition')) {
-            setFooterPlayerSourse(e.target)
-        }
-        if (target.classList.contains('album-card-div')) {
-            setCurrentPageCompositionByID(e.target);
-        }
-        if (target.classList.contains('genre-card-div')) {
-            setCurrentPageAlbumByID(e.target);
-        }
-        if (target.classList.contains('artist-card-div')) {
-            setCurrentPageCompositionByArtistID(e.target);
-        }
-    });
-});
-
 
 export function setNextComposition(compId) {
     try {

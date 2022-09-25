@@ -17,7 +17,7 @@ export function setTitleByArtistAndTitle(el) {
         if (!isEmpty(artist) && !isEmpty(song)) {
             document.title = `${artist} – ${song}`;
             $(".track-artist-song-name").html('');
-            $(".track-artist-song-name").append(response);
+            $(".track-artist-song-name").append(`${artist} – ${song}`);
         }
     } catch (e) {
         console.log(e);

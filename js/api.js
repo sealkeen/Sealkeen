@@ -1,10 +1,12 @@
-export default {
+const urls = {
     loc: 'https://ead6-37-144-214-108.eu.ngrok.io/',
     getLocation() {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
             return 'http://localhost:8080/'
-        } else 
+        } else if(!(window.location.href.indexOf("localhost:500") > -1))
+            return `${location.protocol}//${location.host}/`;
+        else
             return 'https://ead6-37-144-214-108.eu.ngrok.io/'
     },
     getPostfix() {
@@ -21,24 +23,7 @@ export default {
     {
         return (window.location.href.indexOf("github.io") > -1);
     }
-}
-
-const urls = {
-    loc: 'https://ead6-37-144-214-108.eu.ngrok.io/',
-    getLocation() {
-        if (!(window.location.href.indexOf("github.io") > -1))
-        {
-            return 'http://localhost:8080/'
-        } else 
-            return 'https://ead6-37-144-214-108.eu.ngrok.io/'
-    },
-    getPostfix() {
-        if (window.location.href.indexOf("github.io") > -1)
-            return 'Sealkeen/'
-        else
-            return ''
-    }
-}
+}; export default urls;
 
 // if-url-exist.js v1
 export function ifUrlExist(url, callback) {

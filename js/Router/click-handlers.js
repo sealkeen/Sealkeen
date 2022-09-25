@@ -35,7 +35,7 @@ export async function setCurrentPageIndex(event) {
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
                 console.log(responseText)
-                pushHistoryState(urls.getPostfix() + 'Index/');
+                pushHistoryState(urls.getPostfix());
             })
             .catch((error) => {
                 console.log('fetch error. Doing nothing with it.')
@@ -114,7 +114,7 @@ export async function setCurrentPageSignUp(event) {
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
                 console.log(responseText);
-                pushHistoryState('SignUp/');
+                pushHistoryState('GetHtmlSignUpPage/');
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -163,7 +163,7 @@ export async function setCurrentPageCompositions(event) {
                 let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(trackDom);
-                pushHistoryState('Compositions/');
+                pushHistoryState('GetHTMLCompositionsPage/');
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -202,7 +202,7 @@ export async function setCurrentPageAlbums(event) {
                 let data = await response.json();
                 console.log('handling response text');
                 let albumsDom = CreateAlbumsDOMFromJSON(data);
-                pushHistoryState('Albums/');
+                pushHistoryState('GetHTMLAlbumsPage/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(albumsDom);
                 console.log('%j', albumsDom)
@@ -241,10 +241,10 @@ export async function setCurrentPageGenres(event) {
                 else
                     throw new Error('Fetch error.');
             }).then(async (response) => {
+                pushHistoryState('GetHTMLGenresPage/');
                 let data = await response.json();
                 console.log('handling response text');
                 let genresDom = CreateGenresDOMFromJSON(data);
-                pushHistoryState('Genres/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(genresDom);
                 console.log('%j', genresDom)
@@ -283,10 +283,10 @@ export async function setCurrentPageArtists(event) {
                 else
                     throw new Error('Fetch error.');
             }).then(async (response) => {
+                pushHistoryState('GetHTMLArtistsPage/');
                 let data = await response.json();
                 console.log('handling response text');
                 let artistsDom = CreateArtistsDOMFromJSON(data);
-                pushHistoryState('Artists/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(artistsDom);
                 console.log('%j', artistsDom)
@@ -335,7 +335,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                pushHistoryState('CompositionByArtistId/');
+                pushHistoryState('GetPartialCompositionPageByArtistID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
@@ -384,7 +384,7 @@ export async function setCurrentPageCompositionByID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                pushHistoryState('CompositionById/');
+                pushHistoryState('GetPartialCompositionPageByID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
@@ -432,7 +432,7 @@ export async function setCurrentPageAlbumByID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                pushHistoryState('AlbumById/');
+                pushHistoryState('GetPartialAlbumPageByID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
@@ -473,7 +473,7 @@ export async function setCurrentPageRegister(event) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                pushHistoryState('Register/');
+                pushHistoryState('Account/Register/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)

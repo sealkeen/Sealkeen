@@ -21,7 +21,16 @@
 </head>
 <body class="body">
     <div id="top-page-container">
+        <div class="side-hover-bar right-hover-bar"></div>  
+        <div class="side-hover-bar left-hover-bar"></div> 
         <header>
+            <div id="mySidenav" class="sidenav" style="width: 0px;">
+                <a href="javascript:void(0)" class="closebtn">×</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Clients</a>
+                <a href="#">Contact</a>
+            </div>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <a id="navbar-logo-title" class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,14 +124,23 @@
     </div>
     <footer class="footer">
         <div id="player-audio-div">
+            <span class="openNavSpan">&#9776;</span>
             <div class="track-artist-song-name">Unknown – null</div>
             <audio id="player-audio-element" controls="controls" height="80" width="100%" autoplay>
                 <source id="player-source-element" src="" type="audio/mp3">
             </audio>
-            <button class="footer-next-track-btn">next</button>
+            <span class="openRightNavSpan">&#9776;</span>
         </div>
     </footer>
 
+    <div id="bottomRightNav" class="sidenav bottom-right-nav" style="width: 0px;">
+        <a href="javascript:void(0)" class="closeRightNavBtn">×</a>
+        <a href="#" class="footer-next-track-btn">Next</button>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
     <script src="./lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script type="module" src="./js/site.js" asp-append-version="true"></script>
