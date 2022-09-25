@@ -22,6 +22,10 @@ const urls = {
     isGithub()
     {
         return (window.location.href.indexOf("github.io") > -1);
+    },
+    isLocalhost()
+    {
+        return (window.location.href.indexOf('localhost:') > -1);
     }
 }; export default urls;
 
@@ -46,10 +50,11 @@ export function ifUrlExist(url, callback) {
     request.send('');
 };
 
-
 export async function pushHistoryState(url)
 {
     try {
+        if(urls.isGithub() || urls.isLocalhost())
+            return;
         console.log('History state URL:' + url);
         console.log('prevstate not null');
         let loc = `${location.protocol}//${location.host}/`;
