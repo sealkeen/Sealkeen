@@ -246,6 +246,7 @@ export async function setCurrentPageGenres(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
+        document.getElementsByClassName("container")[0].style.opacity = 0;
         let ctrl = (loc + 'GetJSONGenresPage');
         if ($("#page-body-container") != undefined) {
             var ftchGnrs = await fetch(ctrl, {
@@ -286,6 +287,7 @@ export async function setCurrentPageGenres(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
+        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 

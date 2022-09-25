@@ -24,6 +24,15 @@ document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurren
 document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
 document.querySelector('#nav-lnk-background')?.addEventListener('click', colorHandlers.toggleBodyBackground);
 
+document.querySelector('.nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
+document.querySelector('.nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
+document.querySelector('.nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
+document.querySelector('.nav-lnk-artists')?.addEventListener('click', setCurrentPageArtists);
+document.querySelector('.nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
+document.querySelector('.nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
+document.querySelector('.nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
+document.querySelector('.nav-lnk-background')?.addEventListener('click', colorHandlers.toggleBodyBackground);
+
 const loc = urls.getLocation();
 
 $(document).ready(function () {
