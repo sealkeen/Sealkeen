@@ -2,7 +2,7 @@ import urls from './../api.js'
 import { LogMessageRequest } from '.././logging.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../Account/verification.js'
 import { checkInputs } from './../signup.js'
-import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON } from './../Store/mock-data.js'
+import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, CreateGenresDOMFromJSON } from './../Store/mock-data.js'
 
 const loc = urls.getLocation();
 
@@ -217,7 +217,7 @@ export async function setCurrentPageAlbums(event) {
 export async function setCurrentPageGenres(event) {
     try {
         event.preventDefault();
-        let ctrl = (loc + 'GetPartialGenresPage');
+        let ctrl = (loc + 'GetJSONGenresPage');
         if ($("#page-body-container") != undefined) {
             var ftchGnrs = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -233,15 +233,17 @@ export async function setCurrentPageGenres(event) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then((response) => {
                 if(response.ok)
-                    return response.text();
+                    return response;
                 else
                     throw new Error('Fetch error.');
-            })
-            .then((responseText) => {
+            }).then(async (response) => {
+                let data = await response.json();
+                console.log('handling response text');
+                let genresDom = CreateGenresDOMFromJSON(data);
                 $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)
+                $("#page-body-container").append(genresDom);
+                console.log('%j', genresDom)
+                console.log(genresDom)
             })
             .catch((error) => {
                 setCurrentPageMockData();

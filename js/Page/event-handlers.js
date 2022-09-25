@@ -14,8 +14,11 @@ export function setTitleByArtistAndTitle(el) {
         artist = songInfo.querySelector('.card-title')?.firstChild?.nodeValue;
         song = songInfo.querySelector('.card-text')?.firstChild?.nodeValue;
 
-        if (!isEmpty(artist) && !isEmpty(song))
+        if (!isEmpty(artist) && !isEmpty(song)) {
             document.title = `${artist} – ${song}`;
+            $(".track-artist-song-name").html('');
+            $(".track-artist-song-name").append(response);
+        }
     } catch (e) {
         console.log(e);
     } 
@@ -42,6 +45,7 @@ export function setArtistSongNameAsync() {
                 document.title = (response);
             },
             error: function (error_) {
+
                 console.log("Ajax error: " + error_);
             }
         });

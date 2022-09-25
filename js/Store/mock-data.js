@@ -41,7 +41,7 @@ export function CreateDOMFromJSON(jsonSource) {
 }
 
 export function CreateArtistsDOMFromJSON(jsonSource) {
-    console.log('jsonSource: %j', jsonSource);
+    //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
     let cardcolumns = document.createElement("div")
     cardcolumns.className = 'card-columns';
@@ -61,7 +61,7 @@ export function CreateArtistsDOMFromJSON(jsonSource) {
         let h6 = document.createElement("h6")
 
         card.className = 'card';
-        art.className = 'card-body card-body-artist';
+        art.className = 'card-body artist-card-div';
         data.setAttribute("value", element.id);
         h6.innerHTML = element.name;
         h6.className = 'card-title';
@@ -77,7 +77,7 @@ export function CreateArtistsDOMFromJSON(jsonSource) {
 }
 
 export function CreateAlbumsDOMFromJSON(jsonSource) {
-    console.log('jsonSource: %j', jsonSource);
+    //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
     let cardcolumns = document.createElement("div")
     cardcolumns.className = 'card-columns';
@@ -97,7 +97,43 @@ export function CreateAlbumsDOMFromJSON(jsonSource) {
         let h6 = document.createElement("h6")
 
         card.className = 'card';
-        alb.className = 'card-body card-body-album';
+        alb.className = 'card-body album-card-div';
+        data.setAttribute("value", element.id);
+        h6.innerHTML = element.name;
+        h6.className = 'card-title';
+
+        alb.appendChild(data);
+        alb.appendChild(h6);
+        card.appendChild(alb);
+        cardcolumns.appendChild(card);
+    });
+
+    center.appendChild(cardcolumns);
+    return center;
+}
+
+export function CreateGenresDOMFromJSON(jsonSource) {
+    //console.log('jsonSource: %j', jsonSource);
+    let center = document.createElement('center');
+    let cardcolumns = document.createElement("div")
+    cardcolumns.className = 'card-columns';
+
+    let textcenter = document.createElement('div');
+    let display4 = document.createElement('h3');
+    textcenter.className = 'text-center';
+    display4.className = 'display-4 stroke-shadow';
+    display4.innerHTML = ('Count of Genres: ' + jsonSource?.length);
+    textcenter.appendChild(display4);
+    center.appendChild(textcenter);
+
+    jsonSource.forEach(element => {
+        let card = document.createElement("div")
+        let alb = document.createElement("div")
+        let data = document.createElement("data")
+        let h6 = document.createElement("h6")
+
+        card.className = 'card';
+        alb.className = 'card-body genre-card-div';
         data.setAttribute("value", element.id);
         h6.innerHTML = element.name;
         h6.className = 'card-title';

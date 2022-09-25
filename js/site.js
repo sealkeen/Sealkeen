@@ -198,7 +198,7 @@ export function setNextComposition(compId) {
                     bindPlayerButtons();
                     setArtistSongNameAsync();
                     displayQueuedTracks(_trackQueue);
-
+                    //setTitleByArtistAndTitle(el);
                     plr.onended = function () {
                         console.log('id is :' + id);
                         let id = GetCurrentCompositionsId() ?? compId;
@@ -206,6 +206,7 @@ export function setNextComposition(compId) {
                     };
                 },
                 error: async function (error_) {
+                    document.title = 'Media.Web';
                     onAjaxSwitchPageError(compId, error_, safeSwitchTrack);
                 }
             });
@@ -250,6 +251,7 @@ export async function setFooterPlayerSourse(el)
                     };
                 },
                 error: async function (error_) {
+                    document.title = 'Media.Web';
                     onAjaxLoadError(source, error_, safePlay);
                 }
             });
