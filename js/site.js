@@ -1,7 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your Javascript code.
+﻿import { setSidebarInputVolumeOnChange } from './Utils/Audio.js'
 import urls from './api.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
@@ -70,6 +67,7 @@ $(document).ready(function () {
             //urls.getInDevelopmentMessage();
         }
     });
+    setSidebarInputVolumeOnChange();
 });
 
 document.oncontextmenu = function (e) {
@@ -173,6 +171,7 @@ export function setNextComposition(compId) {
                     bindPlayerButtons();
                     setArtistSongNameAsync();
                     displayQueuedTracks(_trackQueue);
+                    setSidebarInputVolumeOnChange();
                     //setTitleByArtistAndTitle(el);
                     plr.onended = function () {
                         let id = GetCurrentCompositionsId() ?? compId;
@@ -218,8 +217,8 @@ export async function setFooterPlayerSourse(el)
                     let plr = $("#player-audio-element").get(0);
                     plr.play();
                     bindPlayerButtons();
-
                     displayQueuedTracks(_trackQueue);
+                    setSidebarInputVolumeOnChange(plr[0]);
                     plr.onended = function () {
                         console.log('Calling get next composition from ID: ', source);
                         setNextComposition(source);
