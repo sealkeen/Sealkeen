@@ -1,11 +1,11 @@
 export default {
-    loc: 'https://1d80-37-144-214-133.eu.ngrok.io/',
+    loc: 'https://ead6-37-144-214-108.eu.ngrok.io',
     getLocation() {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
             return 'http://localhost:8080/'
         } else 
-            return 'https://1d80-37-144-214-133.eu.ngrok.io/'
+            return 'https://ead6-37-144-214-108.eu.ngrok.io'
     },
     getPostfix() {
         if (!(window.location.href.indexOf("github.io") > -1))
@@ -25,13 +25,13 @@ export default {
 }
 
 const urls = {
-    loc: 'https://1d80-37-144-214-133.eu.ngrok.io/',
+    loc: 'https://ead6-37-144-214-108.eu.ngrok.io',
     getLocation() {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
             return 'http://localhost:8080/'
         } else 
-            return 'https://1d80-37-144-214-133.eu.ngrok.io/'
+            return 'https://ead6-37-144-214-108.eu.ngrok.io'
     }
 }
 
