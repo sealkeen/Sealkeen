@@ -23,14 +23,14 @@
     <div id="top-page-container">
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
+                <a id="navbar-logo-title" class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li id="nav-lnk-artists" class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Artists" asp-action="ArtistsPage">Artists</a>
+                            <a class="nav-link text-dark">Artists</a>
                         </li>
                         <li id="nav-lnk-compositions" class="nav-item">
                             <a class="nav-link text-dark" >Home</a>
@@ -50,7 +50,7 @@
                     </ul>
                     <ul class="navbar-nav">
                         <li id="nav-lnk-register" class="nav-item">
-                            <a id="btn-identity-account-register" class="nav-link text-dark" href="/Identity/Account/Register">Register</a>
+                            <a id="btn-identity-account-register" class="nav-link text-dark">Register</a>
                         </li>
                         <li id="nav-lnk-login" class="nav-item">
                             <a id="btn-identity-account-login" class="nav-link text-dark">Login</a>
@@ -59,7 +59,7 @@
                 </div>
             </nav>
         </header>
-        <div>
+        <div class="container">
             <main id="page-body-container" role="main" class="pb-3">
                 <h2 class="stroke-shadow">Log in</h2>
                 <div class="row">
@@ -93,13 +93,15 @@
                                 </div>
                                 <div class="form-group">
                                     <p>
-                                        <a href="/Account/ForgotPassword">Forgot your password?</a>
+                                        <a href="/Sealkeen/Account/ForgotPassword">Forgot your password?</a>
                                     </p>
                                     <p>
-                                        <a href="/Account/Register">Register as a new user?</a>
+                                        <a href="/Sealkeen/Account/Register">Register as a new user?</a>
                                     </p>
                                 </div>
-                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HEs8K_x0ONDkDooDQ9Qiu08Qf7NeLW4kOqldlLcBlmn88FeruEO30oM_au9J4yt-C_lvDjAMgccnqUrDLB2-g2uUuzcuoAoUR6hBO5LNJIr0ASfliC90Xe8pWxd4ezZiSk2WYRnMRcOwr0rX74Q89U"><input name="RememberMe" type="hidden" value="false"></form>
+                                <input name="__RequestVerificationToken" type="hidden">
+                                <input name="RememberMe" type="hidden" value="false">
+                            </form>
                         </section>
                     </div>
                 </div>
@@ -114,16 +116,16 @@
     <footer class="footer">
         <div id="player-audio-div">
             <div class="track-artist-song-name">Unknown – null</div>
-            <audio id="player-audio-element" controls="controls" height="80" width="100%">
+            <audio id="player-audio-element" controls="controls" height="80" width="100%" autoplay>
                 <source id="player-source-element" src="" type="audio/mp3">
             </audio>
             <button class="footer-next-track-btn">next</button>
         </div>
     </footer>
 
-    <script src="./../lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="./../lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script type="module" src="./../js/site.js" asp-append-version="true"></script>
+    <script src="./lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script type="module" src="./js/site.js" asp-append-version="true"></script>
 </body>
 
 </html>

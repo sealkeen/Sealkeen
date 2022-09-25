@@ -23,14 +23,14 @@
     <div id="top-page-container">
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
+                <a id="navbar-logo-title" class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li id="nav-lnk-artists" class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Artists" asp-action="ArtistsPage">Artists</a>
+                            <a class="nav-link text-dark">Artists</a>
                         </li>
                         <li id="nav-lnk-compositions" class="nav-item">
                             <a class="nav-link text-dark" >Home</a>
@@ -50,7 +50,7 @@
                     </ul>
                     <ul class="navbar-nav">
                         <li id="nav-lnk-register" class="nav-item">
-                            <a id="btn-identity-account-register" class="nav-link text-dark" href="/Identity/Account/Register">Register</a>
+                            <a id="btn-identity-account-register" class="nav-link text-dark">Register</a>
                         </li>
                         <li id="nav-lnk-login" class="nav-item">
                             <a id="btn-identity-account-login" class="nav-link text-dark">Login</a>
@@ -59,11 +59,12 @@
                 </div>
             </nav>
         </header>
-        <div>
+        <div class="container">
             <main id="page-body-container" role="main" class="pb-3">
-                <h2 class="stroke-shadow">Register</h2>
+                <h2 class="stroke-shadow">Log in</h2>
                 <div class="row">
                     <div class="col-md-4">
+                    <section>
                         <form id="__AjaxAntiForgeryForm" onsubmit="return false" referrerpolicy="no-referrer">
                             <h4 class="stroke-shadow-h3">Create a new account.</h4>
                             <hr>
@@ -90,30 +91,32 @@
                                 <span class="text-danger field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
                             </div>
                             <button id="form-btn-default" class="btn btn-default">Register</button>
-                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HEs8K_x0ONDkDooDQ9Qiu3tWxrh-d8J8XbrJ_MngvovtBdNKofrhgpt402qRUGjK740lN875pLTeptLHMG-qkxwC8nUiiYuD-BnTi7GVcBWMH__idNEGD90lBwHO4l7ajTwGN7mLjYhbEyK2JDFO2c"></form>
-                    </div>
+                        <input name="__RequestVerificationToken" type="hidden">
+                        </form>
+                    </section>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
         <center>
             <a class="btm-footer2">
-                © Sealkeen - 2022 - MediaStreamer.WebApplication </a><a asp-area="" asp-page="/Privacy">Privacy</a>
-            
+                &copy; Sealkeen - 2022 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </a>
         </center>
     </div>
-    <footer class="footer">
-        <div id="player-audio-div">
-            <div class="track-artist-song-name">Unknown – null</div>
-            <audio id="player-audio-element" controls="controls" height="80" width="100%">
-                <source id="player-source-element" src="" type="audio/mp3">
-            </audio>
-            <button class="footer-next-track-btn">next</button>
-        </div>
-    </footer>
+</div>
+<footer class="footer">
+    <div id="player-audio-div">
+        <div class="track-artist-song-name">Unknown – null</div>
+        <audio id="player-audio-element" controls="controls" height="80" width="100%" autoplay>
+            <source id="player-source-element" src="" type="audio/mp3">
+        </audio>
+        <button class="footer-next-track-btn">next</button>
+    </div>
+</footer>
 
-    <script src="./../lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="./../lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script type="module" src="./../js/site.js" asp-append-version="true"></script>
+<script src="./lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+<script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+<script type="module" src="./js/site.js" asp-append-version="true"></script>
 </body>
 
 </html>

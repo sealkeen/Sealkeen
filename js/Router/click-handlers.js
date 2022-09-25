@@ -159,8 +159,6 @@ export async function setCurrentPageCompositions(event) {
                 let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(trackDom);
-                //console.log('%j', trackDom)
-                //console.log(trackDom)
             })
             .catch((error) => {
                 setCurrentPageMockData();

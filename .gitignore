@@ -7,6 +7,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# stashes
+Sealkeen
+
 # backup
 _Controller
 
