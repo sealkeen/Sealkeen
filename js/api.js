@@ -4,7 +4,7 @@ const urls = {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
             return 'http://localhost:8080/'
-        } else if(!(window.location.href.indexOf("localhost:500") > -1))
+        } else if((window.location.href.indexOf("localhost:500") > -1))
             return `${location.protocol}//${location.host}/`;
         else
             return 'https://ead6-37-144-214-108.eu.ngrok.io/'
