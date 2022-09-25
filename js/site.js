@@ -35,7 +35,7 @@ $(document).ready(function () {
     _trackQueue.onchange = () => {
         displayQueuedTracks(_trackQueue);
     };
-    const container = document.querySelector('#page-body-container');
+    const container = document.querySelector('.body');
 
     container.onmousedown = () => {
         if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
@@ -52,6 +52,9 @@ $(document).ready(function () {
         }
         if (target.classList.contains('card-body-composition')) {
             setFooterPlayerSourse(e.target)
+            if (e.which === 3) {/* Right Mouse Click */
+                //onCompositionRightMouseDown(); 
+            }
         }
         if (target.classList.contains('album-card-div')) {
             setCurrentPageCompositionByID(e.target);
@@ -77,12 +80,21 @@ document.oncontextmenu = function (e) {
 
     if (target.classList.contains('card-body-composition')) {
         e.preventDefault();
+        onCompositionRightMouseDown(e);
+    }
+    if (target.classList.contains('album-card-div')) { }
+    if (target.classList.contains('genre-card-div')) { }
+    if (target.classList.contains('artist-card-div')) { }
+}
+
+export function onCompositionRightMouseDown(e) {
+    try {
         let menu = document.createElement("div")
         let cmiQueueSelected = document.createElement("p")
         cmiQueueSelected.id = 'ctxmenu-button';
         cmiQueueSelected.innerHTML = "Enqueue";
         menu.id = "ctxmenu"
-        menu.style = `top:${e.clientY}px;left:${e.clientX}px`
+        menu.style = `top:${e.pageY - 15}px;left:${e.pageX - 15}px`
 
         cmiQueueSelected.onclick = () => { _trackQueue.enqueue(getWebEntityObject(e)); };
         menu.onfocusout = () => menu.outerHTML = '';
@@ -93,16 +105,15 @@ document.oncontextmenu = function (e) {
 
         setTimeout(() => {
             menu.style.opacity = 0;
-        }, this.animationDelay + 120); 
+        }, 1500); 
         
         document.body.appendChild(menu);
         var timeout = setTimeout(function () {
             $('#ctxmenu').remove();
-        }, 2500);
+        }, 4500);
+    } catch (err) {
+        console.log(err)
     }
-    if (target.classList.contains('album-card-div')) { }
-    if (target.classList.contains('genre-card-div')) { }
-    if (target.classList.contains('artist-card-div')) { }
 }
 
 export function bindPlayerButtons() {
@@ -164,8 +175,8 @@ export function setNextComposition(compId) {
                     displayQueuedTracks(_trackQueue);
                     //setTitleByArtistAndTitle(el);
                     plr.onended = function () {
-                        console.log('id is :' + id);
                         let id = GetCurrentCompositionsId() ?? compId;
+                        console.log('id is :' + id);
                         setNextComposition(id); 
                     };
                 },

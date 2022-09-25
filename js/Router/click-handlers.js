@@ -4,7 +4,6 @@ import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../
 import { checkInputs } from './../signup.js'
 import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, CreateGenresDOMFromJSON } from './../Store/mock-data.js'
 
-
 const loc = urls.getLocation();
 
 export async function setCurrentPageIndex(event) {

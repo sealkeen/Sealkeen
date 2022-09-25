@@ -1,6 +1,7 @@
 ﻿import { setArtistSongNameAsync, setTitleByArtistAndTitle } from './Page/event-handlers.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import urls from './api.js'
+import { createCardFromJSON } from './Store/mock-data.js'
 
 const loc = urls.getLocation();
 
@@ -63,7 +64,7 @@ export function getWebEntityObject(el) {
 export function displayQueuedTracks(_trackQueue) {
     console.log('displayQueuedTracks %j', _trackQueue);
     let queue = $('#footer-track-query')[0];
-    if (queue === undefined) {
+    if (queue == null) {
         queue = document.createElement("div");
         queue.id = "footer-track-query";
         queue.className = "footer-track-query";
@@ -72,6 +73,39 @@ export function displayQueuedTracks(_trackQueue) {
         footer[0].insertBefore(queue, footer[0].firstChild);
     } else {
         queue.innerHTML = peekObjectsArtistsAndTitles();
+    }
+    createCardsFromQuery(_trackQueue);
+}
+
+export function createCardsFromQuery(_trackQueue)
+{
+    try {
+        let cardcolumns = document.querySelector('.card-query-columns');
+        cardcolumns.innerHTML = '';
+        console.log('Elts length: ', _trackQueue.elts.length);
+        _trackQueue.elts.forEach(element => {
+            let card = document.createElement("div")
+            let comp = document.createElement("div")
+            let data = document.createElement("data")
+            let h6 = document.createElement("h6")
+            let h7 = document.createElement("h7")
+
+            card.className = 'card small-card';
+            comp.className = 'card-body card-body-composition';
+            data.setAttribute("value", element.id);
+            h6.innerHTML = element.artist;
+            h7.innerHTML = element.title;
+            h6.className = 'card-title';
+            h7.className = 'card-text';
+
+            comp.appendChild(data);
+            comp.appendChild(h6);
+            comp.appendChild(h7);
+            card.appendChild(comp);
+            cardcolumns.appendChild(card);
+        });
+    } catch (err) {
+        console.log(err);
     }
 }
 

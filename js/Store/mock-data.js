@@ -43,7 +43,7 @@ export function CreateDOMFromJSON(jsonSource) {
 export function CreateArtistsDOMFromJSON(jsonSource) {
     //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
-    let cardcolumns = document.createElement("div")
+    let cardcolumns = document.createElement("div");
     cardcolumns.className = 'card-columns';
 
     let textcenter = document.createElement('div');
@@ -74,6 +74,29 @@ export function CreateArtistsDOMFromJSON(jsonSource) {
 
     center.appendChild(cardcolumns);
     return center;
+}
+
+export function createCardFromJSON(element)
+{
+    let card = document.createElement("div")
+    let comp = document.createElement("div")
+    let data = document.createElement("data")
+    let h6 = document.createElement("h6")
+    let h7 = document.createElement("h7")
+
+    card.className = 'card';
+    comp.className = 'card-body card-body-composition';
+    data.setAttribute("value", element.id);
+    h6.innerHTML = element.artist;
+    h7.innerHTML = element.title;
+    h6.className = 'card-title';
+    h7.className = 'card-text';
+
+    comp.appendChild(data);
+    comp.appendChild(h6);
+    comp.appendChild(h7);
+    card.appendChild(comp);
+    return card;
 }
 
 export function CreateAlbumsDOMFromJSON(jsonSource) {
