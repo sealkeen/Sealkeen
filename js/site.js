@@ -4,12 +4,12 @@ import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queu
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
     displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
 
-import colorHandlers from './StyleHandlers/color-handlers.js'
+import colorHandlers, { toggleTopPageBackground } from './StyleHandlers/color-handlers.js'
 import { closeNav, openNav } from './StyleHandlers/side-nav-handlers.js'
 import { checkInputs } from './signup.js'
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
 import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp, setCurrentPageArtists, setCurrentPageCompositionByArtistID, setCurrentPageMockData, 
-    setCurrentPageCompositions, setCurrentPageAlbums, setCurrentPageGenres, setCurrentPageCompositionByID, setCurrentPageAlbumByID, setCurrentPageRegister, setCurrentPageLogin } 
+setCurrentPageCompositions, setCurrentPageAlbums, setCurrentPageGenres, setCurrentPageCompositionByID, setCurrentPageAlbumByID, setCurrentPageRegister, setCurrentPageLogin } 
 from './Router/click-handlers.js'
 import { setTitleByArtistAndTitle, setArtistSongNameAsync } from './Page/event-handlers.js'
 import { getNext } from './Store/mock-data.js';
@@ -28,6 +28,7 @@ const loc = urls.getLocation();
 
 $(document).ready(function () {
     bindPlayerButtons();
+    toggleTopPageBackground(false);
     //addButtonOnClickHandlers();
     _trackQueue.onchange = () => {
         displayQueuedTracks(_trackQueue);
