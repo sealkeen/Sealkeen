@@ -8,11 +8,10 @@ export default {
             return 'https://ead6-37-144-214-108.eu.ngrok.io/'
     },
     getPostfix() {
-        if (!(window.location.href.indexOf("github.io") > -1))
-        {
+        if (window.location.href.indexOf("github.io") > -1)
+            return 'Sealkeen/'
+        else
             return ''
-        } else
-            return '/Sealkeen'
     },
     getInDevelopmentMessage()
     {
@@ -32,6 +31,12 @@ const urls = {
             return 'http://localhost:8080/'
         } else 
             return 'https://ead6-37-144-214-108.eu.ngrok.io/'
+    },
+    getPostfix() {
+        if (window.location.href.indexOf("github.io") > -1)
+            return 'Sealkeen/'
+        else
+            return ''
     }
 }
 
@@ -55,3 +60,16 @@ export function ifUrlExist(url, callback) {
     };
     request.send('');
 };
+
+
+export async function pushHistoryState(url)
+{
+    try {
+        console.log('History state URL:' + url);
+        console.log('prevstate not null');
+        let loc = `${location.protocol}//${location.host}/`;
+        window.history.pushState({ prevUrl: window.location.href }, null, loc + urls.getPostfix() + url); 
+    } catch(e) {
+        console.log(e);
+    }
+}

@@ -1,8 +1,9 @@
-import urls from './../api.js'
+import urls, { pushHistoryState } from './../api.js'
 import { LogMessageRequest } from '.././logging.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../Account/verification.js'
 import { checkInputs } from './../signup.js'
 import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, CreateGenresDOMFromJSON } from './../Store/mock-data.js'
+
 
 const loc = urls.getLocation();
 
@@ -34,6 +35,7 @@ export async function setCurrentPageIndex(event) {
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
                 console.log(responseText)
+                pushHistoryState(urls.getPostfix() + 'Index/');
             })
             .catch((error) => {
                 console.log('fetch error. Doing nothing with it.')
@@ -72,6 +74,7 @@ export async function setCurrentPageManageAccount(event) {
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
                 console.log(responseText)
+                pushHistoryState(urls.getPostfix() + 'Manage/Index');
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -110,7 +113,8 @@ export async function setCurrentPageSignUp(event) {
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
-                console.log(responseText)
+                console.log(responseText);
+                pushHistoryState('SignUp/');
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -159,6 +163,7 @@ export async function setCurrentPageCompositions(event) {
                 let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(trackDom);
+                pushHistoryState('Compositions/');
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -197,6 +202,7 @@ export async function setCurrentPageAlbums(event) {
                 let data = await response.json();
                 console.log('handling response text');
                 let albumsDom = CreateAlbumsDOMFromJSON(data);
+                pushHistoryState('Albums/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(albumsDom);
                 console.log('%j', albumsDom)
@@ -238,6 +244,7 @@ export async function setCurrentPageGenres(event) {
                 let data = await response.json();
                 console.log('handling response text');
                 let genresDom = CreateGenresDOMFromJSON(data);
+                pushHistoryState('Genres/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(genresDom);
                 console.log('%j', genresDom)
@@ -279,6 +286,7 @@ export async function setCurrentPageArtists(event) {
                 let data = await response.json();
                 console.log('handling response text');
                 let artistsDom = CreateArtistsDOMFromJSON(data);
+                pushHistoryState('Artists/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(artistsDom);
                 console.log('%j', artistsDom)
@@ -327,6 +335,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
+                pushHistoryState('CompositionByArtistId/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
@@ -375,6 +384,7 @@ export async function setCurrentPageCompositionByID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
+                pushHistoryState('CompositionById/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
@@ -422,6 +432,7 @@ export async function setCurrentPageAlbumByID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
+                pushHistoryState('AlbumById/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
@@ -462,11 +473,12 @@ export async function setCurrentPageRegister(event) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
+                pushHistoryState('Register/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
                 console.log(responseText)                    
-                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
+                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                 $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                 $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
                 $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
@@ -521,7 +533,7 @@ export async function setCurrentPageLogin(event) {
                 $("#page-body-container").append(responseText);
                 console.log('%j', responseText)
                 console.log(responseText)                    
-                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, urls.getLocation() + 'Account/Login'
+                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                 $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                 $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
                 $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
@@ -530,6 +542,7 @@ export async function setCurrentPageLogin(event) {
                     setLoginAntiForgeryOnClick(e)
                 });
                 $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
+                pushHistoryState('Login/');
             })
             .catch((error) => {
                 setCurrentPageMockData();
