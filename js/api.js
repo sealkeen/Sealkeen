@@ -1,5 +1,5 @@
 const urls = {
-    loc: 'https://ead6-37-144-214-108.eu.ngrok.io/',
+    loc: 'https://f023-37-144-214-119.eu.ngrok.io/',
     getLocation() {
         if (!(window.location.href.indexOf("github.io") > -1))
         {
@@ -7,7 +7,7 @@ const urls = {
         } else if((window.location.href.indexOf("localhost:500") > -1))
             return `${location.protocol}//${location.host}/`;
         else
-            return 'https://ead6-37-144-214-108.eu.ngrok.io/'
+            return 'https://f023-37-144-214-119.eu.ngrok.io/'
     },
     getPostfix() {
         if (window.location.href.indexOf("github.io") > -1)
