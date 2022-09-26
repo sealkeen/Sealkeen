@@ -175,11 +175,9 @@ export function GetCurrentCompositionsId() {
             audioSrc = audioSrc.src;
 
         if(audioSrc.includes('/GetAudio?Id='))
-            audioSrc = audioSrc.substring(audioSrc.indexOf('/GetAudio?Id=') + '/GetAudio?Id='.length);
+            audioSrc = audioSrc.substring(audioSrc.indexOf('?Id=') + '?Id='.length);
         if(audioSrc.includes('?url='))
             audioSrc = audioSrc.substring(audioSrc.indexOf('?url=') + '?url='.length);
-        if(audioSrc.includes(':'))
-            audioSrc = audioSrc.substring(audioSrc.indexOf(':'));
             
         console.log('GetCurrentCompId = ' + audioSrc);
         return audioSrc;
