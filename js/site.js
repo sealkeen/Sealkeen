@@ -37,7 +37,7 @@ const loc = urls.getLocation();
 
 $(document).ready(function () {
     bindPlayerButtons();
-    toggleTopPageBackground(true);
+    toggleTopPageBackground(false);
     //addButtonOnClickHandlers();
     _trackQueue.onchange = () => {
         displayQueuedTracks(_trackQueue);
@@ -78,7 +78,6 @@ $(document).ready(function () {
         }
     });
     setSidebarInputVolumeOnChange();
-    toggleTopPageBackground(false);
 });
 
 document.oncontextmenu = function (e) {
