@@ -1,3 +1,5 @@
+import urls from './../api.js'
+
 export default { 
     toggleBodyBackground()
     {
@@ -30,7 +32,7 @@ export function toggleTopPageBackground(on)
         document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
         document.getElementById("top-page-container").style.backgroundPosition = 'center top';
         //document.getElementById("top-page-container").style.backgroundSize= '70% 70%';
-        document.getElementById("top-page-container").style.backgroundImage = "url(../Images/WebPack/loading-transparent.gif)";
+        document.getElementById("top-page-container").style.backgroundImage = `url(../${urls.getPostfix()}Images/WebPack/loading-transparent.gif)`;
     } else {
         //document.getElementById("top-page-container").style.height = '100%';
         document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
