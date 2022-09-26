@@ -37,7 +37,7 @@ const loc = urls.getLocation();
 
 $(document).ready(function () {
     bindPlayerButtons();
-    toggleTopPageBackground(false);
+    toggleTopPageBackground(true);
     //addButtonOnClickHandlers();
     _trackQueue.onchange = () => {
         displayQueuedTracks(_trackQueue);
@@ -78,6 +78,7 @@ $(document).ready(function () {
         }
     });
     setSidebarInputVolumeOnChange();
+    toggleTopPageBackground(false);
 });
 
 document.oncontextmenu = function (e) {
@@ -190,7 +191,7 @@ export function setNextComposition(compId) {
                     };
                 },
                 error: async function (error_) {
-                    document.title = 'Media.Web';
+                    document.title = 'Medweb';
                     onAjaxSwitchPageError(compId, error_, safeSwitchTrack);
                 }
             });
@@ -235,7 +236,7 @@ export async function setFooterPlayerSourse(el)
                     };
                 },
                 error: async function (error_) {
-                    document.title = 'Media.Web';
+                    document.title = 'Medweb';
                     onAjaxLoadError(source, error_, safePlay);
                 }
             });
