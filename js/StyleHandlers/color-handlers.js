@@ -28,17 +28,25 @@ export function toggleTopPageBackground(on)
 {
     if (on)
     {   
-        //document.getElementById("top-page-container").style.height = '50%';
-        document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
-        document.getElementById("top-page-container").style.backgroundPosition = 'center top';
-        //document.getElementById("top-page-container").style.backgroundSize= '70% 70%';
-        document.getElementById("top-page-container").style.backgroundImage = `url(../${urls.getPostfix()}Images/WebPack/loading-transparent.gif)`;
+        try {
+            //document.getElementById("top-page-container").style.height = '50%';
+            document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
+            document.getElementById("top-page-container").style.backgroundPosition = 'center top';
+            //document.getElementById("top-page-container").style.backgroundSize= '70% 70%';
+            document.getElementById("top-page-container").style.backgroundImage = `url(../${urls.getPostfix()}Images/WebPack/loading-transparent.gif)`;
+        } finally {
+            document.getElementsByClassName("container")[0].style.opacity = 0;
+        }
     } else {
-        //document.getElementById("top-page-container").style.height = '100%';
-        document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
-        document.getElementById("top-page-container").style.backgroundPosition = 'center center';
-        document.getElementById("top-page-container").style.backgroundImage= 'none';
-        //document.getElementById("top-page-container").style.backgroundSize= '100% 100%';
-        //document.getElementById("top-page-container").setAttribute("style","background: initial;");
+        try {
+            //document.getElementById("top-page-container").style.height = '100%';
+            document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
+            document.getElementById("top-page-container").style.backgroundPosition = 'center center';
+            document.getElementById("top-page-container").style.backgroundImage= 'none';
+            //document.getElementById("top-page-container").style.backgroundSize= '100% 100%';
+            //document.getElementById("top-page-container").setAttribute("style","background: initial;");
+        } finally {
+            document.getElementsByClassName("container")[0].style.opacity = 1;
+        }
     }
 }

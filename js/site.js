@@ -190,7 +190,7 @@ export function setNextComposition(compId) {
                     };
                 },
                 error: async function (error_) {
-                    document.title = 'Media.Web';
+                    document.title = 'Medweb';
                     onAjaxSwitchPageError(compId, error_, safeSwitchTrack);
                 }
             });
@@ -235,7 +235,7 @@ export async function setFooterPlayerSourse(el)
                     };
                 },
                 error: async function (error_) {
-                    document.title = 'Media.Web';
+                    document.title = 'Medweb';
                     onAjaxLoadError(source, error_, safePlay);
                 }
             });

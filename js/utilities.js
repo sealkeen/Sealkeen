@@ -175,13 +175,10 @@ export function GetCurrentCompositionsId() {
             audioSrc = audioSrc.src;
 
         if(audioSrc.includes('/GetAudio?Id='))
-            audioSrc = audioSrc.substring(audioSrc.indexOf('/GetAudio?Id=') + '/GetAudio?Id='.length);
-        // if(audioSrc.includes(location.host) && audioSrc.includes(location.protocol)){
-        //     audioSrc = audioSrc.replace(`${location.protocol}//${location.host}`, '');
-        //     audioSrc = audioSrc.replace('/', '');
-        // }
-        if(audioSrc.includes(':'))
-            audioSrc = audioSrc.substring(audioSrc.indexOf(':'));
+            audioSrc = audioSrc.substring(audioSrc.indexOf('?Id=') + '?Id='.length);
+        if(audioSrc.includes('?url='))
+            audioSrc = audioSrc.substring(audioSrc.indexOf('?url=') + '?url='.length);
+            
         console.log('GetCurrentCompId = ' + audioSrc);
         return audioSrc;
     } catch (e) {
