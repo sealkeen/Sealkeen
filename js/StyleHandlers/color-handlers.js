@@ -33,7 +33,10 @@ export function toggleTopPageBackground(on)
             document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
             document.getElementById("top-page-container").style.backgroundPosition = 'center top';
             //document.getElementById("top-page-container").style.backgroundSize= '70% 70%';
-            document.getElementById("top-page-container").style.backgroundImage = `url(../${urls.getPostfix()}Images/WebPack/loading-transparent.gif)`;
+            if (urls.isGithub() == false)
+                document.getElementById("top-page-container").style.backgroundImage = `url(${urls.getLocation()}Images/WebPack/loading-transparent.gif)`;
+            else
+                document.getElementById("top-page-container").style.backgroundImage = `url(../${urls.getPostfix()}Images/WebPack/loading-transparent.gif)`;
         } finally {
             document.getElementsByClassName("container")[0].style.opacity = 0;
         }

@@ -1,7 +1,7 @@
 const urls = {
     loc: 'https://f023-37-144-214-119.eu.ngrok.io/',
     getLocation() {
-        if (!(window.location.href.indexOf("github.io") > -1))
+        if (!(window.location.href.indexOf("github.io") > -1) && (window.location.href.indexOf('localhost:80') > 0) )
         {
             return 'http://localhost:8080/'
         } else if((window.location.href.indexOf("localhost:500") > -1))
