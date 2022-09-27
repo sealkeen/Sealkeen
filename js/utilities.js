@@ -82,8 +82,8 @@ export function createCardsFromQuery(_trackQueue)
     try {
         let cardcolumns = document.querySelector('.card-query-columns');
         cardcolumns.innerHTML = '';
-        console.log('Elts length: ', _trackQueue.elts.length);
-        _trackQueue.elts.forEach(element => {
+        console.log('Elts length: ', _trackQueue?.elts.length);
+        _trackQueue?.elts.forEach(element => {
             let card = document.createElement("div")
             let comp = document.createElement("div")
             let data = document.createElement("data")
@@ -123,7 +123,7 @@ export function safePlay()
 {
     console.log('safePlay()')
     try {
-        var playPromise = document.querySelector("#player-audio-element")?.play();
+        var playPromise = document.querySelector("#player-audio-element")[0]?.play();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
                 // Automatic playback started!
@@ -148,16 +148,16 @@ export function safeSwitchTrack()
     console.log('safeSwitchTrack()')
     displayQueuedTracks();
     try {
-        var playPromise = document.querySelector("#player-audio-element")?.load();
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
+        var loadPromise = document.querySelector("#player-audio-element")[0]?.load();
+        if (loadPromise !== undefined) {
+            loadPromise.then(_ => {
                 console.log('safeLoadOK: safePlaying...');
 
-                (async () => { await sleep(500); safePlay()})();
+                (async () => { await sleep(50); safePlay()})();
             })  
             .catch(error => {
                 // Auto-play was prevented
-                (async () => { await sleep(500); safePlay()})();
+                (async () => { await sleep(50); safePlay()})();
                 console.log('safeSwitchTrack() err: player returned error on LOAD, autoplay prevented.');
             });
         }

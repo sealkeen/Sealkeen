@@ -16,7 +16,7 @@ export function onAjaxLoadError(source, error_, safePlay)
     console.log('}')
 }
 
-export function onAjaxSwitchPageError(source, error_, safeSwitchPage)
+export function onAjaxSwitchPageError(source, error_, safeSwitch)
 {
     console.log("Ajax error: " + error_);
     console.log('{')
@@ -28,7 +28,7 @@ export function onAjaxSwitchPageError(source, error_, safeSwitchPage)
         src.setAttribute('type', 'audio/mp3');
         $("#player-audio-element").html('');
         $("#player-audio-element").append(src);
-        safeSwitchPage();
+        safeSwitch();
     }
     console.log('}')
 }

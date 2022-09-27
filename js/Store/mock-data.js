@@ -279,17 +279,18 @@ export function getNext(url)
     let data = JSON.parse(fromBinary(takeStore()));
     let res = "";
     data.forEach(element => {
-        console.log('element.p : ' + element.p)
-        if(res !== "")
+        if(res === "next")
         {
-            return element.p;
+            console.log('returning id: ' + element.p + '...')
+            res = element.p;
         }
-        if(url == element.p)
+        if(url === element.p)
         {
             res = "next";
+            console.log('+ element.p : ' + element.p)
         }
     });
-    return "endOfPlayBack";
+    return res;
 }
 
 export function takeStore() {

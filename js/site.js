@@ -3,7 +3,7 @@ import urls from './api.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
     displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
-
+import { transitionEnd } from './StyleHandlers/footer-handlers.js';
 import colorHandlers, { toggleTopPageBackground } from './StyleHandlers/color-handlers.js'
 import { closeNav, openNav } from './StyleHandlers/side-nav-handlers.js'
 import { checkInputs } from './signup.js'
@@ -14,6 +14,7 @@ from './Router/click-handlers.js'
 import { setTitleByArtistAndTitle, setArtistSongNameAsync } from './Page/event-handlers.js'
 import { getNext } from './Store/mock-data.js';
 
+document.addEventListener('transitionend', function() { transitionEnd() });
 document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
 document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
 document.querySelector('#nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
@@ -101,24 +102,32 @@ export function onCompositionRightMouseDown(e) {
         let cmiQueueSelected = document.createElement("p")
         cmiQueueSelected.id = 'ctxmenu-button';
         cmiQueueSelected.innerHTML = "Enqueue";
-        menu.id = "ctxmenu"
-        menu.style = `top:${e.pageY - 15}px;left:${e.pageX - 15}px`
+        menu.id = "ctxmenu";
 
         cmiQueueSelected.onclick = () => { _trackQueue.enqueue(getWebEntityObject(e)); };
         menu.onfocusout = () => menu.outerHTML = '';
         menu.onmouseleave = () => menu.outerHTML = ''
-        menu.innerHTML = '';
-        menu.style.opacity = 100;
-        menu.appendChild(cmiQueueSelected);
-
-        setTimeout(() => {
-            menu.style.opacity = 0;
-        }, 1500); 
+        menu.appendChild(cmiQueueSelected)
         
-        document.body.appendChild(menu);
-        var timeout = setTimeout(function () {
-            $('#ctxmenu').remove();
-        }, 4500);
+        console.log(e.target)
+        let insertTarget = {};
+        if(e.target.classList.contains('card-body'))
+            insertTarget = e.target.parentElement;
+        if(e.target.classList.contains('card'))
+            insertTarget = e.target;
+        if(containsClasses(e.target, 'card-text', 'card-title'))
+            insertTarget = e.target.parentElement.parentElement;
+        
+        insertTarget.appendChild(menu);
+
+        // setTimeout(() => {
+        //     menu.style.opacity = 0;
+        // }, 1500); 
+        
+        // e.target.appendChild(menu);
+        // var timeout = setTimeout(function () {
+        //     $('#ctxmenu').remove();
+        // }, 4500);
     } catch (err) {
         console.log(err)
     }
@@ -129,7 +138,7 @@ export function bindPlayerButtons() {
     document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
         console.log("clicked");
 
-        let id = "";
+        let id = "nextTrackId";
         if (_trackQueue.isEmpty()) {
             console.log('Empty');
             id = GetCurrentCompositionsId();
@@ -137,23 +146,26 @@ export function bindPlayerButtons() {
         else {
             console.log('Not Empty');
         }
-
         setNextComposition(id);
     });
 }
+
+
 
 export function setNextComposition(compId) {
     try {
         if (compId === undefined || compId === null)
             return;
-        if(compId.includes('docs.google')) {
+        if(compId.includes('docs.google') || compId.includes(':')) {
             if(_trackQueue.isEmpty()) {
                 console.log('setNextComposition: Query=empty');
                 compId = getNext(compId);
             } else {
                 console.log('setNextComposition: Query NOT empty');
+                compId = _trackQueue.dequeue().id;
             }
-            onAjaxSwitchPageError(compId, {}, safeSwitchTrack);
+            console.log('calling load Direct');
+            loadDirect(compId);
             return;
         }
         let path = 'GetHtmlNextTrackPlayer/?id=';
@@ -200,14 +212,40 @@ export function setNextComposition(compId) {
     } 
 }
 
+export async function loadDirect(source)
+{
+    if(source.includes(':')) {
+        console.log('loadDirect: $("#player-audio-element")[0] is %j', $("#player-audio-element")[0]);
+        //$("#player-audio-element")[0].pause();
+        $("#player-source-element")[0].setAttribute('src', source);
+        let loadPromise = await $("#player-audio-element")[0].load();
+        if (loadPromise !== undefined) {
+            loadPromise.then(() => {
+                $("#player-audio-element")[0].play()
+                return true;
+            }).catch((error) => {
+                if (error.name === "NotAllowedError") {
+                    console.log('Load audio promise failure. NotAllowed Error.');
+                } else {
+                    console.log('Load or playback error. ' + error);
+                }
+            });
+        }
+    }
+    return Promise.resolve(false);
+}
+
 export async function setFooterPlayerSourse(el)
 {
     try {
         let source = el;
         let songInfo = el;
-        if (!event.target.classList.contains('card-body')) { songInfo = el.parentNode; }
-        source = songInfo.querySelector('data').value; //data
+        if (!el.classList.contains('card-body')) { songInfo = el.parentNode; }
+            source = songInfo.querySelector('data').value; //data
         setTitleByArtistAndTitle(el);
+        let direct = await loadDirect(source);
+        if(direct != null && direct == true)
+            return;
 
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
         if ($("#player-source-element") != undefined) {

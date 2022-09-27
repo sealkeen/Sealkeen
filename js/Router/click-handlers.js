@@ -11,7 +11,6 @@ export async function setCurrentPageIndex(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         let ctrl = (urls.loc + 'IndexPartial');
         if ($("#page-body-container") != undefined) {
             var ftchIndx = await fetch(ctrl, {
@@ -47,7 +46,6 @@ export async function setCurrentPageIndex(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
@@ -55,7 +53,6 @@ export async function setCurrentPageManageAccount(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         let ctrl = (urls.loc + 'Manage/Index');
         if ($("#page-body-container") != undefined) {
             var ftchMngAcc = await fetch(ctrl, {
@@ -92,7 +89,6 @@ export async function setCurrentPageManageAccount(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
@@ -100,7 +96,6 @@ export async function setCurrentPageSignUp(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         let ctrl = (urls.loc + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
             var ftchSignUp = await fetch(ctrl, {
@@ -137,7 +132,6 @@ export async function setCurrentPageSignUp(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
@@ -154,7 +148,6 @@ export async function setCurrentPageCompositions(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         let ctrl = (loc + 'GetJSONCompositionsPage');
         if ($("#page-body-container") != undefined) {
             var ftchComps = await fetch(ctrl, {
@@ -191,7 +184,6 @@ export async function setCurrentPageCompositions(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
@@ -199,7 +191,6 @@ export async function setCurrentPageAlbums(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         let ctrl = (loc + 'GetJSONAlbumsPage');
         if ($("#page-body-container") != undefined) {
             var ftchAlb = await fetch(ctrl, {
@@ -238,7 +229,6 @@ export async function setCurrentPageAlbums(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
@@ -246,7 +236,6 @@ export async function setCurrentPageGenres(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         let ctrl = (loc + 'GetJSONGenresPage');
         if ($("#page-body-container") != undefined) {
             var ftchGnrs = await fetch(ctrl, {
@@ -271,10 +260,8 @@ export async function setCurrentPageGenres(event) {
                 let data = await response.json();
                 console.log('handling response text');
                 let genresDom = CreateGenresDOMFromJSON(data);
-                document.getElementsByClassName("container")[0].style.opacity = 0;
                 $("#page-body-container").html('');
                 $("#page-body-container").append(genresDom);
-                document.getElementsByClassName("container")[0].style.opacity = 1;
                 console.log('%j', genresDom)
                 console.log(genresDom)
             })
@@ -287,13 +274,11 @@ export async function setCurrentPageGenres(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
 export async function setCurrentPageArtists(event) {
     try {
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         toggleTopPageBackground(true);
         //event.preventDefault();
         let ctrl = (loc + 'GetJSONArtistsPage');
@@ -323,16 +308,13 @@ export async function setCurrentPageArtists(event) {
                     console.log('handling response text');
                     let artistsDom = CreateArtistsDOMFromJSON(data);
                     $("#page-body-container").html('');
-                    $("#page-body-container").append(artistsDom);
-                    document.getElementsByClassName("container")[0].style.opacity = 1;     
+                    $("#page-body-container").append(artistsDom);  
                     console.log('%j', artistsDom)
                     console.log(artistsDom)
                 }, 500); 
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                document.getElementsByClassName("container")[0].style.opacity = 1;
-                document.getElementById("top-page-container").setAttribute("style","background: initial;");
                 console.log('fetch error. Setting up mock data.')
                 console.log(error)
             });
@@ -341,13 +323,11 @@ export async function setCurrentPageArtists(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
 export async function setCurrentPageCompositionByArtistID(el) {
     try {
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         toggleTopPageBackground(true);
         let id = el;
         if (!event.target.classList.contains('card-body')) {
@@ -381,10 +361,8 @@ export async function setCurrentPageCompositionByArtistID(el) {
             })
             .then((responseText) => {
                 pushHistoryState('GetPartialCompositionPageByArtistID/?id=' + id);
-                document.getElementsByClassName("container")[0].style.opacity = 0;
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                document.getElementsByClassName("container")[0].style.opacity = 1;
                 console.log('%j', responseText)
                 console.log(responseText)
             })
@@ -397,13 +375,11 @@ export async function setCurrentPageCompositionByArtistID(el) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
 export async function setCurrentPageCompositionByID(el) {
     try {
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         toggleTopPageBackground(true);
         let id = el;
         if (!event.target.classList.contains('card-body')) {
@@ -437,10 +413,8 @@ export async function setCurrentPageCompositionByID(el) {
             })
             .then((responseText) => {
                 pushHistoryState('GetPartialCompositionPageByID/?id=' + id);
-                document.getElementsByClassName("container")[0].style.opacity = 0;
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                document.getElementsByClassName("container")[0].style.opacity = 1;
                 console.log('%j', responseText)
                 console.log(responseText)
             })
@@ -453,13 +427,11 @@ export async function setCurrentPageCompositionByID(el) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
 export async function setCurrentPageAlbumByID(el) {
     try {
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         toggleTopPageBackground(true);
         let id = el;
         if (!event.target.classList.contains('card-body')) {
@@ -492,10 +464,8 @@ export async function setCurrentPageAlbumByID(el) {
             })
             .then((responseText) => {
                 pushHistoryState('GetPartialAlbumPageByID/?id=' + id);
-                document.getElementsByClassName("container")[0].style.opacity = 0;
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                document.getElementsByClassName("container")[0].style.opacity = 1;
                 console.log('%j', responseText)
                 console.log(responseText)
             })
@@ -508,14 +478,12 @@ export async function setCurrentPageAlbumByID(el) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
 export async function setCurrentPageRegister(event) {
     try {
         event.preventDefault();
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         toggleTopPageBackground(true);
         console.log('Loading: ' + loc + 'Account/Register');
         let ctrl = (loc + 'Account/Register');
@@ -540,10 +508,8 @@ export async function setCurrentPageRegister(event) {
             })
             .then((responseText) => {
                 pushHistoryState('Account/Register/');
-                document.getElementsByClassName("container")[0].style.opacity = 0;
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                document.getElementsByClassName("container")[0].style.opacity = 1;
                 console.log('%j', responseText)
                 console.log(responseText)                    
                 $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
@@ -571,14 +537,12 @@ export async function setCurrentPageRegister(event) {
         console.log(e);
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
 
 export async function setCurrentPageLogin(event) {
     try {
         event.preventDefault();
-        document.getElementsByClassName("container")[0].style.opacity = 0;
         toggleTopPageBackground(true);
         console.log('Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + 'Account/Login');
@@ -602,10 +566,8 @@ export async function setCurrentPageLogin(event) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                document.getElementsByClassName("container")[0].style.opacity = 0;
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                document.getElementsByClassName("container")[0].style.opacity = 1;
                 console.log('%j', responseText)
                 console.log(responseText)                    
                 $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
@@ -628,6 +590,5 @@ export async function setCurrentPageLogin(event) {
         console.log(e);
     } finally {
         toggleTopPageBackground(false);
-        document.getElementsByClassName("container")[0].style.opacity = 1;
     }
 }
