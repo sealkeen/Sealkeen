@@ -45,13 +45,15 @@ $(document).ready(function () {
     };
     const container = document.querySelector('.body');
 
-    container.onmousedown = () => {
+    container.onmousedown = (e) => {
+        console.log('onmousedown' + e.target.id + ' ' + e.target.className);
         if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
             $('#ctxmenu').innerHTML = '';
         }
     }
 
     container.addEventListener('click', function (e) {
+        console.log('onclick' + e.target.id + ' ' + e.target.className);
         // But only alert for elements that have an alert-button class
         //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
         let target = e.target;
@@ -84,19 +86,22 @@ $(document).ready(function () {
     setSidebarInputVolumeOnChange();
 });
 
-document.querySelector('.body').addEventListener('touchend', function (e) {
-    const highlightedItems = document.querySelectorAll("#ctxmenu");
-    highlightedItems.forEach((userItem) => {
-        userItem.outerHTML = "";
-    });
-    onCardTapped(e)
+document.querySelector('.container')?.addEventListener('touchend', function (e) {
+    setTimeout( () => {
+        console.log('touchend' + e.target.id + ' ' + e.target.className);
+        const highlightedItems = document.querySelectorAll("#ctxmenu");
+        highlightedItems.forEach((userItem) => {
+            userItem.outerHTML = "";
+        });
+        onCardTapped(e)
+    }, 75);
 });
 
 document.onwheel = (e) =>
 {        
     if (containsClasses(e.target, 'footer-volume-control', 'volume-control-absolute', 'player-audio-element') === true) {
         let target = e.target;
-        console.log(target.value);
+        
         let value = target.value
         if(value > 3) {
             if(-(e.deltaY) > 0)
@@ -113,7 +118,8 @@ document.onwheel = (e) =>
     }
 }
 
-document.oncontextmenu = function (e) {
+document.querySelector('.container').oncontextmenu = (e) => {
+    console.log('onContentMenu' + e.target.id + ' ' + e.target.className);
     e.preventDefault();
     let target = e.target;
     if (containsClasses(target, 'card-text', 'card-title')) {
