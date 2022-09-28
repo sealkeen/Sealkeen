@@ -15,8 +15,10 @@ export function getDevelopmentNewsData()
     ];
 }
 
-export function setDevelopmentMessages()
+export function setDevelopmentMessages(containerName)
 {
+    if(containerName == null)
+        containerName = '#development-body';
     let data = getDevelopmentNewsData();
 
     data.forEach(element => {
@@ -36,10 +38,10 @@ export function setDevelopmentMessages()
         cardText.innerHTML = element.cardText;
 
         card.appendChild(cardBody);
-        document.querySelector('#development-body').appendChild(card);
+        document.querySelector(containerName).appendChild(card);
     });
 
-    document.querySelector('#development-body').addEventListener('click', (e) => {
+    document.querySelector(containerName).addEventListener('click', (e) => {
         if(document.getElementById("mySidenav").getBoundingClientRect().width === 0)
         { 
             openNav(); openRightNav(); 
@@ -50,7 +52,7 @@ export function setDevelopmentMessages()
         let menu = document.createElement("div")
         let cmiQueueSelected = document.createElement("p")
         cmiQueueSelected.id = 'ctxmenu-button';
-        cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open menu on composition";
+        cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open enqueue menu on composition";
         menu.id = "ctxmenu";
 
         //menu.onfocusout = () => menu.outerHTML = '';

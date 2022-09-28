@@ -4,6 +4,7 @@ import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../
 import { checkInputs } from './../signup.js'
 import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, CreateGenresDOMFromJSON } from './../Store/mock-data.js'
 import { toggleTopPageBackground } from './../StyleHandlers/color-handlers.js'
+import { setDevelopmentMessages } from './../Development/news-data.js'
 
 const loc = urls.getLocation();
 
@@ -47,6 +48,7 @@ export async function setCurrentPageIndex(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
+        setDevelopmentMessages('#page-body-container');
     }
 }
 
