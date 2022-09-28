@@ -1,3 +1,5 @@
+import { openRightNav, openNav, closeRightNav, closeNav } from "../StyleHandlers/side-nav-handlers.js";
+import { containsClasses } from "../utilities.js";
 
 export function getDevelopmentNewsData()
 {
@@ -36,4 +38,33 @@ export function setDevelopmentMessages()
         card.appendChild(cardBody);
         document.querySelector('#development-body').appendChild(card);
     });
+
+    document.querySelector('#development-body').addEventListener('click', (e) => {
+        if(document.getElementById("mySidenav").getBoundingClientRect().width === 0)
+        { 
+            openNav(); openRightNav(); 
+        }
+        else { 
+            closeRightNav(); closeNav(); 
+        }
+        let menu = document.createElement("div")
+        let cmiQueueSelected = document.createElement("p")
+        cmiQueueSelected.id = 'ctxmenu-button';
+        cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open menu on composition";
+        menu.id = "ctxmenu";
+
+        //menu.onfocusout = () => menu.outerHTML = '';
+        //menu.onmouseleave = () => menu.outerHTML = ''
+        menu.appendChild(cmiQueueSelected)
+        
+        console.log(e.target)
+        let insertTarget = {};
+        if(e.target.classList.contains('card-body'))
+            insertTarget = e.target.parentElement;
+        if(e.target.classList.contains('card'))
+            insertTarget = e.target;
+        if(containsClasses(e.target, 'card-text', 'card-title'))
+            insertTarget = e.target.parentElement.parentElement;
+        insertTarget.appendChild(menu);
+    })
 }
