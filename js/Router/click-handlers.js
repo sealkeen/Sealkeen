@@ -481,8 +481,10 @@ export async function setCurrentPageAlbumByID(el) {
 }
 
 export async function setCurrentPageRegister(event) {
+    event.preventDefault();
     try {
-        event.preventDefault();
+        if(urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Register'; return; }
+
         toggleTopPageBackground(true);
         console.log('Loading: ' + loc + 'Account/Register');
         let ctrl = (loc + 'Account/Register');
@@ -541,6 +543,8 @@ export async function setCurrentPageRegister(event) {
 
 export async function setCurrentPageLogin(event) {
     try {
+        if(urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Login'; return; }
+
         event.preventDefault();
         toggleTopPageBackground(true);
         console.log('Loading: ' + loc + 'Account/Login');
