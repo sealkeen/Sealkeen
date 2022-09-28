@@ -11,7 +11,7 @@ import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
 import { setCurrentPageIndex, setCurrentPageManageAccount, setCurrentPageSignUp, setCurrentPageArtists, setCurrentPageCompositionByArtistID, setCurrentPageMockData, 
 setCurrentPageCompositions, setCurrentPageAlbums, setCurrentPageGenres, setCurrentPageCompositionByID, setCurrentPageAlbumByID, setCurrentPageRegister, setCurrentPageLogin } 
 from './Router/click-handlers.js'
-import { setTitleByArtistAndTitle, setArtistSongNameAsync } from './Page/event-handlers.js'
+import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js'
 import { getNext } from './Store/mock-data.js';
 
 document.addEventListener('transitionend', function() { transitionEnd() });
@@ -77,23 +77,62 @@ $(document).ready(function () {
             //$('.btn-default').onclick = (e) => { e.preventDefault(); };
             //urls.getInDevelopmentMessage();
         }
+        if (target.id == 'ctxmenu') {
+            document.querySelector('#ctxmenu').outerHTML = "";
+        }
     });
     setSidebarInputVolumeOnChange();
 });
 
+document.querySelector('.body').addEventListener('touchend', function (e) {
+    const highlightedItems = document.querySelectorAll("#ctxmenu");
+    highlightedItems.forEach((userItem) => {
+        userItem.outerHTML = "";
+    });
+    onCardTapped(e)
+});
+
+document.onwheel = (e) =>
+{        
+    if (containsClasses(e.target, 'footer-volume-control', 'volume-control-absolute', 'player-audio-element') === true) {
+        let target = e.target;
+        console.log(target.value);
+        let value = target.value
+        if(value > 3) {
+            if(-(e.deltaY) > 0)
+                target.value *= 1.2;
+            else
+                target.value *= 0.8;
+        } else {
+            if(-(e.deltaY) > 0)
+                target.value += 1;
+            else
+                target.value -= 1;
+        }
+        fireOnInputValueChange(target);
+    }
+}
+
 document.oncontextmenu = function (e) {
+    e.preventDefault();
     let target = e.target;
     if (containsClasses(target, 'card-text', 'card-title')) {
         target = e.target.parentNode;
     }
-
     if (target.classList.contains('card-body-composition')) {
-        e.preventDefault();
         onCompositionRightMouseDown(e);
     }
-    if (target.classList.contains('album-card-div')) { }
-    if (target.classList.contains('genre-card-div')) { }
-    if (target.classList.contains('artist-card-div')) { }
+}
+
+export function onCardTapped(e)
+{
+    let target = e.target;
+    if (containsClasses(target, 'card-text', 'card-title')) {
+        target = e.target.parentNode;
+    }
+    if (target.classList.contains('card-body-composition')) {
+        onCompositionRightMouseDown(e);
+    }
 }
 
 export function onCompositionSourceChanged(compId)
@@ -136,14 +175,6 @@ export function onCompositionRightMouseDown(e) {
         
         insertTarget.appendChild(menu);
 
-        // setTimeout(() => {
-        //     menu.style.opacity = 0;
-        // }, 1500); 
-        
-        // e.target.appendChild(menu);
-        // var timeout = setTimeout(function () {
-        //     $('#ctxmenu').remove();
-        // }, 4500);
     } catch (err) {
         console.log(err)
     }

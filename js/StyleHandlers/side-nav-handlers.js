@@ -1,4 +1,4 @@
-
+const MIN_LENGTH = 15;
 document.querySelector('.closebtn')?.addEventListener('click', closeNav);
 document.querySelector('.openNavSpan')?.addEventListener('click', openNav);
 
@@ -9,6 +9,7 @@ document.querySelector('.left-hover-bar')?.addEventListener('mouseover', openNav
 document.querySelector('.right-hover-bar')?.addEventListener('mouseover', openRightNav);
 document.querySelector('.left-hover-bar')?.addEventListener('click', openNav);
 document.querySelector('.right-hover-bar')?.addEventListener('click', openRightNav);
+document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked)
 
 export function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -46,4 +47,21 @@ export function closeRightNav(e) {
     //document.getElementsByClassName("container")[0].style.opacity = 1;
     document.getElementById("bottomRightNav").style.paddingLeft = "0px"; 
     document.getElementById("bottomRightNav").style.paddingRight = "0px"; 
+}
+
+export function onPauseClicked(e)
+{    
+    var audio = document.querySelector("audio");
+    let sourse = document.querySelector('#player-source-element');
+    if (audio.paused || audio.currentTime == 0 || audio.currentTime==audio.duration) {
+        //audio paused,ended or not started
+        if(sourse.src != null && sourse.src.length > MIN_LENGTH ) {
+            document.querySelector('.footer-pause-track-btn').innerHTML = "Pause";
+            audio.play();
+        }
+    } else {
+        //audio is playing
+        audio.pause();
+        document.querySelector('.footer-pause-track-btn').innerHTML = "Play";
+    }
 }

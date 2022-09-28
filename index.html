@@ -140,7 +140,7 @@
         <div id="player-audio-div">
             <span class="openNavSpan">&#9776;</span>
             <div class="track-artist-song-name">Unknown – null</div>
-            <audio id="player-audio-element" controls="controls" height="80" width="100%" autoplay>
+            <audio id="player-audio-element" class="player-audio-element" controls="controls" height="80" width="100%" autoplay>
                 <source id="player-source-element" src="" type="audio/mp3">
             </audio>
             <span class="openRightNavSpan">&#9776;</span>
@@ -150,7 +150,10 @@
 
     <div id="bottomRightNav" class="sidenav bottom-right-nav">
         <a href="javascript:void(0)" class="closeRightNavBtn">×</a>
-        <a href="#" class="footer-next-track-btn">Next</a>
+        <div style="display: flex;">
+            <a href="#" class="footer-pause-track-btn">Pause</a>
+            <a href="#" class="footer-next-track-btn">Next</a>
+            </div>
         <div class="card-query-columns"></div>
         <input type="range" id="volume-control">
     </div>

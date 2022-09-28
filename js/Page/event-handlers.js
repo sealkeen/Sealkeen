@@ -53,3 +53,10 @@ export function setArtistSongNameAsync() {
         console.log('setArtistSongNameAsync error.')
     }
 }
+
+export function fireOnInputValueChange(element)
+{
+    var event = new Event('change');
+    // Dispatch it.
+    element.dispatchEvent(event);
+}
