@@ -206,14 +206,13 @@ export function setNextComposition(compId) {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
-                    $("#player-audio-div").html('');
-                    $("#player-audio-div").append(response);
-
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
+                    document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
+                    console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                     console.log(htmlDom.documentElement.innerHTML);
-
+                    
                     let plr = $("#player-audio-element").get(0);
+                    plr.load();
                     plr.play();
                     onCompositionSourceChanged(compId);
                 },
@@ -253,15 +252,15 @@ export async function setFooterPlayerSourse(el)
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
+                    document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
                     console.log(htmlDom.documentElement.innerHTML);
                     console.log('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
                     //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
-                    document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
                     
                     let plr = $("#player-audio-element").get(0);
                     plr.load();
                     plr.play();
-                    onCompositionSourceChanged(compId);
+                    onCompositionSourceChanged(htmlDom.querySelector('#player-source-element').src);
                 },
                 error: async function (error_) {
                     document.title = 'Medweb';
