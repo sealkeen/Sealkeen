@@ -2,6 +2,7 @@
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import urls from './api.js'
 import { createCardFromJSON } from './Store/mock-data.js'
+import { loadDirect } from './Utils/Audio.js'
 
 const loc = urls.getLocation();
 
@@ -169,8 +170,10 @@ export function safeSwitchTrack()
 export function GetCurrentCompositionsId() { 
     try {
         let audioSrc = $("#player-audio-element").get(0).children[0];
-        if (audioSrc.src == null)
+        if (audioSrc.src == null) {
+            console.log('GetCurrentCompositionsId() error. audioSrc = null.');
             return '';
+        }
         else 
             audioSrc = audioSrc.src;
 

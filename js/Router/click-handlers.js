@@ -34,8 +34,9 @@ export async function setCurrentPageIndex(event) {
             .then((responseText) => {
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length)
+                
                 pushHistoryState(urls.getPostfix());
             })
             .catch((error) => {
@@ -76,8 +77,8 @@ export async function setCurrentPageManageAccount(event) {
             .then((responseText) => {
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length)
                 pushHistoryState(urls.getPostfix() + 'Manage/Index');
             })
             .catch((error) => {
@@ -119,8 +120,8 @@ export async function setCurrentPageSignUp(event) {
             .then((responseText) => {
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText);
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length);
                 pushHistoryState('GetHtmlSignUpPage/');
             })
             .catch((error) => {
@@ -217,8 +218,7 @@ export async function setCurrentPageAlbums(event) {
                 pushHistoryState('GetHTMLAlbumsPage/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(albumsDom);
-                console.log('%j', albumsDom)
-                console.log(albumsDom)
+                console.log('fetch response key count: ' + Object.keys(albumsDom).length);
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -262,8 +262,7 @@ export async function setCurrentPageGenres(event) {
                 let genresDom = CreateGenresDOMFromJSON(data);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(genresDom);
-                console.log('%j', genresDom)
-                console.log(genresDom)
+                console.log('fetch response key count: ' + Object.keys(genresDom).length);
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -309,8 +308,8 @@ export async function setCurrentPageArtists(event) {
                     let artistsDom = CreateArtistsDOMFromJSON(data);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(artistsDom);  
-                    console.log('%j', artistsDom)
-                    console.log(artistsDom)
+                    
+                    console.log('fetch response key count: ' + Object.keys(artistsDom).length);
                 }, 500); 
             })
             .catch((error) => {
@@ -363,8 +362,8 @@ export async function setCurrentPageCompositionByArtistID(el) {
                 pushHistoryState('GetPartialCompositionPageByArtistID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length)
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -415,8 +414,8 @@ export async function setCurrentPageCompositionByID(el) {
                 pushHistoryState('GetPartialCompositionPageByID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length)
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -466,8 +465,8 @@ export async function setCurrentPageAlbumByID(el) {
                 pushHistoryState('GetPartialAlbumPageByID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length)
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -510,8 +509,8 @@ export async function setCurrentPageRegister(event) {
                 pushHistoryState('Account/Register/');
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)                    
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length)                    
                 $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                 $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                 $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
@@ -568,8 +567,8 @@ export async function setCurrentPageLogin(event) {
             .then((responseText) => {
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
-                console.log('%j', responseText)
-                console.log(responseText)                    
+                //console.log('%j', responseText)
+                console.log('fetch response key count: ' + Object.keys(responseText).length)                    
                 $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                 $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                 $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");

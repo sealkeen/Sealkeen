@@ -1,4 +1,4 @@
-﻿import { setSidebarInputVolumeOnChange } from './Utils/Audio.js'
+﻿import { setSidebarInputVolumeOnChange, loadDirect } from './Utils/Audio.js'
 import urls from './api.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
@@ -96,6 +96,22 @@ document.oncontextmenu = function (e) {
     if (target.classList.contains('artist-card-div')) { }
 }
 
+export function onCompositionSourceChanged(compId)
+{
+    //bindPlayerButtons();
+    setArtistSongNameAsync();
+    displayQueuedTracks(_trackQueue);
+    setSidebarInputVolumeOnChange();
+    //setTitleByArtistAndTitle(el);
+    let plr = $("#player-audio-element").get(0);
+    if(plr != null)
+        plr.onended = function () {
+            let id = GetCurrentCompositionsId() ?? compId;
+            console.log('id is :' + id);
+            setNextComposition(id); 
+        };
+}
+
 export function onCompositionRightMouseDown(e) {
     try {
         let menu = document.createElement("div")
@@ -145,27 +161,32 @@ export function bindPlayerButtons() {
         }
         else {
             console.log('Not Empty');
+            id = _trackQueue.peek().id;
+            console.log('peeked. len: ' + _trackQueue.elts.length); 
         }
         setNextComposition(id);
     });
 }
 
-
-
 export function setNextComposition(compId) {
     try {
-        if (compId === undefined || compId === null)
+        if (compId == null) {
+            console.log('setNextComposition() error, compId is undefined || null')
             return;
+        }
+        console.log('setNextComposition() compsId is ' + compId)
         if(compId.includes('docs.google') || compId.includes(':')) {
+            let newUrl = compId;
             if(_trackQueue.isEmpty()) {
                 console.log('setNextComposition: Query=empty');
-                compId = getNext(compId);
+                newUrl = getNext(compId);
             } else {
                 console.log('setNextComposition: Query NOT empty');
-                compId = _trackQueue.dequeue().id;
+                newUrl = _trackQueue.dequeue().id;
             }
-            console.log('calling load Direct');
-            loadDirect(compId);
+            console.log('calling load Direct, compId = ' + newUrl);
+            loadDirect(newUrl   );
+            onCompositionSourceChanged(newUrl);
             return;
         }
         let path = 'GetHtmlNextTrackPlayer/?id=';
@@ -188,18 +209,13 @@ export function setNextComposition(compId) {
                     console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                     $("#player-audio-div").html('');
                     $("#player-audio-div").append(response);
+
+                    const htmlDom = new DOMParser().parseFromString(response, 'text/html');
+                    console.log(htmlDom.documentElement.innerHTML);
+
                     let plr = $("#player-audio-element").get(0);
                     plr.play();
-                    bindPlayerButtons();
-                    setArtistSongNameAsync();
-                    displayQueuedTracks(_trackQueue);
-                    setSidebarInputVolumeOnChange();
-                    //setTitleByArtistAndTitle(el);
-                    plr.onended = function () {
-                        let id = GetCurrentCompositionsId() ?? compId;
-                        console.log('id is :' + id);
-                        setNextComposition(id); 
-                    };
+                    onCompositionSourceChanged(compId);
                 },
                 error: async function (error_) {
                     document.title = 'Medweb';
@@ -212,29 +228,6 @@ export function setNextComposition(compId) {
     } 
 }
 
-export async function loadDirect(source)
-{
-    if(source.includes(':')) {
-        console.log('loadDirect: $("#player-audio-element")[0] is %j', $("#player-audio-element")[0]);
-        //$("#player-audio-element")[0].pause();
-        $("#player-source-element")[0].setAttribute('src', source);
-        let loadPromise = await $("#player-audio-element")[0].load();
-        if (loadPromise !== undefined) {
-            loadPromise.then(() => {
-                $("#player-audio-element")[0].play()
-                return true;
-            }).catch((error) => {
-                if (error.name === "NotAllowedError") {
-                    console.log('Load audio promise failure. NotAllowed Error.');
-                } else {
-                    console.log('Load or playback error. ' + error);
-                }
-            });
-        }
-    }
-    return Promise.resolve(false);
-}
-
 export async function setFooterPlayerSourse(el)
 {
     try {
@@ -243,8 +236,8 @@ export async function setFooterPlayerSourse(el)
         if (!el.classList.contains('card-body')) { songInfo = el.parentNode; }
             source = songInfo.querySelector('data').value; //data
         setTitleByArtistAndTitle(el);
-        let direct = await loadDirect(source);
-        if(direct != null && direct == true)
+        let direct = loadDirect(source);
+        if(direct != null && direct === true)
             return;
 
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
@@ -259,18 +252,16 @@ export async function setFooterPlayerSourse(el)
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
+                    const htmlDom = new DOMParser().parseFromString(response, 'text/html');
+                    console.log(htmlDom.documentElement.innerHTML);
                     console.log('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
-                    $("#player-audio-div").html('');
-                    $("#player-audio-div").append(response);
+                    //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
+                    document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
+                    
                     let plr = $("#player-audio-element").get(0);
+                    plr.load();
                     plr.play();
-                    bindPlayerButtons();
-                    displayQueuedTracks(_trackQueue);
-                    setSidebarInputVolumeOnChange(plr[0]);
-                    plr.onended = function () {
-                        console.log('Calling get next composition from ID: ', source);
-                        setNextComposition(source);
-                    };
+                    onCompositionSourceChanged(compId);
                 },
                 error: async function (error_) {
                     document.title = 'Medweb';

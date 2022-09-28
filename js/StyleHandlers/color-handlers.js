@@ -29,14 +29,14 @@ export function toggleTopPageBackground(on)
     if (on)
     {   
         try {
-            //document.getElementById("top-page-container").style.height = '50%';
+            document.getElementById("top-page-container").style.opacity = 1;
             document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
             document.getElementById("top-page-container").style.backgroundPosition = 'center top';
-            //document.getElementById("top-page-container").style.backgroundSize= '70% 70%';
-            if (urls.isGithub() == false)
-                document.getElementById("top-page-container").style.backgroundImage = `url(${urls.getLocation()}Images/WebPack/loading-transparent.gif)`;
-            else
-                document.getElementById("top-page-container").style.backgroundImage = `url(../${urls.getPostfix()}Images/WebPack/loading-transparent.gif)`;
+            document.getElementById("top-page-container").style.backgroundSize= '50rem 38rem';
+            let hostRoot =  urls.isGithub() ? `../${urls.getPostfix()}` : `${urls.getLocation()}`;
+            hostRoot = urls.isNodeJSHost() ? urls.getHostRootPath() : hostRoot;
+
+            document.getElementById("top-page-container").style.backgroundImage = `url(${hostRoot}Images/WebPack/loading-transparent.gif)`;
         } finally {
             document.getElementsByClassName("container")[0].style.opacity = 0;
         }
@@ -45,10 +45,11 @@ export function toggleTopPageBackground(on)
             //document.getElementById("top-page-container").style.height = '100%';
             document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
             document.getElementById("top-page-container").style.backgroundPosition = 'center center';
-            document.getElementById("top-page-container").style.backgroundImage= 'none';
-            //document.getElementById("top-page-container").style.backgroundSize= '100% 100%';
+            //document.getElementById("top-page-container").style.backgroundImage= 'none';
+            document.getElementById("top-page-container").style.backgroundSize= '0rem 0rem';
             //document.getElementById("top-page-container").setAttribute("style","background: initial;");
         } finally {
+            document.getElementById("top-page-container").style.opacity = 0;
             document.getElementsByClassName("container")[0].style.opacity = 1;
         }
     }

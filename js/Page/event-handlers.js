@@ -25,6 +25,7 @@ export function setTitleByArtistAndTitle(el) {
 }
 
 export function setArtistSongNameAsync() {
+    try {
     let compId = GetCurrentCompositionsId();
     let ctrl = (loc + 'GetArtistSongName/?id=' + compId);
     
@@ -45,9 +46,10 @@ export function setArtistSongNameAsync() {
                 document.title = (response);
             },
             error: function (error_) {
-
                 console.log("Ajax error: " + error_);
             }
         });
+    }} catch (err) {
+        console.log('setArtistSongNameAsync error.')
     }
 }

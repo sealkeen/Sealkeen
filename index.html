@@ -21,120 +21,120 @@
 </head>
 <body class="body">
     <div id="top-page-container">
-        <div class="side-hover-bar right-hover-bar"></div>  
-        <div class="side-hover-bar left-hover-bar"></div> 
-        <header>
-            <div id="mySidenav" class="sidenav bottom-left-nav" style="width: 0px;">
-                <a href="javascript:void(0)" class="closebtn">×</a>
-                <li class="nav-item nav-lnk-artists">
-                    <a class="nav-link stroke-shadow">Artists</a>
-                </li>
-                <li class="nav-item nav-lnk-compositions">
-                    <a class="nav-link stroke-shadow" >Home</a>
-                </li>
-                <li class="nav-item nav-lnk-albums">
-                    <a class="nav-link stroke-shadow">Albums</a>
-                </li>
-                <li class="nav-item nav-lnk-genres">
-                    <a class="nav-link stroke-shadow">Genres</a>
-                </li>
-                <li class="nav-item nav-lnk-sign-up">
-                    <a class="nav-link stroke-shadow">Sign up</a>
-                </li>
-                <li class="nav-item nav-lnk-background">
-                    <a class="nav-link stroke-shadow">Background</a>
-                </li>
-            </div>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <a id="navbar-logo-title" class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li id="nav-lnk-artists" class="nav-item">
-                            <a class="nav-link text-dark">Artists</a>
-                        </li>
-                        <li id="nav-lnk-compositions" class="nav-item">
-                            <a class="nav-link text-dark" >Home</a>
-                        </li>
-                        <li id="nav-lnk-albums" class="nav-item">
-                            <a class="nav-link text-dark">Albums</a>
-                        </li>
-                        <li id="nav-lnk-genres" class="nav-item">
-                            <a class="nav-link text-dark">Genres</a>
-                        </li>
-                        <li id="nav-lnk-sign-up" class="nav-item">
-                            <a class="nav-link text-dark">Sign up</a>
-                        </li>
-                        <li id="nav-lnk-background" class="nav-item">
-                            <a class="nav-link text-dark">Background</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li id="nav-lnk-register" class="nav-item">
-                            <a id="btn-identity-account-register" class="nav-link text-dark">Register</a>
-                        </li>
-                        <li id="nav-lnk-login" class="nav-item">
-                            <a id="btn-identity-account-login" class="nav-link text-dark">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <div class="container">
-            <main id="page-body-container" role="main" class="pb-3">
-                <h2 class="stroke-shadow">Log in</h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <section>
-                            <form id="__AjaxAntiForgeryForm" onsubmit="return false" referrerpolicy="no-referrer">
-                                <h4 class="stroke-shadow-h3">Use a local account to log in.</h4>
-                                <hr>
-                                <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
-                                    </ul></div>
-                                <div class="form-group">
-                                    <label for="UserName">UserName</label>
-                                    <input class="form-control" type="text" data-val="true" data-val-required="The UserName field is required." id="UserName" name="UserName" value="">
-                                    <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Password">Password</label>
-                                    <input class="form-control" type="password" data-val="true" data-val-required="The Password field is required." id="Password" name="Password">
-                                    <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                                </div>
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label for="RememberMe">
-                                            <input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true">
-                                            Remember me?
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button id="form-btn-default" class="btn btn-default">Log in</button>
-                                </div>
-                                <div class="form-group">
-                                    <p>
-                                        <a href="/Sealkeen/Account/ForgotPassword">Forgot your password?</a>
-                                    </p>
-                                    <p>
-                                        <a href="/Sealkeen/Account/Register">Register as a new user?</a>
-                                    </p>
-                                </div>
-                                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HEs8K_x0ONDkDooDQ9Qiu1JILdDM1cpz1R_HV7yJYLhD0uZLpP9EuUSZQFaWhxIkZ8O3fcJrc6uQi4eaqf05mHiAvVpxu4Frarqt9LIqLT_2vWj1JVgaPE14UgZ5HflG5TLa9i8Q_KaQhOea8eXf6I">
-                                <input name="RememberMe" type="hidden" value="false">
-                            </form>
-                        </section>
-                    </div>
-                </div>
-            </main>
-            <center>
-                <a class="btm-footer2">
-                    &copy; Sealkeen - 2022 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
-                </a>
-            </center>
+    </div>
+    <div class="side-hover-bar right-hover-bar"></div>  
+    <div class="side-hover-bar left-hover-bar"></div> 
+    <header>
+        <div id="mySidenav" class="sidenav bottom-left-nav" style="width: 0px;">
+            <a href="javascript:void(0)" class="closebtn">×</a>
+            <li class="nav-item nav-lnk-artists">
+                <a class="nav-link stroke-shadow">Artists</a>
+            </li>
+            <li class="nav-item nav-lnk-compositions">
+                <a class="nav-link stroke-shadow" >Home</a>
+            </li>
+            <li class="nav-item nav-lnk-albums">
+                <a class="nav-link stroke-shadow">Albums</a>
+            </li>
+            <li class="nav-item nav-lnk-genres">
+                <a class="nav-link stroke-shadow">Genres</a>
+            </li>
+            <li class="nav-item nav-lnk-sign-up">
+                <a class="nav-link stroke-shadow">Sign up</a>
+            </li>
+            <li class="nav-item nav-lnk-background">
+                <a class="nav-link stroke-shadow">Background</a>
+            </li>
         </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <a id="navbar-logo-title" class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li id="nav-lnk-artists" class="nav-item">
+                        <a class="nav-link text-dark">Artists</a>
+                    </li>
+                    <li id="nav-lnk-compositions" class="nav-item">
+                        <a class="nav-link text-dark" >Home</a>
+                    </li>
+                    <li id="nav-lnk-albums" class="nav-item">
+                        <a class="nav-link text-dark">Albums</a>
+                    </li>
+                    <li id="nav-lnk-genres" class="nav-item">
+                        <a class="nav-link text-dark">Genres</a>
+                    </li>
+                    <li id="nav-lnk-sign-up" class="nav-item">
+                        <a class="nav-link text-dark">Sign up</a>
+                    </li>
+                    <li id="nav-lnk-background" class="nav-item">
+                        <a class="nav-link text-dark">Background</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li id="nav-lnk-register" class="nav-item">
+                        <a id="btn-identity-account-register" class="nav-link text-dark">Register</a>
+                    </li>
+                    <li id="nav-lnk-login" class="nav-item">
+                        <a id="btn-identity-account-login" class="nav-link text-dark">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main id="page-body-container" role="main" class="pb-3">
+            <h2 class="stroke-shadow">Log in</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <section>
+                        <form id="__AjaxAntiForgeryForm" onsubmit="return false" referrerpolicy="no-referrer">
+                            <h4 class="stroke-shadow-h3">Use a local account to log in.</h4>
+                            <hr>
+                            <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+                                </ul></div>
+                            <div class="form-group">
+                                <label for="UserName">UserName</label>
+                                <input class="form-control" type="text" data-val="true" data-val-required="The UserName field is required." id="UserName" name="UserName" value="">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input class="form-control" type="password" data-val="true" data-val-required="The Password field is required." id="Password" name="Password">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label for="RememberMe">
+                                        <input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true">
+                                        Remember me?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button id="form-btn-default" class="btn btn-default">Log in</button>
+                            </div>
+                            <div class="form-group">
+                                <p>
+                                    <a href="/Sealkeen/Account/ForgotPassword">Forgot your password?</a>
+                                </p>
+                                <p>
+                                    <a href="/Sealkeen/Account/Register">Register as a new user?</a>
+                                </p>
+                            </div>
+                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HEs8K_x0ONDkDooDQ9Qiu1JILdDM1cpz1R_HV7yJYLhD0uZLpP9EuUSZQFaWhxIkZ8O3fcJrc6uQi4eaqf05mHiAvVpxu4Frarqt9LIqLT_2vWj1JVgaPE14UgZ5HflG5TLa9i8Q_KaQhOea8eXf6I">
+                            <input name="RememberMe" type="hidden" value="false">
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </main>
+        <center>
+            <a class="btm-footer2">
+                &copy; Sealkeen - 2022 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </a>
+        </center>
     </div>
     <footer class="footer">
         <div id="player-audio-div">

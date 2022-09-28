@@ -22,6 +22,7 @@ export function newQueue() {
 
             return result;
         },
+        peek: () => { console.log('peeking. len: ' + queue.elts.length); if (queue.elts?.length > 0) { return queue.elts[queue.elts.length-1] }; return undefined; },
         size: () => queue.tailIdx - queue.headIdx,
         isEmpty: () => queue.tailIdx == queue.headIdx,
         peekAll: () => {
