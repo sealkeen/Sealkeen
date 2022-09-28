@@ -31,6 +31,7 @@ export function closeNav() {
 export function openRightNav(e) {
     document.getElementById("bottomRightNav").style.width = "250px";
     //document.getElementById("top-page-container").style.marginRight = "250px";
+    document.querySelector("#volume-control").classList.add('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
     //document.getElementsByClassName("container")[0].style.opacity = 0.8;
     document.getElementById("bottomRightNav").style.paddingLeft = "5px"; 
@@ -40,6 +41,7 @@ export function openRightNav(e) {
 export function closeRightNav(e) {
     document.getElementById("bottomRightNav").style.width = "0";
     //document.getElementById("top-page-container").style.marginRight= "0";
+    document.querySelector("#volume-control").classList.remove('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 1;
     //document.getElementsByClassName("container")[0].style.opacity = 1;
     document.getElementById("bottomRightNav").style.paddingLeft = "0px"; 
