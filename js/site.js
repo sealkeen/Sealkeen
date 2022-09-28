@@ -13,6 +13,7 @@ setCurrentPageCompositions, setCurrentPageAlbums, setCurrentPageGenres, setCurre
 from './Router/click-handlers.js'
 import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js'
 import { getNext } from './Store/mock-data.js';
+import { setDevelopmentMessages } from './Development/news-data.js'
 
 document.addEventListener('transitionend', function() { transitionEnd() });
 document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
@@ -84,6 +85,7 @@ $(document).ready(function () {
         }
     });
     setSidebarInputVolumeOnChange();
+    setDevelopmentMessages();
 });
 
 document.querySelector('.container')?.addEventListener('touchend', function (e) {
