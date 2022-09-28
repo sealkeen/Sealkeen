@@ -48,8 +48,18 @@ export async function setCurrentPageIndex(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        setDevelopmentMessages('#page-body-container');
+        onDevelopmentCardClick()
     }
+}
+
+export function onDevelopmentCardClick()
+{
+    if(document.querySelector('#development-body') == null) {
+        let cardBody = document.createElement('div')
+        cardBody.id = 'development-body';
+        document.querySelector('#page-body-container').appendChild(cardBody)
+    }
+    setDevelopmentMessages();
 }
 
 export async function setCurrentPageManageAccount(event) {

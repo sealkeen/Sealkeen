@@ -15,10 +15,8 @@ export function getDevelopmentNewsData()
     ];
 }
 
-export function setDevelopmentMessages(containerName)
+export function setDevelopmentMessages()
 {
-    if(containerName == null)
-        containerName = '#development-body';
     let data = getDevelopmentNewsData();
 
     data.forEach(element => {
@@ -38,10 +36,10 @@ export function setDevelopmentMessages(containerName)
         cardText.innerHTML = element.cardText;
 
         card.appendChild(cardBody);
-        document.querySelector(containerName).appendChild(card);
+        document.querySelector('#development-body').appendChild(card);
     });
 
-    document.querySelector(containerName).addEventListener('click', (e) => {
+    document.querySelector('#development-body').addEventListener('click', (e) => {
         if(document.getElementById("mySidenav").getBoundingClientRect().width === 0)
         { 
             openNav(); openRightNav(); 
