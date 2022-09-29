@@ -4,13 +4,26 @@ import { containsClasses } from "../utilities.js";
 export function getDevelopmentNewsData()
 {
     return [
+        {
+            cardTitle: 'Side navigation', date: '29.09.2022', cardText: 
+            'In the new release the navigation bars are expanding into the screen size / 2. some style improvements in progress...',
+            id: 'september-thirty-sidebars'
+        },
         { 
             cardTitle: 'New version release', date: '28.09.2022', cardText: 
             'Last application version improved performance. ' +
-            'Added JSON data to MVC controllers, new ALbums, Composition, Artists and Genres ' +
+            'Added JSON data to MVC controllers, new Albums, Composition, Artists and Genres ' +
             'are fetched from JSON objects (earlier it was HTML text data from View controllers). ' +
             '\r\nAdded two side-bars, use mouse wheel to change the volume level within input ranges. ' + 
-            'Tap and scroll a composition on your mobile device to get context menu opened (queueying).'
+            'Tap and scroll a composition on your mobile device to get context menu opened (queueying).',
+            id: 'september-twenty-eight-sidebars'
+        },
+        {
+            cardTitle: 'Volume controls, animation effects', date: '26.09.2022', cardText: 
+            'On september 26 there were added two volume control handlers ' +
+            '(use mouse wheel to adjust volume level), both work simultaneously, ' +
+            'added transition effects and animations.',
+            id: 'september-volume-effects-animations'
         }
     ];
 }
@@ -19,8 +32,8 @@ export function setDevelopmentMessages()
 {
     let data = getDevelopmentNewsData();
 
+    document.querySelector('#development-body').innerHTML = '';
     data.forEach(element => {
-
         let card = document.createElement('div');
         let cardBody = document.createElement('div')
         let cardTitle = document.createElement('h3')
@@ -34,6 +47,7 @@ export function setDevelopmentMessages()
 
         cardTitle.innerHTML = element.cardTitle + ' ' + element.date;
         cardText.innerHTML = element.cardText;
+        card.id = element.id;
 
         card.appendChild(cardBody);
         document.querySelector('#development-body').appendChild(card);

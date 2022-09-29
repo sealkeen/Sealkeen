@@ -54,10 +54,10 @@ export async function setCurrentPageIndex(event) {
 
 export function onDevelopmentCardClick()
 {
-    if(document.querySelector('#development-body') == null) {
-        let cardBody = document.createElement('div')
-        cardBody.id = 'development-body';
-        document.querySelector('#page-body-container').appendChild(cardBody)
+    if(document.querySelector('#development-body') === null) {
+        let developmentBody = document.createElement('div')
+        developmentBody.id = 'development-body';
+        document.querySelector('#page-body-container').appendChild(developmentBody)
     }
     setDevelopmentMessages();
 }
