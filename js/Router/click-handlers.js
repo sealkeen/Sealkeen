@@ -109,7 +109,7 @@ export async function setCurrentPageSignUp(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (urls.loc + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
+        let ctrl = (urls.getLocation() + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
             var ftchSignUp = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
