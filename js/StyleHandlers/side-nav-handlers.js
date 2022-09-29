@@ -12,7 +12,8 @@ document.querySelector('.right-hover-bar')?.addEventListener('click', openRightN
 document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked)
 
 export function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySidenav").style.width = `calc(0.5 * (100vw) ${(window.screen.width < window.screen.height) ? '- var(--scrollbar-width)' : '' })`;
+    //window.addEventListener('resizeend', () => { document.getElementById("mySidenav").style.width = $('body').width() / 2; } )
     //document.getElementById("top-page-container").style.marginLeft = "250px";
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
     //document.getElementsByClassName("container")[0].style.opacity = 0.8;
@@ -30,7 +31,8 @@ export function closeNav() {
 }
 
 export function openRightNav(e) {
-    document.getElementById("bottomRightNav").style.width = "250px";
+    document.getElementById("bottomRightNav").style.width = `calc(0.5 * (100vw) ${(window.screen.width > window.screen.height) ? '- var(--scrollbar-width)' : '' })`;
+    //window.addEventListener('resizeend', () => { document.getElementById("bottomRightNav").style.width = $('body').width() / 2; } )
     //document.getElementById("top-page-container").style.marginRight = "250px";
     document.querySelector("#volume-control").classList.add('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;

@@ -35,6 +35,7 @@ document.querySelector('.nav-lnk-register')?.addEventListener('click', setCurren
 document.querySelector('.nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
 document.querySelector('.nav-lnk-background')?.addEventListener('click', colorHandlers.toggleBodyBackground);
 
+document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
 
 $(document).ready(function () {
