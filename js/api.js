@@ -34,8 +34,28 @@ const urls = {
     getHostRootPath()
     {
         return `${location.protocol}//${location.host}/`;
+    },
+    async isLocationReachable()
+    {
+        return await getLocationResponse();
     }
 }; export default urls;
+
+function getLocationResponse() { 
+    $.ajax({
+        url: urls.getLocation(),
+        type: 'GET',
+        contentType:'text/html',
+        success: function (result) {
+            //console.log('location reachable')
+            return true;
+        },
+        error: function (err){
+            console.log('location was not reachable, returning false.')
+            return false;
+        }
+    });
+};
 
 // if-url-exist.js v1
 export function ifUrlExist(url, callback) {
