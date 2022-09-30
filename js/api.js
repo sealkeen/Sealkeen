@@ -7,7 +7,7 @@ const urls = {
         } else if((window.location.href.indexOf("localhost:500") > -1))
             return `${location.protocol}//${location.host}/`;
         else
-            return 'https://f023-37-144-214-119.eu.ngrok.io/'
+            return 'https://0b8a-37-144-214-167.eu.ngrok.io'
     },
     getPostfix() {
         if (window.location.href.indexOf("github.io") > -1)
