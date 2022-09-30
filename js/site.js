@@ -45,7 +45,7 @@ $(document).ready(function () {
     _trackQueue.onchange = () => {
         displayQueuedTracks(_trackQueue);
     };
-    const container = document.querySelector('.body');
+    const container = document.querySelector('body');
 
     container.onmousedown = (e) => {
         console.log('onmousedown' + e.target.id + ' ' + e.target.className);
