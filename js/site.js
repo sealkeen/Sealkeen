@@ -4,7 +4,7 @@ import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queu
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
     displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
 import { transitionEnd } from './StyleHandlers/footer-handlers.js';
-import colorHandlers, { toggleTopPageBackground } from './StyleHandlers/color-handlers.js'
+import colorHandlers, { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js'
 import { closeNav, openNav } from './StyleHandlers/side-nav-handlers.js'
 import { checkInputs } from './signup.js'
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
@@ -39,6 +39,7 @@ document.documentElement.style.setProperty('--scrollbar-width', (window.innerWid
 const loc = urls.getLocation();
 
 $(document).ready(function () {
+    toggleBodyBackground();
     bindPlayerButtons();
     toggleTopPageBackground(false);
     //addButtonOnClickHandlers();

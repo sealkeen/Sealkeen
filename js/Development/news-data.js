@@ -1,9 +1,15 @@
 import { openRightNav, openNav, closeRightNav, closeNav } from "../StyleHandlers/side-nav-handlers.js";
 import { containsClasses } from "../utilities.js";
+import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData()
 {
     return [
+        {
+            cardTitle: 'Fixed background and transitions', date: '30.09.2022', cardText: 
+            'Added gradient background and image made fixed (no background scroll). Some CSS styling in progress...',
+            id: 'september-thirty-fixed-background'
+        },
         {
             cardTitle: 'Side navigation', date: '29.09.2022', cardText: 
             'In the new release the navigation bars are expanding into the screen size / 2. some style improvements in progress...',
@@ -30,6 +36,7 @@ export function getDevelopmentNewsData()
 
 export function setDevelopmentMessages()
 {
+    //$('#september-thirty-fixed-background').addEventListener('click', toggleBodyBackground)
     let data = getDevelopmentNewsData();
 
     document.querySelector('#development-body').innerHTML = '';

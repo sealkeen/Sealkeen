@@ -3,26 +3,28 @@ import urls from './../api.js'
 export default { 
     toggleBodyBackground()
     {
-        if ($('.body')[0].className === 'body') {
-            $('.body')[0].className = 'body gradient-blue1'; //$('body').css('background-color', 'white');
-        } else 
-        if ($('.body')[0].className === ('body gradient-blue1')) {
-            $('.body')[0].className = ('body white');
-        } else 
-        if ($('.body')[0].className === ('body white')) {
-            $('.body')[0].className = ('body'); //$('body').css('background-color', 'grey');
+        let hours = (new Date().getHours())
+        if (hours >= 22 || hours <= 7) {
+            $('.body')[0].className = ('body midnight'); //$('body').css('background-color', 'white');
+        } else if (hours > 7 || hours < 11) {
+            $('.body')[0].className = ('body gradient-light-blue');
+        } else if (hours > 18 || hours < 22) {
+            $('.body')[0].className = ('body evening');
+        } else {
+            $('.body')[0].className = ('body gradient-blue1'); //$('body').css('background-color', 'grey');
         }
     }
 }
 
 export function toggleBodyBackground()
 {
-    if ($('body').hasClass('white')) {
-        $('body').toggleClass('white');
-        //$('body').css('background-color', 'white');
+    let hours = (new Date().getHours())
+    if (hours >= 22 || hours <= 7) {
+        $('.body')[0].className = ('body midnight');; //$('body').css('background-color', 'white');
+    } else if (hours > 7 || hours < 11) {
+        $('.body')[0].className = ('body gradient-light-blue');
     } else {
-        $('body').toggleClass('white');
-        //$('body').css('background-color', 'grey');
+        $('.body')[0].className = ('body gradient-blue1'); //$('body').css('background-color', 'grey');
     }
 }
 
