@@ -3,14 +3,14 @@ import urls from './../api.js'
 export default { 
     toggleBodyBackground()
     {
-        if ($('body')[0].className === 'body') {
-            $('body')[0].className = 'body gradient-blue1'; //$('body').css('background-color', 'white');
+        if ($('.body')[0].className === 'body') {
+            $('.body')[0].className = 'body gradient-blue1'; //$('body').css('background-color', 'white');
         } else 
-        if ($('body')[0].className === ('body gradient-blue1')) {
-            $('body')[0].className = ('body white');
+        if ($('.body')[0].className === ('body gradient-blue1')) {
+            $('.body')[0].className = ('body white');
         } else 
-        if ($('body')[0].className === ('body white')) {
-            $('body')[0].className = ('body'); //$('body').css('background-color', 'grey');
+        if ($('.body')[0].className === ('body white')) {
+            $('.body')[0].className = ('body'); //$('body').css('background-color', 'grey');
         }
     }
 }
