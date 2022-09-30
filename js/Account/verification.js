@@ -1,6 +1,6 @@
 import urls from './../api.js'
 import { getCookie } from './../utilities.js'
-import colorHandlers from './../StyleHandlers/color-handlers.js'
+import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setCurrentPageArtists } from './../Router/click-handlers.js'
 
 export function setLoginAntiForgeryOnClick(e) {
@@ -45,7 +45,7 @@ export function setLoginAntiForgeryOnClick(e) {
                     $("#page-body-container").append(...nodes);
                     $("#page-body-container").css("background-color: ", "rgba(255, 255, 255)");
                     $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
-                    colorHandlers.toggleBodyBackground();
+                    toggleBodyBackground();
                 } else {
                     console.log('ajax response error');
                 }

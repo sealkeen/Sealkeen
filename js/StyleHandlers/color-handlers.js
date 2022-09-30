@@ -1,18 +1,16 @@
 import urls from './../api.js'
 
-export default { 
-    toggleBodyBackground()
-    {
-        let hours = (new Date().getHours())
-        if (hours >= 22 || hours <= 7) {
-            $('.body')[0].className = ('body midnight'); //$('body').css('background-color', 'white');
-        } else if (hours > 7 || hours < 11) {
-            $('.body')[0].className = ('body gradient-light-blue');
-        } else if (hours > 18 || hours < 22) {
-            $('.body')[0].className = ('body evening');
-        } else {
-            $('.body')[0].className = ('body gradient-blue1'); //$('body').css('background-color', 'grey');
-        }
+export function onClickBodyBackground()
+{
+    let hours = (new Date().getHours())
+           if ($('.body')[0].className === 'body evening') {
+        $('.body')[0].className = ('body gradient-light-blue'); //$('body').css('background-color', 'white');
+    } else if ($('.body')[0].className === 'body gradient-light-blue') {
+        $('.body')[0].className = ('body midnight');
+    } else if ($('.body')[0].className === 'body midnight') {
+        $('.body')[0].className = ('body gradient-blue1');
+    } else if ($('.body')[0].className === 'body gradient-blue1') {
+        $('.body')[0].className = ('body evening'); //$('body').css('background-color', 'grey');
     }
 }
 
