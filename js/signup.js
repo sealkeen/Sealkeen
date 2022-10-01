@@ -3,11 +3,11 @@
 import { LogMessageRequest } from './logging.js';
 import { setRegisterAntiForgeryOnClick, setLoginAntiForgeryOnClick } from './Account/verification.js';
 
-const button = document.getElementById('form-btn-default');
-const username = document.getElementById('UserName');
-const email = document.getElementById('Email');
-const password = document.getElementById('Password');
-const passwordCheck = document.getElementById('ConfirmPassword');
+var button = document.getElementById('form-btn-default');
+var username = document.getElementById('UserName');
+var email = document.getElementById('Email');
+var password = document.getElementById('Password');
+var passwordCheck = document.getElementById('ConfirmPassword');
 
 button?.addEventListener('click', (e) => {
     e.preventDefault();
@@ -17,15 +17,20 @@ button?.addEventListener('click', (e) => {
 });
 
 export function checkInputs() {
+    username = document.getElementById('UserName');
+    email = document.getElementById('Email');
+    password = document.getElementById('Password');
+    passwordCheck = document.getElementById('ConfirmPassword');
+
     // alert('Данный функционал находится на стадии реализации. js ver = 106.12');
     // get the values from the inputs
     const usernameValue = document.getElementById('UserName').value.trim();
-    const emailValue = document.getElementById('Email').value.trim();
+    const emailValue = document.getElementById('Email') ? document.getElementById('Email').value.trim() : null;
     const passwordValue = document.getElementById('Password').value.trim();
-    const passwordCheckValue = document.getElementById('ConfirmPassword').value.trim();
+    const passwordCheckValue = document.getElementById('ConfirmPassword') ? document.getElementById('ConfirmPassword').value.trim() : null;
 
     if( checkUsername(usernameValue) && checkPassword(passwordValue) 
-        && checkEmail(emailValue) &&checkPasswordRepeat(passwordValue, passwordCheckValue) 
+        && checkEmail(emailValue) && checkPasswordRepeat(passwordValue, passwordCheckValue) 
     ) {
         LogMessageRequest('Ok, all is fine. JS Returned');
         return true;
