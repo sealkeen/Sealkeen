@@ -1,4 +1,5 @@
 const urls = {
+    loc: 'https://1f87-37-144-214-129.eu.ngrok.io/',
     getLocation() {
         if (!(window.location.href.indexOf("github.io") > -1) && (window.location.href.indexOf('localhost:808') > -1) )
         {
@@ -6,7 +7,7 @@ const urls = {
         } else if((window.location.href.indexOf("localhost:500") > -1))
             return `${location.protocol}//${location.host}/`;
         else
-            return 'https://0b8a-37-144-214-167.eu.ngrok.io/'
+            return 'https://1f87-37-144-214-129.eu.ngrok.io/'
     },
     getPostfix() {
         if (window.location.href.indexOf("github.io") > -1)
@@ -29,10 +30,6 @@ const urls = {
     isNodeJSHost()
     {
         return (window.location.href.indexOf('localhost:808') > -1);
-    },
-    isNgrokHost()
-    {
-        return (window.location.href.indexOf('ngrok.io') > -1)
     },
     getHostRootPath()
     {
