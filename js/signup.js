@@ -19,10 +19,10 @@ button?.addEventListener('click', (e) => {
 export function checkInputs() {
     // alert('Данный функционал находится на стадии реализации. js ver = 106.12');
     // get the values from the inputs
-    const usernameValue = username.value.trim();
-    const emailValue = email?.value.trim();
-    const passwordValue = password.value.trim();
-    const passwordCheckValue = passwordCheck?.value.trim();
+    const usernameValue = document.getElementById('UserName').value.trim();
+    const emailValue = document.getElementById('Email').value.trim();
+    const passwordValue = document.getElementById('Password').value.trim();
+    const passwordCheckValue = document.getElementById('ConfirmPassword').value.trim();
 
     if( checkUsername(usernameValue) && checkPassword(passwordValue) 
         && checkEmail(emailValue) &&checkPasswordRepeat(passwordValue, passwordCheckValue) 
