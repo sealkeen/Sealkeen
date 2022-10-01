@@ -80,7 +80,7 @@ export function ifUrlExist(url, callback) {
 export async function pushHistoryState(url)
 {
     try {
-        if(urls.isGithub() || urls.isLocalhost())
+        if(urls.isGithub() || urls.isNodeJSHost())
             return;
         console.log('History state URL:' + url);
         console.log('prevstate not null');
