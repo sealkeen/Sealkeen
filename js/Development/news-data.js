@@ -1,10 +1,15 @@
 import { openRightNav, openNav, closeRightNav, closeNav } from "../StyleHandlers/side-nav-handlers.js";
 import { containsClasses } from "../utilities.js";
-import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
+import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData()
 {
     return [
+        {
+            cardTitle: 'Fixed navigation bar', date: '01.10.2022', cardText: 
+            'Top navigation bar has fixed position now.',
+            id: 'october-first-fixed-navbar'
+        },
         {
             cardTitle: 'Fixed background and transitions', date: '30.09.2022', cardText: 
             'Added gradient background and image made fixed (no background scroll). Some CSS styling in progress...',
@@ -59,33 +64,44 @@ export function setDevelopmentMessages()
         card.appendChild(cardBody);
         document.querySelector('#development-body').appendChild(card);
     });
+    document.querySelectorAll('#september-twenty-eight-sidebars,#september-thirty-sidebars').forEach(card => 
+        card.addEventListener('click', (e) => {
+            if(document.getElementById("mySidenav").getBoundingClientRect().width === 0)
+            { 
+                openNav(); openRightNav(); 
+            }
+            else { 
+                closeRightNav(); closeNav(); 
+            }
+            let menu = document.createElement("div")
+            let cmiQueueSelected = document.createElement("p")
+            cmiQueueSelected.id = 'ctxmenu-button';
+            cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open enqueue menu on composition";
+            menu.id = "ctxmenu";
 
-    document.querySelector('#development-body').addEventListener('click', (e) => {
-        if(document.getElementById("mySidenav").getBoundingClientRect().width === 0)
-        { 
-            openNav(); openRightNav(); 
-        }
-        else { 
-            closeRightNav(); closeNav(); 
-        }
-        let menu = document.createElement("div")
-        let cmiQueueSelected = document.createElement("p")
-        cmiQueueSelected.id = 'ctxmenu-button';
-        cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open enqueue menu on composition";
-        menu.id = "ctxmenu";
+            //menu.onfocusout = () => menu.outerHTML = '';
+            //menu.onmouseleave = () => menu.outerHTML = ''
+            menu.appendChild(cmiQueueSelected)
+            
+            console.log(e.target)
+            let insertTarget = {};
+            if(e.target.classList.contains('card-body'))
+                insertTarget = e.target.parentElement;
+            if(e.target.classList.contains('card'))
+                insertTarget = e.target;
+            if(containsClasses(e.target, 'card-text', 'card-title'))
+                insertTarget = e.target.parentElement.parentElement;
+            insertTarget.appendChild(menu);
+        })
+    )
 
-        //menu.onfocusout = () => menu.outerHTML = '';
-        //menu.onmouseleave = () => menu.outerHTML = ''
-        menu.appendChild(cmiQueueSelected)
-        
-        console.log(e.target)
-        let insertTarget = {};
-        if(e.target.classList.contains('card-body'))
-            insertTarget = e.target.parentElement;
-        if(e.target.classList.contains('card'))
-            insertTarget = e.target;
-        if(containsClasses(e.target, 'card-text', 'card-title'))
-            insertTarget = e.target.parentElement.parentElement;
-        insertTarget.appendChild(menu);
-    })
+    $('#october-first-fixed-navbar')[0].addEventListener('click', (e) => { 
+        e.preventDefault();
+        document.querySelectorAll(".navbar-collapse")[0].classList.toggle('show') //(".navbar,.navbar-collapse")[0]
+    });
+
+    $('#september-thirty-fixed-background')[0].addEventListener('click', (e) => { 
+        e.preventDefault();
+        onClickBodyBackground()
+    });
 }
