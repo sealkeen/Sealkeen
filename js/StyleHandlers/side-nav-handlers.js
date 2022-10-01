@@ -9,7 +9,7 @@ document.querySelector('.left-hover-bar')?.addEventListener('mouseover', openNav
 document.querySelector('.right-hover-bar')?.addEventListener('mouseover', openRightNav);
 document.querySelector('.left-hover-bar')?.addEventListener('click', openNav);
 document.querySelector('.right-hover-bar')?.addEventListener('click', openRightNav);
-document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked)
+document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked);
 
 export function openNav() {
     document.getElementById("mySidenav").style.width = `calc(0.5 * (100vw) ${(window.screen.width < window.screen.height) ? '- var(--scrollbar-width)' : '' })`;
