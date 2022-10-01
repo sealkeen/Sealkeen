@@ -44,6 +44,10 @@ export function setDevelopmentMessages()
     //$('#september-thirty-fixed-background').addEventListener('click', toggleBodyBackground)
     let data = getDevelopmentNewsData();
 
+    if($("#development-body").length <= 0){
+        let devDiv = document.createElement('div'); devDiv.id = 'development-body';
+        $("#page-body-container")[0].appendChild(devDiv)
+    }
     document.querySelector('#development-body').innerHTML = '';
     data.forEach(element => {
         let card = document.createElement('div');
@@ -52,7 +56,7 @@ export function setDevelopmentMessages()
         let cardText = document.createElement('div')
         card.className = 'card'
         cardBody.className = 'card-body'
-        cardTitle.className = 'card-title stroke-shadow-h3'
+        cardTitle.className = 'card-title'
         cardText.className = 'card-text'
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
