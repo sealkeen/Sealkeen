@@ -2,29 +2,37 @@ import urls from './../api.js'
 
 export function onClickBodyBackground()
 {
-    let hours = (new Date().getHours())
-           if ($('.body')[0].className === 'body evening') {
-        $('.body')[0].className = ('body gradient-light-blue'); //$('body').css('background-color', 'white');
-    } else if ($('.body')[0].className === 'body gradient-light-blue') {
-        $('.body')[0].className = ('body midnight');
-    } else if ($('.body')[0].className === 'body midnight') {
-        $('.body')[0].className = ('body gradient-blue1');
-    } else if ($('.body')[0].className === 'body gradient-blue1') {
-        $('.body')[0].className = ('body evening'); //$('body').css('background-color', 'grey');
+    if ($('.body')[0].className === 'body early-evening') {
+        $('.body')[0].className = ('body midnight'); //$('body').css('background-color', 'white');
+    } else if ($('.body')[0].className ==='body midnight') {
+        $('.body')[0].className = ('body gradient-light-blue');
+    } else if ($('.body')[0].className ==='body gradient-light-blue') {
+        $('.body')[0].className = ('body gradient-daylight'); //$('body').css('background-color', 'grey');
+    } else if ($('.body')[0].className ==='body gradient-daylight') {
+        $('.body')[0].className = ('body early-evening');
     }
 }
 
 export function toggleBodyBackground()
 {
     let hours = (new Date().getHours())
+    let welcome = $('#welcome')[0];
     if (hours >= 22 || hours <= 7) {
-        $('.body')[0].className = ('body midnight');; //$('body').css('background-color', 'white');
-    } else if (hours > 7 || hours < 11) {
+        $('.body')[0].className = ('body midnight'); //$('body').css('background-color', 'white');
+        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good midnight';
+    } else if (hours > 7 && hours < 11) {
         $('.body')[0].className = ('body gradient-light-blue');
-    } else {
-        $('.body')[0].className = ('body gradient-blue1'); //$('body').css('background-color', 'grey');
+        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good morning';
+    } else if (hours >= 11 && hours <= 16) {
+        $('.body')[0].className = ('body gradient-daylight'); //$('body').css('background-color', 'grey');
+        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good day';
+    } else if (hours > 16 && hours < 22) {
+        $('.body')[0].className = ('body early-evening');
+        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good evening';
     }
 }
+
+function noOp() { console.log('no-op')}
 
 export function toggleTopPageBackground(on)
 {

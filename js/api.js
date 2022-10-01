@@ -1,13 +1,12 @@
 const urls = {
     loc: 'https://1f87-37-144-214-129.eu.ngrok.io/',
     getLocation() {
-        if (!(window.location.href.indexOf("github.io") > -1) && (window.location.href.indexOf('localhost:808') > -1) )
-        {
-            return 'http://localhost:8080/'
-        } else if((window.location.href.indexOf("localhost:500") > -1))
-            return `${location.protocol}//${location.host}/`;
-        else
+        if(this.isGithub()) {
             return 'https://1f87-37-144-214-129.eu.ngrok.io/'
+        } else if (this.isNodeJSHost()) {
+            return 'http://localhost:8080/'
+        } else
+            return `${location.protocol}//${location.host}/`;
     },
     getPostfix() {
         if (window.location.href.indexOf("github.io") > -1)

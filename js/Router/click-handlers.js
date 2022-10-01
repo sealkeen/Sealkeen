@@ -3,10 +3,33 @@ import { LogMessageRequest } from '.././logging.js';
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../Account/verification.js'
 import { checkInputs } from './../signup.js'
 import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, CreateGenresDOMFromJSON } from './../Store/mock-data.js'
-import { toggleTopPageBackground } from './../StyleHandlers/color-handlers.js'
+import { toggleTopPageBackground, onClickBodyBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setDevelopmentMessages } from './../Development/news-data.js'
+import { transitionEnd } from './../StyleHandlers/footer-handlers.js';
 
 const loc = urls.getLocation();
+
+export function addEventHandlersOnBody() {
+    document.addEventListener('transitionend', function() { transitionEnd() });
+    document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
+    document.querySelector('#nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
+    document.querySelector('#nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
+    document.querySelector('#nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
+    document.querySelector('#nav-lnk-artists')?.addEventListener('click', setCurrentPageArtists);
+    document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
+    document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
+    document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
+    document.querySelector('#nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
+    
+    document.querySelector('.nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
+    document.querySelector('.nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
+    document.querySelector('.nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
+    document.querySelector('.nav-lnk-artists')?.addEventListener('click', setCurrentPageArtists);
+    document.querySelector('.nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
+    document.querySelector('.nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
+    document.querySelector('.nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
+    document.querySelector('.nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
+}
 
 export async function setCurrentPageIndex(event) {
     try {
@@ -49,6 +72,7 @@ export async function setCurrentPageIndex(event) {
     } finally {
         toggleTopPageBackground(false);
         onDevelopmentCardClick()
+        toggleBodyBackground();
     }
 }
 

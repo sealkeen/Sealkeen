@@ -27,25 +27,13 @@
     <div class="side-hover-bar left-hover-bar"></div> 
     <header>
         <div id="mySidenav" class="sidenav bottom-left-nav" style="width: 0px;">
-            <a href="javascript:void(0)" class="closebtn">×</a>
-            <li class="nav-item nav-lnk-artists">
-                <a class="nav-link stroke-shadow">Artists</a>
-            </li>
-            <li class="nav-item nav-lnk-compositions">
-                <a class="nav-link stroke-shadow" >Home</a>
-            </li>
-            <li class="nav-item nav-lnk-albums">
-                <a class="nav-link stroke-shadow">Albums</a>
-            </li>
-            <li class="nav-item nav-lnk-genres">
-                <a class="nav-link stroke-shadow">Genres</a>
-            </li>
-            <li class="nav-item nav-lnk-sign-up">
-                <a class="nav-link stroke-shadow">Sign up</a>
-            </li>
-            <li class="nav-item nav-lnk-background">
-                <a class="nav-link stroke-shadow">Background</a>
-            </li>
+            <p href="javascript:void(0)" class="closebtn">×</p>
+            <p class="nav-link stroke-shadow nav-lnk-artists">Artists</p>
+            <p class="nav-link stroke-shadow nav-lnk-compositions" >Home</p>
+            <p class="nav-link stroke-shadow nav-lnk-albums">Albums</p>
+            <p class="nav-link stroke-shadow nav-lnk-genres">Genres</p>
+            <p class="nav-link stroke-shadow nav-lnk-sign-up">Sign up</p>
+            <p class="nav-link stroke-shadow nav-lnk-background">Background</p>
         </div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <a id="navbar-logo-title" class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
@@ -57,7 +45,7 @@
                     <li id="nav-lnk-artists" class="nav-item">
                         <a class="nav-link text-dark">Artists</a>
                     </li>
-                    <li id="nav-lnk-compositions" class="nav-item">
+                    <li id="nav-lnk-compositions" class="nav-item nav-lnk-compositions">
                         <a class="nav-link text-dark" >Home</a>
                     </li>
                     <li id="nav-lnk-albums" class="nav-item">
@@ -87,7 +75,7 @@
     <div class="container">
         <main id="page-body-container" role="main" class="pb-3">
             <div class="text-center">
-                <h1 class="display-4 stroke-shadow">Welcome</h1>
+                <h1 id="welcome" class="display-4 stroke-shadow">Welcome</h1>
                 <p class="stroke-shadow-h3">Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
             </div>
             <div id="development-body"></div>
@@ -111,10 +99,10 @@
     </footer>
 
     <div id="bottomRightNav" class="sidenav bottom-right-nav">
-        <a href="javascript:void(0)" class="closeRightNavBtn">×</a>
+        <p href="javascript:void(0)" class="closeRightNavBtn">×</p>
         <div style="display: flex;">
-            <a href="#" class="footer-pause-track-btn">Pause</a>
-            <a href="#" class="footer-next-track-btn">Next</a>
+            <p href="#" class="footer-pause-track-btn">Pause</p>
+            <p href="#" class="footer-next-track-btn">Next</p>
             </div>
         <div class="card-query-columns"></div>
         <input type="range" id="volume-control">
