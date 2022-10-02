@@ -11,6 +11,26 @@ document.querySelector('.left-hover-bar')?.addEventListener('click', openNav);
 document.querySelector('.right-hover-bar')?.addEventListener('click', openRightNav);
 document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked);
 
+export function addSideNavElements()
+{
+    let leftCircle = document.createElement('div');
+    leftCircle.className = 'circle left-circle';
+    let rightCircle = document.createElement('div')
+    rightCircle.className = 'circle right-circle';
+    let leftLine = document.createElement('div');
+    leftLine.className = 'line left-line'
+    let rightLine = document.createElement('div');
+    rightLine.className = 'line right-line'
+    leftCircle.appendChild(leftLine)
+    rightCircle.appendChild(rightLine)
+    document.querySelector('.closeRightNavBtn').after(rightCircle)
+    document.querySelector('.closebtn').after(leftCircle)
+    
+    document.querySelectorAll('.circle').forEach(element => {
+        element.addEventListener('click', onPauseClicked);
+    });
+}
+
 export function openNav() {
     document.getElementById("mySidenav").style.width = `calc(0.5 * (100vw) ${(window.screen.width < window.screen.height) ? '- var(--scrollbar-width)' : '' })`;
     //window.addEventListener('resizeend', () => { document.getElementById("mySidenav").style.width = $('body').width() / 2; } )

@@ -1,4 +1,3 @@
-
 export function addEventOnWindowResize() {
     document.querySelector('.spacer').style.height = $('.navbar').height() * 1.5 + 'px';
     window.addEventListener('resize', function(event) {
