@@ -27,8 +27,17 @@ export function addSideNavElements()
     document.querySelector('.closebtn').after(leftCircle)
     
     document.querySelectorAll('.circle').forEach(element => {
-        element.addEventListener('click', onPauseClicked);
+        element.addEventListener('click', (e) => { 
+            onPauseClicked(e); 
+        });
+        element.addEventListener('touchstart', (e) => { 
+            $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
+        });
+        element.addEventListener('mouseup', (e) => { 
+            setTimeout( () => { $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active')}, 150);
+        });
     });
+
 }
 
 export function openNav() {
