@@ -6,6 +6,12 @@ export function getDevelopmentNewsData()
 {
     return [
         {
+            cardTitle: 'Performance', date: '02.10.2022', cardText: 
+            'Dramatically increased performance by caching the database in RAM (9151–13,234 times) and making data repository class singleton.',
+            id: 'october-second-performance-boost'
+        },
+        {
+
             cardTitle: 'Fixed navigation bar', date: '01.10.2022', cardText: 
             'Top navigation bar has fixed position now.',
             id: 'october-first-fixed-navbar'
