@@ -102,7 +102,7 @@ export function createCardFromJSON(element)
 export function CreateAlbumsDOMFromJSON(jsonSource) {
     //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
-    let cardcolumns = document.createElement("div")
+    let cardcolumns = document.createElement("div");
     cardcolumns.className = 'card-columns';
 
     let textcenter = document.createElement('div');
@@ -118,15 +118,19 @@ export function CreateAlbumsDOMFromJSON(jsonSource) {
         let alb = document.createElement("div")
         let data = document.createElement("data")
         let h6 = document.createElement("h6")
+        let h7 = document.createElement("h7")
 
         card.className = 'card';
         alb.className = 'card-body album-card-div';
         data.setAttribute("value", element.id);
-        h6.innerHTML = element.name;
+        h6.innerHTML = element.art;
+        h7.innerHTML = element.name;
         h6.className = 'card-title';
+        h7.className = 'card-text';
 
         alb.appendChild(data);
         alb.appendChild(h6);
+        alb.appendChild(h7);
         card.appendChild(alb);
         cardcolumns.appendChild(card);
     });
