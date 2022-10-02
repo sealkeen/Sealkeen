@@ -37,7 +37,6 @@ export function addSideNavElements()
             setTimeout( () => { $('.right-circle').removeClass('circle-active'); $('.left-circle').removeClass('circle-active')}, 150);
         });
     });
-
 }
 
 export function openNav() {
