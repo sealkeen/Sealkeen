@@ -34,7 +34,7 @@ export function addSideNavElements()
             $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
         });
         element.addEventListener('mouseup', (e) => { 
-            setTimeout( () => { $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active')}, 150);
+            setTimeout( () => { $('.right-circle').removeClass('circle-active'); $('.left-circle').removeClass('circle-active')}, 150);
         });
     });
 
