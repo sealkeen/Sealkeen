@@ -30,6 +30,9 @@ export function addSideNavElements()
         element.addEventListener('click', (e) => { 
             onPauseClicked(e); 
         });
+        element.addEventListener('mousedown', (e) => { 
+            $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
+        });
         element.addEventListener('touchstart', (e) => { 
             $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
         });
