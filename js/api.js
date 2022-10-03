@@ -30,6 +30,10 @@ const urls = {
     {
         return (window.location.href.indexOf('localhost:808') > -1);
     },
+    isNgrok()
+    {
+        return (window.location.href.indexOf('ngrok.io') > -1);
+    },
     getHostRootPath()
     {
         return `${location.protocol}//${location.host}/`;

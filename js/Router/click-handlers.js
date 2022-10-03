@@ -528,10 +528,11 @@ export async function setCurrentPageRegister(event) {
     event.preventDefault();
     try {
         if(urls.isLocationReachable() && urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Register'; return; }
-
+	    let prefix = urls.isNgrok() ? 'Identity/' : '';
+	
         toggleTopPageBackground(true);
         console.log('Loading: ' + loc + 'Account/Register');
-        let ctrl = (loc + 'Account/Register');
+        let ctrl = (loc + prefix + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             var ftchPartRegister = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -588,11 +589,12 @@ export async function setCurrentPageRegister(event) {
 export async function setCurrentPageLogin(event) {
     try {
         if(urls.isLocationReachable() && urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Login'; return; }
-
+	    let prefix = urls.isNgrok() ? 'Identity/' : '';
+	
         event.preventDefault();
         toggleTopPageBackground(true);
         console.log('Loading: ' + loc + 'Account/Login');
-        let ctrl = (loc + 'Account/Login');
+        let ctrl = (loc + prefix + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             var ftchPartLgn = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
