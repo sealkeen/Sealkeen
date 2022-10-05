@@ -467,7 +467,8 @@ export async function setCurrentPageCompositionByID(el) {
             });
         }
     } catch (e) {
-        console.log(e)
+        setCurrentPageMockData();
+        console.log('fetch error. Setting up mock data. Details: ' + e)
     } finally {
         toggleTopPageBackground(false);
     }
@@ -518,7 +519,8 @@ export async function setCurrentPageAlbumByID(el) {
             });
         }
     } catch (e) {
-        console.log(e)
+        setCurrentPageMockData();
+        console.log('fetch error. Setting up mock data. Details: ' + e)
     } finally {
         toggleTopPageBackground(false);
     }
