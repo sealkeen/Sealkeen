@@ -527,6 +527,7 @@ export async function setCurrentPageAlbumByID(el) {
 }
 
 export async function setCurrentPageRegister(event) {
+    toggleTopPageBackground(true);
     event.preventDefault();
     try {
         if(await urls.isLocationReachable() && urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Register'; }
@@ -590,6 +591,7 @@ export async function setCurrentPageRegister(event) {
 }
 
 export async function setCurrentPageLogin(event) {
+    toggleTopPageBackground(true);
     try {
         if(await urls.isLocationReachable() && urls.isGithub())
             window.location = urls.getLocation() + 'Identity/Account/Login';
