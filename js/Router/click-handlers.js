@@ -527,7 +527,7 @@ export async function setCurrentPageAlbumByID(el) {
 export async function setCurrentPageRegister(event) {
     event.preventDefault();
     try {
-        if(urls.isLocationReachable() && urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Register'; }
+        if(await urls.isLocationReachable() && urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Register'; }
         else return; 
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';
 	
@@ -589,7 +589,7 @@ export async function setCurrentPageRegister(event) {
 
 export async function setCurrentPageLogin(event) {
     try {
-        if(urls.isLocationReachable() && urls.isGithub())
+        if(await urls.isLocationReachable() && urls.isGithub())
             window.location = urls.getLocation() + 'Identity/Account/Login';
         else
             return; 

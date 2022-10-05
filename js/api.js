@@ -44,8 +44,8 @@ const urls = {
     }
 }; export default urls;
 
-function getLocationResponse() {
-    $.ajax({
+export async function getLocationResponse() {
+    return $.ajax({
         url: urls.getLocation(),
         type: 'GET',
         contentType:'text/html',
