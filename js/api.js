@@ -49,7 +49,7 @@ function getLocationResponse() {
         url: urls.getLocation(),
         type: 'GET',
         contentType:'text/html',
-        success: function (result) {
+        success: function (response) {
             if (response.responseText.indexOf('page-body-container') > 0)
                 return true;
             return false;
