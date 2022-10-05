@@ -44,14 +44,15 @@ const urls = {
     }
 }; export default urls;
 
-function getLocationResponse() { 
+function getLocationResponse() {
     $.ajax({
         url: urls.getLocation(),
         type: 'GET',
         contentType:'text/html',
         success: function (result) {
-            //console.log('location reachable')
-            return true;
+            if (response.responseText.indexOf('page-body-container') > 0)
+                return true;
+            return false;
         },
         error: function (err){
             console.log('location was not reachable, returning false.')
