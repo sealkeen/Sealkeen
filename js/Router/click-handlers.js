@@ -37,7 +37,7 @@ export async function setCurrentPageIndex(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (urls.loc + 'IndexPartial');
+        let ctrl = (urls.getLocation() + 'IndexPartial');
         if ($("#page-body-container") != undefined) {
             var ftchIndx = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -92,7 +92,7 @@ export async function setCurrentPageManageAccount(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (urls.loc + 'Manage/Index');
+        let ctrl = (urls.getLocation() + 'Manage/Index');
         if ($("#page-body-container") != undefined) {
             var ftchMngAcc = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
