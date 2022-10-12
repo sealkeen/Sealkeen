@@ -251,6 +251,26 @@ export function setMockFooterSourse(el) {
     }
 }
 
+export function getNext(url)
+{
+    console.log('parsing...');
+    let data = JSON.parse(fromBinary(takeStore()));
+    let res = "";
+    data.forEach(element => {
+        if(res === "next")
+        {
+            console.log('returning id: ' + element.p + '...')
+            res = element.p;
+        }
+        if(url === element.p)
+        {
+            res = "next";
+            console.log('+ element.p : ' + element.p)
+        }
+    });
+    return res;
+}
+
 function fromBinary(binary) {
     const bytes = Uint8Array.from({ length: binary.length }, (element, i) =>
         binary.charCodeAt(i)
@@ -275,26 +295,6 @@ function toBinary(str) {
         result += String.fromCharCode(char);
     });
     return result;
-}
-
-export function getNext(url)
-{
-    console.log('parsing...');
-    let data = JSON.parse(fromBinary(takeStore()));
-    let res = "";
-    data.forEach(element => {
-        if(res === "next")
-        {
-            console.log('returning id: ' + element.p + '...')
-            res = element.p;
-        }
-        if(url === element.p)
-        {
-            res = "next";
-            console.log('+ element.p : ' + element.p)
-        }
-    });
-    return res;
 }
 
 export function takeStore() {
