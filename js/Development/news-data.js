@@ -6,27 +6,42 @@ export function getDevelopmentNewsData()
 {
     return [
         {
-            cardTitle: 'Performance', date: '02.10.2022', cardText: 
+            cardTitle: 'Hardware, ', date: '15.11.2022', cardText: 
+            'Slightly improved hosting hardware (major performance boost).',
+            id: 'november-tw-two-fifty-five-hardware-improvement'
+        },
+        {
+            cardTitle: 'User library tab, ', date: 'nov. 2022', cardText: 
+            'User library tab is now available (after register) via proxy for signed in users. Count of plays is npw recorded for logged in accounts.',
+            id: 'november-tw-two--user-library-and-count-of-plays'
+        },
+        {
+            cardTitle: 'Web mp3 uploads, ', date: 'oct. 2022', cardText: 
+            'Music uploads are now available for signed in users (after register).',
+            id: 'october-tw-two--uploads-are-now-available'
+        },
+        {
+            cardTitle: 'Performance,  ', date: '02.10.2022', cardText: 
             'Dramatically increased performance by caching the database in RAM (9151–13,234 times) and making data repository class singleton. Fixed absent artist names on Albums page.',
             id: 'october-second-performance-boost'
         },
         {
-            cardTitle: 'Fixed navigation bar', date: '01.10.2022', cardText: 
+            cardTitle: 'Fixed navigation bar, ', date: '01.10.2022', cardText: 
             'Top navigation bar has fixed position now.',
             id: 'october-first-fixed-navbar'
         },
         {
-            cardTitle: 'Fixed background and transitions', date: '30.09.2022', cardText: 
+            cardTitle: 'Fixed background and transitions, ', date: '30.09.2022', cardText: 
             'Added gradient background and image made fixed (no background scroll). Some CSS styling in progress...',
             id: 'september-thirty-fixed-background'
         },
         {
-            cardTitle: 'Side navigation', date: '29.09.2022', cardText: 
+            cardTitle: 'Side navigation, ', date: '29.09.2022', cardText: 
             'In the new release the navigation bars are expanding into the screen size / 2. some style improvements in progress...',
             id: 'september-thirty-sidebars'
         },
         { 
-            cardTitle: 'New version release', date: '28.09.2022', cardText: 
+            cardTitle: 'New version release, ', date: '28.09.2022', cardText: 
             'Last application version improved performance. ' +
             'Added JSON data to MVC controllers, new Albums, Composition, Artists and Genres ' +
             'are fetched from JSON objects (earlier it was HTML text data from View controllers). ' +
@@ -35,7 +50,7 @@ export function getDevelopmentNewsData()
             id: 'september-twenty-eight-sidebars'
         },
         {
-            cardTitle: 'Volume controls, animation effects', date: '26.09.2022', cardText: 
+            cardTitle: 'Volume controls, animation effects, ', date: '26.09.2022', cardText: 
             'On september 26 there were added two volume control handlers ' +
             '(use mouse wheel to adjust volume level), both work simultaneously, ' +
             'added transition effects and animations.',
