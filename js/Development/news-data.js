@@ -6,9 +6,14 @@ export function getDevelopmentNewsData()
 {
     return [
         {
+            cardTitle: 'Music styles (pending), ', date: '15.11.2022', cardText: 
+            'Getting ready to create new tab Styles to embrace a wide range or genres.',
+            id: 'november-tw-two-seventeen--styles-pending'
+        },
+        {
             cardTitle: 'Hardware, ', date: '15.11.2022', cardText: 
             'Slightly improved hosting hardware (major performance boost).',
-            id: 'november-tw-two-fifty-five-hardware-improvement'
+            id: 'november-tw-two-fifteen--hardware-improvement'
         },
         {
             cardTitle: 'User library tab, ', date: 'nov. 2022', cardText: 
