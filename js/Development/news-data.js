@@ -6,6 +6,12 @@ export function getDevelopmentNewsData()
 {
     return [
         {
+            cardTitle: 'Current goals: ', date: '20.12.2022', cardText: 
+            'The Back-End side: 1) Create "a href"able (clickable) Artist name in query and footer for playing audio.' + "<br>" + 
+            "The Client-Side: improve css and styles, add more transparancy.",
+            id: 'december-tw-two-twenty--current-goals'
+        },
+        {
             cardTitle: 'Music styles (pending), ', date: '15.11.2022', cardText: 
             'Getting ready to create new tab Styles to embrace a wide range or genres.',
             id: 'november-tw-two-seventeen--styles-pending'
