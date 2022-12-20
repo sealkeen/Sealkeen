@@ -1,5 +1,5 @@
 ### Hello there 👋
-#### visit my dev resource here: [sealkeen.github.io](sealkeen.github.io)
+#### visit my dev resource here: [https://sealkeen.github.io](sealkeen.github.io)
 
 <!--
 **sealkeen/Sealkeen** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
