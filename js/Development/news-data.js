@@ -7,8 +7,9 @@ export function getDevelopmentNewsData()
     return [
         {
             cardTitle: 'Current goals: ', date: '20.12.2022', cardText: 
-            'The Back-End side: 1) Create "a href"able (clickable) Artist name in query and footer for playing audio.' + "<br>" + 
-            "The Client-Side: improve css and styles, add more transparancy.",
+            'The Back-End side: 1) Create "a href"able (clickable) Artist name in query and footer for playing audio.'
+            + ' Update the JS bundle files (newest version). Create the build-deploy Service on server to quickly rebuild and redeploy if needed.' + "<br>" + 
+            "The Client-Side: 1) improve css and styles, add more transparancy.",
             id: 'december-tw-two-twenty--current-goals'
         },
         {

@@ -4,9 +4,7 @@ const loc = urls.getLocation();
 
 export function setTitleByArtistAndTitle(el) {
     try {
-        let artist = el;
-        let song = el;
-        let songInfo = el;
+        let artist = el; let song = el; let songInfo = el;
         if (!el.target.classList.contains('card-body')) {
             songInfo = el.parentNode;
         }
