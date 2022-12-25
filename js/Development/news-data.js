@@ -6,7 +6,7 @@ export function getDevelopmentNewsData()
 {
     return [        
         {
-            cardTitle: 'Current goals: ', date: '26.12.2022', cardText: 
+            cardTitle: 'Progress freeze: ', date: '26.12.2022', cardText: 
             'The development is being frozen right now (not really much is going on). '+
             "The Next major changes are going to appear in the year of 2023.",
             id: 'december-tw-two--twenty-six--development-frozen'
