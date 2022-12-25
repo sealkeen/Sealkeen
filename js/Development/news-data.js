@@ -4,18 +4,24 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData()
 {
-    return [
+    return [        
+        {
+            cardTitle: 'Current goals: ', date: '26.12.2022', cardText: 
+            'The development is being frozen right now (not really much is going on). '+
+            "The Next major changes are going to appear in the year of 2023.",
+            id: 'december-tw-two--twenty-six--development-frozen'
+        },
         {
             cardTitle: 'Current goals: ', date: '20.12.2022', cardText: 
             'The Back-End side: 1) Create "a href"able (clickable) Artist name in query and footer for playing audio.'
             + ' Update the JS bundle files (newest version). Create the build-deploy Service on server to quickly rebuild and redeploy if needed.' + "<br>" + 
             "The Client-Side: 1) improve css and styles, add more transparancy.",
-            id: 'december-tw-two-twenty--current-goals'
+            id: 'december-tw-two--twenty--current-goals'
         },
         {
             cardTitle: 'Music styles (pending), ', date: '15.11.2022', cardText: 
             'Getting ready to create new tab Styles to embrace a wide range or genres.',
-            id: 'november-tw-two-seventeen--styles-pending'
+            id: 'november-tw-two--seventeen--styles-pending'
         },
         {
             cardTitle: 'Hardware, ', date: '15.11.2022', cardText: 
