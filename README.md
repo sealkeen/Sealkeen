@@ -1,7 +1,7 @@
 ### Hello there 👋
 #### visit my dev resource here: [sealkeen.github.io](https://sealkeen.github.io)
 
-- 🔭 I’m currently working on MediaStreamer [sealkeen.github.io](https://sealkeen.github.io)
+- 🔭 I’m currently working on MediaStreamer (C# .Net) [sealkeen.github.io](https://sealkeen.github.io)
 - 🌱 I’m currently learning: Angular, ASP.Net Core, Node.JS, Docker, Kubernetes
 - 👯 I’m looking to collaborate on Sound Production
 - 🤔 I’m looking for help with Front-End development
