@@ -6,13 +6,13 @@ export function getDevelopmentNewsData()
 {
     return [        
         {
-            cardTitle: 'Progress freeze: ', date: '26.12.2022', cardText: 
+            cardTitle: 'Progress freeze, ', date: '26.12.2022', cardText: 
             'The development is being frozen right now (not really much is going on). '+
-            "The Next major changes are going to appear in the year of 2023.",
+            "The Next major changes are going to appear in the year of 2023. Some API changes are pending.",
             id: 'december-tw-two--twenty-six--development-frozen'
         },
         {
-            cardTitle: 'Current goals: ', date: '20.12.2022', cardText: 
+            cardTitle: 'Current goals, ', date: '20.12.2022', cardText: 
             'The Back-End side: 1) Create "a href"able (clickable) Artist name in query and footer for playing audio.'
             + ' Update the JS bundle files (newest version). Create the build-deploy Service on server to quickly rebuild and redeploy if needed.' + "<br>" + 
             "The Client-Side: 1) improve css and styles, add more transparancy.",
@@ -90,7 +90,7 @@ export function setDevelopmentMessages()
     data.forEach(element => {
         let card = document.createElement('div');
         let cardBody = document.createElement('div')
-        let cardTitle = document.createElement('h3')
+        let cardTitle = document.createElement('h4')
         let cardText = document.createElement('div')
         card.className = 'card'
         cardBody.className = 'card-body'
