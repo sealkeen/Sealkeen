@@ -4,7 +4,14 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData()
 {
-    return [        
+    return [   
+        {
+            cardTitle: 'Current goals, ', date: '08.01.2023', cardText: 
+            '1) Create customizable "Artist" pages with both albums and compositions. '
+            + "" + 
+            "2) Let users manage Genres and Albums and suggest changes (feedback).",
+            id: 'january-eighty-two--three--current-goals'
+        },     
         {
             cardTitle: 'Progress freeze, ', date: '26.12.2022', cardText: 
             'The development is being frozen right now (not really much is going on). '+
