@@ -11,14 +11,14 @@ from './Router/click-handlers.js'
 import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js'
 import { getNext } from './Store/mock-data.js';
 import { setDevelopmentMessages } from './Development/news-data.js'
-import { runBackgroundHandShakes } from './Router/testing.js'
+import { runBackgroundHandShakes, onPerformHandShakeInterval } from './Router/testing.js'
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
 
 /// On document loaded event
 $(document).ready(function () {
-    runBackgroundHandShakes();
+    onPerformHandShakeInterval(); runBackgroundHandShakes();
     addSideNavElements();
     addEventHandlersOnBody();
     toggleBodyBackground();
