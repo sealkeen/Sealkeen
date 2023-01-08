@@ -3,7 +3,7 @@ export function toggleForId(left, right, element, boolWhich)
 {
     console.log('togglingClass for: ' + element + '...');
     let id = $(element);
-    console.log('Which under JQuery has id: ', id)
+    //console.log('Which under JQuery has id: ', id)
     if(id != null) {
         if(boolWhich === true) {
             toggleClass(left, right, id);
@@ -11,7 +11,7 @@ export function toggleForId(left, right, element, boolWhich)
             toggleClass(right, left, id);
         }
     } else {
-        console.log('toggling failed for: ' + element + '.');
+        //console.log('toggling failed for: ' + element + '.');
     }
 }
 

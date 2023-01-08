@@ -164,7 +164,7 @@ export async function setCurrentPageSignUp(event) {
                 //console.log('%j', responseText)
                 console.log('fetch response key count: ' + Object.keys(responseText).length);
                 pushHistoryState('GetHtmlSignUpPage/');
-
+                
                 const button = document.getElementById('form-btn-default');
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
