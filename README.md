@@ -7,5 +7,4 @@
 - 🤔 I’m looking for help with Front-End development
 - 💬 Ask me about Music
 - 📫 How to reach me: about.me/sealkeen
-- ⚡ Fun fact: I am a self-learned sportsman that supports renewable energy and recyclable waste IN RUSSIA 
-  (It is fun for most of my friends because they don't know why this is even a thing) 
+- ⚡ Fun fact: I never wanted to make any web-sites (or resources) using C#, I felt like this is the worst language for that but right now It is probably the main purpose and the use case for it.
