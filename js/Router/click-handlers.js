@@ -7,6 +7,7 @@ import { toggleTopPageBackground, onClickBodyBackground, toggleBodyBackground } 
 import { setDevelopmentMessages } from './../Development/news-data.js'
 import { transitionEnd } from './../StyleHandlers/footer-handlers.js';
 import { addEventOnWindowResize } from './../StyleHandlers/navbar-handlers.js'
+import { onClickGotoAboutMe } from './redirect.js'
 
 const loc = urls.getLocation();
 
@@ -21,6 +22,7 @@ export function addEventHandlersOnBody() {
     document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
     document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
     document.querySelector('#nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
+    document.querySelector('.nav-lnk-about')?.addEventListener('click', onClickGotoAboutMe);
     
     document.querySelector('.nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
     document.querySelector('.nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
@@ -30,6 +32,7 @@ export function addEventHandlersOnBody() {
     document.querySelector('.nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
     document.querySelector('.nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
     document.querySelector('.nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
+    document.querySelector('.nav-lnk-about')?.addEventListener('click', onClickGotoAboutMe);
     addEventOnWindowResize();
 }
 
