@@ -8,7 +8,7 @@ export function getDevelopmentNewsData()
         {
             cardTitle: 'Current goals, ', date: '08.01.2023', cardText: 
             '1) Create customizable "Artist" pages with both albums and compositions. '
-            + "" + 
+            + "<br>" + 
             "2) Let users manage Genres and Albums and suggest changes (feedback).",
             id: 'january-eighty-two--three--current-goals'
         },     
