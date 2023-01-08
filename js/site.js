@@ -3,10 +3,8 @@ import urls from './api.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
     displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
-import { transitionEnd } from './StyleHandlers/footer-handlers.js';
 import { toggleTopPageBackground, onClickBodyBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js'
 import { addSideNavElements } from './StyleHandlers/side-nav-handlers.js'
-import { checkInputs } from './signup.js'
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
 from './Router/click-handlers.js'

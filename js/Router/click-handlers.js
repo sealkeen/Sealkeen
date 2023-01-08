@@ -181,12 +181,13 @@ export async function setCurrentPageSignUp(event) {
 }
 
 import { ConvertToDOM } from './../Store/mock-data.js'
+import { toggleForId } from '../Utils/ClassQuery.js';
 export function setCurrentPageMockData()
 {
     $("#page-body-container").html('');
     $("#page-body-container").append(ConvertToDOM());
+    toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', true)
 }
-
 
 // TODO: separate
 export async function setCurrentPageCompositions(event) {
