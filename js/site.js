@@ -15,6 +15,7 @@ import { setDevelopmentMessages } from './Development/news-data.js'
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
 
+/// On document loaded event
 $(document).ready(function () {
     addSideNavElements();
     addEventHandlersOnBody();
@@ -69,6 +70,7 @@ $(document).ready(function () {
     setDevelopmentMessages();
 });
 
+/// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)
 document.querySelector('.container')?.addEventListener('touchend', function (e) {
     setTimeout( () => {
         console.log('touchend' + e.target.id + ' ' + e.target.className);
@@ -80,6 +82,7 @@ document.querySelector('.container')?.addEventListener('touchend', function (e) 
     }, 75);
 });
 
+/// Toggle change volume by mouse wheel for scroll on footer / absolute volume control
 document.onwheel = (e) =>
 {        
     if (containsClasses(e.target, 'footer-volume-control', 'volume-control-absolute', 'player-audio-element') === true) {
