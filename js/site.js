@@ -2,7 +2,7 @@
 import urls from './api.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
-    displayQueuedTracks, sleep, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
+    displayQueuedTracks, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js'
 import { addSideNavElements } from './StyleHandlers/side-nav-handlers.js'
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
