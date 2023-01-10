@@ -1,6 +1,6 @@
 ﻿import { setSidebarInputVolumeOnChange, loadDirect } from './Utils/Audio.js'
 import urls from './api.js'
-import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
+import { _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import { isEmpty, containsClasses, getIdFromElementData, getWebEntityObject, 
     displayQueuedTracks, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js'
