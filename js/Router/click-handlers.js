@@ -405,7 +405,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                pushHistoryState('GetPartialCompositionPageByArtistID/?id=' + id);
+                pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 //console.log('%j', responseText)
@@ -457,7 +457,7 @@ export async function setCurrentPageCompositionByID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                pushHistoryState('GetPartialCompositionPageByID/?id=' + id);
+                pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 //console.log('%j', responseText)
@@ -509,7 +509,7 @@ export async function setCurrentPageAlbumByID(el) {
                     throw new Error('Fetch error.');
             })
             .then((responseText) => {
-                pushHistoryState('GetPartialAlbumPageByID/?id=' + id);
+                pushHistoryState('GetHtmlAlbumPageByID/?id=' + id);
                 $("#page-body-container").html('');
                 $("#page-body-container").append(responseText);
                 //console.log('%j', responseText)
