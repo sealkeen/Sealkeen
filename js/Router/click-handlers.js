@@ -196,7 +196,7 @@ export async function setCurrentPageCompositions(event) {
         event.preventDefault();
         toggleTopPageBackground(true);
 
-        let firstLoad = (document.getElementById('track-filter') == null); if(firstLoad) { document.getElementById('page-body-container')?.insertAdjacentHTML("afterbegin", '<div id="track-filter" class="card track-filter"><input type="checkbox" id="scales" name="scales" checked="" class="track-filter-checkbox"><span class="track-filter-span">Reverse</span></div>'); }
+        let firstLoad = (document.getElementById('track-filter') == null); 
         let append = ''; if(firstLoad === true || document.querySelector('.track-filter-checkbox')?.checked === true) { append = '?reverse=true'; }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + append);
         if ($("#page-body-container") != undefined) {
@@ -222,6 +222,7 @@ export async function setCurrentPageCompositions(event) {
                 console.log('handling response text');
                 let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
+                document.getElementById('page-body-container')?.insertAdjacentHTML("afterbegin", '<div id="track-filter" class="card track-filter"><input type="checkbox" id="scales" name="scales" checked="" class="track-filter-checkbox"><span class="track-filter-span">Reverse</span></div>');
                 $("#page-body-container").append(trackDom);
                 pushHistoryState('GetHTMLCompositionsPage/');
             })
