@@ -6,11 +6,16 @@ export function getDevelopmentNewsData()
 {
     return [   
         {
+            cardTitle: '"Reverse" checkbox, ', date: '15.01.2023', cardText: 
+            'Added <reverse> checkbox on compositions page (Home) If the server status is green (running).',
+            id: 'january-tw-three--fifteen--checkbox'
+        },     
+        {
             cardTitle: 'Current goals, ', date: '08.01.2023', cardText: 
             '1) Create customizable "Artist" pages with both albums and compositions. '
             + "<br>" + 
             "2) Let users manage Genres and Albums and suggest changes (feedback).",
-            id: 'january-eighty-two--three--current-goals'
+            id: 'january-tw-three--eighty--current-goals'
         },     
         {
             cardTitle: 'Progress freeze, ', date: '26.12.2022', cardText: 
