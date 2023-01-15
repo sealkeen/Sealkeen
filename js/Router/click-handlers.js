@@ -190,7 +190,7 @@ export async function setCurrentPageCompositions(event) {
         let pageBodyContainer = document.getElementById("#page-body-container");
 
         let isFirstLoad = (document.getElementById('track-filter') == null); let isCheckedAlready = document.querySelector('.track-filter-checkbox')?.checked;
-        let appendText = ''; if(isFirstLoad === true || isCheckedAlready === true) { append = '?reverse=true'; }
+        let appendText = ''; if(isFirstLoad === true || isCheckedAlready === true) { appendText = '?reverse=true'; }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
         if (pageBodyContainer != undefined) {
             var ftchComps = await fetch(ctrl, {
