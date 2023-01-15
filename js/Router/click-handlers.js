@@ -196,7 +196,7 @@ export async function setCurrentPageCompositions(event) {
         event.preventDefault();
         toggleTopPageBackground(true);
 
-        let append = ''; if(document.querySelector('.track-filter-checkbox').checked === true) { append = '?reverse=true'; }
+        let append = ''; if(document.querySelector('.track-filter-checkbox')?.checked === true) { append = '?reverse=true'; }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + append);
         if ($("#page-body-container") != undefined) {
             var ftchComps = await fetch(ctrl, {
