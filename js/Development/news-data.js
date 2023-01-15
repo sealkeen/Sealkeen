@@ -7,7 +7,7 @@ export function getDevelopmentNewsData()
     return [   
         {
             cardTitle: '"Reverse" checkbox, ', date: '15.01.2023', cardText: 
-            'Added <reverse> checkbox on compositions page (Home) If the server status is green (running).',
+            'Added <reverse> (order) checkbox on compositions page (Home) by default If the server status is green ✅ (running) - (not red ⛔).',
             id: 'january-tw-three--fifteen--checkbox'
         },     
         {
