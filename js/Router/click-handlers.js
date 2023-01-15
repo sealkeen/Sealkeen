@@ -210,7 +210,7 @@ export async function setCurrentPageCompositions(event) {
                 console.log('handling response text');
                 let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
-                appendCheckBoxTo(pageBodyContainer, isCheckedAlready);
+                appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
                 $("#page-body-container").append(trackDom);
                 pushHistoryState('GetHTMLCompositionsPage/');
             })
