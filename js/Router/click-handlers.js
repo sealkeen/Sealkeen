@@ -184,6 +184,7 @@ export async function setCurrentPageSignUp(event) {
 }
 
 import { ConvertToDOM } from './../Store/mock-data.js'
+import { appendCheckBoxTo } from '../Page/data-processing.js';
 export function setCurrentPageMockData()
 {
     $("#page-body-container").html('');
@@ -195,34 +196,32 @@ export async function setCurrentPageCompositions(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
+        let pageBodyContainer = document.getElementById("#page-body-container");
 
-        let firstLoad = (document.getElementById('track-filter') == null); let checkedAlready = document.querySelector('.track-filter-checkbox')?.checked;
-        let append = ''; if(firstLoad === true || checkedAlready === true) { append = '?reverse=true'; }
-        let ctrl = (loc + 'GetJSONCompositionsPage/' + append);
-        if ($("#page-body-container") != undefined) {
+        let isFirstLoad = (document.getElementById('track-filter') == null); let isCheckedAlready = document.querySelector('.track-filter-checkbox')?.checked;
+        let appendText = ''; if(isFirstLoad === true || isCheckedAlready === true) { append = '?reverse=true'; }
+        let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
+        if (pageBodyContainer != undefined) {
             var ftchComps = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: 'include', // include, *same-origin, omit
-                headers: {
-                  'Content-Type': 'application/json'
+                headers: { 'Content-Type': 'application/json'
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then((response) => {
-                if(response.ok)
-                    return response;
-                else
-                    throw new Error('Fetch error.');
+                if(response.ok) return response;
+                else throw new Error('Fetch error.');
             }).then(async (response) => {
                 let data = await response.json();
                 console.log('handling response text');
                 let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
-                document.getElementById('page-body-container')?.insertAdjacentHTML("afterbegin", '<div id="track-filter" class="card track-filter"><input type="checkbox" id="scales" name="scales" checked="' + checkedAlready+ '" class="track-filter-checkbox"><span class="track-filter-span">Reverse</span></div>');
+                appendCheckBoxTo(pageBodyContainer, 'scales');
                 $("#page-body-container").append(trackDom);
                 pushHistoryState('GetHTMLCompositionsPage/');
             })
