@@ -195,7 +195,9 @@ export async function setCurrentPageCompositions(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (loc + 'GetJSONCompositionsPage');
+
+        let append = ''; if(document.querySelector('.track-filter-checkbox').checked === true) { append = '?reverse=true'; }
+        let ctrl = (loc + 'GetJSONCompositionsPage/' + append);
         if ($("#page-body-container") != undefined) {
             var ftchComps = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -219,6 +221,7 @@ export async function setCurrentPageCompositions(event) {
                 console.log('handling response text');
                 let trackDom = CreateDOMFromJSON(data);
                 $("#page-body-container").html('');
+                document.getElementById('page-body-container')?.insertAdjacentHTML("afterbegin", '<div id="track-filter" class="card track-filter"><input type="checkbox" id="scales" name="scales" checked="" class="track-filter-checkbox"><span class="track-filter-span">Reverse</span></div>');
                 $("#page-body-container").append(trackDom);
                 pushHistoryState('GetHTMLCompositionsPage/');
             })
