@@ -195,9 +195,9 @@ export async function setCurrentPageCompositions(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        
-        if(document.getElementById('track-filter') == null) { document.getElementById('page-body-container')?.insertAdjacentHTML("afterbegin", '<div id="track-filter" class="card track-filter"><input type="checkbox" id="scales" name="scales" checked="" class="track-filter-checkbox"><span class="track-filter-span">Reverse</span></div>'); }
-        let append = ''; if(document.querySelector('.track-filter-checkbox')?.checked === true) { append = '?reverse=true'; }
+
+        let firstLoad = (document.getElementById('track-filter') == null); if(firstLoad) { document.getElementById('page-body-container')?.insertAdjacentHTML("afterbegin", '<div id="track-filter" class="card track-filter"><input type="checkbox" id="scales" name="scales" checked="" class="track-filter-checkbox"><span class="track-filter-span">Reverse</span></div>'); }
+        let append = ''; if(firstLoad === true || document.querySelector('.track-filter-checkbox')?.checked === true) { append = '?reverse=true'; }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + append);
         if ($("#page-body-container") != undefined) {
             var ftchComps = await fetch(ctrl, {
