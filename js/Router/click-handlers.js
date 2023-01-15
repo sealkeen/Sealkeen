@@ -187,12 +187,12 @@ export async function setCurrentPageCompositions(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let pageBodyContainer = document.getElementById("#page-body-container");
+        let pageBodyContainer = document.getElementById("page-body-container");
 
         let isFirstLoad = (document.getElementById('track-filter') == null); let isCheckedAlready = document.querySelector('.track-filter-checkbox')?.checked;
         let appendText = ''; if(isFirstLoad === true || isCheckedAlready === true) { appendText = '?reverse=true'; }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
-        if (pageBodyContainer != undefined) {
+        if (pageBodyContainer != null) {
             var ftchComps = await fetch(ctrl, {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, *cors, same-origin
