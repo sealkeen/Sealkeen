@@ -3,9 +3,11 @@ import { toggleForId } from '../Utils/ClassQuery.js';
 
 export async function runBackgroundHandShakes()
 {
-    setInterval(function() {
-        onPerformHandShakeInterval()
-    }, 8000);
+    if(urls.isGithub()) {
+        setInterval(function() {
+            onPerformHandShakeInterval()
+        }, 8000);
+    }
 }
 
 export async function onPerformHandShakeInterval()
