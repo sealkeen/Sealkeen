@@ -1,5 +1,6 @@
 import urls from './../api.js'
 import { toggleForId } from '../Utils/ClassQuery.js';
+import { fetchContentCrossOrigin } from './shared.js';
 
 export async function runBackgroundHandShakes()
 {
@@ -10,7 +11,7 @@ export async function runBackgroundHandShakes()
     }
 }
 
-export async function onPerformHandShakeInterval()
+export async function onPerformHandShakeInterval(onSuccessAction)
 {
     try {
         let ctrl = (urls.getLocation() + 'PerformPublicHandShake');
@@ -23,7 +24,8 @@ export async function onPerformHandShakeInterval()
                 // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then((response) => {
                 if(response.ok) {
-                    toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', false)
+                    toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', false);
+                    onSuccessAction == null ? '' : onSuccessAction();
                 }
                 else throw new Error('Fetch error.');
             })
@@ -35,4 +37,9 @@ export async function onPerformHandShakeInterval()
     } catch (e) {
         console.log(e)
     } 
+}
+
+export async function onSiteLoadIfAuthorized()
+{
+    onPerformHandShakeInterval(fetchContentCrossOrigin('GetPartialListenedPage'))
 }

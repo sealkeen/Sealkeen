@@ -4,10 +4,13 @@ import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../
 import { checkInputs } from './../signup.js'
 import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, CreateGenresDOMFromJSON } from './../Store/mock-data.js'
 import { toggleTopPageBackground, onClickBodyBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
-import { setDevelopmentMessages } from './../Development/news-data.js'
+import { setDevelopmentMessages } from './../Development/news-data.js';
 import { transitionEnd } from './../StyleHandlers/footer-handlers.js';
-import { addEventOnWindowResize } from './../StyleHandlers/navbar-handlers.js'
-import { onClickGotoAboutMe } from './redirect.js'
+import { addEventOnWindowResize } from './../StyleHandlers/navbar-handlers.js';
+import { onClickGotoAboutMe } from './redirect.js';
+import { ConvertToDOM } from './../Store/mock-data.js'
+import { appendCheckBoxTo } from '../Page/data-processing.js';
+import { onDevelopmentCardClick } from './shared.js';
 
 const loc = urls.getLocation();
 
@@ -73,19 +76,9 @@ export async function setCurrentPageIndex(event) {
         console.log(e)
     } finally {
         toggleTopPageBackground(false);
-        onDevelopmentCardClick()
+        onDevelopmentCardClick();
         toggleBodyBackground();
     }
-}
-
-export function onDevelopmentCardClick()
-{
-    if(document.querySelector('#development-body') === null) {
-        let developmentBody = document.createElement('div')
-        developmentBody.id = 'development-body';
-        document.querySelector('#page-body-container').appendChild(developmentBody)
-    }
-    setDevelopmentMessages();
 }
 
 export async function setCurrentPageManageAccount(event) {
@@ -174,8 +167,6 @@ export async function setCurrentPageSignUp(event) {
     }
 }
 
-import { ConvertToDOM } from './../Store/mock-data.js'
-import { appendCheckBoxTo } from '../Page/data-processing.js';
 export function setCurrentPageMockData()
 {
     $("#page-body-container").html('');
@@ -361,8 +352,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
         if (!event.target.classList.contains('card-body')) {
             console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
             id = el.parentNode.children[0].value;
-        }
-        else {
+        } else {
             console.log('contains card-body. el.children[0].value');
             id = el.children[0].value;
         }
@@ -569,7 +559,7 @@ export async function setCurrentPageLogin(event) {
         if(await urls.isLocationReachable() && urls.isGithub())
             window.location = urls.getLocation() + 'Identity/Account/Login';
         else
-            return; 
+            return;
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';
 	
         event.preventDefault();

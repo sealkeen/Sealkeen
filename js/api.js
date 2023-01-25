@@ -1,5 +1,6 @@
 const urls = {
     getLocation() {
+        return "https://localhost:5001/"
         if(this.isGithub()) {
             return 'https://0088-89-178-159-167.eu.ngrok.io/'
         } else if (this.isNodeJSHost()) {
@@ -8,7 +9,7 @@ const urls = {
             return `${location.protocol}//${location.host}/`;
     },
     getPostfix() {
-        if (window.location.href.indexOf("github.io") > -1)
+        if (window.location.href.indexOf("github.io/Sealkeen") > -1)
             return 'Sealkeen/'
         else
             return ''

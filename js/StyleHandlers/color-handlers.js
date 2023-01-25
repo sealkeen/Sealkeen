@@ -32,7 +32,7 @@ export function toggleBodyBackground()
     }
 }
 
-function noOp() { console.log('no-op')}
+function noOp() { console.log('no-op') }
 
 export function toggleTopPageBackground(on)
 {

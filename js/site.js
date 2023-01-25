@@ -11,18 +11,16 @@ from './Router/click-handlers.js'
 import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js'
 import { getNext } from './Store/mock-data.js';
 import { setDevelopmentMessages } from './Development/news-data.js'
-import { runBackgroundHandShakes, onPerformHandShakeInterval } from './Router/testing.js'
+import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js'
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
 
 /// On document loaded event
 $(document).ready(function () {
-    onPerformHandShakeInterval(); runBackgroundHandShakes();
-    addSideNavElements();
-    addEventHandlersOnBody();
-    toggleBodyBackground();
-    bindPlayerButtons();
+    onSiteLoadIfAuthorized(); runBackgroundHandShakes();
+    addSideNavElements(); addEventHandlersOnBody();
+    toggleBodyBackground(); bindPlayerButtons();
     toggleTopPageBackground(false);
     //addButtonOnClickHandlers();
     _trackQueue.onchange = () => {
