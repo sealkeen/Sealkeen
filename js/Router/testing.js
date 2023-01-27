@@ -41,5 +41,8 @@ export async function onPerformHandShakeInterval(onSuccessAction)
 
 export async function onSiteLoadIfAuthorized()
 {
-    onPerformHandShakeInterval(fetchContentCrossOrigin('GetPartialListenedPage'))
+    if(window.location.origin + "/" + urls.getPostfix() == window.location.href) // in the homepage
+        onPerformHandShakeInterval(fetchContentCrossOrigin('GetPartialListenedPage'));
+    else
+        onPerformHandShakeInterval();
 }

@@ -3,7 +3,7 @@ const urls = {
         if(this.isGithub()) {
             return 'https://0088-89-178-159-167.eu.ngrok.io/'
         } else if (this.isNodeJSHost()) {
-            return 'http://localhost:8080/'
+            return 'https://localhost:5001/'
         } else
             return `${location.protocol}//${location.host}/`;
     },
