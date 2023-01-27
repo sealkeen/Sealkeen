@@ -1,13 +1,14 @@
 import urls from './../api.js'
 import { toggleForId } from '../Utils/ClassQuery.js';
-import { fetchContentCrossOrigin } from './shared.js';
 import { getTime_HH_MM_SS_MS } from '../Utils/Chrono/main.js';
+import { setDevelopmentMessages } from '../Development/news-data.js';
+import { FetchGetPatialListenedPage } from './click-handlers.js';
 
 export async function runBackgroundHandShakes()
 {
     if(urls.isGithub()) {
-        setInterval(function() {
-            onPerformHandShakeInterval()
+        setInterval(async function() {
+            onPerformHandShakeInterval(noOp)
         }, 8000);
     }
 }
@@ -15,7 +16,7 @@ export async function runBackgroundHandShakes()
 export async function onPerformHandShakeInterval(onSuccessAction)
 {
     try {
-        console.log('HandShake at ' + getTime_HH_MM_SS_MS())
+        //console.log('HandShake at ' + getTime_HH_MM_SS_MS())
         let ctrl = (urls.getLocation() + 'PerformPublicHandShake');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
@@ -24,16 +25,19 @@ export async function onPerformHandShakeInterval(onSuccessAction)
                 credentials: 'include', /* include, *same-origin, omit */ headers: { 'Content-Type': 'application/json' }, // 'Content-Type': 'application/x-www-form-urlencoded',
                 redirect: 'follow', /* manual, *follow, error*/ referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
+            }).then(async (response) => {
+                //countCookies();
                 if(response.ok) {
                     toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', false);
-                    onSuccessAction == null ? '' : onSuccessAction();
+                    await onSuccessAction();
                 }
                 else throw new Error('Fetch error.');
             })
             .catch((error) => {
                 toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', true)
-                console.log('HandShake error. Doing nothing with it.')
+                console.log('HandShake error. Doing nothing with it. ⛔%j' + error)
+            }).finally(() => {
+                setDevelopmentMessages();
             });
         }
     } catch (e) {
@@ -43,8 +47,21 @@ export async function onPerformHandShakeInterval(onSuccessAction)
 
 export async function onSiteLoadIfAuthorized()
 {
+    let result = "";
     if(window.location.origin + "/" + urls.getPostfix() == window.location.href) // in the homepage
-        onPerformHandShakeInterval(fetchContentCrossOrigin('GetPartialListenedPage'));
+        onPerformHandShakeInterval(FetchGetPatialListenedPage);
     else
-        onPerformHandShakeInterval(null);
+        onPerformHandShakeInterval(noOp);
 }
+
+export function countCookies()
+{
+    response.headers.forEach((val, key) => {
+        if(key === 'set-cookie'){
+            count += val.split("; ").length;
+        }
+    });
+    console.log(count + " cookies found");
+}
+
+async function noOp() {}

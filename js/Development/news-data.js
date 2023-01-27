@@ -91,6 +91,7 @@ export function getDevelopmentNewsData()
 
 export function setDevelopmentMessages()
 {
+    console.log('set dev messages')
     //$('#september-thirty-fixed-background').addEventListener('click', toggleBodyBackground)
     let data = getDevelopmentNewsData();
 

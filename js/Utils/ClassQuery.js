@@ -1,13 +1,14 @@
 
 export function toggleForId(left, right, element, boolWhich)
 {
-    console.log('togglingClass for: ' + element + boolWhich ? "on" : "off" + '...');
     let id = $(element);
     //console.log('Which under JQuery has id: ', id)
     if(id != null) {
         if(boolWhich === true) {
+            id.toggleClass(right); //console.log("⛔");
             toggleClass(left, right, id);
         } else {
+            id.addClass(left); //console.log("✅");
             toggleClass(right, left, id);
         }
     } else {
@@ -17,10 +18,8 @@ export function toggleForId(left, right, element, boolWhich)
 
 function toggleClass(left, right, id) {
     if(!id.hasClass(left))  {
-        id.addClass(left);
     }
     if(id.hasClass(right)) {
-        id.toggleClass(right);
     }
 }
 

@@ -10,7 +10,7 @@ import { addEventOnWindowResize } from './../StyleHandlers/navbar-handlers.js';
 import { onClickGotoAboutMe } from './redirect.js';
 import { ConvertToDOM } from './../Store/mock-data.js'
 import { appendCheckBoxTo } from '../Page/data-processing.js';
-import { onDevelopmentCardClick } from './shared.js';
+import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
 
 const loc = urls.getLocation();
 
@@ -608,4 +608,9 @@ export async function setCurrentPageLogin(event) {
     } finally {
         toggleTopPageBackground(false);
     }
+}
+
+export async function FetchGetPatialListenedPage()
+{
+    await fetchContentCrossOrigin('GetPartialListenedPage')
 }

@@ -67,7 +67,6 @@ $(document).ready(function () {
         }
     });
     setSidebarInputVolumeOnChange();
-    setDevelopmentMessages();
 });
 
 /// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)
