@@ -1,7 +1,7 @@
 
 export function toggleForId(left, right, element, boolWhich)
 {
-    console.log('togglingClass for: ' + element + '...');
+    console.log('togglingClass for: ' + element + boolWhich ? "on" : "off" + '...');
     let id = $(element);
     //console.log('Which under JQuery has id: ', id)
     if(id != null) {

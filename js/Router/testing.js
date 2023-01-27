@@ -1,6 +1,7 @@
 import urls from './../api.js'
 import { toggleForId } from '../Utils/ClassQuery.js';
 import { fetchContentCrossOrigin } from './shared.js';
+import { getTime_HH_MM_SS_MS } from '../Utils/Chrono/main.js';
 
 export async function runBackgroundHandShakes()
 {
@@ -14,6 +15,7 @@ export async function runBackgroundHandShakes()
 export async function onPerformHandShakeInterval(onSuccessAction)
 {
     try {
+        console.log('HandShake at ' + getTime_HH_MM_SS_MS())
         let ctrl = (urls.getLocation() + 'PerformPublicHandShake');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {

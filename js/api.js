@@ -27,7 +27,7 @@ const urls = {
     },
     isNodeJSHost()
     {
-        return (window.location.href.indexOf('localhost:808') > -1);
+        return (window.location.href.indexOf('localhost:808') > -1 || window.location.href.indexOf('127.0.0.1:808'));
     },
     isNgrok()
     {
