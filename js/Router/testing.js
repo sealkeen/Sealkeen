@@ -29,14 +29,16 @@ export async function onPerformHandShakeInterval(onSuccessAction)
                 //countCookies();
                 if(response.ok) {
                     toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', false);
-                    await onSuccessAction();
+                    
+                    onSuccessAction().then(() => {
+                        setDevelopmentMessages();
+                    });
                 }
                 else throw new Error('Fetch error.');
             })
             .catch((error) => {
                 toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', true)
                 console.log('HandShake error. Doing nothing with it. ⛔%j' + error)
-            }).finally(() => {
                 setDevelopmentMessages();
             });
         }
