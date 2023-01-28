@@ -88,75 +88,71 @@ export function getDevelopmentNewsData()
         }
     ];
 }
+export function setDevelopmentMessages() {
+    console.log('set dev messages');
 
-export function setDevelopmentMessages()
-{
-    console.log('set dev messages')
-    //$('#september-thirty-fixed-background').addEventListener('click', toggleBodyBackground)
     let data = getDevelopmentNewsData();
 
-    if($("#development-body").length <= 0){
-        let devDiv = document.createElement('div'); devDiv.id = 'development-body';
-        $("#page-body-container")[0].appendChild(devDiv)
+    if (!document.getElementById("development-body")) {
+        let devDiv = document.createElement('div');
+        devDiv.id = 'development-body';
+        document.getElementById("page-body-container").appendChild(devDiv);
     }
-    document.querySelector('#development-body').innerHTML = '';
+
+    document.getElementById('development-body').innerHTML = '';
+
     data.forEach(element => {
         let card = document.createElement('div');
-        let cardBody = document.createElement('div')
-        let cardTitle = document.createElement('h4')
-        let cardText = document.createElement('div')
-        card.className = 'card'
-        cardBody.className = 'card-body'
-        cardTitle.className = 'card-title'
-        cardText.className = 'card-text'
-        cardBody.appendChild(cardTitle);
-        cardBody.appendChild(cardText);
-
-        cardTitle.innerHTML = element.cardTitle + ' ' + element.date;
-        cardText.innerHTML = element.cardText;
+        card.className = 'card';
         card.id = element.id;
 
+        let cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
         card.appendChild(cardBody);
-        document.querySelector('#development-body').appendChild(card);
+
+        let cardTitle = document.createElement('h4');
+        cardTitle.className = 'card-title';
+        cardTitle.innerHTML = element.cardTitle + ' ' + element.date;
+        cardBody.appendChild(cardTitle);
+
+        let cardText = document.createElement('div');
+        cardText.className = 'card-text';
+        cardText.innerHTML = element.cardText;
+        cardBody.appendChild(cardText);
+
+        document.getElementById('development-body').appendChild(card);
     });
-    document.querySelectorAll('#september-twenty-eight-sidebars,#september-thirty-sidebars').forEach(card => 
+
+    document.querySelectorAll('#september-twenty-eight-sidebars,#september-thirty-sidebars').forEach(card => {
         card.addEventListener('click', (e) => {
-            if(document.getElementById("mySidenav").getBoundingClientRect().width === 0)
-            { 
-                openNav(); openRightNav(); 
+            if (document.getElementById("mySidenav").getBoundingClientRect().width === 0) {
+                openNav();
+                openRightNav();
+            } else {
+                closeRightNav();
+                closeNav();
             }
-            else { 
-                closeRightNav(); closeNav(); 
-            }
-            let menu = document.createElement("div")
-            let cmiQueueSelected = document.createElement("p")
-            cmiQueueSelected.id = 'ctxmenu-button';
-            cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open enqueue menu on composition";
+
+            let menu = document.createElement("div");
             menu.id = "ctxmenu";
 
-            //menu.onfocusout = () => menu.outerHTML = '';
-            //menu.onmouseleave = () => menu.outerHTML = ''
-            menu.appendChild(cmiQueueSelected)
-            
-            console.log(e.target)
-            let insertTarget = {};
-            if(e.target.classList.contains('card-body'))
-                insertTarget = e.target.parentElement;
-            if(e.target.classList.contains('card'))
-                insertTarget = e.target;
-            if(containsClasses(e.target, 'card-text', 'card-title'))
-                insertTarget = e.target.parentElement.parentElement;
-            insertTarget.appendChild(menu);
-        })
-    )
+            let cmiQueueSelected = document.createElement("p");
+            cmiQueueSelected.id = 'ctxmenu-button';
+            cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open enqueue menu on composition";
+            menu.appendChild(cmiQueueSelected);
 
-    $('#october-first-fixed-navbar')[0].addEventListener('click', (e) => { 
-        e.preventDefault();
-        document.querySelectorAll(".navbar-collapse")[0].classList.toggle('show') //(".navbar,.navbar-collapse")[0]
+            let insertTarget = e.target.closest('.card');
+            insertTarget.appendChild(menu);
+        });
     });
 
-    $('#september-thirty-fixed-background')[0].addEventListener('click', (e) => { 
+    document.getElementById('october-first-fixed-navbar').addEventListener('click', (e) => {
         e.preventDefault();
-        onClickBodyBackground()
+        document.querySelector(".navbar-collapse").classList.toggle('show');
+    });
+
+    document.getElementById('september-thirty-fixed-background').addEventListener('click', (e) => {
+        e.preventDefault();
+        onClickBodyBackground();
     });
 }

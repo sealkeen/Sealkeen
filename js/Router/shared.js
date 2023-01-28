@@ -11,40 +11,32 @@ export function onDevelopmentCardClick()
     }
     setDevelopmentMessages();
 }
-
-export async function fetchContentCrossOrigin(path)
-{
+export async function fetchContentCrossOrigin(path) {
     try {
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + path);
         if ($("#page-body-container") != undefined) {
-            await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
-                if(response.ok)
-                    return response.text();
-                else
-                    throw new Error('Fetch error.');
-            })
-            .then((responseText) => {
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                console.log('fetch response key count: ' + Object.keys(responseText).length)
-                pushHistoryState(urls.getPostfix());
-            })
-            .catch((error) => {
-                console.log('fetch error. Doing nothing with it.')
+            let response = await fetch(ctrl, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
             });
+
+            if (!response.ok) {
+                throw new Error('Fetch error.');
+            }
+            let responseText = await response.text();
+            $("#page-body-container").html('');
+            $("#page-body-container").append(responseText);
+            console.log('fetch response key count: ' + Object.keys(responseText).length);
+            pushHistoryState(urls.getPostfix());
         }
     } catch (e) {
-        console.log(e)
+        console.log(e);
     } finally {
         toggleTopPageBackground(false);
         toggleBodyBackground();

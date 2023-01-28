@@ -44,33 +44,23 @@ export async function setCurrentPageIndex(event) {
         event.preventDefault();
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'IndexPartial');
-        if ($("#page-body-container") != undefined) {
-            var ftchIndx = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
-                if(response.ok)
-                    return response.text();
-                else
-                    throw new Error('Fetch error.');
-            })
-            .then((responseText) => {
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length)
-                
-                pushHistoryState(urls.getPostfix());
-            })
-            .catch((error) => {
-                console.log('fetch error. Doing nothing with it.')
+        if (!$("#page-body-container").length) return;
+        try {
+            const response = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
             });
+    
+            if (!response.ok) throw new Error('Fetch error.');
+    
+            const responseText = await response.text();
+            pushHistoryState(urls.getPostfix());
+            $("#page-body-container").html('').append(responseText);
+            console.log(`fetch response key count: ${Object.keys(responseText).length}`);
+        } catch (error) {
+            setCurrentPageMockData();
+            console.log('fetch error. Setting up mock data.%j' + error, error );
         }
     } catch (e) {
         console.log(e)
@@ -86,28 +76,21 @@ export async function setCurrentPageManageAccount(event) {
         event.preventDefault();
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'Manage/Index');
-        if ($("#page-body-container") != undefined) {
+        if ($("#page-body-container").length) {
             var ftchMngAcc = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
-                if(response.ok)
-                    return response.text();
-                else
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow', 
+                referrerPolicy: 'no-referrer'
+            }).then(async (response) => {
+                if(response.ok) {
+                    let responseText = await response.text();
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    console.log('fetch response key count: ' + Object.keys(responseText).length)
+                    pushHistoryState(urls.getPostfix() + 'Manage/Index');
+                } else {
                     throw new Error('Fetch error.');
-            })
-            .then((responseText) => {
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length)
-                pushHistoryState(urls.getPostfix() + 'Manage/Index');
+                }
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -128,10 +111,6 @@ export async function setCurrentPageSignUp(event) {
         let ctrl = (urls.getLocation() + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
             var ftchSignUp = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -180,15 +159,15 @@ export async function setCurrentPageCompositions(event) {
         toggleTopPageBackground(true);
         let pageBodyContainer = document.getElementById("page-body-container");
 
-        let isFirstLoad = (document.getElementById('track-filter') == null); let isCheckedAlready = document.querySelector('.track-filter-checkbox')?.checked;
-        let appendText = ''; if(isFirstLoad === true || isCheckedAlready === true) { appendText = '?reverse=true'; }
+        let isFirstLoad = (document.getElementById('track-filter') == null); 
+        let isCheckedAlready = document.querySelector('.track-filter-checkbox')?.checked;
+        let appendText = ''; 
+        if(isFirstLoad === true || isCheckedAlready === true) { 
+            appendText = '?reverse=true'; 
+        }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
         if (pageBodyContainer != null) {
             var ftchComps = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -224,10 +203,6 @@ export async function setCurrentPageAlbums(event) {
         let ctrl = (loc + 'GetJSONAlbumsPage');
         if ($("#page-body-container") != undefined) {
             var ftchAlb = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -265,10 +240,6 @@ export async function setCurrentPageGenres(event) {
         let ctrl = (loc + 'GetJSONGenresPage');
         if ($("#page-body-container") != undefined) {
             var ftchGnrs = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -306,10 +277,6 @@ export async function setCurrentPageArtists(event) {
         let ctrl = (loc + 'GetJSONArtistsPage');
         if ($("#page-body-container") != undefined) {
             var ftchArts = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -360,10 +327,6 @@ export async function setCurrentPageCompositionByArtistID(el) {
         let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             var ftchCmpsById = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -409,10 +372,6 @@ export async function setCurrentPageCompositionByID(el) {
         let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             var ftchPartCmpsById = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -458,10 +417,6 @@ export async function setCurrentPageAlbumByID(el) {
         let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             var ftchPartAlbmsById = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -505,10 +460,6 @@ export async function setCurrentPageRegister(event) {
         let ctrl = (loc + prefix + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             var ftchPartRegister = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -568,10 +519,6 @@ export async function setCurrentPageLogin(event) {
         let ctrl = (loc + prefix + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             var ftchPartLgn = await fetch(ctrl, {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url

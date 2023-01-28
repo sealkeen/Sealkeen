@@ -4,19 +4,21 @@ import { getTime_HH_MM_SS_MS } from '../Utils/Chrono/main.js';
 import { setDevelopmentMessages } from '../Development/news-data.js';
 import { FetchGetPatialListenedPage } from './click-handlers.js';
 
+window.handShakeCondition = false;
+
 export async function runBackgroundHandShakes()
 {
-    if(urls.isGithub()) {
-        setInterval(async function() {
+    setInterval(async function() {
+        if(urls.isGithub() || window.handShakeCondition) {
             onPerformHandShakeInterval(noOp)
-        }, 8000);
-    }
+        }
+    }, 8000);
 }
 
 export async function onPerformHandShakeInterval(onSuccessAction)
 {
     try {
-        //console.log('HandShake at ' + getTime_HH_MM_SS_MS())
+        console.log('HandShake at ' + getTime_HH_MM_SS_MS())
         let ctrl = (urls.getLocation() + 'PerformPublicHandShake');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
@@ -29,7 +31,6 @@ export async function onPerformHandShakeInterval(onSuccessAction)
                 //countCookies();
                 if(response.ok) {
                     toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', false);
-                    
                     onSuccessAction().then(() => {
                         setDevelopmentMessages();
                     });
