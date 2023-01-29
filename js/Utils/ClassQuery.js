@@ -1,21 +1,19 @@
-
-export function toggleForId(left, right, element, boolWhich)
-{
-    let id = $(element);
-    //console.log('Toggling class for id: ', id)
-    if(id != null) {
-        if(boolWhich === true) {
-            id.toggleClass(right); console.log("Server unavailable ⛔");
-            toggleClass(left, right, id);
-        } else {
-            id.addClass(left); console.log("Server available ✅");
-            toggleClass(right, left, id);
-        }
+export function toggleForId(left, right, element, boolWhich) {
+    const id = $(element);
+    if (!id) {
+        return;
+    }
+    if (boolWhich === true) {
+        toggleClass(left, right, id);
+        console.log("Server unavailable ⛔");
     } else {
-        //console.log('toggling failed for: ' + element + '.');
+        addClass(left, id);
+        toggleClass(right, left, id);
+        console.log("Server available ✅");
     }
 }
 
+// the toggle class function only adds the class1 if the id element has it, and toggles the class2 if the id element has it?
 function toggleClass(left, right, id) {
     if(!id.hasClass(left))  {
         id.addClass(left);
@@ -25,16 +23,21 @@ function toggleClass(left, right, id) {
     }
 }
 
-export function toggleTwoClasses (class1, class2) {
-    if( !class1 || !class2 )
-        return this;
-        
-    return this.each(function() {
-        var $elm = $(this);
+function addClass(className, id) {
+    id.addClass(className);
+}
 
-        if( $elm.hasClass(class1) || $elm.hasClass(class2) )
-            $elm.toggleClass(class1 +' '+ class2);
-        else
+export function toggleTwoClasses(class1, class2) {
+    if (!class1 || !class2) {
+        return;
+    }
+    const elements = $(this);
+    elements.each(function() {
+        const $elm = $(this);
+        if ($elm.hasClass(class1) || $elm.hasClass(class2)) {
+            $elm.toggleClass(`${class1} ${class2}`);
+        } else {
             $elm.addClass(class1);
+        }
     });
-};
+}
