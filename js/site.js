@@ -1,17 +1,16 @@
-﻿import { setSidebarInputVolumeOnChange, loadDirect } from './Utils/Audio.js'
-import urls from './api.js'
+﻿import { setSidebarInputVolumeOnChange, loadDirect } from './Utils/Audio.js';
+import urls from './api.js';
 import { _trackQueue } from './Utils/Queue.js';
 import { containsClasses, getWebEntityObject, 
     displayQueuedTracks, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
-import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js'
-import { addSideNavElements } from './StyleHandlers/side-nav-handlers.js'
-import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js'
+import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
+import { addSideNavElements } from './StyleHandlers/side-nav-handlers.js';
+import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
-from './Router/click-handlers.js'
-import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js'
+from './Router/click-handlers.js';
+import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js';
 import { getNext } from './Store/mock-data.js';
-import { setDevelopmentMessages } from './Development/news-data.js'
-import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js'
+import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
