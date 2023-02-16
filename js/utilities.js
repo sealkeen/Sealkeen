@@ -2,7 +2,6 @@
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import urls from './api.js'
 import { createCardFromJSON } from './Store/mock-data.js'
-import { loadDirect } from './Utils/Audio.js'
 
 const loc = urls.getLocation();
 
