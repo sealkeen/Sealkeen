@@ -1,7 +1,6 @@
 ﻿import { setArtistSongNameAsync, setTitleByArtistAndTitle } from './Page/event-handlers.js'
 import { newQueue, _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import urls from './api.js'
-import { createCardFromJSON } from './Store/mock-data.js'
 
 const loc = urls.getLocation();
 
