@@ -1,7 +1,7 @@
 const urls = {
     getLocation() {
         if(this.isGithub()) {
-            return 'https://e9b9-92-101-253-82.eu.ngrok.io/'
+            return 'https://7ec7-37-144-213-180.eu.ngrok.io/'
         } else if (this.isNodeJSHost()) {
             return 'https://localhost:5001/'
         } else
