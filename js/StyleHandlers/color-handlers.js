@@ -1,34 +1,64 @@
 import urls from './../api.js'
 
-export function onClickBodyBackground()
-{
-    if ($('.body')[0].className === 'body early-evening') {
-        $('.body')[0].className = ('body midnight'); //$('body').css('background-color', 'white');
-    } else if ($('.body')[0].className ==='body midnight') {
-        $('.body')[0].className = ('body gradient-light-blue');
-    } else if ($('.body')[0].className ==='body gradient-light-blue') {
-        $('.body')[0].className = ('body gradient-daylight'); //$('body').css('background-color', 'grey');
-    } else if ($('.body')[0].className ==='body gradient-daylight') {
-        $('.body')[0].className = ('body early-evening');
+// color-handlers.js
+function setGradientEarlyMidnightBackground() { $('.body')[0].className = ('body gradient-early-midnight'); console.log('body gradient-early-midnight'); }
+function setGradientMediumMidnightBackground() { $('.body')[0].className = ('body gradient- midnight'); console.log('body gradient-medium-midnight'); }
+function setGradientLateMidnightBackground() { $('.body')[0].className = ('body gradient- midnight'); console.log('body gradient-late-midnight'); }
+function setGradientEarlyMorningBackground() { $('.body')[0].className = ('body gradient- midnight'); console.log('body gradient-early-morning'); }
+function setGradientLateMorningBackground() { $('.body')[0].className = ('body gradient-late-morning'); console.log('body gradient-late-morning'); }
+function setGradientDaylightBackground() { $('.body')[0].className = ('body gradient-daylight'); console.log('body gradient-daylight'); }
+function setGradientEarlyAfternoonBackground() { $('.body')[0].className = ('body gradient-early-afternoon'); console.log('body gradient-early-afternoon'); }
+function setGradientLateAfternoonBackground() { $('.body')[0].className = ('body gradient-late-afternoon'); console.log('body gradient-late-afternoon'); }
+function setGradientEarlyEveningBackground() { $('.body')[0].className = ('body gradient-early-evening'); console.log('body gradient-early-evening'); }
+function setGradientLateEveningBackground() { $('.body')[0].className = ('body gradient-late-evening'); console.log('body gradient-late-evening'); }
+
+export function onClickBodyBackground() {
+    const bodyClass = $('.body')[0].className;
+    switch (bodyClass) {
+        case 'body gradient-early-evening':
+            setGradientEarlyMidnightBackground(); break;
+        case 'body gradient-early-midnight':
+            setGradientLateMorningBackground(); break;
+        case 'body gradient-late-morning':
+            setGradientDaylightBackground(); break;
+        case 'body gradient-daylight':
+            setGradientEarlyAfternoonBackground(); break;
+        case 'body gradient-early-afternoon':
+            setGradientLateAfternoonBackground(); break;
+        case 'body gradient-late-afternoon':
+            setGradientLateEveningBackground(); break;
+        case 'body gradient-late-evening':
+            setGradientEarlyEveningBackground(); break;
+        default:
+        break;
     }
 }
 
-export function toggleBodyBackground()
-{
-    let hours = (new Date().getHours())
-    let welcome = $('#welcome')[0];
+export function toggleBodyBackground() {
+    const hours = new Date().getHours();
+    const welcome = $('#welcome')[0];
+    if(welcome == null) return;
     if (hours >= 22 || hours <= 7) {
-        $('.body')[0].className = ('body midnight'); //$('body').css('background-color', 'white');
-        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good midnight';
+        setGradientEarlyMidnightBackground();
+        welcome.innerHTML = 'Good midnight';
     } else if (hours > 7 && hours < 11) {
-        $('.body')[0].className = ('body gradient-light-blue');
-        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good morning';
-    } else if (hours >= 11 && hours <= 16) {
-        $('.body')[0].className = ('body gradient-daylight'); //$('body').css('background-color', 'grey');
-        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good day';
-    } else if (hours > 16 && hours < 22) {
-        $('.body')[0].className = ('body early-evening');
-        $('#welcome')[0] == null ? noOp() : $('#welcome')[0].innerHTML = 'Good evening';
+        setGradientLateMorningBackground();
+        welcome.innerHTML = 'Good morning';
+    } else if (hours >= 11 && hours <= 13) {
+        setGradientDaylightBackground();
+        welcome.innerHTML = 'Good day';
+    } else if (hours > 13 && hours < 16) {
+        setGradientEarlyAfternoonBackground();
+        welcome.innerHTML = 'Good early afternoon';
+    } else if (hours >= 16 && hours <= 18) {
+        setGradientLateAfternoonBackground();
+        welcome.innerHTML = 'Good late afternoon';
+    } else if (hours > 18 && hours < 20) {
+        setGradientEarlyEveningBackground();
+        welcome.innerHTML = 'Good early evening';
+    } else if (hours >= 20 && hours < 22) {
+        setGradientLateEveningBackground();
+        welcome.innerHTML = 'Good late evening';
     }
 }
 

@@ -1,11 +1,11 @@
 const urls = {
     getLocation() {
-        if(this.isGithub()) {
+        if(this.isGithub() || this.isNgrok()) {
             return 'https://c3dd-89-178-157-251.eu.ngrok.io/'
-        } else if (this.isNodeJSHost()) {
-            return 'https://localhost:5001/'
-        } else
+        } else if (!this.isNodeJSHost()) {
             return `${location.protocol}//${location.host}/`;
+        } else
+            return 'https://localhost:5001/'
     },
     getPostfix() {
         if (window.location.href.indexOf("github.io/Sealkeen") > -1)
@@ -27,7 +27,7 @@ const urls = {
     },
     isNodeJSHost()
     {
-        return (window.location.href.indexOf('localhost:808') > -1 || window.location.href.indexOf('127.0.0.1:808'));
+        return (window.location.href.indexOf('localhost:808') > -1 || window.location.href.indexOf('127.0.0.1:808') > -1);
     },
     isNgrok()
     {
