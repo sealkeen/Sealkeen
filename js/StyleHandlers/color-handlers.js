@@ -2,9 +2,9 @@ import urls from './../api.js'
 
 // color-handlers.js
 function setGradientEarlyMidnightBackground() { $('.body')[0].className = ('body gradient-early-midnight'); console.log('body gradient-early-midnight'); }
-function setGradientMediumMidnightBackground() { $('.body')[0].className = ('body gradient- midnight'); console.log('body gradient-medium-midnight'); }
-function setGradientLateMidnightBackground() { $('.body')[0].className = ('body gradient- midnight'); console.log('body gradient-late-midnight'); }
-function setGradientEarlyMorningBackground() { $('.body')[0].className = ('body gradient- midnight'); console.log('body gradient-early-morning'); }
+function setGradientMediumMidnightBackground() { $('.body')[0].className = ('body gradient-medium-midnight'); console.log('body gradient-medium-midnight'); }
+function setGradientLateMidnightBackground() { $('.body')[0].className = ('body gradient-late-midnight'); console.log('body gradient-late-midnight'); }
+function setGradientEarlyMorningBackground() { $('.body')[0].className = ('body gradient-early-morning'); console.log('body gradient-early-morning'); }
 function setGradientLateMorningBackground() { $('.body')[0].className = ('body gradient-late-morning'); console.log('body gradient-late-morning'); }
 function setGradientDaylightBackground() { $('.body')[0].className = ('body gradient-daylight'); console.log('body gradient-daylight'); }
 function setGradientEarlyAfternoonBackground() { $('.body')[0].className = ('body gradient-early-afternoon'); console.log('body gradient-early-afternoon'); }
@@ -15,9 +15,15 @@ function setGradientLateEveningBackground() { $('.body')[0].className = ('body g
 export function onClickBodyBackground() {
     const bodyClass = $('.body')[0].className;
     switch (bodyClass) {
-        case 'body gradient-early-evening':
+        case 'body gradient-late-evening':
             setGradientEarlyMidnightBackground(); break;
         case 'body gradient-early-midnight':
+            setGradientMediumMidnightBackground(); break;
+        case 'body gradient-medium-midnight':
+            setGradientLateMidnightBackground(); break;
+        case 'body gradient-late-midnight':
+            setGradientEarlyMorningBackground(); break;
+        case 'body gradient-early-morning':
             setGradientLateMorningBackground(); break;
         case 'body gradient-late-morning':
             setGradientDaylightBackground(); break;
@@ -26,9 +32,9 @@ export function onClickBodyBackground() {
         case 'body gradient-early-afternoon':
             setGradientLateAfternoonBackground(); break;
         case 'body gradient-late-afternoon':
-            setGradientLateEveningBackground(); break;
-        case 'body gradient-late-evening':
             setGradientEarlyEveningBackground(); break;
+        case 'body gradient-early-evening':
+            setGradientLateEveningBackground(); break;
         default:
         break;
     }
