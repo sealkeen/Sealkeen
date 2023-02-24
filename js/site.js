@@ -11,6 +11,7 @@ from './Router/click-handlers.js';
 import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js';
 import { getNext } from './Store/mock-data.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
+import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -20,7 +21,7 @@ $(document).ready(function () {
     onSiteLoadIfAuthorized(); runBackgroundHandShakes();
     addSideNavElements(); addEventHandlersOnBody();
     toggleBodyBackground(); bindPlayerButtons();
-    toggleTopPageBackground(false);
+    toggleTopPageBackground(false); initializeKeyboardHook();
     //addButtonOnClickHandlers();
     _trackQueue.onchange = () => {
         displayQueuedTracks(_trackQueue);

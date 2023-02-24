@@ -42,8 +42,8 @@ export function onClickBodyBackground() {
 
 export function toggleBodyBackground() {
     const hours = new Date().getHours();
-    const welcome = $('#welcome')[0];
-    if(welcome == null) return;
+    const welcome = $('#welcome')[0] == null ? { innerHtml : "" } : $('#welcome')[0];
+    
     if (hours >= 22 || hours <= 7) {
         setGradientEarlyMidnightBackground();
         welcome.innerHTML = 'Good midnight';
