@@ -6,6 +6,13 @@ export function getDevelopmentNewsData()
 {
     return [   
         {
+            cardTitle: '"Search query added, ', date: '25.02.2023', cardText: 
+            '1) Added search query in browser url (sealkeen.github.io/?artist=Cold%20Insight) %20 is the whitespace.'
+            + "<br>" + 
+            "2) Added press 'space' => pause action.",
+            id: 'february-tw-five--search--query'
+        },   
+        {
             cardTitle: '"Reverse" checkbox, ', date: '15.01.2023', cardText: 
             'Added <reverse> (order) checkbox on compositions page (Home) by default If the server status is green ✅ (running) - (not red ⛔).',
             id: 'january-tw-three--fifteen--checkbox'
