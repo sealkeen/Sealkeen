@@ -14,7 +14,7 @@ export function onDevelopmentCardClick()
 export async function fetchContentCrossOrigin(path) {
     try {
         toggleTopPageBackground(true);
-        let ctrl = (urls.getLocation() + path);
+        let ctrl = (path.startsWith("http") ? path : urls.getLocation() + path);
         if ($("#page-body-container") != undefined) {
             let response = await fetch(ctrl, {
                 method: 'GET',

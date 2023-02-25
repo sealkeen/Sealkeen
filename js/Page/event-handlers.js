@@ -1,6 +1,7 @@
 import { isEmpty, GetCurrentCompositionsId } from './../utilities.js'
 import urls from './../api.js'
 import MusicApi from './../Page/url-decoding.js'
+import { fetchContentCrossOrigin } from "../Router/shared.js";
 
 const loc = urls.getLocation();
 
@@ -30,23 +31,18 @@ export function setArtistSongNameAsync() {
         let ctrl = (loc + 'GetArtistSongName/?id=' + compId);
         
         if ($(".track-artist-song-name") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl, type: 'GET', contentType: 'html',
-                xhrFields: { withCredentials: true },
+            $.ajax({
+                url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true },
                 crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
-                    // console.log('setArtistSongNameAsync: Ajax returned key count: ' + response);
-                    console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
                     const artistSong = response.trim(); // remove leading/trailing whitespaces
                     const artistSongHtml = createArtistLink(artistSong);
                     $(".track-artist-song-name").html('');
                     $(".track-artist-song-name").append(`<div class="track-artist-song-name">${artistSongHtml}</div>`);
                     document.title = artistSong;
+                    preventDefaultOnArtistNameAHref();
                 },
-                error: function (error_) {
-                    console.log("Ajax error: " + error_);
-                }
+                error: function (error_) { console.log("setArtistSongNameAsync() Ajax error: " + error_); }
             });
         }
     } catch (err) {
@@ -61,11 +57,12 @@ export function createArtistLink(artistSong) {
     }
     const params = new URLSearchParams(window.location.search);
     const artistParam = params.get("artist");
-    const artistUrl = artistParam ? window.location.href : `${window.location.href}?artist=${encodeURIComponent(artist)}`;
+    const artistUrl = artistParam ? urls.getLocation() : 
+    `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
 
     let api = new MusicApi();
 
-    const artistLink = `<a href="${artistUrl}">${artist}</a>`;
+    const artistLink = `<a id="artist-name-hrefable" href="${artistUrl}">${artist}</a>`;
     return `${artistLink} – ${track}`;
 }
 
@@ -74,4 +71,17 @@ export function fireOnInputValueChange(element)
     var event = new Event('change');
     // Dispatch it.
     element.dispatchEvent(event);
+}
+
+export function preventDefaultOnArtistNameAHref()
+{
+    // Override the click event of the #artist-name-hrefable link element
+    const artistLinkElement = document.getElementById("artist-name-hrefable");
+    if (artistLinkElement) {
+        artistLinkElement.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent the default behavior of the link
+            const artistUrl = artistLinkElement.href;
+            fetchContentCrossOrigin(artistUrl);
+        });
+    }
 }
