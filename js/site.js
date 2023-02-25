@@ -12,6 +12,7 @@ import { setTitleByArtistAndTitle, setArtistSongNameAsync, fireOnInputValueChang
 import { getNext } from './Store/mock-data.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
+import MusicApi from './Page/url-decoding.js'
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -22,6 +23,7 @@ $(document).ready(function () {
     addSideNavElements(); addEventHandlersOnBody();
     toggleBodyBackground(); bindPlayerButtons();
     toggleTopPageBackground(false); initializeKeyboardHook();
+    let urlHandler = new MusicApi();
     //addButtonOnClickHandlers();
     _trackQueue.onchange = () => {
         displayQueuedTracks(_trackQueue);

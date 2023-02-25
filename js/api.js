@@ -49,7 +49,7 @@ export async function getLocationResponse() {
         type: 'GET',
         contentType:'text/html',
         success: function (response) {
-            if (response.responseText.indexOf('page-body-container') > 0)
+            if (response.responseText?.indexOf('page-body-container') > 0)
                 return true;
             return false;
         },
