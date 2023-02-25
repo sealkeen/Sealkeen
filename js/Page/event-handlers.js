@@ -1,5 +1,7 @@
 import { isEmpty, GetCurrentCompositionsId } from './../utilities.js'
 import urls from './../api.js'
+import MusicApi from './../Page/url-decoding.js'
+
 const loc = urls.getLocation();
 
 export function setTitleByArtistAndTitle(el) {
@@ -34,11 +36,13 @@ export function setArtistSongNameAsync() {
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
+                    // console.log('setArtistSongNameAsync: Ajax returned key count: ' + response);
                     console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
-                    console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
+                    const artistSong = response.trim(); // remove leading/trailing whitespaces
+                    const artistSongHtml = createArtistLink(artistSong);
                     $(".track-artist-song-name").html('');
-                    $(".track-artist-song-name").append(response);
-                    document.title = (response);
+                    $(".track-artist-song-name").append(`<div class="track-artist-song-name">${artistSongHtml}</div>`);
+                    document.title = artistSong;
                 },
                 error: function (error_) {
                     console.log("Ajax error: " + error_);
@@ -48,6 +52,21 @@ export function setArtistSongNameAsync() {
     } catch (err) {
         console.log('setArtistSongNameAsync error.')
     }
+}
+
+export function createArtistLink(artistSong) {
+    const [artist, track] = artistSong.split(' – '); // assuming "–" is the separator
+    if (!artist || !track) {
+        return artistSong;
+    }
+    const params = new URLSearchParams(window.location.search);
+    const artistParam = params.get("artist");
+    const artistUrl = artistParam ? window.location.href : `${window.location.href}?artist=${encodeURIComponent(artist)}`;
+
+    let api = new MusicApi();
+
+    const artistLink = `<a href="${artistUrl}">${artist}</a>`;
+    return `${artistLink} – ${track}`;
 }
 
 export function fireOnInputValueChange(element)
