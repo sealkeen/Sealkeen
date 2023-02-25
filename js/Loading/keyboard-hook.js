@@ -7,6 +7,7 @@ export function initializeKeyboardHook()
   		const isInputFocused =
     		focusedElement.tagName === "INPUT" || focusedElement.tagName === "TEXTAREA";
   		if (event.code === "Space" && !isInputFocused) {
+			event.preventDefault();
     		onPauseClicked();
   		}
 	});
