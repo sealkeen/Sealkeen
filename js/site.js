@@ -220,15 +220,10 @@ export function setNextComposition(compId) {
         }
         let ctrl = (loc + path + compId);
         if ($("#player-source-element") != undefined) {
-            $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
+            $.ajax({ 
+                url: ctrl, type: 'GET', contentType: 'html',
+                xhrFields: { withCredentials: true },
                 crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 

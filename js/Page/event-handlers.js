@@ -29,15 +29,12 @@ export function setArtistSongNameAsync() {
         
         if ($(".track-artist-song-name") != undefined) {
             $.ajax({ //$.get({ //
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: {
-                withCredentials: true
-                },
+                url: ctrl, type: 'GET', contentType: 'html',
+                xhrFields: { withCredentials: true },
                 crossDomain: true,
                 /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
+                    console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
                     console.log('setArtistSongNameAsync: Ajax returned key count: ' + Object.keys(response).length);
                     $(".track-artist-song-name").html('');
                     $(".track-artist-song-name").append(response);

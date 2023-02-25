@@ -6,9 +6,13 @@ export function getDevelopmentNewsData()
 {
     return [   
         {
-            cardTitle: '"Search query added, ', date: '25.02.2023', cardText: 
-            '1) Added search query in browser url (sealkeen.github.io/?artist=Cold%20Insight) %20 is the whitespace.'
-            + "<br>" + 
+            cardTitle: 'Search query added, ', date: '25.02.2023', cardText: 
+            '1) Added search query in browser url' +
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Cold%20Insight">sealkeen.github.io/?artist=Cold Insight</a>'+
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Rammstein">sealkeen.github.io/?artist=Rammstein</a>'+
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Parkway%20Drive">sealkeen.github.io/?artist=Parkway Drive</a>'+
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Essenger">sealkeen.github.io/?artist=Essenger</a>' + 
+            "<br>" + 
             "2) Added press 'space' => pause action.",
             id: 'february-tw-five--search--query'
         },   
