@@ -57,8 +57,10 @@ export function createArtistLink(artistSong) {
     }
     const params = new URLSearchParams(window.location.search);
     const artistParam = params.get("artist");
-    const artistUrl = artistParam ? urls.getLocation() : 
-    `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
+    if(artistParam) { 
+        urls.getLocation(); 
+    }
+    const artistUrl = `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
 
     let api = new MusicApi();
 
