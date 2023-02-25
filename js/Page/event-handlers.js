@@ -62,8 +62,6 @@ export function createArtistLink(artistSong) {
     }
     const artistUrl = `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
 
-    let api = new MusicApi();
-
     const artistLink = `<a id="artist-name-hrefable" href="${artistUrl}">${artist}</a>`;
     return `${artistLink} – ${track}`;
 }
