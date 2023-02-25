@@ -44,23 +44,26 @@ export async function setCurrentPageIndex(event) {
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'IndexPartial');
         if (!$("#page-body-container").length) return;
-        try {
-            const response = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' },
-                redirect: 'follow',
-                referrerPolicy: 'no-referrer'
-            });
-    
+        fetch(ctrl, {
+            headers: { 'Content-Type': 'application/json' },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer'
+          })
+          .then(response => {
             if (!response.ok) throw new Error('Fetch error.');
-    
-            const responseText = await response.text();
+            return response.text();
+          })
+          .then(responseText => {
             pushHistoryState(urls.getPostfix());
-            $("#page-body-container").html('').append(responseText);
-            console.log(`fetch response key count: ${Object.keys(responseText).length}`);
-        } catch (error) {
+            const responseHtml = $.parseHTML(responseText);
+            $("#page-body-container").html('').append(responseHtml);
+            console.log(`fetch response key count: ${Object.keys(responseHtml).length}`);
+            toggleBodyBackground();
+          })
+          .catch(error => {
             setCurrentPageMockData();
-            console.log('fetch error. Setting up mock data.%j' + error, error );
-        }
+            console.log('fetch error. Setting up mock data.', error);
+          });
     } catch (e) {
         console.log(e)
     } finally {

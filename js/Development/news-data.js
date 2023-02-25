@@ -107,7 +107,7 @@ export function setDevelopmentMessages() {
     if (!devBody) {
         let devDiv = document.createElement('div');
         devDiv.id = 'development-body';
-        devBody.className = "card-columns";
+        devDiv.className = "card-columns";
         document.getElementById("page-body-container").appendChild(devDiv);
     } else { devBody.className = "card-columns"; }
 

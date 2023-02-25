@@ -55,16 +55,32 @@ export function createArtistLink(artistSong) {
     if (!artist || !track) {
         return artistSong;
     }
-    const params = new URLSearchParams(window.location.search);
-    const artistParam = params.get("artist");
-    if(artistParam) { 
-        urls.getLocation(); 
-    }
+
+    replaceArtistParamInUrl(artist);
+    
     const artistUrl = `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
 
     const artistLink = `<a id="artist-name-hrefable" href="${artistUrl}">${artist}</a>`;
     return `${artistLink} – ${track}`;
 }
+function replaceArtistParamInUrl(artist) {
+    if (!urls.isGithub() && !urls.isNodeJSHost()) {
+      return;
+    }
+  
+    const params = new URLSearchParams(window.location.search);
+  
+    if (!params.has('artist')) {
+      // No artist parameter, so add it
+      params.append('artist', artist);
+    } else {
+      // Artist parameter exists, so modify it
+      params.set('artist', artist);
+    }
+  
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState(null, null, newUrl);
+  }
 
 export function fireOnInputValueChange(element)
 {
