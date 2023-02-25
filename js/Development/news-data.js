@@ -103,12 +103,13 @@ export function setDevelopmentMessages() {
     console.log('set dev messages');
 
     let data = getDevelopmentNewsData();
-
-    if (!document.getElementById("development-body")) {
+    let devBody = document.getElementById("development-body");
+    if (!devBody) {
         let devDiv = document.createElement('div');
         devDiv.id = 'development-body';
+        devBody.className = "card-columns";
         document.getElementById("page-body-container").appendChild(devDiv);
-    }
+    } else { devBody.className = "card-columns"; }
 
     document.getElementById('development-body').innerHTML = '';
 
