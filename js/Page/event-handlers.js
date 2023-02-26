@@ -51,11 +51,14 @@ export function setArtistSongNameAsync() {
 }
 
 export function createArtistLink(artistSong) {
-    const [artist, track] = artistSong.split(' – '); // assuming "–" is the separator
+    const lastIndex = artistSong.lastIndexOf(' - ');
+    const artist = artistSong.slice(0, lastIndex).trim();
+    const track = artistSong.slice(lastIndex + 1).trim();
+    
     if (!artist || !track) {
-        return artistSong;
+      return artistSong;
     }
-
+  
     replaceArtistParamInUrl(artist);
     
     const artistUrl = `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
@@ -63,6 +66,7 @@ export function createArtistLink(artistSong) {
     const artistLink = `<a id="artist-name-hrefable" href="${artistUrl}">${artist}</a>`;
     return `${artistLink} – ${track}`;
 }
+
 function replaceArtistParamInUrl(artist) {
     if (!urls.isGithub() && !urls.isNodeJSHost()) {
       return;

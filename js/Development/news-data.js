@@ -11,8 +11,8 @@ export function getDevelopmentNewsData()
             "<br>" + '<a href="https://sealkeen.github.io/?artist=dEMOTIONAL">sealkeen.github.io/?artist=dEMOTIONAL</a>' +
             '<img src="../Images/Development/clickable-artist-links.png">' + 
             "<br>" + '<a href="https://sealkeen.github.io/?artist=In+Flames">sealkeen.github.io/?artist=In+Flames</a>' +
-            '<img src="../Images/Development/clickable-artist-links-in-flames.png">'
-            ,
+            '<img src="../Images/Development/clickable-artist-links-in-flames.png">'+
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Dead by April">Dead by April</a>',
             id: 'february-tw-three--clickable-artists'
         }, 
         {
