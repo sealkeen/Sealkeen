@@ -4,14 +4,24 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData()
 {
-    return [   
+    return [    
+        {
+            cardTitle: 'Clickable artist names, ', date: '26.02.2023', cardText: 
+            '1) Artist links are now clickable when playing audio (with running server) ' +
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=dEMOTIONAL">sealkeen.github.io/?artist=dEMOTIONAL</a>' +
+            '<img src="../Images/Development/clickable-artist-links.png">' + 
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=In+Flames">sealkeen.github.io/?artist=In+Flames</a>' +
+            '<img src="../Images/Development/clickable-artist-links-in-flames.png">'
+            ,
+            id: 'february-tw-three--clickable-artists'
+        }, 
         {
             cardTitle: 'Search query added, ', date: '25.02.2023', cardText: 
             '1) Added search query in browser url' +
-            "<br>" + '<a href="https://sealkeen.github.io/?artist=Cold%20Insight">sealkeen.github.io/?artist=Cold Insight</a>'+
-            "<br>" + '<a href="https://sealkeen.github.io/?artist=Rammstein">sealkeen.github.io/?artist=Rammstein</a>'+
-            "<br>" + '<a href="https://sealkeen.github.io/?artist=Parkway%20Drive">sealkeen.github.io/?artist=Parkway Drive</a>'+
-            "<br>" + '<a href="https://sealkeen.github.io/?artist=Essenger">sealkeen.github.io/?artist=Essenger</a>' + 
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Cold%20Insight">Cold Insight</a>'+
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Rammstein">Rammstein</a>'+
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Parkway%20Drive">Parkway Drive</a>'+
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Essenger">Essenger</a>' + 
             "<br>" + 
             "2) Added press 'space' => pause action.",
             id: 'february-tw-five--search--query'
@@ -36,8 +46,8 @@ export function getDevelopmentNewsData()
         },
         {
             cardTitle: 'Current goals, ', date: '20.12.2022', cardText: 
-            'The Back-End side: 1) Create "a href"able (clickable) Artist name in query and footer for playing audio.'
-            + ' Update the JS bundle files (newest version). Create the build-deploy Service on server to quickly rebuild and redeploy if needed.' + "<br>" + 
+            'The Back-End side: 1) Create "a href"able (clickable) Artist name in query and footer for playing audio. '
+            + 'Create the build-deploy Service on server to quickly redeploy if needed.' + "<br>" + 
             "The Client-Side: 1) improve css and styles, add more transparancy.",
             id: 'december-tw-two--twenty--current-goals'
         },
