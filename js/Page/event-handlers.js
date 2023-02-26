@@ -51,14 +51,11 @@ export function setArtistSongNameAsync() {
 }
 
 export function createArtistLink(artistSong) {
-    const lastIndex = artistSong.lastIndexOf(' - ');
-    const artist = artistSong.slice(0, lastIndex).trim();
-    const track = artistSong.slice(lastIndex + 1).trim();
-    
+    const [artist, track] = artistSong.split(' – '); // assuming "–" is the separator
     if (!artist || !track) {
-      return artistSong;
+        return artistSong;
     }
-  
+
     replaceArtistParamInUrl(artist);
     
     const artistUrl = `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
