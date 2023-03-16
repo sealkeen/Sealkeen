@@ -1,5 +1,4 @@
-﻿import { setArtistSongNameAsync, setTitleByArtistAndTitle } from './Page/event-handlers.js'
-import { _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
+﻿import { _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import urls from './api.js'
 
 const loc = urls.getLocation();
