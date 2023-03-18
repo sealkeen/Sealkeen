@@ -1,7 +1,7 @@
 // JS module for User sign up form inputs
 // Interaction logic for -> SignUpPage.cshtml
 import { LogMessageRequest } from './logging.js';
-import { setRegisterAntiForgeryOnClick, setLoginAntiForgeryOnClick } from './Account/verification.js';
+import { setRegisterAntiForgeryOnClick } from './Account/verification.js';
 
 var button = document.getElementById('form-btn-default');
 var username = document.getElementById('UserName');
