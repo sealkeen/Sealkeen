@@ -1,8 +1,6 @@
 ﻿import { _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import urls from './api.js'
 
-const loc = urls.getLocation();
-
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
