@@ -62,7 +62,6 @@ $(document).ready(function () {
         }
         if (target.classList.contains('btn-default')) {
             //$('.btn-default').onclick = (e) => { e.preventDefault(); };
-            //urls.getInDevelopmentMessage();
         }
         if (target.id == 'ctxmenu') {
             document.querySelector('#ctxmenu').outerHTML = "";
