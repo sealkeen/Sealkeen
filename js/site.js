@@ -267,7 +267,6 @@ export async function setFooterPlayerSourse(el)
                    withCredentials: true
                 },
                 crossDomain: true,
-                /*data: ("_ViewPlayer=" + source),*/
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 

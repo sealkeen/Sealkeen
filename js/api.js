@@ -1,7 +1,7 @@
 const urls = {
     getLocation() {
         if(this.isGithub() || this.isNgrok()) {
-            return 'https://76dd-89-178-156-143.eu.ngrok.io/';
+            return 'https://cae4-89-178-156-143.eu.ngrok.io/';
         } else if (!this.isNodeJSHost()) {
             return `${location.protocol}//${location.host}/`;
         } else
