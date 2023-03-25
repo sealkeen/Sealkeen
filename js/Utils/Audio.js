@@ -1,24 +1,24 @@
 
 export function setSidebarInputVolumeOnChange(plr) {
-    try {
-        let audio = plr ?? document.getElementById('player-audio-element');
-        if(audio != null) {
-            let volume = document.querySelector("#volume-control");
-            let volumeCtrlAbs = document.querySelector("#volume-control-absolute");
-            if(volume != null) {
-                volume?.addEventListener("change", function(e) {
-                    audio.volume = e.currentTarget.value / 100;
-                    volumeCtrlAbs.value = e.currentTarget.value;
-                });
-                audio.volume = volume.value / 100;
-            }            
-            if(volumeCtrlAbs != null) {
-                volumeCtrlAbs.addEventListener("change", function(e) { audio.volume = e.currentTarget.value / 100; volume.value = e.currentTarget.value });
-                audio.volume = volumeCtrlAbs.value / 100;
-            }
-        }
-    } catch (err) {
-        console.log(err);
+    const audio = plr || document.getElementById('player-audio-element');
+    if (!audio) {
+        return;
+    }
+    const volume = document.querySelector('#volume-control');
+    const volumeCtrlAbs = document.querySelector('#volume-control-absolute');
+    if (volume) {
+        volume.addEventListener('change', handleVolumeChange);
+        audio.volume = volume.value / 100;
+    }
+    if (volumeCtrlAbs) {
+        volumeCtrlAbs.addEventListener('change', handleVolumeChange);
+        audio.volume = volumeCtrlAbs.value / 100;
+    }
+    function handleVolumeChange(e) {
+        const newVolume = e.currentTarget.value / 100;
+        audio.volume = newVolume;
+        volumeCtrlAbs.value = e.currentTarget.value;
+        volume.value = e.currentTarget.value;
     }
 }
 
