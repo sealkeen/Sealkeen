@@ -1,9 +1,8 @@
 
 export function setSidebarInputVolumeOnChange(plr) {
     const audio = plr || document.getElementById('player-audio-element');
-    if (!audio) {
-        return;
-    }
+    if (!audio) { return; }
+
     const volume = document.querySelector('#volume-control');
     const volumeCtrlAbs = document.querySelector('#volume-control-absolute');
     if (volume) {
@@ -26,7 +25,6 @@ export async function loadDirect(source)
 {
     if(source.includes(':')) {
         console.log('loadDirect: $("#player-audio-element")[0] is %j', $("#player-audio-element")[0]);
-        //$("#player-audio-element")[0].pause();
         $("#player-source-element")[0].setAttribute('src', source);
         let loadPromise = await $("#player-audio-element")[0].load();
         if (loadPromise !== undefined) {
