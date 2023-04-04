@@ -51,7 +51,6 @@ export function openNav() {
     //window.addEventListener('resizeend', () => { document.getElementById("mySidenav").style.width = $('body').width() / 2; } )
     //document.getElementById("top-page-container").style.marginLeft = "250px";
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
-    //document.getElementsByClassName("container")[0].style.opacity = 0.8;
     document.getElementById("mySidenav").style.paddingLeft = "5px"; 
     document.getElementById("mySidenav").style.paddingRight = "5px"; 
 }
