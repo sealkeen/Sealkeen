@@ -4,7 +4,12 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData()
 {
-    return [    
+    return [   
+        {
+            cardTitle: 'Hosting down, ', date: '08.04.2023', cardText: 
+            '1) My tunnel service has restricted the free usage and re-targeted the free traffic into an unsafe zone. Turning my site down for some time.',
+            id: 'april-nine--tunnel-disabled'
+        },  
         {
             cardTitle: 'Clickable artist names, ', date: '26.02.2023', cardText: 
             '1) Artist links are now clickable when playing audio (with running server) ' +
