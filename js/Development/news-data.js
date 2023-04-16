@@ -7,7 +7,8 @@ export function getDevelopmentNewsData()
     return [   
         {
             cardTitle: 'Hosting down, ', date: '08.04.2023', cardText: 
-            '1) My tunnel service has restricted the free usage and re-targeted the free traffic into an unsafe zone. Turning my site down for some time.',
+            '1) My tunnel service has restricted the free usage and re-targeted the free traffic into an unsafe zone. Turning my site down for some time (⛔).'
+            + '2) As for 14.04.2023 the hosting is up, as the warning is removed (✅).',
             id: 'april-nine--tunnel-disabled'
         },  
         {
