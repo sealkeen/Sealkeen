@@ -1,7 +1,7 @@
 const urls = {
     getLocation() {
         if(true) {
-            return 'https://80bd-89-178-156-146.ngrok-free.app/';
+            return 'https://c8ee-89-178-156-142.ngrok-free.app/';
         } else if (!this.isNodeJSHost()) {
             return `${location.protocol}//${location.host}/`;
         } else
