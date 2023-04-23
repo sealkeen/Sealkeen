@@ -1,7 +1,7 @@
 const urls = {
     getLocation() {
-        if(true) {
-            return 'https://c8ee-89-178-156-142.ngrok-free.app/';
+        if(this.isGithub() || this.isNgrok()) {
+            return 'https://f3c2-92-101-253-82.ngrok-free.app/';
         } else if (!this.isNodeJSHost()) {
             return `${location.protocol}//${location.host}/`;
         } else
@@ -31,7 +31,7 @@ const urls = {
     },
     isNgrok()
     {
-        return (window.location.href.indexOf('ngrok.io') > -1);
+        return (window.location.href.indexOf('ngrok.io') > -1) || (window.location.href.indexOf('ngrok-free.app') > -1);
     },
     getHostRootPath()
     {
