@@ -6,13 +6,18 @@ import { FetchGetPatialListenedPage } from './click-handlers.js';
 
 window.handShakeCondition = false;
 
+const MAX_INTERVAL = 48500; // Max value for the HandShake Health condition in milliseconds
+const DEFAULT_INTERVAL = 8000; // Default handshake interval value is ms
+const INTERVAL_INCREASE = 1450; // Increase interval after the handshake is failed in ms
+var g_interval = DEFAULT_INTERVAL;
+
 export async function runBackgroundHandShakes()
 {
     setInterval(async function() {
         if(urls.isGithub() || window.handShakeCondition) {
             onPerformHandShakeInterval(noOp)
         }
-    }, 8000);
+    }, g_interval);
 }
 
 export async function onPerformHandShakeInterval(onSuccessAction)
@@ -30,6 +35,7 @@ export async function onPerformHandShakeInterval(onSuccessAction)
             }).then(async (response) => {
                 //countCookies();
                 if(response.ok) {
+                    g_interval = DEFAULT_INTERVAL;
                     toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', false);
                     onSuccessAction().then(() => {
                         setDevelopmentMessages();
@@ -39,7 +45,9 @@ export async function onPerformHandShakeInterval(onSuccessAction)
             })
             .catch((error) => {
                 toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', true)
-                console.log('HandShake error. Doing nothing with it. ⛔%j' + error)
+                if(g_interval < MAX_INTERVAL) 
+                    g_interval += INTERVAL_INCREASE;
+                console.log(`HandShake error. Increased handshake interval to ${g_interval} ⛔%j`, error);
                 setDevelopmentMessages();
             });
         }
