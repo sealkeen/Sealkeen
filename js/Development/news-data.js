@@ -6,15 +6,20 @@ export function getDevelopmentNewsData()
 {
     return [   
         {
+            cardTitle: 'Hosting down, ', date: '01.05.2023', cardText: 
+            'New artists, albums, tracks, genres card colors added. ',
+            id: 'may-first-tw-three--card-colors'
+        },  
+        {
             cardTitle: 'Hosting down, ', date: '08.04.2023', cardText: 
             '1) My tunnel service has restricted the free usage and re-targeted the free traffic into an unsafe zone. Turning my site down for some time (⛔).'
-            + '2) As for 14.04.2023 the hosting is up, as the warning is removed (✅).',
+            + "<br>" + '2) As for 14.04.2023 the hosting is up, as the warning is removed (✅).',
             id: 'april-nine--tunnel-disabled'
         },  
         {
             cardTitle: 'Clickable artist names, ', date: '26.02.2023', cardText: 
             '1) Artist links are now clickable when playing audio (with running server) ' +
-            "<br>" + '<a href="https://sealkeen.github.io/?artist=dEMOTIONAL">sealkeen.github.io/?artist=dEMOTIONAL</a>' +
+            "<br>" + '<a href="https://sealkeen.github.io/?artist=Demotional">sealkeen.github.io/?artist=Demotional</a>' +
             '<img src="../Images/Development/clickable-artist-links.png">' + 
             "<br>" + '<a href="https://sealkeen.github.io/?artist=In+Flames">sealkeen.github.io/?artist=In+Flames</a>' +
             '<img src="../Images/Development/clickable-artist-links-in-flames.png">'+
