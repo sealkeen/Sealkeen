@@ -8,6 +8,11 @@ const loc = urls.getLocation();
 export function setTitleByArtistAndTitle(el) {
     try {
         let artist = el; let song = el; let songInfo = el;
+	if(el.target == null) {
+	    console.log(' [Err] NRE setTitleByArtistAndTitle(): %j', el.target );
+	    return;
+	}
+
         if (!el.target.classList.contains('card-body')) {
             songInfo = el.parentNode;
         }
