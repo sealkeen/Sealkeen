@@ -6,7 +6,7 @@ export function CreateLocalization()
 {
     // Greetings 
     lS.setString('en', 'greeting_midnight', 'Good midnight');
-    lS.setString('ru', 'greeting_midnight', 'Спокойной ночи');
+    lS.setString('ru', 'greeting_midnight', 'Доброй ночи');
     lS.setString('de', 'greeting_midnight', 'Gute Nacht');
     lS.setString('sv', 'greeting_midnight', 'God natt');
 

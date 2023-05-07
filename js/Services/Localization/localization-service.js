@@ -1,10 +1,16 @@
 const LocalizationService = (function () {
     let instance;
+    const strings = {        
+        'en': {}, 'de': {}, 'ru': {}, 'sv' : {}
+    };
     // Default language is English
     let defaultLanguage = 'en';
-    const strings = {        
-        'en': {}, 'ru': {}, 'de': {}
-    };
+    // If no other specified
+    const language = (navigator.language || navigator.userLanguage).substring(0, 2);
+    if (Object.keys(strings).includes(language)) {
+        defaultLanguage = language;
+    }
+
     function init() { 
         return { getString, setString, setDefaultLanguage, getDefaultLanguage, getLanguages, getDefault };
         function getDefault(key)
