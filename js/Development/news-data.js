@@ -4,9 +4,14 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData()
 {
-    return [   
+    return [  
         {
-            cardTitle: 'Hosting down, ', date: '01.05.2023', cardText: 
+            cardTitle: 'New appearances, ', date: '01.05.2023', cardText: 
+            'Added language localizations to several menus.',
+            id: 'may-seven-tw-three--localization-services'
+        },   
+        {
+            cardTitle: 'New appearances, ', date: '01.05.2023', cardText: 
             'New artists, albums, tracks, genres card colors added. ',
             id: 'may-first-tw-three--card-colors'
         },  
