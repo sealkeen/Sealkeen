@@ -9,12 +9,12 @@ export function FillLocalizationStore()
 
     window.fillLocalizationStore = FillLocalizationStore;
     window.translateWebsite = Localize;
-    window.setNavigationLocalizations = setNavigationLocalizations;
+    window.applyLanguageTranslations = applyLanguageTranslations;
     window.translateGreetings = translateGreetings;
 
     CreateLocalization();
     AddLanguageDropDown();
-    setNavigationLocalizations();
+    applyLanguageTranslations();
 
     console.log('Call ok.');
     return lS;
@@ -22,11 +22,11 @@ export function FillLocalizationStore()
 
 function Localize()
 {
-    setNavigationLocalizations();
+    applyLanguageTranslations();
     window.toggleBodyBackground();
 }
 
-function setNavigationLocalizations() {
+function applyLanguageTranslations() {
     // ids
     const ids_A = ['nav-lnk-artists', 'nav-lnk-compositions', 'nav-lnk-albums', 'nav-lnk-genres', 'nav-lnk-sign-up', 'nav-lnk-register', 'nav-lnk-login', 'nav-lnk-background'];
     ids_A.forEach((id) => {
@@ -36,7 +36,7 @@ function setNavigationLocalizations() {
       }
     });
     // classes
-    const claasses = ['lbl-srv-status', 'nav-lnk-about', 'navbar-brand']
+    const claasses = ['lbl-srv-status', 'nav-lnk-about', 'navbar-brand', 'nav-lnk-artists', 'nav-lnk-compositions', 'nav-lnk-albums', 'nav-lnk-genres', 'nav-lnk-background']
     claasses.forEach(id => {
         const el = document.querySelector(`.${id}`);
         if (el) {

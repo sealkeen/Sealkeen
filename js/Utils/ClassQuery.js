@@ -1,3 +1,5 @@
+var prevState = 'off';
+
 export function toggleForId(left, right, element, boolWhich) {
     const id = $(element);
     if (!id) {
@@ -5,11 +7,13 @@ export function toggleForId(left, right, element, boolWhich) {
     }
     if (boolWhich === true) {
         toggleClass(left, right, id);
-        console.log("Server unavailable ⛔");
+        if(prevState !== 'off') console.log("Server unavailable ⛔"); //State changed, warn about it
+        prevState = 'off'
     } else {
         addClass(left, id);
         toggleClass(right, left, id);
-        console.log("Server available ✅");
+        if(prevState !== 'on') console.log("Server available ✅"); //State changed, warn about it
+        prevState = 'on'
     }
 }
 

@@ -41,7 +41,9 @@ export async function onPerformHandShakeInterval(onSuccessAction)
                     g_interval = DEFAULT_INTERVAL;
                     toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', false);
                     onSuccessAction().then(() => {
-                        setDevelopmentMessages();
+                        if (!document.getElementById("development-body")) {
+                            setDevelopmentMessages();
+                        }
                     });
                 }
                 else throw new Error('Fetch error.');
