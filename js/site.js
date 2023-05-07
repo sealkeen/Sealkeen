@@ -13,12 +13,14 @@ import { getNext } from './Store/mock-data.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import MusicApi from './Page/url-decoding.js'
+import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
 
 /// On document loaded event
 $(document).ready(function () {
+    FillLocalizationStore();
     onSiteLoadIfAuthorized(); runBackgroundHandShakes();
     addSideNavElements(); addEventHandlersOnBody();
     toggleBodyBackground(); bindPlayerButtons();

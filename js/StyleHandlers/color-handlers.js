@@ -1,4 +1,7 @@
 import urls from './../api.js'
+import LocalizationService from './../Services/Localization/localization-service.js';
+
+const lS = LocalizationService.getInstance();
 
 // color-handlers.js
 function setGradientEarlyMidnightBackground() { $('.body')[0].className = ('body gradient-early-midnight'); console.log('body gradient-early-midnight'); }
@@ -13,6 +16,7 @@ function setGradientEarlyEveningBackground() { $('.body')[0].className = ('body 
 function setGradientLateEveningBackground() { $('.body')[0].className = ('body gradient-late-evening'); console.log('body gradient-late-evening'); }
 
 export function onClickBodyBackground() {
+  
     const bodyClass = $('.body')[0].className;
     switch (bodyClass) {
         case 'body gradient-late-evening':
@@ -41,31 +45,34 @@ export function onClickBodyBackground() {
 }
 
 export function toggleBodyBackground() {
-    const hours = new Date().getHours();
-    const welcome = $('#welcome')[0] == null ? { innerHtml : "" } : $('#welcome')[0];
+    window.toggleBodyBackground = toggleBodyBackground;
     
+    const hours = new Date().getHours();
+    let greetingKey = '';
     if (hours >= 22 || hours <= 7) {
         setGradientEarlyMidnightBackground();
-        welcome.innerHTML = 'Good midnight';
+        greetingKey = 'greeting_midnight';
     } else if (hours > 7 && hours < 11) {
         setGradientLateMorningBackground();
-        welcome.innerHTML = 'Good morning';
+        greetingKey = 'greeting_morning';
     } else if (hours >= 11 && hours <= 13) {
         setGradientDaylightBackground();
-        welcome.innerHTML = 'Good day';
+        greetingKey = 'greeting_day';
     } else if (hours > 13 && hours < 16) {
         setGradientEarlyAfternoonBackground();
-        welcome.innerHTML = 'Good early afternoon';
+        greetingKey = 'greeting_early_afternoon';
     } else if (hours >= 16 && hours <= 18) {
         setGradientLateAfternoonBackground();
-        welcome.innerHTML = 'Good late afternoon';
+        greetingKey = 'greeting_late_afternoon';
     } else if (hours > 18 && hours < 20) {
         setGradientEarlyEveningBackground();
-        welcome.innerHTML = 'Good early evening';
+        greetingKey = 'greeting_early_evening';
     } else if (hours >= 20 && hours < 22) {
         setGradientLateEveningBackground();
-        welcome.innerHTML = 'Good late evening';
+        greetingKey = 'greeting_late_evening';
     }
+    
+    window.translateGreetings(greetingKey);
 }
 
 function noOp() { console.log('no-op') }
