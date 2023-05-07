@@ -39,10 +39,10 @@ const LocalizationService = (function () {
         function setDefaultLanguage(language) {
             defaultLanguage = language;
         };
-        function getDefaultLanguage(language) {
+        function getDefaultLanguage() {
             return defaultLanguage;
         };
-        function getLanguages(language) {
+        function getLanguages() {
             return Object.keys(strings);
         };
     }

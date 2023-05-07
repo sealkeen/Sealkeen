@@ -27,12 +27,21 @@ function Localize()
 }
 
 function setNavigationLocalizations() {
-    const ids = ['nav-lnk-artists', 'nav-lnk-compositions', 'nav-lnk-albums', 'nav-lnk-genres', 'nav-lnk-sign-up', 'nav-lnk-register', 'nav-lnk-login', 'nav-lnk-background', 'nav-lnk-about'];
-    ids.forEach((id) => {
+    // ids
+    const ids_A = ['nav-lnk-artists', 'nav-lnk-compositions', 'nav-lnk-albums', 'nav-lnk-genres', 'nav-lnk-sign-up', 'nav-lnk-register', 'nav-lnk-login', 'nav-lnk-background'];
+    ids_A.forEach((id) => {
       const el = document.querySelector(`#${id} a`);
       if (el) {
         el.textContent = lS.getDefault(id);
       }
+    });
+    // classes
+    const claasses = ['lbl-srv-status', 'nav-lnk-about', 'navbar-brand']
+    claasses.forEach(id => {
+        const el = document.querySelector(`.${id}`);
+        if (el) {
+          el.textContent = lS.getDefault(id);
+        }
     });
   }
 
