@@ -26,7 +26,7 @@ export async function runBackgroundHandShakes()
 export async function onPerformHandShakeInterval(onSuccessAction)
 {
     try {
-        console.log('HandShake at ' + getTime_HH_MM_SS_MS())
+        //console.log('HandShake at ' + getTime_HH_MM_SS_MS())
         let ctrl = (urls.getLocation() + 'PerformPublicHandShake');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
