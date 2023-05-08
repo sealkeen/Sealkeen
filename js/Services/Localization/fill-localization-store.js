@@ -60,9 +60,6 @@ function AddLanguageDropDown()
     // Continue with the function
     console.log("No dropdown toggles found");
 
-    const navbar = document.querySelector('.navbar-nav');
-    const navLnkBackground = document.querySelector('#nav-lnk-background');
-
     // Create language combobox button
     const languageComboBoxButton = document.createElement('li');
     languageComboBoxButton.classList.add('nav-item', 'dropdown', 'language-combobox-button');
@@ -100,5 +97,6 @@ function AddLanguageDropDown()
 
     languageComboBoxButton.appendChild(languageOptionsDropdownMenu);
 
-    navbar.insertBefore(languageComboBoxButton, navLnkBackground.nextSibling);
+    const navbarUserRegisterLogin = document.querySelector('#navbar-nav-user-register-login');
+    navbarUserRegisterLogin.insertBefore(languageComboBoxButton, navbarUserRegisterLogin.firstChild);
 }
