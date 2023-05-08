@@ -133,9 +133,9 @@ export function setDevelopmentMessages() {
     if (!devBody) {
         let devDiv = document.createElement('div');
         devDiv.id = 'development-body';
-        devDiv.className = "card-columns";
+        devDiv.className = "news-columns";
         document.getElementById("page-body-container").appendChild(devDiv);
-    } else { devBody.className = "card-columns"; }
+    } else { devBody.className = "news-columns"; }
 
     document.getElementById('development-body').innerHTML = '';
 
