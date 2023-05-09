@@ -163,7 +163,7 @@ export function setDevelopmentMessages() {
 
     document.querySelectorAll('#september-twenty-eight-sidebars,#september-thirty-sidebars').forEach(card => {
         card.addEventListener('click', (e) => {
-            if (document.getElementById("mySidenav").getBoundingClientRect().width === 0) {
+            if (document.getElementById("left-side-nav").getBoundingClientRect().width === 0) {
                 openNav();
                 openRightNav();
             } else {

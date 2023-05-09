@@ -51,42 +51,42 @@ function getSideNavWidth() {
 }
 
 export function openNav() {
-    document.getElementById("mySidenav").style.width = getSideNavWidth();
-    //window.addEventListener('resizeend', () => { document.getElementById("mySidenav").style.width = $('body').width() / 2; } )
+    document.getElementById("left-side-nav").style.width = getSideNavWidth();
+    //window.addEventListener('resizeend', () => { document.getElementById("left-side-nav").style.width = $('body').width() / 2; } )
     //document.getElementById("top-page-container").style.marginLeft = "250px";
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
-    document.getElementById("mySidenav").style.paddingLeft = "5px"; 
-    document.getElementById("mySidenav").style.paddingRight = "5px"; 
+    document.getElementById("left-side-nav").style.paddingLeft = "5px"; 
+    document.getElementById("left-side-nav").style.paddingRight = "5px"; 
 }
   
 export function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("left-side-nav").style.width = "0";
     //document.getElementById("top-page-container").style.marginLeft= "0";
     document.getElementsByClassName("navbar")[0].style.opacity = 1;
     //document.getElementsByClassName("container")[0].style.opacity = 1;
-    document.getElementById("mySidenav").style.paddingLeft = "0px"; 
-    document.getElementById("mySidenav").style.paddingRight = "0px"; 
+    document.getElementById("left-side-nav").style.paddingLeft = "0px"; 
+    document.getElementById("left-side-nav").style.paddingRight = "0px"; 
 }
 
 export function openRightNav(e) {
-    document.getElementById("bottomRightNav").style.width = getSideNavWidth();
-    //window.addEventListener('resizeend', () => { document.getElementById("bottomRightNav").style.width = $('body').width() / 2; } )
+    document.getElementById("right-side-nav").style.width = getSideNavWidth();
+    //window.addEventListener('resizeend', () => { document.getElementById("right-side-nav").style.width = $('body').width() / 2; } )
     //document.getElementById("top-page-container").style.marginRight = "250px";
     document.querySelector("#volume-control").classList.add('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
     //document.getElementsByClassName("container")[0].style.opacity = 0.8;
-    document.getElementById("bottomRightNav").style.paddingLeft = "5px"; 
-    document.getElementById("bottomRightNav").style.paddingRight = "5px"; 
+    document.getElementById("right-side-nav").style.paddingLeft = "5px"; 
+    document.getElementById("right-side-nav").style.paddingRight = "5px"; 
 }
   
 export function closeRightNav(e) {
-    document.getElementById("bottomRightNav").style.width = "0";
+    document.getElementById("right-side-nav").style.width = "0";
     //document.getElementById("top-page-container").style.marginRight= "0";
     document.querySelector("#volume-control").classList.remove('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 1;
     //document.getElementsByClassName("container")[0].style.opacity = 1;
-    document.getElementById("bottomRightNav").style.paddingLeft = "0px"; 
-    document.getElementById("bottomRightNav").style.paddingRight = "0px"; 
+    document.getElementById("right-side-nav").style.paddingLeft = "0px"; 
+    document.getElementById("right-side-nav").style.paddingRight = "0px"; 
 }
 
 export function onPauseClicked(e)
