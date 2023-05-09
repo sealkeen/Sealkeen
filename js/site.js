@@ -4,7 +4,7 @@ import { _trackQueue } from './Utils/Queue.js';
 import { containsClasses, getWebEntityObject, 
     displayQueuedTracks, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
-import { addSideNavElements } from './StyleHandlers/side-nav-handlers.js';
+import { addSideNavElements, addSidenavEventListeners } from './StyleHandlers/side-nav-handlers.js';
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
 from './Router/click-handlers.js';
@@ -14,15 +14,18 @@ import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testin
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import MusicApi from './Page/url-decoding.js'
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
+import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
 
 /// On document loaded event
 $(document).ready(function () {
+    appendSideNavigationBars();
     FillLocalizationStore();
     onSiteLoadIfAuthorized(); runBackgroundHandShakes();
-    addSideNavElements(); addEventHandlersOnBody();
+    addSideNavElements(); addSidenavEventListeners();
+    addEventHandlersOnBody();
     toggleBodyBackground(); bindPlayerButtons();
     toggleTopPageBackground(false); initializeKeyboardHook();
     let urlHandler = new MusicApi();

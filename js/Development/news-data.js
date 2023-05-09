@@ -6,7 +6,7 @@ export function getDevelopmentNewsData()
 {
     return [  
         {
-            cardTitle: 'New appearances, ', date: '01.05.2023', cardText: 
+            cardTitle: 'Language switcher, ', date: '01.05.2023', cardText: 
             'Added language localizations to several menus.',
             id: 'may-seven-tw-three--localization-services'
         },   
