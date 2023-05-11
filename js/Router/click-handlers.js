@@ -11,6 +11,7 @@ import { ConvertToDOM } from './../Store/mock-data.js'
 import { appendCheckBoxTo } from '../Page/data-processing.js';
 import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
 import { createErrorMessage } from '../Errors/fetch-errors.js';
+import { create429ErrorMessageOrThrowError } from '../Errors/fetch-errors-4xx.js';
 
 const loc = urls.getLocation();
 
@@ -45,24 +46,21 @@ export async function setCurrentPageIndex(event) {
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'IndexPartial');
         if (!$("#page-body-container").length) return;
-        fetch(ctrl, {
+        await fetch(ctrl, {
           headers: { 'Content-Type': 'application/json' },
           redirect: 'follow',
           referrerPolicy: 'no-referrer'
-        })
-        .then(response => {
-            if (response.status === 429) { throw new Error('Too many requests.'); }
-            if (!response.ok) { throw new Error('Fetch error.'); }
-            return response.text();
-        })
-        .then(responseText => {
-            pushHistoryState(urls.getPostfix());
-            const responseHtml = $.parseHTML(responseText);
-            $("#page-body-container").html('').append(responseHtml);
-            console.log(`fetch response key count: ${Object.keys(responseHtml).length}`);
-            toggleBodyBackground();
-        })
-        .catch(error => {
+        }).then(async response => {
+            if (response.ok) {
+                let responseText = await response.text();
+                pushHistoryState(urls.getPostfix());
+                const responseHtml = $.parseHTML(responseText);
+                $("#page-body-container").html('').append(responseHtml);
+                console.log(`fetch response key count: ${Object.keys(responseHtml).length}`);
+                toggleBodyBackground();
+            } else 
+                create429ErrorMessageOrThrowError(response.status);
+        }).catch((error) => {
             if (error.message === 'Too many requests.') {
                 createErrorMessage(error.message);
             } else {
@@ -96,17 +94,11 @@ export async function setCurrentPageManageAccount(event) {
                     $("#page-body-container").append(responseText);
                     console.log('fetch response key count: ' + Object.keys(responseText).length)
                     pushHistoryState(urls.getPostfix() + 'Manage/Index');
-                } else {
-                    throw new Error('Fetch error.');
-                }
-            })
-            .catch((error) => {
-                if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
-                } else {
-                    setCurrentPageMockData();    setCurrentPageMockData();
-                    createErrorMessage('setCurrentPageManageAccount: ' + error);
-                }
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
+            }).catch((error) => {
+                setCurrentPageMockData();    setCurrentPageMockData();
+                createErrorMessage('setCurrentPageManageAccount: ' + error);
             });
         }
     } catch (error) {
@@ -123,29 +115,27 @@ export async function setCurrentPageSignUp(event) {
         let ctrl = (urls.getLocation() + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
             var ftchSignUp = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(response => {
-                if (response.status === 429) { throw new Error('Too many requests.'); }
-                if (!response.ok) { throw new Error('Fetch error.'); }
-                return response.text();
-            })
-            .then((responseText) => {
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length);
-                pushHistoryState('GetHtmlSignUpPage/');
-                
-                const button = document.getElementById('form-btn-default');
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if(checkInputs()) setRegisterAntiForgeryOnClick();
-                });
-            })
-            .catch((error) => {            
+            headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async response => {
+                if (response.ok) { 
+                    let responseText = await response.text();
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    //console.log('%j', responseText)
+                    console.log('fetch response key count: ' + Object.keys(responseText).length);
+                    pushHistoryState('GetHtmlSignUpPage/');
+
+                    const button = document.getElementById('form-btn-default');
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if(checkInputs()) setRegisterAntiForgeryOnClick();
+                    });
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
+            }).catch((error) => {         
                 if (error.message === 'Too many requests.') {
                     createErrorMessage(error.message);
                 } else {
@@ -196,11 +186,8 @@ export async function setCurrentPageCompositions(event) {
                     appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
                     $("#page-body-container").append(trackDom);
                     pushHistoryState('GetHTMLCompositionsPage/');
-                } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
-                } else {
-                    throw new Error('Fetch error.');
-                }
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
                     setCurrentPageMockData();
                     createErrorMessage('setCurrentPageCompositions: ' + error); 
@@ -233,11 +220,8 @@ export async function setCurrentPageAlbums(event) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(albumsDom);
                     console.log('fetch response key count: ' + Object.keys(albumsDom).length);
-                } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
-                } else {
-                    throw new Error('Fetch error.');
-                }
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
                 setCurrentPageMockData();
                 createErrorMessage('in setCurrentPageAlbums: ' + error); 
@@ -270,11 +254,8 @@ export async function setCurrentPageGenres(event) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(genresDom);
                     console.log('Fetch response key count: ' + Object.keys(genresDom).length);
-                } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
-                } else {
-                    throw new Error('Fetch error.');
-                }
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
                 setCurrentPageMockData();
                 createErrorMessage('in setCurrentPageGenres: ' + error);
@@ -307,11 +288,8 @@ export async function setCurrentPageArtists(event) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(artistsDom);  
                     console.log('fetch response key count: ' + Object.keys(artistsDom).length);
-                } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
-                } else {
-                    throw new Error('Fetch error.');
-                }
+                } else 
+                    create429ErrorMessageOrThrowError()
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -346,6 +324,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
+                    let responseText = await response.text();
                     pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
@@ -393,6 +372,7 @@ export async function setCurrentPageCompositionByID(el) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
+                    let responseText = response.text();
                     pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
@@ -441,6 +421,7 @@ export async function setCurrentPageAlbumByID(el) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
+                    let responseText = await response.text();
                     pushHistoryState('GetHtmlAlbumPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
@@ -485,6 +466,7 @@ export async function setCurrentPageRegister(event) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
+                    let responseText = await response.text();
                     pushHistoryState('Account/Register/');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
@@ -546,6 +528,7 @@ export async function setCurrentPageLogin(event) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
+                    let responseText = await response.text();
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     //console.log('%j', responseText)
