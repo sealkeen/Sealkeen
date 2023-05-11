@@ -10,6 +10,7 @@ import { onClickGotoAboutMe } from './redirect.js';
 import { ConvertToDOM } from './../Store/mock-data.js'
 import { appendCheckBoxTo } from '../Page/data-processing.js';
 import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
+import { createErrorMessage } from '../Errors/fetch-errors.js';
 
 const loc = urls.getLocation();
 
@@ -169,27 +170,30 @@ export async function setCurrentPageCompositions(event) {
         }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
         if (pageBodyContainer != null) {
-            var ftchComps = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
-                if(response.ok) return response;
-                else throw new Error('Fetch error.');
-            }).then(async (response) => {
-                let data = await response.json();
-                console.log('handling response text');
-                let trackDom = CreateDOMFromJSON(data);
-                $("#page-body-container").html('');
-                appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
-                $("#page-body-container").append(trackDom);
-                pushHistoryState('GetHTMLCompositionsPage/');
-            })
-            .catch((error) => {
-                setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
-            });
+          var ftchComps = await fetch(ctrl, {
+            headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                // body: JSON.stringify(data) // body data type must match "Content-Type" header
+          }).then(async (response) => {
+            if (response.ok) {
+              let data = await response.json();
+              console.log('handling response text');
+              let trackDom = CreateDOMFromJSON(data);
+              $("#page-body-container").html('');
+              appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
+              $("#page-body-container").append(trackDom);
+              pushHistoryState('GetHTMLCompositionsPage/');
+            } else if (response.status === 429) {
+              createErrorMessage('Request rate is too high');
+            } else {
+              throw new Error('Fetch error.');
+            }
+          }).catch((error) => {
+            setCurrentPageMockData();
+            console.log('fetch error. Setting up mock data.');
+            createErrorMessage('An error occurred while fetching the data');
+          });
         }
     } catch (e) {
         console.log(e)

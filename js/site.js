@@ -1,4 +1,4 @@
-﻿import { setSidebarInputVolumeOnChange, loadDirect } from './Utils/Audio.js';
+﻿import { loadDirect } from './Utils/Audio.js';
 import urls from './api.js';
 import { _trackQueue } from './Utils/Queue.js';
 import { containsClasses, getWebEntityObject, 
@@ -15,6 +15,7 @@ import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import MusicApi from './Page/url-decoding.js'
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
 import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
+import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -28,6 +29,8 @@ $(document).ready(function () {
     addEventHandlersOnBody();
     toggleBodyBackground(); bindPlayerButtons();
     toggleTopPageBackground(false); initializeKeyboardHook();
+    appendHorizontalVolumeControl();
+    
     let urlHandler = new MusicApi();
     //addButtonOnClickHandlers();
     _trackQueue.onchange = () => {
@@ -72,7 +75,6 @@ $(document).ready(function () {
             document.querySelector('#ctxmenu').outerHTML = "";
         }
     });
-    setSidebarInputVolumeOnChange();
 });
 
 /// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)

@@ -28,9 +28,8 @@ export function appendSideNavigationBars()
       .append($('<p>').addClass('footer-pause-track-btn').text('Pause').attr('href', '#'))
       .append($('<p>').addClass('footer-next-track-btn').text('Next').attr('href', '#')));
     rightSideNav.append($('<div>').addClass('card-query-columns'));
-    rightSideNav.append($('<input>').attr({type: 'range', id: 'volume-control', class: ''}));
+    rightSideNav.append($('<input>').attr({type: 'range', id: 'vertical-volume-control', class: ''}));
   
     // add both div elements to header as first children
     $('header').prepend(leftSideNav).prepend(rightSideNav);
-
 }
