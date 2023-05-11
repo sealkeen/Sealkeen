@@ -372,7 +372,7 @@ export async function setCurrentPageCompositionByID(el) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
-                    let responseText = response.text();
+                    let responseText = await response.text();
                     pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
