@@ -18,9 +18,8 @@ export function appendHorizontalVolumeControl() {
     volumeControl.setAttribute("id", "horizontal-volume-control");
     volumeControl.setAttribute("class", "footer-volume-control");
 
-    // Append the input element to the track-artist-song-name div element
-    const trackArtistSongNameDiv = playerAudioDiv.querySelector(".track-artist-song-name");
-    trackArtistSongNameDiv.appendChild(volumeControl);
+    // Append the input element to the player-audio-div element
+    playerAudioDiv.appendChild(volumeControl);
 
     setSidebarInputVolumeOnChange();
 }
@@ -30,20 +29,22 @@ export function setSidebarInputVolumeOnChange(plr) {
     if (!audio) { return; }
 
     const vVolume = document.querySelector('#vertical-volume-control');
-    const volumeCtrlAbs = document.querySelector('#horizontal-volume-control');
+    const hVolume = document.querySelector('#horizontal-volume-control');
 
     if (vVolume) {
         vVolume.addEventListener('change', handleVolumeChange);
         audio.volume = vVolume.value / 100;
-    }
-    if (volumeCtrlAbs) {
-        volumeCtrlAbs.addEventListener('change', handleVolumeChange);
-        audio.volume = volumeCtrlAbs.value / 100;
-    }
+    } else { console.error('No verVolume found') }
+    
+    if (hVolume) {
+        hVolume.addEventListener('change', handleVolumeChange);
+        audio.volume = hVolume.value / 100;
+    } else { console.error('No horVolume found') }
+
     function handleVolumeChange(e) {
         const newVolume = e.currentTarget.value / 100;
         audio.volume = newVolume;
-        volumeCtrlAbs.value = e.currentTarget.value;
+        hVolume.value = e.currentTarget.value;
         vVolume.value = e.currentTarget.value;
     }
 }

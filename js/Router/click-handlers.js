@@ -63,10 +63,10 @@ export async function setCurrentPageIndex(event) {
           })
           .catch(error => {
             setCurrentPageMockData();
-            console.log('fetch error. Setting up mock data.', error);
+            createErrorMessage('setCurrentPageIndex: ' + error);
           });
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('setCurrentPageIndex: ' + error);
     } finally {
         toggleTopPageBackground(false);
         onDevelopmentCardClick();
@@ -97,11 +97,11 @@ export async function setCurrentPageManageAccount(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('setCurrentPageManageAccount: ' + error);
             });
         }
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('setCurrentPageManageAccount: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -139,11 +139,11 @@ export async function setCurrentPageSignUp(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('setCurrentPageSignUp: ' + error);
             });
         }
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('setCurrentPageSignUp: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -191,12 +191,11 @@ export async function setCurrentPageCompositions(event) {
             }
           }).catch((error) => {
             setCurrentPageMockData();
-            console.log('fetch error. Setting up mock data.');
-            createErrorMessage('An error occurred while fetching the data');
+            createErrorMessage('setCurrentPageCompositions: ' + error);
           });
         }
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('setCurrentPageCompositions: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -229,11 +228,11 @@ export async function setCurrentPageAlbums(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('in setCurrentPageAlbums: ' + error);
             });
         }
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('in setCurrentPageAlbums: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -266,11 +265,11 @@ export async function setCurrentPageGenres(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('in setCurrentPageAlbums: ' + error);
             });
         }
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('in setCurrentPageAlbums: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -307,12 +306,11 @@ export async function setCurrentPageArtists(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
-                console.log(error)
+                createErrorMessage('in setCurrentPageArtists: ' + error);
             });
         }
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('in setCurrentPageArtists: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -352,11 +350,11 @@ export async function setCurrentPageCompositionByArtistID(el) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + id + '\n'+ error);
             });
         }
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + '\n'+ e);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -397,10 +395,10 @@ export async function setCurrentPageCompositionByID(el) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('in GetPartialCompositionPageByID/?id=' + id + '\n' + error);
             });
         }
-    } catch (e) {
+    } catch (error) {
         setCurrentPageMockData();
         console.log('fetch error. Setting up mock data. Details: ' + e)
     } finally {
@@ -442,12 +440,12 @@ export async function setCurrentPageAlbumByID(el) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('in setCurrentPageAlbumByID/?id=' + id + '\n' + error);
             });
         }
-    } catch (e) {
+    } catch (error) {
         setCurrentPageMockData();
-        console.log('fetch error. Setting up mock data. Details: ' + e)
+        createErrorMessage('in setCurrentPageAlbumByID: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -500,11 +498,11 @@ export async function setCurrentPageRegister(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('in setCurrentPageRegister: ' + error);
             });
         }
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        createErrorMessage('in setCurrentPageRegister: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -553,11 +551,11 @@ export async function setCurrentPageLogin(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                console.log('fetch error. Setting up mock data.')
+                createErrorMessage('in setCurrentPageLogin: ' + error);
             });
         }
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        createErrorMessage('in setCurrentPageLogin: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }

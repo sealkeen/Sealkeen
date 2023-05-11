@@ -139,15 +139,18 @@ export function onCompositionSourceChanged(compId)
     //bindPlayerButtons();
     setArtistSongNameAsync();
     displayQueuedTracks(_trackQueue);
-    //appendHorizontalVolumeControl(); // changed source - apply volume control once more
+    appendHorizontalVolumeControl(); // changed source - apply volume control once more
     //setTitleByArtistAndTitle(el);
     let plr = $("#player-audio-element").get(0);
-    if(plr != null)
+    if(plr != null) {
         plr.onended = function () {
-            let id = GetCurrentCompositionsId() ?? compId;
+            let id = GetCurrentCompositionsId();
+            id == null ? compId : id;
+
             console.log('id is :' + id);
             setNextComposition(id); 
         };
+    }
 }
 
 export function onCompositionRightMouseDown(e) {
@@ -288,6 +291,8 @@ export async function setFooterPlayerSourse(el)
                 },
                 error: async function (error_) {
                     document.title = 'Medweb';
+                    const errorMessage = `Error loading audio: ${error_.status} ${error_.statusText}`;
+                    createErrorMessage(errorMessage);
                     onAjaxLoadError(source, error_, safePlay);
                 }
             });
