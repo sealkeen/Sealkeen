@@ -1,6 +1,4 @@
 
-
-
 // Define the function that appends the volume control element
 export function appendHorizontalVolumeControl() {
     // Get the player-audio-div element by its ID
@@ -33,6 +31,7 @@ export function setSidebarInputVolumeOnChange(plr) {
 
     const vVolume = document.querySelector('#vertical-volume-control');
     const volumeCtrlAbs = document.querySelector('#horizontal-volume-control');
+
     if (vVolume) {
         vVolume.addEventListener('change', handleVolumeChange);
         audio.volume = vVolume.value / 100;
@@ -45,6 +44,6 @@ export function setSidebarInputVolumeOnChange(plr) {
         const newVolume = e.currentTarget.value / 100;
         audio.volume = newVolume;
         volumeCtrlAbs.value = e.currentTarget.value;
-        volume.value = e.currentTarget.value;
+        vVolume.value = e.currentTarget.value;
     }
 }

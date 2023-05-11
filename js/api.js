@@ -2,6 +2,8 @@ const urls = {
     getLocation() {
         if(this.isGithub() || this.isNgrok()) {
             return 'https://72fa-37-144-214-170.ngrok-free.app/';
+        } else if ( this.isRemoteWorkspace() ) {
+            return 'https://localhost:443/'
         } else if (!this.isNodeJSHost()) {
             return `${location.protocol}//${location.host}/`;
         } else
@@ -24,6 +26,10 @@ const urls = {
     isLocalhost()
     {
         return (window.location.href.indexOf('localhost:') > -1);
+    },
+    isRemoteWorkspace()
+    {
+        return (window.location.href.indexOf(':65000') > -1);
     },
     isNodeJSHost()
     {

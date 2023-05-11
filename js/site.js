@@ -15,7 +15,7 @@ import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import MusicApi from './Page/url-decoding.js'
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
 import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
-import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
+import { appendHorizontalVolumeControl, setSidebarInputVolumeOnChange } from './Page/Components/volume-controls.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -139,7 +139,7 @@ export function onCompositionSourceChanged(compId)
     //bindPlayerButtons();
     setArtistSongNameAsync();
     displayQueuedTracks(_trackQueue);
-    setSidebarInputVolumeOnChange();
+    //appendHorizontalVolumeControl(); // changed source - apply volume control once more
     //setTitleByArtistAndTitle(el);
     let plr = $("#player-audio-element").get(0);
     if(plr != null)
