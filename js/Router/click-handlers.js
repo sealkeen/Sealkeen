@@ -101,8 +101,12 @@ export async function setCurrentPageManageAccount(event) {
                 }
             })
             .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('setCurrentPageManageAccount: ' + error);
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();    setCurrentPageMockData();
+                    createErrorMessage('setCurrentPageManageAccount: ' + error);
+                }
             });
         }
     } catch (error) {
@@ -141,9 +145,13 @@ export async function setCurrentPageSignUp(event) {
                     if(checkInputs()) setRegisterAntiForgeryOnClick();
                 });
             })
-            .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('setCurrentPageSignUp: ' + error);
+            .catch((error) => {            
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('setCurrentPageSignUp: ' + error); 
+                }
             });
         }
     } catch (error) {
@@ -174,29 +182,29 @@ export async function setCurrentPageCompositions(event) {
         }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
         if (pageBodyContainer != null) {
-          var ftchComps = await fetch(ctrl, {
-            headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                // body: JSON.stringify(data) // body data type must match "Content-Type" header
-          }).then(async (response) => {
-            if (response.ok) {
-                let data = await response.json();
-                console.log('handling response text');
-                let trackDom = CreateDOMFromJSON(data);
-                $("#page-body-container").html('');
-                appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
-                $("#page-body-container").append(trackDom);
-                pushHistoryState('GetHTMLCompositionsPage/');
-            } else if (response.status === 429) {
-                createErrorMessage('Request rate is too high');
-            } else {
-                throw new Error('Fetch error.');
-            }
-          }).catch((error) => {
-            setCurrentPageMockData();
-            createErrorMessage('setCurrentPageCompositions: ' + error);
-          });
+            var ftchComps = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async (response) => {
+                if (response.ok) {
+                    let data = await response.json();
+                    console.log('handling response text');
+                    let trackDom = CreateDOMFromJSON(data);
+                    $("#page-body-container").html('');
+                    appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
+                    $("#page-body-container").append(trackDom);
+                    pushHistoryState('GetHTMLCompositionsPage/');
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
+                    setCurrentPageMockData();
+                    createErrorMessage('setCurrentPageCompositions: ' + error); 
+            });
         }
     } catch (error) {
         createErrorMessage('setCurrentPageCompositions: ' + error);
@@ -214,24 +222,25 @@ export async function setCurrentPageAlbums(event) {
             var ftchAlb = await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(response => {
-                if (response.status === 429) { throw new Error('Too many requests.'); }
-                if (!response.ok) { throw new Error('Fetch error.'); }
-                return response.text();
-            }).then(async (response) => {
-                let data = await response.json();
-                console.log('handling response text');
-                let albumsDom = CreateAlbumsDOMFromJSON(data);
-                pushHistoryState('GetHTMLAlbumsPage/');
-                $("#page-body-container").html('');
-                $("#page-body-container").append(albumsDom);
-                console.log('fetch response key count: ' + Object.keys(albumsDom).length);
-            })
-            .catch((error) => {
+            }).then(async response => {
+                if (response.ok) { 
+                    let data = await response.json();
+                    console.log('handling response text');
+                    let albumsDom = CreateAlbumsDOMFromJSON(data);
+                    pushHistoryState('GetHTMLAlbumsPage/');
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(albumsDom);
+                    console.log('fetch response key count: ' + Object.keys(albumsDom).length);
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
                 setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageAlbums: ' + error);
+                createErrorMessage('in setCurrentPageAlbums: ' + error); 
             });
         }
     } catch (error) {
@@ -252,22 +261,23 @@ export async function setCurrentPageGenres(event) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(response => {
-                if (response.status === 429) { throw new Error('Too many requests.'); }
-                if (!response.ok) { throw new Error('Fetch error.'); }
-                return response.text();
-            }).then(async (response) => {
-                pushHistoryState('GetHTMLGenresPage/');
-                let data = await response.json();
-                console.log('handling response text');
-                let genresDom = CreateGenresDOMFromJSON(data);
-                $("#page-body-container").html('');
-                $("#page-body-container").append(genresDom);
-                console.log('fetch response key count: ' + Object.keys(genresDom).length);
-            })
-            .catch((error) => {
+            }).then(async response => {
+                if (response.ok) { 
+                    let data = await response.json();
+                    pushHistoryState('GetHTMLGenresPage/');
+                    console.log('Handling response text');
+                    let genresDom = CreateGenresDOMFromJSON(data);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(genresDom);
+                    console.log('Fetch response key count: ' + Object.keys(genresDom).length);
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
                 setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageAlbums: ' + error);
+                createErrorMessage('in setCurrentPageGenres: ' + error);
             });
         }
     } catch (error) {
@@ -288,21 +298,20 @@ export async function setCurrentPageArtists(event) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(response => {
-                if (response.status === 429) { throw new Error('Too many requests.'); }
-                if (!response.ok) { throw new Error('Fetch error.'); }
-                return response.text();
-            }).then(async (response) => {
-                setTimeout(async () => {
+            }).then(async response => {
+                if (response.ok) { 
                     pushHistoryState('GetHTMLArtistsPage/');
                     let data = await response.json();
                     console.log('handling response text');
                     let artistsDom = CreateArtistsDOMFromJSON(data);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(artistsDom);  
-                    
                     console.log('fetch response key count: ' + Object.keys(artistsDom).length);
-                }, 500); 
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
             })
             .catch((error) => {
                 setCurrentPageMockData();
@@ -335,21 +344,25 @@ export async function setCurrentPageCompositionByArtistID(el) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(response => {
-                if (response.status === 429) { throw new Error('Too many requests.'); }
-                if (!response.ok) { throw new Error('Fetch error.'); }
-                return response.text();
-            })
-            .then((responseText) => {
-                pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length)
-            })
-            .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + id + '\n'+ error);
+            }).then(async response => {
+                if (response.ok) { 
+                    pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    //console.log('%j', responseText)
+                    console.log('fetch response key count: ' + Object.keys(responseText).length)
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + id + '\n'+ error);
+                }
             });
         }
     } catch (error) {
@@ -366,8 +379,7 @@ export async function setCurrentPageCompositionByID(el) {
         if (!event.target.classList.contains('card-body')) {
             console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
             id = el.parentNode.children[0].value;
-        }
-        else {
+        } else {
             console.log('contains card-body. el.children[0].value');
             id = el.children[0].value;
         }
@@ -379,21 +391,25 @@ export async function setCurrentPageCompositionByID(el) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(response => {
-                if (response.status === 429) { throw new Error('Too many requests.'); }
-                if (!response.ok) { throw new Error('Fetch error.'); }
-                return response.text();
-            })
-            .then((responseText) => {
-                pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length)
-            })
-            .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in GetPartialCompositionPageByID/?id=' + id + '\n' + error);
+            }).then(async response => {
+                if (response.ok) { 
+                    pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    //console.log('%j', responseText)
+                    console.log('fetch response key count: ' + Object.keys(responseText).length)
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in GetPartialCompositionPageByID/?id=' + id + '\n' + error);
+                }
             });
         }
     } catch (error) {
@@ -423,22 +439,23 @@ export async function setCurrentPageAlbumByID(el) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
-                if(response.ok)
-                    return response.text();
-                else
+            }).then(async response => {
+                if (response.ok) { 
+                    pushHistoryState('GetHtmlAlbumPageByID/?id=' + id);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
                     throw new Error('Fetch error.');
-            })
-            .then((responseText) => {
-                pushHistoryState('GetHtmlAlbumPageByID/?id=' + id);
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length)
-            })
-            .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageAlbumByID/?id=' + id + '\n' + error);
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in setCurrentPageAlbumByID/?id=' + id + '\n' + error);
+                }
             });
         }
     } catch (error) {
@@ -466,37 +483,39 @@ export async function setCurrentPageRegister(event) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
-                if(response.ok)
-                    return response.text();
-                else
-                    throw new Error('Fetch error.');
-            })
-            .then((responseText) => {
-                pushHistoryState('Account/Register/');
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length)                    
-                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
-                $('#__AjaxAntiForgeryForm').removeAttr('method');                    
-                $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
-                $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
-                $('.btn-default').removeAttr('type');
-                $('#__AjaxAntiForgeryForm').submit(function (e) {
-                    //e.preventDefault();
-                });
-                $('.btn-default').onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
+            }).then(async response => {
+                if (response.ok) { 
+                    pushHistoryState('Account/Register/');
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    console.log('fetch response key count: ' + Object.keys(responseText).length)                    
+                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
+                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
+                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
+                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
+                    $('.btn-default').removeAttr('type');
+                    $('#__AjaxAntiForgeryForm').submit(function (e) {
+                        //e.preventDefault();
+                    });
+                    $('.btn-default').onclick = (e) => {setRegisterAntiForgeryOnClick(e)}
 
-                const button = document.getElementById('form-btn-default');
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if(checkInputs()) setRegisterAntiForgeryOnClick();
-                });
-            })
-            .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageRegister: ' + error);
+                    const button = document.getElementById('form-btn-default');
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if(checkInputs()) setRegisterAntiForgeryOnClick();
+                    });
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in setCurrentPageRegister: ' + error);
+                }
             });
         }
     } catch (error) {
@@ -525,31 +544,34 @@ export async function setCurrentPageLogin(event) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then((response) => {
-                if(response.ok)
-                    return response.text();
-                else
+            }).then(async response => {
+                if (response.ok) { 
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    //console.log('%j', responseText)
+                    console.log('fetch response key count: ' + Object.keys(responseText).length)                    
+                    $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
+                    $('#__AjaxAntiForgeryForm').removeAttr('method');                    
+                    $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
+                    $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
+                    $('.btn-default').removeAttr('type');
+                    $('#__AjaxAntiForgeryForm').submit(function (e) {
+                        setLoginAntiForgeryOnClick(e)
+                    });
+                    $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
+                    pushHistoryState('Login/');
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
                     throw new Error('Fetch error.');
-            })
-            .then((responseText) => {
-                $("#page-body-container").html('');
-                $("#page-body-container").append(responseText);
-                //console.log('%j', responseText)
-                console.log('fetch response key count: ' + Object.keys(responseText).length)                    
-                $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
-                $('#__AjaxAntiForgeryForm').removeAttr('method');                    
-                $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
-                $('#__AjaxAntiForgeryForm').attr('referrerpolicy', 'no-referrer')
-                $('.btn-default').removeAttr('type');
-                $('#__AjaxAntiForgeryForm').submit(function (e) {
-                    setLoginAntiForgeryOnClick(e)
-                });
-                $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
-                pushHistoryState('Login/');
-            })
-            .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageLogin: ' + error);
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in setCurrentPageLogin: ' + error);
+                }
             });
         }
     } catch (error) {
