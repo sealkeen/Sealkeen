@@ -1,7 +1,7 @@
 const urls = {
     getLocation() {
         if(this.isGithub() || this.isNgrok()) {
-            return 'https://72fa-37-144-214-170.ngrok-free.app/';
+            return 'https://85df-37-144-214-109.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/'
         } else if (!this.isNodeJSHost()) {
