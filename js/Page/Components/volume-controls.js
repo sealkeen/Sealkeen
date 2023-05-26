@@ -4,7 +4,7 @@ export function appendHorizontalVolumeControl() {
     // Get the player-audio-div element by its ID
     const playerAudioDiv = document.getElementById("player-audio-div");
 
-    // Check if an element with the ID 'volume-control-absolute' already exists
+    // Check if an element with the ID 'horizontal-volume-control' already exists
     if (document.getElementById("horizontal-volume-control")) {
       console.log("An element with the ID 'horizontal-volume-control' already exists");
       return;

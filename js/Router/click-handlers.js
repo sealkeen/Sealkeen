@@ -451,8 +451,13 @@ export async function setCurrentPageRegister(event) {
     toggleTopPageBackground(true);
     event.preventDefault();
     try {
-        if(await urls.isLocationReachable() && urls.isGithub()) { window.location = urls.getLocation() + 'Identity/Account/Register'; }
-        else return; 
+        if (await urls.isLocationReachable() // && urls.isGithub() // ??
+        ) {
+            window.location = urls.getLocation() + 'Identity/Account/Register';
+        }
+        else
+            return;
+
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';
 	
         toggleTopPageBackground(true);
