@@ -1,10 +1,10 @@
 const urls = {
     getLocation() {
-        if(this.isGithub() || this.isNgrok()) {
+        if(this.isGithub()) {
             return 'https://3e93-37-144-212-8.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/'
-        } else if (!this.isNodeJSHost()) {
+        } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
             return `${location.protocol}//${location.host}/`;
         } else
             return 'https://localhost:5001/';
