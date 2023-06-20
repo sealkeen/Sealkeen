@@ -2,6 +2,8 @@ import urls, { pushHistoryState } from './../api.js'
 import { toggleTopPageBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setDevelopmentMessages } from '../Development/news-data.js';
 
+var loc = await urls.getLocation();
+
 export function onDevelopmentCardClick()
 {
     if(document.querySelector('#development-body') === null) {
@@ -14,7 +16,7 @@ export function onDevelopmentCardClick()
 export async function fetchContentCrossOrigin(path) {
     try {
         toggleTopPageBackground(true);
-        let ctrl = (path.startsWith("http") ? path : urls.getLocation() + path);
+        let ctrl = (path.startsWith("http") ? path : loc + path);
         if ($("#page-body-container") != undefined) {
             let response = await fetch(ctrl, {
                 method: 'GET',

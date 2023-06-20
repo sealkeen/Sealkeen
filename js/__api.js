@@ -1,59 +1,12 @@
 const urls = {
-    g_PreconfiguredApi: '',
-    async getLocation() {
-        try {
-            if (urls.g_PreconfiguredApi && urls.g_PreconfiguredApi.trim() !== '') {
-                console.log('[INF] Using cached API URL:', this.g_PreconfiguredApi );
-                return this.g_PreconfiguredApi;
-            }
-
-            var fileContents = await this.fetchApiUrlFromGoogleDocs();
-            
-            setPreconfiguredApi(fileContents);
-            console.log('[INF] API URL set to:', g_PreconfiguredApi);
-        } catch (error) {
-            console.error(error);
-            if(this.isGithub()) {
-                return 'https://021f-185-18-125-92.ngrok-free.app/';
-            } else if ( this.isRemoteWorkspace() ) {
-                return 'https://localhost:443/';
-            } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
-                return `${location.protocol}//${location.host}/`;
-            } else
-                return 'https://localhost:5001/';
-        }
-    },
-    async fetchApiUrlFromGoogleDocs() {
-        var fileLink = 'http://docs.google.com/uc?export=open&id=1HsGPTmpgUa5erTKQOV5gmitSRGSzl-hZ';
-      
-        return new Promise(function(resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', fileLink, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        resolve(xhr.responseText);
-                    } else {
-                        reject(xhr.statusText);
-                    }
-                }
-            };
-            xhr.onerror = function() {
-                reject('[ERR] gDocs: Network error.');
-            };
-            xhr.send();
-        });
-    },
-    setPreconfiguredApi(contents) {
-        var lines = contents.split('\n');
-        var apiURL = lines[0].trim();
-        g_PreconfiguredApi = apiURL;
+    getLocation() {
+        return "192.168.0.127";
     },
     getPostfix() {
         if (window.location.href.indexOf("github.io/Sealkeen") > -1)
-            return 'Sealkeen/'
+            return 'Sealkeen/';
         else
-            return ''
+            return '';
     },
     getInDevelopmentMessage()
     {
@@ -90,9 +43,8 @@ const urls = {
 }; export default urls;
 
 export async function getLocationResponse() {
-    let loc = await urls.getLocation();
     return $.ajax({
-        url: loc,
+        url: urls.getLocation(),
         type: 'GET',
         contentType:'text/html',
         success: function (response) {

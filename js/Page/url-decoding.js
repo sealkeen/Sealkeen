@@ -2,7 +2,7 @@ import { fetchContentCrossOrigin } from "../Router/shared.js";
 
 export default class MusicAPI {
     constructor() {
-      console.log('%j', window.location)
+      //console.log('%j', window.location)
       const params = new URLSearchParams(window.location.search);
       const artist = params.get("artist");
       const track = params.get("track") || "*";

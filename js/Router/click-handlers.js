@@ -13,7 +13,7 @@ import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
 import { createErrorMessage } from '../Errors/fetch-errors.js';
 import { create429ErrorMessageOrThrowError } from '../Errors/fetch-errors-4xx.js';
 
-const loc = urls.getLocation();
+var loc = await urls.getLocation();
 
 export function addEventHandlersOnBody() {
     document.addEventListener('transitionend', function() { transitionEnd() });
@@ -44,7 +44,7 @@ export async function setCurrentPageIndex(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (urls.getLocation() + 'IndexPartial');
+        let ctrl = (loc + 'IndexPartial');
         if (!$("#page-body-container").length) return;
         await fetch(ctrl, {
           headers: { 'Content-Type': 'application/json' },
@@ -81,7 +81,7 @@ export async function setCurrentPageManageAccount(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (urls.getLocation() + 'Manage/Index');
+        let ctrl = (loc + 'Manage/Index');
         if ($("#page-body-container").length) {
             var ftchMngAcc = await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' },
@@ -112,7 +112,7 @@ export async function setCurrentPageSignUp(event) {
     try {
         event.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (urls.getLocation() + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
+        let ctrl = (loc + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
             var ftchSignUp = await fetch(ctrl, {
             headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -453,7 +453,7 @@ export async function setCurrentPageRegister(event) {
     try {
         if (await urls.isLocationReachable() // && urls.isGithub() // ??
         ) {
-            window.location = urls.getLocation() + 'Identity/Account/Register';
+            window.location = loc + 'Identity/Account/Register';
         }
         else
             return;
@@ -516,7 +516,7 @@ export async function setCurrentPageLogin(event) {
     toggleTopPageBackground(true);
     try {
         if(await urls.isLocationReachable() && urls.isGithub())
-            window.location = urls.getLocation() + 'Identity/Account/Login';
+            window.location = loc + 'Identity/Account/Login';
         else
             return;
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';

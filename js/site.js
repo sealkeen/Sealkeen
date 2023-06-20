@@ -18,7 +18,7 @@ import { appendSideNavigationBars } from './Page/Components/side-navigations.js'
 import { appendHorizontalVolumeControl, setSidebarInputVolumeOnChange } from './Page/Components/volume-controls.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
-const loc = urls.getLocation();
+var loc = await urls.getLocation();
 
 /// On document loaded event
 $(document).ready(function () {
@@ -183,7 +183,7 @@ export function onCompositionRightMouseDown(e) {
 }
 
 export function bindPlayerButtons() {
-    console.log('binding player buttons...');
+    //console.log('binding player buttons...');
     document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
         console.log("clicked");
 

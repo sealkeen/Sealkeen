@@ -3,7 +3,7 @@ import urls from './../api.js'
 import MusicApi from './../Page/url-decoding.js'
 import { fetchContentCrossOrigin } from "../Router/shared.js";
 
-const loc = urls.getLocation();
+var loc = await urls.getLocation();
 
 export function setTitleByArtistAndTitle(el) {
     try {
@@ -62,7 +62,7 @@ export function createArtistLink(artistSong) {
 
     replaceArtistParamInUrl(artist);
     
-    const artistUrl = `${urls.getLocation()}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
+    const artistUrl = `${loc}GetPartialCompositionPageByArtistName?artistName=${encodeURIComponent(artist)}`;
 
     const artistLink = `<a id="artist-name-hrefable" href="${artistUrl}">${artist}</a>`;
     return `${artistLink} – ${track}`;

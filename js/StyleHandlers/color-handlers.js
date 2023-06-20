@@ -2,18 +2,19 @@ import urls from './../api.js'
 import LocalizationService from './../Services/Localization/localization-service.js';
 
 const lS = LocalizationService.getInstance();
+var loc = await urls.getLocation();
 
 // color-handlers.js
-function setGradientEarlyMidnightBackground() { $('.body')[0].className = ('body gradient-early-midnight'); console.log('body gradient-early-midnight'); }
-function setGradientMediumMidnightBackground() { $('.body')[0].className = ('body gradient-medium-midnight'); console.log('body gradient-medium-midnight'); }
-function setGradientLateMidnightBackground() { $('.body')[0].className = ('body gradient-late-midnight'); console.log('body gradient-late-midnight'); }
-function setGradientEarlyMorningBackground() { $('.body')[0].className = ('body gradient-early-morning'); console.log('body gradient-early-morning'); }
-function setGradientLateMorningBackground() { $('.body')[0].className = ('body gradient-late-morning'); console.log('body gradient-late-morning'); }
-function setGradientDaylightBackground() { $('.body')[0].className = ('body gradient-daylight'); console.log('body gradient-daylight'); }
-function setGradientEarlyAfternoonBackground() { $('.body')[0].className = ('body gradient-early-afternoon'); console.log('body gradient-early-afternoon'); }
-function setGradientLateAfternoonBackground() { $('.body')[0].className = ('body gradient-late-afternoon'); console.log('body gradient-late-afternoon'); }
-function setGradientEarlyEveningBackground() { $('.body')[0].className = ('body gradient-early-evening'); console.log('body gradient-early-evening'); }
-function setGradientLateEveningBackground() { $('.body')[0].className = ('body gradient-late-evening'); console.log('body gradient-late-evening'); }
+function setGradientEarlyMidnightBackground() { $('.body')[0].className = ('body gradient-early-midnight'); }
+function setGradientMediumMidnightBackground() { $('.body')[0].className = ('body gradient-medium-midnight'); }
+function setGradientLateMidnightBackground() { $('.body')[0].className = ('body gradient-late-midnight'); }
+function setGradientEarlyMorningBackground() { $('.body')[0].className = ('body gradient-early-morning'); }
+function setGradientLateMorningBackground() { $('.body')[0].className = ('body gradient-late-morning'); }
+function setGradientDaylightBackground() { $('.body')[0].className = ('body gradient-daylight'); }
+function setGradientEarlyAfternoonBackground() { $('.body')[0].className = ('body gradient-early-afternoon'); }
+function setGradientLateAfternoonBackground() { $('.body')[0].className = ('body gradient-late-afternoon'); }
+function setGradientEarlyEveningBackground() { $('.body')[0].className = ('body gradient-early-evening'); }
+function setGradientLateEveningBackground() { $('.body')[0].className = ('body gradient-late-evening'); }
 
 export function onClickBodyBackground() {
   
@@ -86,7 +87,7 @@ export function toggleTopPageBackground(on)
             document.getElementById("top-page-container").style.backgroundRepeat= 'no-repeat';
             document.getElementById("top-page-container").style.backgroundPosition = 'center top';
             document.getElementById("top-page-container").style.backgroundSize= '50rem 38rem';
-            let hostRoot =  urls.isGithub() ? `../${urls.getPostfix()}` : `${urls.getLocation()}`;
+            let hostRoot =  urls.isGithub() ? `../${urls.getPostfix()}` : `${loc}`;
             hostRoot = urls.isNodeJSHost() ? urls.getHostRootPath() : hostRoot;
 
             document.getElementById("top-page-container").style.backgroundImage = `url(${hostRoot}Images/WebPack/loading-transparent.gif)`;

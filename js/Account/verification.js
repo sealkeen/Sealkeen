@@ -3,7 +3,7 @@ import { getCookie } from './../utilities.js'
 import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setCurrentPageArtists } from './../Router/click-handlers.js'
 import { checkInputs } from '../signup.js';
-
+var loc = await urls.getLocation();
 
 export function setRegisterAntiForgeryOnClick() {
     try {
@@ -17,7 +17,7 @@ export function setRegisterAntiForgeryOnClick() {
 
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
-        fetch(urls.getLocation() + 'Account/RegisterCors', {
+        fetch(loc + 'Account/RegisterCors', {
             method: 'POST',
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -83,7 +83,7 @@ export function setLoginAntiForgeryOnClick(e) {
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
         var stLgnAntFrgNClk = 
-        fetch(urls.getLocation() + 'Account/LoginCors', {
+        fetch(loc + 'Account/LoginCors', {
             method: 'POST',
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
