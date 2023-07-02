@@ -2,17 +2,19 @@ const MIN_LENGTH = 15;
 
 export function addSidenavEventListeners()
 {
-    document.querySelector('.closebtn')?.addEventListener('click', closeNav);
-    document.querySelector('.openNavSpan')?.addEventListener('click', openNav);
-    
-    document.querySelector('.closeRightNavBtn')?.addEventListener('click', closeRightNav);
-    document.querySelector('.openRightNavSpan')?.addEventListener('click', openRightNav);
-    
-    document.querySelector('.left-hover-bar')?.addEventListener('mouseover', openNav);
-    document.querySelector('.right-hover-bar')?.addEventListener('mouseover', openRightNav);
-    document.querySelector('.left-hover-bar')?.addEventListener('click', openNav);
-    document.querySelector('.right-hover-bar')?.addEventListener('click', openRightNav);
-    document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked);
+    try {
+        document.querySelector('.closebtn')?.addEventListener('click', closeNav);
+        document.querySelector('.openNavSpan')?.addEventListener('click', openNav);
+        
+        document.querySelector('.closeRightNavBtn')?.addEventListener('click', closeRightNav);
+        document.querySelector('.openRightNavSpan')?.addEventListener('click', openRightNav);
+        
+        document.querySelector('.left-hover-bar')?.addEventListener('mouseover', openNav);
+        document.querySelector('.right-hover-bar')?.addEventListener('mouseover', openRightNav);
+        document.querySelector('.left-hover-bar')?.addEventListener('click', openNav);
+        document.querySelector('.right-hover-bar')?.addEventListener('click', openRightNav);
+        document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked);
+    } catch { }
 }
 
 export function addSideNavElements()
