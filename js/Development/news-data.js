@@ -126,6 +126,9 @@ export function getDevelopmentNewsData()
     ];
 }
 export function setDevelopmentMessages() {
+
+    if (window.location.href.indexOf("MJpeg") > -1)
+        return;
     console.log('set dev messages');
 
     let data = getDevelopmentNewsData();
