@@ -17,33 +17,35 @@ export function addSidenavEventListeners()
 
 export function addSideNavElements()
 {
-    let leftCircle = document.createElement('div');
-    leftCircle.className = 'circle left-circle';
-    let rightCircle = document.createElement('div')
-    rightCircle.className = 'circle right-circle';
-    let leftLine = document.createElement('div');
-    leftLine.className = 'line left-line'
-    let rightLine = document.createElement('div');
-    rightLine.className = 'line right-line'
-    leftCircle.appendChild(leftLine)
-    rightCircle.appendChild(rightLine)
-    document.querySelector('.closeRightNavBtn').after(rightCircle)
-    document.querySelector('.closebtn').after(leftCircle)
-    
-    document.querySelectorAll('.circle').forEach(element => {
-        element.addEventListener('click', (e) => { 
-            onPauseClicked(e); 
-        });
-        element.addEventListener('mousedown', (e) => { 
-            $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
-        });
-        element.addEventListener('touchstart', (e) => { 
-            $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
-        });
-        element.addEventListener('mouseup', (e) => { 
-            setTimeout( () => { $('.right-circle').removeClass('circle-active'); $('.left-circle').removeClass('circle-active')}, 50);
-        });
-    });
+    try {
+        let leftCircle = document.createElement('div');
+        leftCircle.className = 'circle left-circle';
+        let rightCircle = document.createElement('div')
+        rightCircle.className = 'circle right-circle';
+        let leftLine = document.createElement('div');
+        leftLine.className = 'line left-line'
+        let rightLine = document.createElement('div');
+        rightLine.className = 'line right-line'
+        leftCircle.appendChild(leftLine)
+        rightCircle.appendChild(rightLine)
+        document.querySelector('.closeRightNavBtn').after(rightCircle)
+        document.querySelector('.closebtn').after(leftCircle)
+        
+        document.querySelectorAll('.circle').forEach(element => {
+            element.addEventListener('click', (e) => { 
+                onPauseClicked(e); 
+            });
+            element.addEventListener('mousedown', (e) => { 
+                $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
+            });
+            element.addEventListener('touchstart', (e) => { 
+                $('.right-circle').toggleClass('circle-active'); $('.left-circle').toggleClass('circle-active');
+            });
+            element.addEventListener('mouseup', (e) => { 
+                setTimeout( () => { $('.right-circle').removeClass('circle-active'); $('.left-circle').removeClass('circle-active')}, 50);
+            });
+        }); 
+    } catch { }
 }
 
 function getSideNavWidth() {
