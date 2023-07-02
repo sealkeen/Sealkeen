@@ -22,106 +22,109 @@ const loc = urls.getLocation();
 
 /// On document loaded event
 $(document).ready(function () {
-    appendSideNavigationBars();
-    FillLocalizationStore();
-    onSiteLoadIfAuthorized(); runBackgroundHandShakes();
-    addSideNavElements(); addSidenavEventListeners();
-    addEventHandlersOnBody();
-    toggleBodyBackground(); bindPlayerButtons();
-    toggleTopPageBackground(false); initializeKeyboardHook();
-    appendHorizontalVolumeControl();
-    
-    let urlHandler = new MusicApi();
-    //addButtonOnClickHandlers();
-    _trackQueue.onchange = () => {
-        displayQueuedTracks(_trackQueue);
-    };
-    const container = document.querySelector('body');
+    try {
+        appendSideNavigationBars();
+        FillLocalizationStore();
+        onSiteLoadIfAuthorized(); runBackgroundHandShakes();
+        addSideNavElements(); addSidenavEventListeners();
+        addEventHandlersOnBody();
+        toggleBodyBackground(); bindPlayerButtons();
+        toggleTopPageBackground(false); initializeKeyboardHook();
+        appendHorizontalVolumeControl();
+        
+        let urlHandler = new MusicApi();
+        //addButtonOnClickHandlers();
+        _trackQueue.onchange = () => {
+            displayQueuedTracks(_trackQueue);
+        };
+        const container = document.querySelector('body');
 
-    container.onmousedown = (e) => {
-        console.log('onmousedown' + e.target.id + ' ' + e.target.className);
-        if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
-            $('#ctxmenu').innerHTML = '';
-        }
-    }
-
-    container.addEventListener('click', function (e) {
-        console.log('onclick' + e.target.id + ' ' + e.target.className);
-        // But only alert for elements that have an alert-button class
-        //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
-        let target = e.target;
-        if (containsClasses(target, 'card-text', 'card-title')) {
-            target = e.target.parentNode;
-        }
-        if (target.classList.contains('card-body-composition')) {
-            setFooterPlayerSourse(e.target)
-            if (e.which === 3) {/* Right Mouse Click */
-                //onCompositionRightMouseDown(); 
+        container.onmousedown = (e) => {
+            console.log('onmousedown' + e.target.id + ' ' + e.target.className);
+            if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
+                $('#ctxmenu').innerHTML = '';
             }
         }
-        if (target.classList.contains('album-card-div')) {
-            setCurrentPageCompositionByID(e.target);
-        }
-        if (target.classList.contains('genre-card-div')) {
-            setCurrentPageAlbumByID(e.target);
-        }
-        if (target.classList.contains('artist-card-div')) {
-            setCurrentPageCompositionByArtistID(e.target);
-        }
-        if (target.classList.contains('btn-default')) {
-            //$('.btn-default').onclick = (e) => { e.preventDefault(); };
-        }
-        if (target.id == 'ctxmenu') {
-            document.querySelector('#ctxmenu').outerHTML = "";
-        }
-    });
-});
 
-/// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)
-document.querySelector('.container')?.addEventListener('touchend', function (e) {
-    setTimeout( () => {
-        console.log('touchend' + e.target.id + ' ' + e.target.className);
-        const highlightedItems = document.querySelectorAll("#ctxmenu");
-        highlightedItems.forEach((userItem) => {
-            userItem.outerHTML = "";
+        container.addEventListener('click', function (e) {
+            console.log('onclick' + e.target.id + ' ' + e.target.className);
+            // But only alert for elements that have an alert-button class
+            //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
+            let target = e.target;
+            if (containsClasses(target, 'card-text', 'card-title')) {
+                target = e.target.parentNode;
+            }
+            if (target.classList.contains('card-body-composition')) {
+                setFooterPlayerSourse(e.target)
+                if (e.which === 3) {/* Right Mouse Click */
+                    //onCompositionRightMouseDown(); 
+                }
+            }
+            if (target.classList.contains('album-card-div')) {
+                setCurrentPageCompositionByID(e.target);
+            }
+            if (target.classList.contains('genre-card-div')) {
+                setCurrentPageAlbumByID(e.target);
+            }
+            if (target.classList.contains('artist-card-div')) {
+                setCurrentPageCompositionByArtistID(e.target);
+            }
+            if (target.classList.contains('btn-default')) {
+                //$('.btn-default').onclick = (e) => { e.preventDefault(); };
+            }
+            if (target.id == 'ctxmenu') {
+                document.querySelector('#ctxmenu').outerHTML = "";
+            }
         });
-        onCardTapped(e)
-    }, 75);
+        
+        /// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)
+        document.querySelector('.container')?.addEventListener('touchend', function (e) {
+            setTimeout( () => {
+                console.log('touchend' + e.target.id + ' ' + e.target.className);
+                const highlightedItems = document.querySelectorAll("#ctxmenu");
+                highlightedItems.forEach((userItem) => {
+                    userItem.outerHTML = "";
+                });
+                onCardTapped(e)
+            }, 75);
+        });
+
+        /// Toggle change volume by mouse wheel for scroll on footer / absolute volume control
+        document.onwheel = (e) =>
+        {        
+            if (containsClasses(e.target, 'footer-volume-control', 'volume-control-absolute', 'player-audio-element') === true) {
+                let target = e.target;
+                
+                let value = target.value
+                if(value > 3) {
+                    if(-(e.deltaY) > 0)
+                        target.value *= 1.2;
+                    else
+                        target.value *= 0.8;
+                } else {
+                    if(-(e.deltaY) > 0)
+                        target.value += 1;
+                    else
+                        target.value -= 1;
+                }
+                fireOnInputValueChange(target);
+            }
+        }
+
+        document.querySelector('.container').oncontextmenu = (e) => {
+            console.log('onContentMenu' + e.target.id + ' ' + e.target.className);
+            e.preventDefault();
+            let target = e.target;
+            if (containsClasses(target, 'card-text', 'card-title')) {
+                target = e.target.parentNode;
+            }
+            if (target.classList.contains('card-body-composition')) {
+                onCompositionRightMouseDown(e);
+            }
+        }
+    } catch { }
 });
 
-/// Toggle change volume by mouse wheel for scroll on footer / absolute volume control
-document.onwheel = (e) =>
-{        
-    if (containsClasses(e.target, 'footer-volume-control', 'volume-control-absolute', 'player-audio-element') === true) {
-        let target = e.target;
-        
-        let value = target.value
-        if(value > 3) {
-            if(-(e.deltaY) > 0)
-                target.value *= 1.2;
-            else
-                target.value *= 0.8;
-        } else {
-            if(-(e.deltaY) > 0)
-                target.value += 1;
-            else
-                target.value -= 1;
-        }
-        fireOnInputValueChange(target);
-    }
-}
-
-document.querySelector('.container').oncontextmenu = (e) => {
-    console.log('onContentMenu' + e.target.id + ' ' + e.target.className);
-    e.preventDefault();
-    let target = e.target;
-    if (containsClasses(target, 'card-text', 'card-title')) {
-        target = e.target.parentNode;
-    }
-    if (target.classList.contains('card-body-composition')) {
-        onCompositionRightMouseDown(e);
-    }
-}
 
 export function onCardTapped(e)
 {
