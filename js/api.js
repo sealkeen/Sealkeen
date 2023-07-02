@@ -15,38 +15,18 @@ const urls = {
         else
             return ''
     },
-    getInDevelopmentMessage()
-    {
-        //alert('В разработке (развёртывается на удалённый ресурс)');
-    },
-    isGithub()
-    {
-        return (window.location.href.indexOf("github.io") > -1);
-    },
-    isLocalhost()
-    {
-        return (window.location.href.indexOf('localhost:') > -1);
-    },
-    isRemoteWorkspace()
-    {
-        return (window.location.href.indexOf(':65000') > -1);
-    },
-    isNodeJSHost()
-    {
-        return (window.location.href.indexOf('localhost:808') > -1 || window.location.href.indexOf('127.0.0.1:808') > -1);
-    },
-    isNgrok()
-    {
-        return (window.location.href.indexOf('ngrok.io') > -1) || (window.location.href.indexOf('ngrok-free.app') > -1);
-    },
-    getHostRootPath()
-    {
-        return `${location.protocol}//${location.host}/`;
-    },
-    async isLocationReachable()
-    {
-        return await getLocationResponse();
-    }
+    getInDevelopmentMessage: () => { /*alert('В разработке (развёртывается на удалённый ресурс)');*/ },
+    isGithub: () => (window.location.href.indexOf("github.io") > -1),
+    isLocalhost: () => (window.location.href.indexOf('localhost:') > -1),
+    isRemoteWorkspace: () => window.location.href.indexOf(':65000') > -1,
+    isNodeJSHost: ()  =>
+        ( window.location.href.indexOf('localhost:808') > -1
+        || window.location.href.indexOf('127.0.0.1:808') > -1
+        || window.location.href.indexOf(':8081') > -1 ),
+    isNgrok: () => (window.location.href.indexOf('ngrok.io') > -1) 
+        || (window.location.href.indexOf('ngrok-free.app') > -1),
+    getHostRootPath: () => `${location.protocol}//${location.host}/`,
+    isLocationReachable: async () => await getLocationResponse()
 }; export default urls;
 
 export async function getLocationResponse() {
@@ -59,7 +39,7 @@ export async function getLocationResponse() {
                 return true;
             return false;
         },
-        error: function (err){
+        error: function (err) {
             console.log('location was not reachable, returning false.')
             return false;
         }
