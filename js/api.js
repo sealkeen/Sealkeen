@@ -69,7 +69,8 @@ export async function pushHistoryState(url)
 {
     try {
         if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
-            return;
+            return; // throw new NotImplementedException();
+
         console.log('History state URL:' + url);
         console.log('prevstate not null');
         let loc = `${location.protocol}//${location.host}/`;
@@ -77,4 +78,15 @@ export async function pushHistoryState(url)
     } catch(e) {
         console.log(e);
     }
+}
+
+export async function redirectIfServerIsReachable(path) // : String
+{
+    if (await urls.isLocationReachable() ) 
+    {
+        window.location = urls.getLocation() + path;
+        return true;
+    } 
+    else 
+        return false;
 }

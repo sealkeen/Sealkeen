@@ -16,15 +16,8 @@ export async function fetchContentCrossOrigin(path) {
         toggleTopPageBackground(true);
         let ctrl = (path.startsWith("http") ? path : urls.getLocation() + path);
         if ($("#page-body-container") != undefined) {
-            let response = await fetch(ctrl, {
-                method: 'GET',
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                redirect: 'follow',
-                referrerPolicy: 'no-referrer'
-            });
+            console.log('[INF] Fecthing content CROSS ORIGIN (' + path +')');
+            let response = await fetch(ctrl);
 
             if (!response.ok) {
                 throw new Error('Fetch error.');
@@ -32,7 +25,7 @@ export async function fetchContentCrossOrigin(path) {
             let responseText = await response.text();
             $("#page-body-container").html('');
             $("#page-body-container").append(responseText);
-            console.log('fetch response key count: ' + Object.keys(responseText).length);
+            console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
             pushHistoryState(urls.getPostfix());
         }
     } catch (e) {
