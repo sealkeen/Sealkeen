@@ -52,6 +52,7 @@ export async function onPerformHandShakeInterval(onSuccessAction)
                 toggleForId('srv-status-disabled', 'srv-status-enabled', '#srv-status-light', true)
                 if(g_interval < MAX_INTERVAL) 
                     g_interval += INTERVAL_INCREASE;
+                    
                 console.log(`HandShake error. Increased handshake interval to ${g_interval} ⛔%j`, error);
                 setDevelopmentMessages();
             });
@@ -64,7 +65,7 @@ export async function onPerformHandShakeInterval(onSuccessAction)
 export async function onSiteLoadIfAuthorized()
 {
     let result = "";
-    if(window.location.origin + "/" + urls.getPostfix() == window.location.href) // in the homepage
+    if(urls.isHomePage())
         onPerformHandShakeInterval(FetchGetPatialListenedPage);
     else
         onPerformHandShakeInterval(noOp);

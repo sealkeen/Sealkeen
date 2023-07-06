@@ -15,7 +15,6 @@ const urls = {
         else
             return ''
     },
-    getInDevelopmentMessage: () => { /*alert('В разработке (развёртывается на удалённый ресурс)');*/ },
     isGithub: () => (window.location.href.indexOf("github.io") > -1),
     isLocalhost: () => (window.location.href.indexOf('localhost:') > -1),
     isRemoteWorkspace: () => window.location.href.indexOf(':65000') > -1,
@@ -26,18 +25,17 @@ const urls = {
     isNgrok: () => (window.location.href.indexOf('ngrok.io') > -1) 
         || (window.location.href.indexOf('ngrok-free.app') > -1),
     getHostRootPath: () => `${location.protocol}//${location.host}/`,
-    isLocationReachable: async () => await getLocationResponse()
+    isLocationReachable: async () => await getLocationResponse(),
+    isHomePage : () => { return window.location.origin + "/" + urls.getPostfix() == window.location.href }
 }; export default urls;
 
 export async function getLocationResponse() {
     return $.ajax({
-        url: urls.getLocation(),
+        url: (urls.getLocation() + 'PerformPublicHandShake'),
         type: 'GET',
         contentType:'text/html',
         success: function (response) {
-            if (response.responseText?.indexOf('page-body-container') > 0)
-                return true;
-            return false;
+            return true;
         },
         error: function (err) {
             console.log('location was not reachable, returning false.')
@@ -70,7 +68,7 @@ export function ifUrlExist(url, callback) {
 export async function pushHistoryState(url)
 {
     try {
-        if(urls.isGithub() || urls.isNodeJSHost())
+        if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
             return;
         console.log('History state URL:' + url);
         console.log('prevstate not null');

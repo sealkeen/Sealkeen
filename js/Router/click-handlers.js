@@ -23,8 +23,12 @@ export function addEventHandlersOnBody() {
     document.querySelector('#nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
     document.querySelector('#nav-lnk-artists')?.addEventListener('click', setCurrentPageArtists);
     document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
-    document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
-    document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
+
+    // No event handlers for Razor pages <a href>'s
+    if( !urls.isNgrok() ) { 
+        document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
+        document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
+    }
     document.querySelector('#nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
     document.querySelector('.nav-lnk-about')?.addEventListener('click', onClickGotoAboutMe);
     
@@ -515,10 +519,13 @@ export async function setCurrentPageRegister(event) {
 export async function setCurrentPageLogin(event) {
     toggleTopPageBackground(true);
     try {
-        if(await urls.isLocationReachable() && urls.isGithub())
+        if (await urls.isLocationReachable() // && urls.isGithub() // ??
+        ) {
             window.location = urls.getLocation() + 'Identity/Account/Login';
+        }
         else
             return;
+
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';
 	
         event.preventDefault();
