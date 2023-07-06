@@ -17,7 +17,15 @@ export async function fetchContentCrossOrigin(path) {
         let ctrl = (path.startsWith("http") ? path : urls.getLocation() + path);
         if ($("#page-body-container") != undefined) {
             console.log('[INF] Fecthing content CROSS ORIGIN (' + path +')');
-            let response = await fetch(ctrl);
+            let response = await fetch(ctrl, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
+            });
 
             if (!response.ok) {
                 throw new Error('Fetch error.');
