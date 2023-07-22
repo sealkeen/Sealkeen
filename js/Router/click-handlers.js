@@ -1,9 +1,8 @@
-import urls, { pushHistoryState } from './../api.js'
+import urls, { pushHistoryState, redirectIfServerIsReachable } from './../api.js'
 import { setLoginAntiForgeryOnClick, setRegisterAntiForgeryOnClick } from './../Account/verification.js'
 import { checkInputs } from './../signup.js'
 import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, CreateGenresDOMFromJSON } from './../Store/mock-data.js'
 import { toggleTopPageBackground, onClickBodyBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
-import { setDevelopmentMessages } from './../Development/news-data.js';
 import { transitionEnd } from './../StyleHandlers/footer-handlers.js';
 import { addEventOnWindowResize } from './../StyleHandlers/navbar-handlers.js';
 import { onClickGotoAboutMe } from './redirect.js';
@@ -455,12 +454,7 @@ export async function setCurrentPageRegister(event) {
     toggleTopPageBackground(true);
     event.preventDefault();
     try {
-        if (await urls.isLocationReachable() // && urls.isGithub() // ??
-        ) {
-            window.location = urls.getLocation() + 'Identity/Account/Register';
-        }
-        else
-            return;
+        if( redirectIfServerIsReachable('Identity/Account/Register') ) return;
 
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';
 	
@@ -519,12 +513,7 @@ export async function setCurrentPageRegister(event) {
 export async function setCurrentPageLogin(event) {
     toggleTopPageBackground(true);
     try {
-        if (await urls.isLocationReachable() // && urls.isGithub() // ??
-        ) {
-            window.location = urls.getLocation() + 'Identity/Account/Login';
-        }
-        else
-            return;
+        if( redirectIfServerIsReachable('Identity/Account/Login') ) return;
 
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';
 	
