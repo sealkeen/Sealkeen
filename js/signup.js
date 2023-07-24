@@ -22,7 +22,6 @@ export function checkInputs() {
     password = document.getElementById('Password');
     passwordCheck = document.getElementById('ConfirmPassword');
 
-    // alert('Данный функционал находится на стадии реализации. js ver = 106.12');
     // get the values from the inputs
     const usernameValue = document.getElementById('UserName').value.trim();
     const emailValue = document.getElementById('Email') ? document.getElementById('Email').value.trim() : null;
