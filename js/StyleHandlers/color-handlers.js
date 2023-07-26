@@ -1,4 +1,3 @@
-import { sleep } from './../utilities.js';
 import urls from './../api.js'
 import LocalizationService from './../Services/Localization/localization-service.js';
 
