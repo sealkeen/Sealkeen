@@ -4,16 +4,18 @@ import LocalizationService from './../Services/Localization/localization-service
 const lS = LocalizationService.getInstance();
 
 // color-handlers.js 
-function setGradientEarlyMidnightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-midnight'); console.log('background-image-div gradient-early-midnight'); }
-function setGradientMediumMidnightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-medium-midnight'); console.log('background-image-div gradient-medium-midnight'); }
-function setGradientLateMidnightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-midnight'); console.log('background-image-div gradient-late-midnight'); }
-function setGradientEarlyMorningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-morning'); console.log('background-image-div gradient-early-morning'); }
-function setGradientLateMorningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-morning'); console.log('background-image-div gradient-late-morning'); }
-function setGradientDaylightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-daylight'); console.log('background-image-div gradient-daylight'); }
-function setGradientEarlyAfternoonBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-afternoon'); console.log('background-image-div gradient-early-afternoon'); }
-function setGradientLateAfternoonBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-afternoon'); console.log('background-image-div gradient-late-afternoon'); }
-function setGradientEarlyEveningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-evening'); console.log('background-image-div gradient-early-evening'); }
-function setGradientLateEveningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-evening'); console.log('background-image-div gradient-late-evening'); }
+const imageDiv = '.background-image-div'
+const classNames = 'background-image-div gradient-'
+function setGradientEarlyMidnightBackground() { $(imageDiv)[0].className = (classNames + 'early-midnight'); console.log(classNames + 'early-midnight'); }
+function setGradientMediumMidnightBackground() { $(imageDiv)[0].className = (classNames + 'medium-midnight'); console.log(classNames + 'medium-midnight'); }
+function setGradientLateMidnightBackground() { $(imageDiv)[0].className = (classNames + 'late-midnight'); console.log(classNames + 'late-midnight'); }
+function setGradientEarlyMorningBackground() { $(imageDiv)[0].className = (classNames + 'early-morning'); console.log(classNames + 'early-morning'); }
+function setGradientLateMorningBackground() { $(imageDiv)[0].className = (classNames + 'late-morning'); console.log(classNames + 'late-morning'); }
+function setGradientDaylightBackground() { $(imageDiv)[0].className = (classNames + 'daylight'); console.log(classNames + 'daylight'); }
+function setGradientEarlyAfternoonBackground() { $(imageDiv)[0].className = (classNames + 'early-afternoon'); console.log(classNames + 'early-afternoon'); }
+function setGradientLateAfternoonBackground() { $(imageDiv)[0].className = (classNames + 'late-afternoon'); console.log(classNames + 'late-afternoon'); }
+function setGradientEarlyEveningBackground() { $(imageDiv)[0].className = (classNames + 'early-evening'); console.log(classNames + 'early-evening'); }
+function setGradientLateEveningBackground() { $(imageDiv)[0].className = (classNames + 'late-evening'); console.log(classNames + 'late-evening'); }
 
 export async function setBackgroundOpacityInterval()
 {
@@ -32,32 +34,36 @@ function customSleep(delay) {
 }
 
 export function onClickBodyBackground() {
-  
-    const bodyClass = $('.background-image-div')[0].className;
+    const bodyClass = $(imageDiv)[0].className;
+    let el = document.getElementsByClassName('background-image-div')[0]
+    el.style.opacity = 0;
     switch (bodyClass) {
-        case 'background-image-div gradient-late-evening':
+        case classNames + 'late-evening':
             setGradientEarlyMidnightBackground(); break;
-        case 'background-image-div gradient-early-midnight':
+        case classNames + 'early-midnight':
             setGradientMediumMidnightBackground(); break;
-        case 'background-image-div gradient-medium-midnight':
+        case classNames + 'medium-midnight':
             setGradientLateMidnightBackground(); break;
-        case 'background-image-div gradient-late-midnight':
+        case classNames + 'late-midnight':
             setGradientEarlyMorningBackground(); break;
-        case 'background-image-div gradient-early-morning':
+        case classNames + 'early-morning':
             setGradientLateMorningBackground(); break;
-        case 'background-image-div gradient-late-morning':
+        case classNames + 'late-morning':
             setGradientDaylightBackground(); break;
-        case 'background-image-div gradient-daylight':
+        case classNames + 'daylight':
             setGradientEarlyAfternoonBackground(); break;
-        case 'background-image-div gradient-early-afternoon':
+        case classNames + 'early-afternoon':
             setGradientLateAfternoonBackground(); break;
-        case 'background-image-div gradient-late-afternoon':
+        case classNames + 'late-afternoon':
             setGradientEarlyEveningBackground(); break;
-        case 'background-image-div gradient-early-evening':
+        case classNames + 'early-evening':
             setGradientLateEveningBackground(); break;
         default:
         break;
     }
+    setInterval(() => {
+        el.style.opacity = 1;
+    }, (2500)); 
 }
 
 export function toggleBodyBackground() {
