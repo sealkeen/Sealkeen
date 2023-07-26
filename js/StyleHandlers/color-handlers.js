@@ -18,23 +18,13 @@ function setGradientLateEveningBackground() { $('.background-image-div')[0].clas
 
 export async function setBackgroundOpacityInterval()
 {
-    console.log('[INF] get elements ("background-image-div")')
+    //console.log('[INF] Get elements ("background-image-div")')
     let elts = document.getElementsByClassName('background-image-div');
     if(elts != null && elts[0] != null)
     {
-        console.log('[INF] for .. increase opacity ...')
+        console.log('[INF] Transform-Increase opacity ...')
         elts[0].style.opacity = 1
-        // for (let i = 0.0 ; i < 1; i += 0.005) {
-        //     setTimeout(            
-        //         () => {
-        //             //console.log('[INF] add opacity ...' + elts[0].style.opacity)
-        //             elts[0].style.opacity = i
-        //         }
-        //     , i*1000);
-        // }
-    } else {
-
-    }
+    } 
 }
 
 function customSleep(delay) {
