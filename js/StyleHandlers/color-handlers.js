@@ -1,43 +1,70 @@
+import { sleep } from './../utilities.js';
 import urls from './../api.js'
 import LocalizationService from './../Services/Localization/localization-service.js';
 
 const lS = LocalizationService.getInstance();
 
-// color-handlers.js
-function setGradientEarlyMidnightBackground() { $('.body')[0].className = ('body gradient-early-midnight'); console.log('body gradient-early-midnight'); }
-function setGradientMediumMidnightBackground() { $('.body')[0].className = ('body gradient-medium-midnight'); console.log('body gradient-medium-midnight'); }
-function setGradientLateMidnightBackground() { $('.body')[0].className = ('body gradient-late-midnight'); console.log('body gradient-late-midnight'); }
-function setGradientEarlyMorningBackground() { $('.body')[0].className = ('body gradient-early-morning'); console.log('body gradient-early-morning'); }
-function setGradientLateMorningBackground() { $('.body')[0].className = ('body gradient-late-morning'); console.log('body gradient-late-morning'); }
-function setGradientDaylightBackground() { $('.body')[0].className = ('body gradient-daylight'); console.log('body gradient-daylight'); }
-function setGradientEarlyAfternoonBackground() { $('.body')[0].className = ('body gradient-early-afternoon'); console.log('body gradient-early-afternoon'); }
-function setGradientLateAfternoonBackground() { $('.body')[0].className = ('body gradient-late-afternoon'); console.log('body gradient-late-afternoon'); }
-function setGradientEarlyEveningBackground() { $('.body')[0].className = ('body gradient-early-evening'); console.log('body gradient-early-evening'); }
-function setGradientLateEveningBackground() { $('.body')[0].className = ('body gradient-late-evening'); console.log('body gradient-late-evening'); }
+// color-handlers.js 
+function setGradientEarlyMidnightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-midnight'); console.log('background-image-div gradient-early-midnight'); }
+function setGradientMediumMidnightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-medium-midnight'); console.log('background-image-div gradient-medium-midnight'); }
+function setGradientLateMidnightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-midnight'); console.log('background-image-div gradient-late-midnight'); }
+function setGradientEarlyMorningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-morning'); console.log('background-image-div gradient-early-morning'); }
+function setGradientLateMorningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-morning'); console.log('background-image-div gradient-late-morning'); }
+function setGradientDaylightBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-daylight'); console.log('background-image-div gradient-daylight'); }
+function setGradientEarlyAfternoonBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-afternoon'); console.log('background-image-div gradient-early-afternoon'); }
+function setGradientLateAfternoonBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-afternoon'); console.log('background-image-div gradient-late-afternoon'); }
+function setGradientEarlyEveningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-early-evening'); console.log('background-image-div gradient-early-evening'); }
+function setGradientLateEveningBackground() { $('.background-image-div')[0].className = ('background-image-div gradient-late-evening'); console.log('background-image-div gradient-late-evening'); }
+
+export async function setBackgroundOpacityInterval()
+{
+    console.log('[INF] get elements ("background-image-div")')
+    let elts = document.getElementsByClassName('background-image-div');
+    if(elts != null && elts[0] != null)
+    {
+        console.log('[INF] for .. increase opacity ...')
+        elts[0].style.opacity = 1
+        // for (let i = 0.0 ; i < 1; i += 0.005) {
+        //     setTimeout(            
+        //         () => {
+        //             //console.log('[INF] add opacity ...' + elts[0].style.opacity)
+        //             elts[0].style.opacity = i
+        //         }
+        //     , i*1000);
+        // }
+    } else {
+
+    }
+}
+
+function customSleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}
 
 export function onClickBodyBackground() {
   
-    const bodyClass = $('.body')[0].className;
+    const bodyClass = $('.background-image-div')[0].className;
     switch (bodyClass) {
-        case 'body gradient-late-evening':
+        case 'background-image-div gradient-late-evening':
             setGradientEarlyMidnightBackground(); break;
-        case 'body gradient-early-midnight':
+        case 'background-image-div gradient-early-midnight':
             setGradientMediumMidnightBackground(); break;
-        case 'body gradient-medium-midnight':
+        case 'background-image-div gradient-medium-midnight':
             setGradientLateMidnightBackground(); break;
-        case 'body gradient-late-midnight':
+        case 'background-image-div gradient-late-midnight':
             setGradientEarlyMorningBackground(); break;
-        case 'body gradient-early-morning':
+        case 'background-image-div gradient-early-morning':
             setGradientLateMorningBackground(); break;
-        case 'body gradient-late-morning':
+        case 'background-image-div gradient-late-morning':
             setGradientDaylightBackground(); break;
-        case 'body gradient-daylight':
+        case 'background-image-div gradient-daylight':
             setGradientEarlyAfternoonBackground(); break;
-        case 'body gradient-early-afternoon':
+        case 'background-image-div gradient-early-afternoon':
             setGradientLateAfternoonBackground(); break;
-        case 'body gradient-late-afternoon':
+        case 'background-image-div gradient-late-afternoon':
             setGradientEarlyEveningBackground(); break;
-        case 'body gradient-early-evening':
+        case 'background-image-div gradient-early-evening':
             setGradientLateEveningBackground(); break;
         default:
         break;

@@ -3,7 +3,7 @@ import urls from './api.js';
 import { _trackQueue } from './Utils/Queue.js';
 import { containsClasses, getWebEntityObject, 
     displayQueuedTracks, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
-import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
+import { toggleTopPageBackground, toggleBodyBackground, setBackgroundOpacityInterval } from './StyleHandlers/color-handlers.js';
 import { addSideNavElements, addSidenavEventListeners } from './StyleHandlers/side-nav-handlers.js';
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
@@ -23,6 +23,7 @@ const loc = urls.getLocation();
 /// On document loaded event
 $(document).ready(function () {
     try {
+        setBackgroundOpacityInterval();
         appendSideNavigationBars();
         FillLocalizationStore();
         onSiteLoadIfAuthorized(); runBackgroundHandShakes();
