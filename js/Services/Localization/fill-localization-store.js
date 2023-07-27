@@ -5,7 +5,7 @@ var lS = LocalizationService.getInstance();
 
 export function FillLocalizationStore()
 {
-    console.log('Call: FillLocalizationStore()');
+    console.inf('[INF] Call: FillLocalizationStore()');
 
     window.fillLocalizationStore = FillLocalizationStore;
     window.translateWebsite = Localize;
@@ -16,7 +16,7 @@ export function FillLocalizationStore()
     AddLanguageDropDown();
     applyLanguageTranslations();
 
-    console.log('Call ok.');
+    console.inf('[INF] Call ok.');
     return lS;
 }
 
@@ -59,7 +59,7 @@ function AddLanguageDropDown()
             return; // Exit the function
         }
         // Continue with the function
-        console.log("No dropdown toggles found");
+        console.log("[INF] No dropdown toggles found");
 
         // Create language combobox button
         const languageComboBoxButton = document.createElement('li');
@@ -85,7 +85,7 @@ function AddLanguageDropDown()
             languageOptionLink.textContent = language;
 
             languageOptionLink.addEventListener('click', () => {
-                console.log('Setting default language: ' + language)
+                console.log('[INF] Setting default language: ' + language)
                 lS.setDefaultLanguage(language);
                 window.translateWebsite();
                 // Get the language toggler and set its text to the default language
@@ -101,7 +101,7 @@ function AddLanguageDropDown()
         const navbarUserRegisterLogin = document.querySelector('#navbar-nav-user-register-login');
         navbarUserRegisterLogin.insertBefore(languageComboBoxButton, navbarUserRegisterLogin.firstChild);
     } 
-    catch {
-
+    catch (e) {
+        console.log(e)
     } 
 }

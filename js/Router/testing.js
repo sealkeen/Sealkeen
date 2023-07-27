@@ -26,7 +26,6 @@ export async function runBackgroundHandShakes()
 export async function onPerformHandShakeInterval(onSuccessAction)
 {
     try {
-        //console.log('HandShake at ' + getTime_HH_MM_SS_MS())
         let ctrl = (urls.getLocation() + 'PerformPublicHandShake');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
@@ -53,7 +52,7 @@ export async function onPerformHandShakeInterval(onSuccessAction)
                 if(g_interval < MAX_INTERVAL) 
                     g_interval += INTERVAL_INCREASE;
                     
-                console.log(`HandShake error. Increased handshake interval to ${g_interval} ⛔%j`, error);
+                console.log(`[INF] HandShake not sucessfull. Increased handshake interval to ${g_interval} ⛔%j`, error);
                 setDevelopmentMessages();
             });
         }
@@ -78,7 +77,7 @@ export function countCookies()
             count += val.split("; ").length;
         }
     });
-    console.log(count + " cookies found");
+    console.log("[DBG] " + count + " cookies found");
 }
 
 async function noOp() {}

@@ -11,9 +11,9 @@ const urls = {
     },
     getPostfix() {
         if (window.location.href.indexOf("github.io/Sealkeen") > -1)
-            return 'Sealkeen/'
+            return 'Sealkeen/';
         else
-            return ''
+            return '';
     },
     isGithub: () => (window.location.href.indexOf("github.io") > -1),
     isLocalhost: () => (window.location.href.indexOf('localhost:') > -1),
@@ -38,7 +38,7 @@ export async function getLocationResponse() {
             return true;
         },
         error: function (err) {
-            console.log('location was not reachable, returning false.')
+            console.log('[ERR] api.js/getLocationResponse: location was not reachable, returning false.')
             return false;
         }
     });
@@ -71,10 +71,10 @@ export async function pushHistoryState(url)
         if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
             return; // throw new NotImplementedException();
 
-        console.log('History state URL:' + url);
-        console.log('prevstate not null');
+        console.log('[DBG] api.js/pushHistoryState: History state URL:' + url);
+        console.log('[DBG] api.js/pushHistoryState: prevstate not null');
         let loc = `${location.protocol}//${location.host}/`;
-        window.history.pushState({ prevUrl: window.location.href }, null, loc + urls.getPostfix() + url); 
+        window.history.pushState({ prevUrl: window.location.href }, null, loc + urls.getPostfix() + url);
     } catch(e) {
         console.log(e);
     }

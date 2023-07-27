@@ -9,7 +9,7 @@ export function setTitleByArtistAndTitle(el) {
     try {
         let artist = el; let song = el; let songInfo = el;
         if(el.target == null) {
-            console.log(' [Err] NRE setTitleByArtistAndTitle(): %j', el.target );
+            console.log('[Err] NRE setTitleByArtistAndTitle(): %j', el.target );
             return;
         }
         if (!el.target.classList.contains('card-body')) {
@@ -46,11 +46,11 @@ export function setArtistSongNameAsync() {
                     document.title = artistSong;
                     preventDefaultOnArtistNameAHref();
                 },
-                error: function (error_) { console.log("setArtistSongNameAsync() Ajax error: " + error_); }
+                error: function (error_) { console.log("[ERR] event-handlers.js/setArtistSongNameAsync() Ajax error: " + error_); }
             });
         }
     } catch (err) {
-        console.log('setArtistSongNameAsync error.')
+        console.log('[ERR] setArtistSongNameAsync error.')
     }
 }
 

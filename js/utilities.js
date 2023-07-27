@@ -11,21 +11,18 @@ export function containsClasses (node, ...classes) {
 
 export function getIdFromElementData(el) {
     let id = el.target;
-    //console.log('%j', el);
-    //console.log('%j', el.target);
     if (!event.target.classList.contains('card-body')) {
-        console.log('contains card-body. el.children[0].value');
+        console.log('[VRB] contains card-body. el.children[0].value');
         console.log('%j', el.target.parentNode);//.querySelector('data'));
         console.log('%j', el.target.parentNode.querySelector('data').value);
         id = el.target.parentNode.querySelector('data').value;
-        console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
+        console.log('[VRB] not contains card-body. el.currentTarget.parentNode.children[0].value');
     }
     else {
-        console.log('contains card-body. el.children[0].value');
-        console.log('%j', el.target.querySelector('data'));
-        console.log('%j', el.target.querySelector('data').value);
+        console.log('[VRB] contains card-body. el.children[0].value');
+        console.log('[VRB] %j', el.target.querySelector('data'));
+        console.log('[VRB] %j', el.target.querySelector('data').value);
         id = el.target.querySelector('data').value;
-        //id = el.target.children[0].value;
     }
     return id;
 }
@@ -34,21 +31,12 @@ export function getWebEntityObject(el) {
     let id = el.target;
     let artist = el.target;
     let title = el.target;
-    //console.log('%j', el);
-    //console.log('%j', el.target);
     if (!event.target.classList.contains('card-body')) {
-        console.log('contains card-body. el.children[0].value');
-        console.log('%j', el.target.parentNode);//.querySelector('data'));
-        console.log('%j', el.target.parentNode.querySelector('data').value);
         id = el.target.parentNode.querySelector('data').value;
         artist = el.target.parentNode.querySelector('.card-title').innerHTML;
         title = el.target.parentNode.querySelector('.card-text').innerHTML;
-        console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
     }
     else {
-        console.log('contains card-body. el.children[0].value');
-        console.log('%j', el.target.querySelector('data'));
-        console.log('%j', el.target.querySelector('data').value);
         id = el.target.querySelector('data').value;
         artist = el.target.querySelector('.card-title').innerHTML;
         title = el.target.querySelector('.card-text').innerHTML;
@@ -58,7 +46,6 @@ export function getWebEntityObject(el) {
 }
 
 export function displayQueuedTracks(_trackQueue) {
-    console.log('displayQueuedTracks %j', _trackQueue);
     let queue = $('#footer-track-query')[0];
     if (queue == null) {
         queue = document.createElement("div");
@@ -78,7 +65,7 @@ export function createCardsFromQuery(_trackQueue)
     try {
         let cardcolumns = document.querySelector('.card-query-columns');
         cardcolumns.innerHTML = '';
-        console.log('Elts length: ', _trackQueue?.elts.length);
+        console.log('[DBG] utilities.js/createCardsFromQuery() Elts length: ', _trackQueue?.elts.length);
         _trackQueue?.elts.forEach(element => {
             let card = document.createElement("div")
             let comp = document.createElement("div")
@@ -117,7 +104,7 @@ export function sleep(ms) {
 
 export function safePlay()
 {
-    console.log('safePlay()')
+    console.log('[DBG] utilities.js/safePlay() { -> ... } ')
     try {
         var playPromise = document.querySelector("#player-audio-element")[0]?.play();
         if (playPromise !== undefined) {
@@ -125,40 +112,40 @@ export function safePlay()
                 // Automatic playback started!
                 // Show playing UI.
                 // We can now safely pause video...
-                console.log('safePlay ok()');
+                console.log('[DBG] utilities.js/safePlay() { } -> ...');
             })
             .catch(error => {
                 // Auto-play was prevented
                 // Show paused UI.
                 (async () => { await sleep(500); safePlay()})();
-                console.log('safePlay err: player returned error on play, autoplay prevented.');
+                console.log('[ERR] utilities.js/safePlay err: player returned error on play, autoplay prevented.');
             });
         }
     } catch(error) {
-        console.log('safePlay err: Player returned exception on try load or play %j', error);
+        console.log('[ERR] utilities.js/safePlay err: Player returned exception on try load or play %j', error);
     }
 }
 
 export function safeSwitchTrack()
 {
-    console.log('safeSwitchTrack()')
+    console.log('[DBG] utilities.js/safeSwitchTrack() { -> ... }')
     displayQueuedTracks();
     try {
         var loadPromise = document.querySelector("#player-audio-element")[0]?.load();
         if (loadPromise !== undefined) {
             loadPromise.then(_ => {
-                console.log('safeLoadOK: safePlaying...');
+                console.log('[DBG] utilities.js/safeLoadOK: safePlaying...');
 
                 (async () => { await sleep(50); safePlay()})();
             })  
             .catch(error => {
                 // Auto-play was prevented
                 (async () => { await sleep(50); safePlay()})();
-                console.log('safeSwitchTrack() err: player returned error on LOAD, autoplay prevented.');
+                console.log('[ERR] safeSwitchTrack() err: player returned error on LOAD, autoplay prevented.');
             });
         }
     } catch(error) {
-        console.log('safeSwitchTrack() err: Player returned exception on try LOAD or PLAY %j', error);
+        console.log('[ERR] utilities.js/safeSwitchTrack() err: Player returned exception on try LOAD or PLAY %j', error);
     }
 }
 
@@ -166,7 +153,7 @@ export function GetCurrentCompositionsId() {
     try {
         let audioSrc = $("#player-audio-element").get(0).children[0];
         if (audioSrc.src == null) {
-            console.log('GetCurrentCompositionsId() error. audioSrc = null.');
+            console.log('[DBG] utilities.js/GetCurrentCompositionsId() error. audioSrc = null.');
             return '';
         }
         else 
@@ -177,7 +164,7 @@ export function GetCurrentCompositionsId() {
         if(audioSrc.includes('?url='))
             audioSrc = audioSrc.substring(audioSrc.indexOf('?url=') + '?url='.length);
             
-        console.log('GetCurrentCompId = ' + audioSrc);
+        console.log('[DBG] utilities.js/GetCurrentCompId = ' + audioSrc);
         return audioSrc;
     } catch (e) {
         console.log(e);

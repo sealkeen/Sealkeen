@@ -95,7 +95,7 @@ export async function setCurrentPageManageAccount(event) {
                     let responseText = await response.text();
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    console.log('fetch response key count: ' + Object.keys(responseText).length)
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
                     pushHistoryState(urls.getPostfix() + 'Manage/Index');
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
@@ -127,8 +127,8 @@ export async function setCurrentPageSignUp(event) {
                     let responseText = await response.text();
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    //console.log('%j', responseText)
-                    console.log('fetch response key count: ' + Object.keys(responseText).length);
+                    
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length);
                     pushHistoryState('GetHtmlSignUpPage/');
 
                     const button = document.getElementById('form-btn-default');
@@ -183,7 +183,7 @@ export async function setCurrentPageCompositions(event) {
             }).then(async (response) => {
                 if (response.ok) {
                     let data = await response.json();
-                    console.log('handling response text');
+                    console.log('[DBG] handling response text');
                     let trackDom = CreateDOMFromJSON(data);
                     $("#page-body-container").html('');
                     appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
@@ -217,12 +217,12 @@ export async function setCurrentPageAlbums(event) {
             }).then(async response => {
                 if (response.ok) { 
                     let data = await response.json();
-                    console.log('handling response text');
+                    console.log('[DBG] click-handlers.js/.. Handling response text');
                     let albumsDom = CreateAlbumsDOMFromJSON(data);
                     pushHistoryState('GetHTMLAlbumsPage/');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(albumsDom);
-                    console.log('fetch response key count: ' + Object.keys(albumsDom).length);
+                    console.log('[DBG] fetch response key count: ' + Object.keys(albumsDom).length);
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -252,11 +252,11 @@ export async function setCurrentPageGenres(event) {
                 if (response.ok) { 
                     let data = await response.json();
                     pushHistoryState('GetHTMLGenresPage/');
-                    console.log('Handling response text');
+                    console.log('[DBG] Handling response text');
                     let genresDom = CreateGenresDOMFromJSON(data);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(genresDom);
-                    console.log('Fetch response key count: ' + Object.keys(genresDom).length);
+                    console.log('[DBG] fetch response key count: ' + Object.keys(genresDom).length);
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -286,11 +286,11 @@ export async function setCurrentPageArtists(event) {
                 if (response.ok) { 
                     pushHistoryState('GetHTMLArtistsPage/');
                     let data = await response.json();
-                    console.log('handling response text');
+                    console.log('[DBG] handling response text');
                     let artistsDom = CreateArtistsDOMFromJSON(data);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(artistsDom);  
-                    console.log('fetch response key count: ' + Object.keys(artistsDom).length);
+                    console.log('[DBG] fetch response key count: ' + Object.keys(artistsDom).length);
                 } else 
                     create429ErrorMessageOrThrowError()
             })
@@ -311,10 +311,8 @@ export async function setCurrentPageCompositionByArtistID(el) {
         toggleTopPageBackground(true);
         let id = el;
         if (!event.target.classList.contains('card-body')) {
-            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
             id = el.parentNode.children[0].value;
         } else {
-            console.log('contains card-body. el.children[0].value');
             id = el.children[0].value;
         }
 
@@ -331,8 +329,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
                     pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    //console.log('%j', responseText)
-                    console.log('fetch response key count: ' + Object.keys(responseText).length)
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
                 } else if (response.status === 429) {
                     createErrorMessage('Request rate is too high');
                 } else {
@@ -359,10 +356,8 @@ export async function setCurrentPageCompositionByID(el) {
         toggleTopPageBackground(true);
         let id = el;
         if (!event.target.classList.contains('card-body')) {
-            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
             id = el.parentNode.children[0].value;
         } else {
-            console.log('contains card-body. el.children[0].value');
             id = el.children[0].value;
         }
 
@@ -379,8 +374,7 @@ export async function setCurrentPageCompositionByID(el) {
                     pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    //console.log('%j', responseText)
-                    console.log('fetch response key count: ' + Object.keys(responseText).length)
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
                 } else if (response.status === 429) {
                     createErrorMessage('Request rate is too high');
                 } else {
@@ -397,7 +391,7 @@ export async function setCurrentPageCompositionByID(el) {
         }
     } catch (error) {
         setCurrentPageMockData();
-        console.log('fetch error. Setting up mock data. Details: ' + e)
+        console.log('[DBG] fetch error. Setting up mock data. Details: ' + e)
     } finally {
         toggleTopPageBackground(false);
     }
@@ -408,11 +402,9 @@ export async function setCurrentPageAlbumByID(el) {
         toggleTopPageBackground(true);
         let id = el;
         if (!event.target.classList.contains('card-body')) {
-            console.log('not contains card-body. el.currentTarget.parentNode.children[0].value');
             id = el.parentNode.children[0].value;
         }
         else {
-            console.log('contains card-body. el.children[0].value');
             id = el.children[0].value;
         }
         let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
@@ -473,7 +465,7 @@ export async function setCurrentPageRegister(event) {
                     pushHistoryState('Account/Register/');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    console.log('fetch response key count: ' + Object.keys(responseText).length)                    
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)                    
                     $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                     $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                     $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
@@ -532,8 +524,8 @@ export async function setCurrentPageLogin(event) {
                     let responseText = await response.text();
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    //console.log('%j', responseText)
-                    console.log('fetch response key count: ' + Object.keys(responseText).length)                    
+                    
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)                    
                     $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                     $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                     $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");

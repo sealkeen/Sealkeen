@@ -3,7 +3,7 @@ import urls from './api.js';
 import { _trackQueue } from './Utils/Queue.js';
 import { containsClasses, getWebEntityObject, 
     displayQueuedTracks, safePlay, safeSwitchTrack, GetCurrentCompositionsId } from './utilities.js';
-import { toggleTopPageBackground, toggleBodyBackground, setBackgroundOpacityInterval } from './StyleHandlers/color-handlers.js';
+import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
 import { addSideNavElements, addSidenavEventListeners } from './StyleHandlers/side-nav-handlers.js';
 import { onAjaxLoadError, onAjaxSwitchPageError } from './Errors/ajax-errors.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
@@ -15,7 +15,7 @@ import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import MusicApi from './Page/url-decoding.js'
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
 import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
-import { appendHorizontalVolumeControl, setSidebarInputVolumeOnChange } from './Page/Components/volume-controls.js';
+import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -23,7 +23,6 @@ const loc = urls.getLocation();
 /// On document loaded event
 $(document).ready(function () {
     try {
-        setBackgroundOpacityInterval();
         appendSideNavigationBars();
         FillLocalizationStore();
         onSiteLoadIfAuthorized(); runBackgroundHandShakes();
@@ -41,14 +40,14 @@ $(document).ready(function () {
         const container = document.querySelector('body');
 
         container.onmousedown = (e) => {
-            console.log('onmousedown' + e.target.id + ' ' + e.target.className);
+            console.log('[DBG] site.js/onmousedown' + e.target.id + ' ' + e.target.className);
             if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
                 $('#ctxmenu').innerHTML = '';
             }
         }
 
         container.addEventListener('click', function (e) {
-            console.log('onclick' + e.target.id + ' ' + e.target.className);
+            console.log('[DBG] site.js/onclick' + e.target.id + ' ' + e.target.className);
             // But only alert for elements that have an alert-button class
             //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
             let target = e.target;
@@ -81,7 +80,7 @@ $(document).ready(function () {
         /// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)
         document.querySelector('.container')?.addEventListener('touchend', function (e) {
             setTimeout( () => {
-                console.log('touchend' + e.target.id + ' ' + e.target.className);
+                console.log('[DBG] site.js/touchend' + e.target.id + ' ' + e.target.className);
                 const highlightedItems = document.querySelectorAll("#ctxmenu");
                 highlightedItems.forEach((userItem) => {
                     userItem.outerHTML = "";
@@ -113,7 +112,7 @@ $(document).ready(function () {
         }
 
         document.querySelector('.container').oncontextmenu = (e) => {
-            console.log('onContentMenu' + e.target.id + ' ' + e.target.className);
+            console.log('[DBG] site.js/onContentMenu' + e.target.id + ' ' + e.target.className);
             e.preventDefault();
             let target = e.target;
             if (containsClasses(target, 'card-text', 'card-title')) {
@@ -151,7 +150,7 @@ export function onCompositionSourceChanged(compId)
             let id = GetCurrentCompositionsId();
             id == null ? compId : id;
 
-            console.log('id is :' + id);
+            console.log('[DBG] site.js/onCompositionSourceChanged() id is :' + id);
             setNextComposition(id); 
         };
     }
@@ -187,19 +186,19 @@ export function onCompositionRightMouseDown(e) {
 }
 
 export function bindPlayerButtons() {
-    console.log('binding player buttons...');
+    console.log('[DBG] binding player buttons...');
     document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
-        console.log("clicked");
+        console.log("[DBG] clicked");
 
         let id = "nextTrackId";
         if (_trackQueue.isEmpty()) {
-            console.log('Empty');
+            console.log('[DBG] .footer-next-track-btn.click() : Track Query is Empty.');
             id = GetCurrentCompositionsId();
         }
         else {
-            console.log('Not Empty');
+            console.log('[DBG] .footer-next-track-btn.click() : Track Query is Not Empty.');
             id = _trackQueue.peek().id;
-            console.log('peeked. len: ' + _trackQueue.elts.length); 
+            console.log('[DBG] .footer-next-track-btn.click() : peeked item. Elts len: ' + _trackQueue.elts.length); 
         }
         setNextComposition(id);
     });
@@ -208,20 +207,20 @@ export function bindPlayerButtons() {
 export function setNextComposition(compId) {
     try {
         if (compId == null) {
-            console.log('setNextComposition() error, compId is undefined || null')
+            console.log('[DBG] site.js/setNextComposition() error, compId is undefined || null')
             return;
         }
-        console.log('setNextComposition() compsId is ' + compId)
+        console.log('[DBG] setNextComposition(): compsId is ' + compId)
         if(compId.includes('docs.google') || compId.includes(':')) {
             let newUrl = compId;
             if(_trackQueue.isEmpty()) {
-                console.log('setNextComposition: Query=empty');
+                console.log('[DBG] setNextComposition: Query=empty');
                 newUrl = getNext(compId);
             } else {
-                console.log('setNextComposition: Query NOT empty');
+                console.log('[DBG] setNextComposition: Query NOT empty');
                 newUrl = _trackQueue.dequeue().id;
             }
-            console.log('calling load Direct, compId = ' + newUrl);
+            console.log('[DBG] setNextComposition: calling load Direct, compId = ' + newUrl);
             loadDirect(newUrl   );
             onCompositionSourceChanged(newUrl);
             return;
@@ -240,7 +239,7 @@ export function setNextComposition(compId) {
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
-                    console.log('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
+                    console.log('[DBG] setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                     console.log(htmlDom.documentElement.innerHTML);
                     
                     let plr = $("#player-audio-element").get(0);
@@ -284,8 +283,8 @@ export async function setFooterPlayerSourse(el)
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
+                    console.log('[DBG] setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
                     console.log(htmlDom.documentElement.innerHTML);
-                    console.log('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
                     //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
                     
                     let plr = $("#player-audio-element").get(0);

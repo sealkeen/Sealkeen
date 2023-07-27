@@ -1,7 +1,6 @@
 import { setTitleByArtistAndTitle } from './../Page/event-handlers.js'
 
 export function CreateDOMFromJSON(jsonSource) {
-    //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
     let cardcolumns = document.createElement("div")
     cardcolumns.className = 'card-columns';
@@ -41,7 +40,6 @@ export function CreateDOMFromJSON(jsonSource) {
 }
 
 export function CreateArtistsDOMFromJSON(jsonSource) {
-    //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
     let cardcolumns = document.createElement("div");
     cardcolumns.className = 'card-columns';
@@ -100,7 +98,6 @@ export function createCardFromJSON(element)
 }
 
 export function CreateAlbumsDOMFromJSON(jsonSource) {
-    //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
     let cardcolumns = document.createElement("div");
     cardcolumns.className = 'card-columns';
@@ -140,7 +137,6 @@ export function CreateAlbumsDOMFromJSON(jsonSource) {
 }
 
 export function CreateGenresDOMFromJSON(jsonSource) {
-    //console.log('jsonSource: %j', jsonSource);
     let center = document.createElement('center');
     let cardcolumns = document.createElement("div")
     cardcolumns.className = 'card-columns';
@@ -253,19 +249,19 @@ export function setMockFooterSourse(el) {
 
 export function getNext(url)
 {
-    console.log('parsing...');
+    console.log('[INF] mock-data.js/.. parsing...');
     let data = JSON.parse(fromBinary(takeStore()));
     let res = "";
     data.forEach(element => {
         if(res === "next")
         {
-            console.log('returning id: ' + element.p + '...')
+            console.log('[INF] mock-data.js/: returning id: ' + element.p + '...')
             res = element.p;
         }
         if(url === element.p)
         {
             res = "next";
-            console.log('+ element.p : ' + element.p)
+            console.log('[INF] mock-data.js/: + element.p : ' + element.p)
         }
     });
     return res;

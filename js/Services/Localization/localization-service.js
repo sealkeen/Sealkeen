@@ -25,7 +25,7 @@ const LocalizationService = (function () {
                 value = strings[defaultLanguage][key];
             } else {
                 value = key;
-                console.error('String not found: ' + key)
+                console.log('String not found: ' + key)
             }
             return value;
         };

@@ -40,7 +40,7 @@ class Terminal {
         })
             .then(response => response.json())
             .then(output => this.addOutput(output.statusText))
-            .catch(error => console.log(`An error occurred: ${error}`));
+            .catch(error => console.log(`[ERR] An error occurred: ${error}`));
     }
 
     addOutput(text) {

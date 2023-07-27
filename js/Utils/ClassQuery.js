@@ -7,12 +7,12 @@ export function toggleForId(left, right, element, boolWhich) {
     }
     if (boolWhich === true) {
         toggleClass(left, right, id);
-        if(prevState !== 'off') console.log("Server unavailable ⛔"); //State changed, warn about it
+        if(prevState !== 'off') console.log("[INF] Server unavailable ⛔"); //State changed, warn about it
         prevState = 'off'
     } else {
         addClass(left, id);
         toggleClass(right, left, id);
-        if(prevState !== 'on') console.log("Server available ✅"); //State changed, warn about it
+        if(prevState !== 'on') console.log("[INF] Server available ✅"); //State changed, warn about it
         prevState = 'on'
     }
 }
