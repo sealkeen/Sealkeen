@@ -25,5 +25,7 @@ export function addEventOnWindowResize() {
                 $(this).css('top', navHeight);
             });
         }, true);
-    } catch {}
+    } catch (e) {
+        console.log(e);
+    } 
 }

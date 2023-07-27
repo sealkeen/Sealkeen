@@ -5,7 +5,7 @@ var lS = LocalizationService.getInstance();
 
 export function FillLocalizationStore()
 {
-    console.inf('[INF] Call: FillLocalizationStore()');
+    console.log('[INF] Call: FillLocalizationStore()');
 
     window.fillLocalizationStore = FillLocalizationStore;
     window.translateWebsite = Localize;
@@ -16,7 +16,7 @@ export function FillLocalizationStore()
     AddLanguageDropDown();
     applyLanguageTranslations();
 
-    console.inf('[INF] Call ok.');
+    console.log('[INF] Call ok.');
     return lS;
 }
 

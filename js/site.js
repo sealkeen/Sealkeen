@@ -122,7 +122,9 @@ $(document).ready(function () {
                 onCompositionRightMouseDown(e);
             }
         }
-    } catch { }
+    } catch (e) {
+        console.log(e);
+    } 
 });
 
 
