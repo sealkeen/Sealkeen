@@ -58,15 +58,15 @@ export function setRegisterAntiForgeryOnClick() {
                     $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
                     toggleBodyBackground();
                 } else {
-                    console.log('ajax response error');
+                    console.log('[DBG] verification.js/setRegisterAntiForgeryOnClick() ajax response error');
                 }
             } catch (e) {
-                console.log('try-catch-fetch-error' + e);
+                console.log('[ERR] verification.js/setRegisterAntiForgeryOnClick() try-catch-fetch-error' + e);
             }
         });
         return false;
     } catch (e) {
-        console.log('%j', e);
+        console.log('[ERR] verification.js/setRegisterAntiForgeryOnClick() %j', e);
         alert(e);
     }
 }
@@ -77,7 +77,7 @@ export function setLoginAntiForgeryOnClick(e) {
             return;
         $('#__AjaxAntiForgeryForm').removeAttr('action');
         let username = $('#UserName').val();
-        console.log('Username: ' + username);
+        console.log('[DBG] verification.js/set... Username: ' + username);
         let password= $('#Password').val();
         let rememberMe = true;
         var form = $('#__AjaxAntiForgeryForm');
@@ -120,10 +120,10 @@ export function setLoginAntiForgeryOnClick(e) {
                     $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
                     toggleBodyBackground();
                 } else {
-                    console.log('ajax response error');
+                    console.log('[ERR] verification.js/set... ajax response error');
                 }
             } catch (e) {
-                console.log('try-catch-ajax-error' + e);
+                console.log('[ERR] verification.js/set... try-catch-ajax-error' + e);
             }
         });
         return false;

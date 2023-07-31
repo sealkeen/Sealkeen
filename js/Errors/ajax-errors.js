@@ -1,8 +1,6 @@
 
 export function onAjaxLoadError(source, error_, safePlay)
 {
-    console.log("Ajax error: " + error_);
-    console.log('{')
     if (source.includes('http')) {
         //<source id="player-source-element" src="null" type="audio/mp3"></source>
         let src = document.createElement('source');
@@ -13,13 +11,10 @@ export function onAjaxLoadError(source, error_, safePlay)
         $("#player-audio-element").append(src);
         safePlay();
     }
-    console.log('}')
 }
 
 export function onAjaxSwitchPageError(source, error_, safeSwitch)
 {
-    console.log("Ajax error: " + error_);
-    console.log('{')
     if (source.includes('http')) {
         //<source id="player-source-element" src="null" type="audio/mp3"></source>
         let src = document.createElement('source');
@@ -30,5 +25,4 @@ export function onAjaxSwitchPageError(source, error_, safeSwitch)
         $("#player-audio-element").append(src);
         safeSwitch();
     }
-    console.log('}')
 }

@@ -14,7 +14,9 @@ export function addSidenavEventListeners()
         document.querySelector('.left-hover-bar')?.addEventListener('click', openNav);
         document.querySelector('.right-hover-bar')?.addEventListener('click', openRightNav);
         document.querySelector('.footer-pause-track-btn')?.addEventListener('click', onPauseClicked);
-    } catch { }
+    } catch (e) {
+        console.log(e);
+    } 
 }
 
 export function addSideNavElements()
@@ -47,7 +49,9 @@ export function addSideNavElements()
                 setTimeout( () => { $('.right-circle').removeClass('circle-active'); $('.left-circle').removeClass('circle-active')}, 50);
             });
         }); 
-    } catch { }
+    } catch (e) {
+        console.log(e);
+    } 
 }
 
 function getSideNavWidth() {

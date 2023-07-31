@@ -6,7 +6,7 @@ export function appendHorizontalVolumeControl() {
 
     // Check if an element with the ID 'horizontal-volume-control' already exists
     if (document.getElementById("horizontal-volume-control")) {
-      console.log("An element with the ID 'horizontal-volume-control' already exists");
+      console.log("[WRN] An element with the ID 'horizontal-volume-control' already exists");
       return;
     }
 
@@ -34,12 +34,12 @@ export function setSidebarInputVolumeOnChange(plr) {
     if (vVolume) {
         vVolume.addEventListener('change', handleVolumeChange);
         audio.volume = vVolume.value / 100;
-    } else { console.error('No verVolume found') }
+    } else { console.log('No verVolume found') }
     
     if (hVolume) {
         hVolume.addEventListener('change', handleVolumeChange);
         audio.volume = hVolume.value / 100;
-    } else { console.error('No horVolume found') }
+    } else { console.log('No horVolume found') }
 
     function handleVolumeChange(e) {
         const newVolume = e.currentTarget.value / 100;

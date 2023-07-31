@@ -6,20 +6,24 @@ const lS = LocalizationService.getInstance();
 // color-handlers.js 
 const imageDiv = '.background-image-div'
 const classNames = 'background-image-div gradient-'
-function setGradientEarlyMidnightBackground() { $(imageDiv)[0].className = (classNames + 'early-midnight'); console.log(classNames + 'early-midnight'); }
-function setGradientMediumMidnightBackground() { $(imageDiv)[0].className = (classNames + 'medium-midnight'); console.log(classNames + 'medium-midnight'); }
-function setGradientLateMidnightBackground() { $(imageDiv)[0].className = (classNames + 'late-midnight'); console.log(classNames + 'late-midnight'); }
-function setGradientEarlyMorningBackground() { $(imageDiv)[0].className = (classNames + 'early-morning'); console.log(classNames + 'early-morning'); }
-function setGradientLateMorningBackground() { $(imageDiv)[0].className = (classNames + 'late-morning'); console.log(classNames + 'late-morning'); }
-function setGradientDaylightBackground() { $(imageDiv)[0].className = (classNames + 'daylight'); console.log(classNames + 'daylight'); }
-function setGradientEarlyAfternoonBackground() { $(imageDiv)[0].className = (classNames + 'early-afternoon'); console.log(classNames + 'early-afternoon'); }
-function setGradientLateAfternoonBackground() { $(imageDiv)[0].className = (classNames + 'late-afternoon'); console.log(classNames + 'late-afternoon'); }
-function setGradientEarlyEveningBackground() { $(imageDiv)[0].className = (classNames + 'early-evening'); console.log(classNames + 'early-evening'); }
-function setGradientLateEveningBackground() { $(imageDiv)[0].className = (classNames + 'late-evening'); console.log(classNames + 'late-evening'); }
+function setGradientEarlyMidnightBackground() { setCertainImage( 'early-midnight');}
+function setGradientMediumMidnightBackground() { setCertainImage('medium-midnight'); }
+function setGradientLateMidnightBackground() { setCertainImage('late-midnight'); }
+function setGradientEarlyMorningBackground() { setCertainImage('early-morning'); }
+function setGradientLateMorningBackground() { setCertainImage('late-morning'); }
+function setGradientDaylightBackground() { setCertainImage('daylight'); }
+function setGradientEarlyAfternoonBackground() { setCertainImage('early-afternoon'); }
+function setGradientLateAfternoonBackground() { setCertainImage('late-afternoon'); }
+function setGradientEarlyEveningBackground() { setCertainImage('early-evening'); }
+function setGradientLateEveningBackground() { setCertainImage('late-evening'); }
+
+function setCertainImage(name)
+{
+    $(imageDiv)[0].className = (classNames + name); console.log(classNames + name);
+}
 
 export async function setBackgroundOpacityInterval()
 {
-    //console.log('[INF] Get elements ("background-image-div")')
     let elts = document.getElementsByClassName('background-image-div');
     if(elts != null && elts[0] != null)
     {
@@ -67,6 +71,8 @@ export function onClickBodyBackground() {
 }
 
 export function toggleBodyBackground() {
+    setBackgroundOpacityInterval();
+
     window.toggleBodyBackground = toggleBodyBackground;
     
     const hours = new Date().getHours();
@@ -97,7 +103,7 @@ export function toggleBodyBackground() {
     window.translateGreetings(greetingKey);
 }
 
-function noOp() { console.log('no-op') }
+function noOp() { console.log('[DBG] no-op') }
 
 export function toggleTopPageBackground(on)
 {

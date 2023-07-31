@@ -40,7 +40,7 @@ export function checkInputs() {
 
 export function checkUsername(value) {
     //alert('username... value is: ' + value);
-    if (value === '') { //console.log('username: blank');
+    if (value === '') { 
         setErrorFor(username, 'Username cannot be blank'); // show error 
         return false;
     } else {
@@ -68,13 +68,12 @@ export function checkEmail(mlValue) {
 }
 
 export function checkPassword(value) {
-    //console.log('password... value is: ' + value);
     if (value === '') {
         setErrorFor(password, 'Password cannot be empty');
         return false;
     } else {
         setSuccessFor(password);
-        console.log('password: ok');
+        console.log('[DBG] signup.js/checkPassword(): ok');
         return true;
     }
 }
@@ -91,7 +90,7 @@ export function checkPasswordRepeat(origin, repeat) {
         return false;
     } else {
         setSuccessFor(passwordCheck);
-        console.log('passwordChk: ok');
+        console.log('[DBG] signup.js/checkPasswordRepeat(): passwordChk: ok');
         return true;
     }
 }
@@ -101,7 +100,7 @@ export function setErrorFor(input, message) {
         return
     let group = input.parentElement;
     let small = group.querySelector('small')
-    console.log('err, small: %j', small)
+    console.log('[ERR] signup.js/setErrorFor: err, small: %j', small)
     if(small == undefined) {
         small = document.createElement('small');
         group.appendChild(small);
@@ -109,7 +108,7 @@ export function setErrorFor(input, message) {
     small.innerText = message; // add error message inside small
     small.className = 'form-control-small.error';
     input.className = 'form-control form-control-error';
-    console.log('set error for func completed ok');
+    console.log('[DBG] signup.js/setErrorFor() set error for func completed ok');
 }
 
 export function setSuccessFor(input) {
@@ -117,7 +116,7 @@ export function setSuccessFor(input) {
         return
     let group = input.parentElement; // .form-control
     let small = group.querySelector('small')
-    console.log('suc, small: %j', small)
+    console.log('[DBG] signup.js/setSuccessFor() suc, small: %j', small)
     if(small == undefined) {
         small = document.createElement('small');
         group.appendChild(small);
