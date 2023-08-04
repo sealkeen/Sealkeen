@@ -10,6 +10,7 @@ export function appendNavigationLink(navbarNav, element, path)
         return;
     }
 
+    element.innerHTML = element.innerHTML.replace('Partial', 'HTML')
     console.info('[INF] appendNavigationLink : ' + path);
     setElementOnClick(element, path);
     navbarNav.appendChild(element);

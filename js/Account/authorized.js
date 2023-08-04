@@ -50,6 +50,7 @@ function appendLogOut()
     const logoutUrl = urls.getLocation() + 'Identity/Account/Logout';
     const login = document.querySelector('#nav-lnk-login');
     if(login) {
+        login.className = 'nav-lnk-logout'
         login.textContent = 'Logout';
         login.removeEventListener('click', setCurrentPageLogin);
         login.addEventListener('click', (e) => {

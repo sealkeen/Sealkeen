@@ -67,7 +67,9 @@ export async function onSiteLoadIfAuthorized()
     let result = "";
     if(urls.isHomePage()) {
         // Only 
-        const nextActionInPipeLine = urls.isGithub() || urls.isNodeJSHost() ? addElementsForAuthorizedUser : noOp;
+        const nextActionInPipeLine = //urls.isGithub() || urls.isNodeJSHost() ? 
+            addElementsForAuthorizedUser 
+        //: noOp;
         onPerformHandShakeInterval(FetchGetPatialListenedPage(nextActionInPipeLine));
     } else {
         onPerformHandShakeInterval(noOp);
