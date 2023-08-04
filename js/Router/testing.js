@@ -3,6 +3,7 @@ import { toggleForId } from '../Utils/ClassQuery.js';
 import { getTime_HH_MM_SS_MS } from '../Utils/Chrono/main.js';
 import { setDevelopmentMessages } from '../Development/news-data.js';
 import { FetchGetPatialListenedPage } from './click-handlers.js';
+import { addElementsForAuthorizedUser } from '../Account/authorized.js';
 
 window.handShakeCondition = false;
 
@@ -64,10 +65,13 @@ export async function onPerformHandShakeInterval(onSuccessAction)
 export async function onSiteLoadIfAuthorized()
 {
     let result = "";
-    if(urls.isHomePage())
-        onPerformHandShakeInterval(FetchGetPatialListenedPage);
-    else
+    if(urls.isHomePage()) {
+        // Only 
+        const nextActionInPipeLine = urls.isGithub() || urls.isNodeJSHost() ? addElementsForAuthorizedUser : noOp;
+        onPerformHandShakeInterval(FetchGetPatialListenedPage(nextActionInPipeLine));
+    } else {
         onPerformHandShakeInterval(noOp);
+    }
 }
 
 export function countCookies()

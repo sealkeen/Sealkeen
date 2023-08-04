@@ -557,7 +557,11 @@ export async function setCurrentPageLogin(event) {
     }
 }
 
-export async function FetchGetPatialListenedPage()
+export async function FetchGetPatialListenedPage(nextActionInPipeLine)
 {
-    await fetchContentCrossOrigin('GetPartialListenedPage')
+    await fetchContentCrossOrigin('GetPartialListenedPage').then(result => {
+        if(result.ok) {
+            nextActionInPipeLine();
+        }
+    });
 }

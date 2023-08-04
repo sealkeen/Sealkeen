@@ -25,13 +25,14 @@ $(document).ready(function () {
     try {
         appendSideNavigationBars();
         FillLocalizationStore();
-        onSiteLoadIfAuthorized(); runBackgroundHandShakes();
+        runBackgroundHandShakes();
         addSideNavElements(); addSidenavEventListeners();
         addEventHandlersOnBody();
         toggleBodyBackground(); bindPlayerButtons();
         toggleTopPageBackground(false); initializeKeyboardHook();
         appendHorizontalVolumeControl();
-        
+        onSiteLoadIfAuthorized();
+
         let urlHandler = new MusicApi();
         //addButtonOnClickHandlers();
         _trackQueue.onchange = () => {

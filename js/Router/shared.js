@@ -35,9 +35,11 @@ export async function fetchContentCrossOrigin(path) {
             $("#page-body-container").append(responseText);
             console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
             pushHistoryState(urls.getPostfix());
+            return response;
         }
     } catch (e) {
         console.log(e);
+        return { ok : false };
     } finally {
         toggleTopPageBackground(false);
         toggleBodyBackground();
