@@ -51,7 +51,8 @@ function appendLogOut()
     const login = document.querySelector('#nav-lnk-login');
     if(login) {
         login.className = 'nav-lnk-logout'
-        login.textContent = 'Logout';
+        //login.textContent = '';
+        login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${logoutUrl}">Logout</a>`;
         login.removeEventListener('click', setCurrentPageLogin);
         login.addEventListener('click', (e) => {
             console.log('Logout url: ' + logoutUrl)
