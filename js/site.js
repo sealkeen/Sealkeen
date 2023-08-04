@@ -16,6 +16,7 @@ import MusicApi from './Page/url-decoding.js'
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
 import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
+import { addSearchTerminal } from './System/search-terminal.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -23,6 +24,8 @@ const loc = urls.getLocation();
 /// On document loaded event
 $(document).ready(function () {
     try {
+        addSearchTerminal();
+        window.isAuthorized = (window.isAuthorized === true) ? true : false;
         appendSideNavigationBars();
         FillLocalizationStore();
         runBackgroundHandShakes();
@@ -32,7 +35,7 @@ $(document).ready(function () {
         toggleTopPageBackground(false); initializeKeyboardHook();
         appendHorizontalVolumeControl();
         onSiteLoadIfAuthorized();
-
+        
         let urlHandler = new MusicApi();
         //addButtonOnClickHandlers();
         _trackQueue.onchange = () => {

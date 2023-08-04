@@ -5,6 +5,7 @@ import { setCurrentPageLogin } from '../Router/click-handlers.js';
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
     try {
+        window.isAuthorized = true;
         const navbarNavs = document.getElementsByClassName('navbar-nav');
         console.log('[DBG] Seek navbar');
         if(navbarNavs && navbarNavs[0] != null)

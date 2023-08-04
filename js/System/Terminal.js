@@ -1,9 +1,10 @@
-﻿// Terminal.js
-class Terminal {
+﻿import { fetchContentCrossOrigin } from "../Router/shared.js";
+
+// Terminal.js
+export class Terminal {
     constructor(commandUrl, containerId) {
         this.commandUrl = commandUrl;
         this.container = document.getElementById(containerId);
-        this.container.style.opacity = "0.75";
         this.output = document.createElement('div');
         this.output.classList.add('output');
         this.container.appendChild(this.output);
@@ -23,8 +24,17 @@ class Terminal {
         this.form.appendChild(this.button);
     }
 
+    setButtonText(line) { this.button.textContent = line; }
+    
+    onSearchSubmit(e) { 
+        e.preventDefault();
+    }
+
     onSubmit(e) {
         e.preventDefault();
+        if(this.button.textContent) //search
+            fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`) 
+
         const command = this.input.value;
         this.input.value = '';
         this.sendCommand({ Input: command });
