@@ -1,15 +1,26 @@
 export function createErrorMessage(message) {
+    createMessage(message, 'error')
+}
+
+export function createInfoMessage(text)
+{
+    createMessage(text, 'info')
+}
+
+function createMessage(message, type)
+{
     const errorMessage = document.createElement("div");
-    errorMessage.classList.add("error-message");
+    errorMessage.classList.add(type === 'error' ? "error-message" : "info-message");
     
     // Get the position of the page-body-container element
     const pageBodyContainer = document.querySelector("#page-body-container");
     const pageBodyContainerRect = pageBodyContainer.getBoundingClientRect();
     const pageBodyContainerTop = pageBodyContainerRect.top + window.pageYOffset;
     
+    console.error('type === error ' + (type === 'error') + ' type : ' + type);
     // Set the top position of the error message to the top of the page-body-container element
     // if there are no existing error messages, otherwise position it below the previous messages
-    const existingErrorMessages = document.querySelectorAll(".error-message");
+    const existingErrorMessages = document.querySelectorAll(".error-message, .info-message") ;
     let topPosition;
     if (existingErrorMessages.length === 0) {
       topPosition = pageBodyContainerTop;
@@ -22,7 +33,7 @@ export function createErrorMessage(message) {
     errorMessage.style.left = `15px`;
       
     errorMessage.textContent = message;
-  
+
     document.body.appendChild(errorMessage);
     
     // Remove the error message after 5 seconds

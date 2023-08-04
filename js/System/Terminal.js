@@ -1,4 +1,5 @@
 ﻿import { fetchContentCrossOrigin } from "../Router/shared.js";
+import { createInfoMessage } from "../Errors/fetch-errors.js";
 
 // Terminal.js
 export class Terminal {
@@ -30,10 +31,16 @@ export class Terminal {
         e.preventDefault();
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
-        if(this.button.textContent) //search
-            fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`) 
+        if(this.button.textContent) /*search */ {
+            let resp = await fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`);
+            console.error('response == false ' + resp.ok == false + ' reps.ok : ' + resp.ok )
+            if( resp.ok == false )
+            {
+                await createInfoMessage('Error occured while fetching the artist tracks. Server may be unavailable rught now.')
+            }
+        }
         else { // command executing
             const command = this.input.value;
             this.input.value = '';

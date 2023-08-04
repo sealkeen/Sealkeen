@@ -11,6 +11,7 @@ import { appendCheckBoxTo } from '../Page/data-processing.js';
 import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
 import { createErrorMessage } from '../Errors/fetch-errors.js';
 import { create429ErrorMessageOrThrowError } from '../Errors/fetch-errors-4xx.js';
+import { addSearchTerminal } from '../System/search-terminal.js';
 
 const loc = urls.getLocation();
 
@@ -77,6 +78,7 @@ export async function setCurrentPageIndex(event) {
         toggleTopPageBackground(false);
         onDevelopmentCardClick();
         toggleBodyBackground();
+        addSearchTerminal();
     }
 }
 
