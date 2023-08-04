@@ -1,5 +1,5 @@
 import urls from './../api.js'
-import { fetchContentCrossOrigin } from '../Router/shared.js';
+import { appendNavigationLink } from '../Router/shared.js';
 import { setCurrentPageLogin } from '../Router/click-handlers.js';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
@@ -11,13 +11,12 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
         {
             console.log('[DBG] Seek navbar-nav');
             const navbarNav = navbarNavs[0];
-            let library = document.createElement('li');
-            library.id = 'nav-lnk-library';  
-            library.className = "nav-item";
-            library.innerHTML = '<a class="nav-link text-dark stroke-shadow-h3-white">Library</a>';
-            console.log('[DBG] append ');
-            setLibraryPageOnClick(library);
-            navbarNav.appendChild(library);
+            const lbPath = urls.getLocation() + 'GetPartialListenedPage';
+            const uplPath = urls.getLocation() + 'GetPartialUploadedCompositionsPage'
+            const library = createLibraryElement(lbPath);
+            const uploaded = createUploadedElement(uplPath);
+            appendNavigationLink(navbarNav, library, lbPath)
+            appendNavigationLink(navbarNav, uploaded, uplPath)
             appendLogOut();
         } else {
             console.log('[INF] Navbar-nav not found')
@@ -25,6 +24,24 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
     } catch (e) {
         console.error('addElementsForAuthorizedUser: ' + e);
     }  
+}
+
+function createUploadedElement(path)
+{
+    let uploaded = document.createElement('li');
+    uploaded.id = 'nav-lnk-uploaded';  
+    uploaded.className = "nav-item";
+    uploaded.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${path}">Uploaded</a>`;
+    return uploaded;
+}
+
+function createLibraryElement(path)
+{
+    let library = document.createElement('li');
+    library.id = 'nav-lnk-library';  
+    library.className = "nav-item";
+    library.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${path}">Library</a>`;
+    return library;
 }
 
 function appendLogOut()
@@ -42,12 +59,4 @@ function appendLogOut()
         const register = document.getElementById('nav-lnk-register');
         if(register) register.remove();
     }
-}
-
-function setLibraryPageOnClick(library)
-{
-    library.addEventListener('click', 
-    (event) => {
-        fetchContentCrossOrigin('GetPartialListenedPage')
-    });
 }

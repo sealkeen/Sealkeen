@@ -2,6 +2,28 @@ import urls, { pushHistoryState } from './../api.js'
 import { toggleTopPageBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setDevelopmentMessages } from '../Development/news-data.js';
 
+//appendNavigationLink(navbarNav, library, 'GetPartialListenedPage')
+export function appendNavigationLink(navbarNav, element, path)
+{
+    if(document.querySelector(`#${element.Id}`) != null) {
+        console.log('Element exists, no append: ' + element.Id);
+        return;
+    }
+
+    console.info('[INF] appendNavigationLink : ' + path);
+    setElementOnClick(element, path);
+    navbarNav.appendChild(element);
+}
+
+function setElementOnClick(element, path)
+{
+    element.addEventListener('click', 
+    (event) => {
+        event.preventDefault();
+        fetchContentCrossOrigin(path)
+    });
+}
+
 export function onDevelopmentCardClick()
 {
     if(document.querySelector('#development-body') === null) {
