@@ -34,10 +34,11 @@ export class Terminal {
         e.preventDefault();
         if(this.button.textContent) //search
             fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`) 
-
-        const command = this.input.value;
-        this.input.value = '';
-        this.sendCommand({ Input: command });
+        else { // command executing
+            const command = this.input.value;
+            this.input.value = '';
+            this.sendCommand({ Input: command });
+        }
     }
 
     sendCommand(commandObject) {
