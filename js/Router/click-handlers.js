@@ -15,6 +15,12 @@ import { addSearchTerminal } from '../System/search-terminal.js';
 
 const loc = urls.getLocation();
 
+function onContentPageLoaded_Finally()
+{
+    toggleTopPageBackground(false);
+    addSearchTerminal();
+}
+
 export function addEventHandlersOnBody() {
     document.addEventListener('transitionend', function() { transitionEnd() });
     document.querySelector('#navbar-logo-title')?.addEventListener('click', setCurrentPageIndex);
@@ -75,12 +81,324 @@ export async function setCurrentPageIndex(event) {
     } catch (error) {
         createErrorMessage('setCurrentPageIndex: ' + error);
     } finally {
-        toggleTopPageBackground(false);
         onDevelopmentCardClick();
         toggleBodyBackground();
-        addSearchTerminal();
+        onContentPageLoaded_Finally()
     }
 }
+
+
+export function setCurrentPageMockData()
+{
+    $("#page-body-container").html('');
+    $("#page-body-container").append(ConvertToDOM());
+}
+
+/* <summary> 
+    CONTENT PAGES :
+    * Composition
+    * Albums
+    * Genres
+    * Artists
+</summary> */
+
+export async function setCurrentPageCompositions(event) {
+    try {
+        event.preventDefault();
+        toggleTopPageBackground(true);
+        let pageBodyContainer = document.getElementById("page-body-container");
+
+        let isFirstLoad = (document.getElementById('track-filter') == null); 
+        let isCheckedAlready = document.querySelector('.track-filter-checkbox')?.checked;
+        let appendText = ''; 
+        if(isFirstLoad === true || isCheckedAlready === true) { 
+            appendText = '?reverse=true'; 
+        }
+        let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
+        if (pageBodyContainer != null) {
+            var ftchComps = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async (response) => {
+                if (response.ok) {
+                    let data = await response.json();
+                    console.log('[DBG] handling response text');
+                    let trackDom = CreateDOMFromJSON(data);
+                    $("#page-body-container").html('');
+                    appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
+                    $("#page-body-container").append(trackDom);
+                    pushHistoryState('GetHTMLCompositionsPage/');
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
+            }).catch((error) => {
+                    setCurrentPageMockData();
+                    createErrorMessage('setCurrentPageCompositions: ' + error); 
+            });
+        }
+    } catch (error) {
+        createErrorMessage('setCurrentPageCompositions: ' + error);
+    } finally {
+        onContentPageLoaded_Finally()
+    }
+}
+
+export async function setCurrentPageAlbums(event) {
+    try {
+        event.preventDefault();
+        toggleTopPageBackground(true);
+        let ctrl = (loc + 'GetJSONAlbumsPage');
+        if ($("#page-body-container") != undefined) {
+            var ftchAlb = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async response => {
+                if (response.ok) { 
+                    let data = await response.json();
+                    console.log('[DBG] click-handlers.js/.. Handling response text');
+                    let albumsDom = CreateAlbumsDOMFromJSON(data);
+                    pushHistoryState('GetHTMLAlbumsPage/');
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(albumsDom);
+                    console.log('[DBG] fetch response key count: ' + Object.keys(albumsDom).length);
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
+            }).catch((error) => {
+                setCurrentPageMockData();
+                createErrorMessage('in setCurrentPageAlbums: ' + error); 
+            });
+        }
+    } catch (error) {
+        createErrorMessage('in setCurrentPageAlbums: ' + error);
+    } finally {
+        onContentPageLoaded_Finally()
+    }
+}
+
+export async function setCurrentPageGenres(event) {
+    try {
+        event.preventDefault();
+        toggleTopPageBackground(true);
+        let ctrl = (loc + 'GetJSONGenresPage');
+        if ($("#page-body-container") != undefined) {
+            var ftchGnrs = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async response => {
+                if (response.ok) { 
+                    let data = await response.json();
+                    pushHistoryState('GetHTMLGenresPage/');
+                    console.log('[DBG] Handling response text');
+                    let genresDom = CreateGenresDOMFromJSON(data);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(genresDom);
+                    console.log('[DBG] fetch response key count: ' + Object.keys(genresDom).length);
+                } else 
+                    create429ErrorMessageOrThrowError(response.status);
+            }).catch((error) => {
+                setCurrentPageMockData();
+                createErrorMessage('in setCurrentPageGenres: ' + error);
+            });
+        }
+    } catch (error) {
+        createErrorMessage('in setCurrentPageAlbums: ' + error);
+    } finally {
+        onContentPageLoaded_Finally()
+    }
+}
+
+export async function setCurrentPageArtists(event) {
+    try {
+        toggleTopPageBackground(true);
+        //event.preventDefault();
+        let ctrl = (loc + 'GetJSONArtistsPage');
+        if ($("#page-body-container") != undefined) {
+            var ftchArts = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async response => {
+                if (response.ok) { 
+                    pushHistoryState('GetHTMLArtistsPage/');
+                    let data = await response.json();
+                    console.log('[DBG] handling response text');
+                    let artistsDom = CreateArtistsDOMFromJSON(data);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(artistsDom);  
+                    console.log('[DBG] fetch response key count: ' + Object.keys(artistsDom).length);
+                } else 
+                    create429ErrorMessageOrThrowError()
+            })
+            .catch((error) => {
+                setCurrentPageMockData();
+                createErrorMessage('in setCurrentPageArtists: ' + error);
+            });
+        }
+    } catch (error) {
+        createErrorMessage('in setCurrentPageArtists: ' + error);
+    } finally {
+        onContentPageLoaded_Finally()
+    }
+}
+
+export async function setCurrentPageCompositionByArtistID(el) {
+    try {
+        toggleTopPageBackground(true);
+        let id = el;
+        if (!event.target.classList.contains('card-body')) {
+            id = el.parentNode.children[0].value;
+        } else {
+            id = el.children[0].value;
+        }
+
+        let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
+        if ($("#page-body-container") != undefined) {
+            var ftchCmpsById = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async response => {
+                if (response.ok) { 
+                    let responseText = await response.text();
+                    pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + id + '\n'+ error);
+                }
+            });
+        }
+    } catch (error) {
+        createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + '\n'+ e);
+    } finally {
+        onContentPageLoaded_Finally()
+    }
+}
+
+export async function setCurrentPageCompositionByID(el) {
+    try {
+        toggleTopPageBackground(true);
+        let id = el;
+        if (!event.target.classList.contains('card-body')) {
+            id = el.parentNode.children[0].value;
+        } else {
+            id = el.children[0].value;
+        }
+
+        let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
+        if ($("#page-body-container") != undefined) {
+            var ftchPartCmpsById = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async response => {
+                if (response.ok) { 
+                    let responseText = await response.text();
+                    pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in GetPartialCompositionPageByID/?id=' + id + '\n' + error);
+                }
+            });
+        }
+    } catch (error) {
+        setCurrentPageMockData();
+        console.log('[DBG] fetch error. Setting up mock data. Details: ' + e)
+    } finally {
+        onContentPageLoaded_Finally()
+    }
+}
+
+export async function setCurrentPageAlbumByID(el) {
+    try {
+        toggleTopPageBackground(true);
+        let id = el;
+        if (!event.target.classList.contains('card-body')) {
+            id = el.parentNode.children[0].value;
+        }
+        else {
+            id = el.children[0].value;
+        }
+        let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
+        if ($("#page-body-container") != undefined) {
+            var ftchPartAlbmsById = await fetch(ctrl, {
+                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then(async response => {
+                if (response.ok) { 
+                    let responseText = await response.text();
+                    pushHistoryState('GetHtmlAlbumPageByID/?id=' + id);
+                    $("#page-body-container").html('');
+                    $("#page-body-container").append(responseText);
+                } else if (response.status === 429) {
+                    createErrorMessage('Request rate is too high');
+                } else {
+                    throw new Error('Fetch error.');
+                }
+            }).catch((error) => {
+                if (error.message === 'Too many requests.') {
+                    createErrorMessage(error.message);
+                } else {
+                    setCurrentPageMockData();
+                    createErrorMessage('in setCurrentPageAlbumByID/?id=' + id + '\n' + error);
+                }
+            });
+        }
+    } catch (error) {
+        setCurrentPageMockData();
+        createErrorMessage('in setCurrentPageAlbumByID: ' + error);
+    } finally {
+        onContentPageLoaded_Finally()
+    }
+}
+
+export async function FetchGetPatialListenedPage(nextActionInPipeLine)
+{
+    await fetchContentCrossOrigin('GetPartialListenedPage').then(result => {
+        if(result.ok) {
+            nextActionInPipeLine();
+        }
+    });
+}
+
+/* <summary> 
+    ACCOUNT / MANAGE PAGES  
+    * ManageAccount
+    * SignUp
+    * Register
+    * Login
+</summary> */
 
 export async function setCurrentPageManageAccount(event) {
     try {
@@ -151,294 +469,6 @@ export async function setCurrentPageSignUp(event) {
         }
     } catch (error) {
         createErrorMessage('setCurrentPageSignUp: ' + error);
-    } finally {
-        toggleTopPageBackground(false);
-    }
-}
-
-export function setCurrentPageMockData()
-{
-    $("#page-body-container").html('');
-    $("#page-body-container").append(ConvertToDOM());
-}
-
-// TODO: separate
-export async function setCurrentPageCompositions(event) {
-    try {
-        event.preventDefault();
-        toggleTopPageBackground(true);
-        let pageBodyContainer = document.getElementById("page-body-container");
-
-        let isFirstLoad = (document.getElementById('track-filter') == null); 
-        let isCheckedAlready = document.querySelector('.track-filter-checkbox')?.checked;
-        let appendText = ''; 
-        if(isFirstLoad === true || isCheckedAlready === true) { 
-            appendText = '?reverse=true'; 
-        }
-        let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
-        if (pageBodyContainer != null) {
-            var ftchComps = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(async (response) => {
-                if (response.ok) {
-                    let data = await response.json();
-                    console.log('[DBG] handling response text');
-                    let trackDom = CreateDOMFromJSON(data);
-                    $("#page-body-container").html('');
-                    appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
-                    $("#page-body-container").append(trackDom);
-                    pushHistoryState('GetHTMLCompositionsPage/');
-                } else 
-                    create429ErrorMessageOrThrowError(response.status);
-            }).catch((error) => {
-                    setCurrentPageMockData();
-                    createErrorMessage('setCurrentPageCompositions: ' + error); 
-            });
-        }
-    } catch (error) {
-        createErrorMessage('setCurrentPageCompositions: ' + error);
-    } finally {
-        toggleTopPageBackground(false);
-    }
-}
-
-export async function setCurrentPageAlbums(event) {
-    try {
-        event.preventDefault();
-        toggleTopPageBackground(true);
-        let ctrl = (loc + 'GetJSONAlbumsPage');
-        if ($("#page-body-container") != undefined) {
-            var ftchAlb = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(async response => {
-                if (response.ok) { 
-                    let data = await response.json();
-                    console.log('[DBG] click-handlers.js/.. Handling response text');
-                    let albumsDom = CreateAlbumsDOMFromJSON(data);
-                    pushHistoryState('GetHTMLAlbumsPage/');
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(albumsDom);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(albumsDom).length);
-                } else 
-                    create429ErrorMessageOrThrowError(response.status);
-            }).catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageAlbums: ' + error); 
-            });
-        }
-    } catch (error) {
-        createErrorMessage('in setCurrentPageAlbums: ' + error);
-    } finally {
-        toggleTopPageBackground(false);
-    }
-}
-
-export async function setCurrentPageGenres(event) {
-    try {
-        event.preventDefault();
-        toggleTopPageBackground(true);
-        let ctrl = (loc + 'GetJSONGenresPage');
-        if ($("#page-body-container") != undefined) {
-            var ftchGnrs = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(async response => {
-                if (response.ok) { 
-                    let data = await response.json();
-                    pushHistoryState('GetHTMLGenresPage/');
-                    console.log('[DBG] Handling response text');
-                    let genresDom = CreateGenresDOMFromJSON(data);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(genresDom);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(genresDom).length);
-                } else 
-                    create429ErrorMessageOrThrowError(response.status);
-            }).catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageGenres: ' + error);
-            });
-        }
-    } catch (error) {
-        createErrorMessage('in setCurrentPageAlbums: ' + error);
-    } finally {
-        toggleTopPageBackground(false);
-    }
-}
-
-export async function setCurrentPageArtists(event) {
-    try {
-        toggleTopPageBackground(true);
-        //event.preventDefault();
-        let ctrl = (loc + 'GetJSONArtistsPage');
-        if ($("#page-body-container") != undefined) {
-            var ftchArts = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(async response => {
-                if (response.ok) { 
-                    pushHistoryState('GetHTMLArtistsPage/');
-                    let data = await response.json();
-                    console.log('[DBG] handling response text');
-                    let artistsDom = CreateArtistsDOMFromJSON(data);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(artistsDom);  
-                    console.log('[DBG] fetch response key count: ' + Object.keys(artistsDom).length);
-                } else 
-                    create429ErrorMessageOrThrowError()
-            })
-            .catch((error) => {
-                setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageArtists: ' + error);
-            });
-        }
-    } catch (error) {
-        createErrorMessage('in setCurrentPageArtists: ' + error);
-    } finally {
-        toggleTopPageBackground(false);
-    }
-}
-
-export async function setCurrentPageCompositionByArtistID(el) {
-    try {
-        toggleTopPageBackground(true);
-        let id = el;
-        if (!event.target.classList.contains('card-body')) {
-            id = el.parentNode.children[0].value;
-        } else {
-            id = el.children[0].value;
-        }
-
-        let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
-        if ($("#page-body-container") != undefined) {
-            var ftchCmpsById = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(async response => {
-                if (response.ok) { 
-                    let responseText = await response.text();
-                    pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(responseText);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
-                } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
-                } else {
-                    throw new Error('Fetch error.');
-                }
-            }).catch((error) => {
-                if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
-                } else {
-                    setCurrentPageMockData();
-                    createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + id + '\n'+ error);
-                }
-            });
-        }
-    } catch (error) {
-        createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + '\n'+ e);
-    } finally {
-        toggleTopPageBackground(false);
-    }
-}
-
-export async function setCurrentPageCompositionByID(el) {
-    try {
-        toggleTopPageBackground(true);
-        let id = el;
-        if (!event.target.classList.contains('card-body')) {
-            id = el.parentNode.children[0].value;
-        } else {
-            id = el.children[0].value;
-        }
-
-        let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
-        if ($("#page-body-container") != undefined) {
-            var ftchPartCmpsById = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(async response => {
-                if (response.ok) { 
-                    let responseText = await response.text();
-                    pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(responseText);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
-                } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
-                } else {
-                    throw new Error('Fetch error.');
-                }
-            }).catch((error) => {
-                if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
-                } else {
-                    setCurrentPageMockData();
-                    createErrorMessage('in GetPartialCompositionPageByID/?id=' + id + '\n' + error);
-                }
-            });
-        }
-    } catch (error) {
-        setCurrentPageMockData();
-        console.log('[DBG] fetch error. Setting up mock data. Details: ' + e)
-    } finally {
-        toggleTopPageBackground(false);
-    }
-}
-
-export async function setCurrentPageAlbumByID(el) {
-    try {
-        toggleTopPageBackground(true);
-        let id = el;
-        if (!event.target.classList.contains('card-body')) {
-            id = el.parentNode.children[0].value;
-        }
-        else {
-            id = el.children[0].value;
-        }
-        let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
-        if ($("#page-body-container") != undefined) {
-            var ftchPartAlbmsById = await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            }).then(async response => {
-                if (response.ok) { 
-                    let responseText = await response.text();
-                    pushHistoryState('GetHtmlAlbumPageByID/?id=' + id);
-                    $("#page-body-container").html('');
-                    $("#page-body-container").append(responseText);
-                } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
-                } else {
-                    throw new Error('Fetch error.');
-                }
-            }).catch((error) => {
-                if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
-                } else {
-                    setCurrentPageMockData();
-                    createErrorMessage('in setCurrentPageAlbumByID/?id=' + id + '\n' + error);
-                }
-            });
-        }
-    } catch (error) {
-        setCurrentPageMockData();
-        createErrorMessage('in setCurrentPageAlbumByID: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -557,13 +587,4 @@ export async function setCurrentPageLogin(event) {
     } finally {
         toggleTopPageBackground(false);
     }
-}
-
-export async function FetchGetPatialListenedPage(nextActionInPipeLine)
-{
-    await fetchContentCrossOrigin('GetPartialListenedPage').then(result => {
-        if(result.ok) {
-            nextActionInPipeLine();
-        }
-    });
 }
