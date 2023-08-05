@@ -102,6 +102,6 @@ function AddLanguageDropDown()
         navbarUserRegisterLogin.insertBefore(languageComboBoxButton, navbarUserRegisterLogin.firstChild);
     } 
     catch (e) {
-        console.log(e)
+        console.error(e)
     } 
 }

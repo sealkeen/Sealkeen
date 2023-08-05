@@ -1,0 +1,8 @@
+dodgerblue
+aliceblue
+currentColor
+darkred
+darkslategreay
+teal sienna
+saddlebrown
+maroon
