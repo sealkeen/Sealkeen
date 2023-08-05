@@ -7,7 +7,7 @@ export function addSearchTerminal()
             return;
             
         let text = document.getElementsByClassName("text-center");
-            if(text[0])
+            if(text[0]) {
                 text[0].insertAdjacentHTML("afterend",
                 `
                 <div id="terminal-container">
@@ -16,9 +16,9 @@ export function addSearchTerminal()
                     <div id="command-form"></div>
                 </div>
                 `);
-
-        let trm = new Terminal("?artist=", "terminal-container"); 
-        trm.setButtonText('Search');
+                let trm = new Terminal("?artist=", "terminal-container"); 
+                trm.setButtonText('Search');
+            }
     } catch (e) {
         console.error(e);
     }

@@ -62,15 +62,18 @@ export async function onPerformHandShakeInterval(onSuccessAction)
     } 
 }
 
-export async function onSiteLoadIfAuthorized()
+export async function onSiteLoadIfAuthorized(skipLibraryFetch)
 {
     let result = "";
-    if(urls.isHomePage()) {
+    if(urls.isHomePage() || skipLibraryFetch === true) {
         // Only 
         const nextActionInPipeLine = //urls.isGithub() || urls.isNodeJSHost() ? 
             addElementsForAuthorizedUser 
         //: noOp;
-        onPerformHandShakeInterval(FetchGetPatialListenedPage(nextActionInPipeLine));
+        if(skipLibraryFetch === true)
+            onPerformHandShakeInterval(nextActionInPipeLine);
+        else
+            onPerformHandShakeInterval(FetchGetPatialListenedPage(nextActionInPipeLine));
     } else {
         onPerformHandShakeInterval(noOp);
     }

@@ -52,7 +52,7 @@
                         <a class="nav-link text-dark">Background</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav">
+                <ul id="navbar-nav-user-register-login" class="navbar-nav">
                     <li id="nav-lnk-register" class="nav-item">
                         <a id="btn-identity-account-register" class="nav-link text-dark">Register</a>
                     </li>
@@ -69,51 +69,49 @@
             <h2 class="stroke-shadow">Log in</h2>
             <div class="account-data-container">
                 <div class="account-data-container-body">
-                    <section>
-                        <form id="__AjaxAntiForgeryForm" onsubmit="return false" referrerpolicy="no-referrer">
-                            <h4 class="stroke-shadow-h3">Use a local account to log in.</h4>
-                            <hr>
-                            <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
-                            </ul></div>
-                            <div class="form-group">
-                                <label for="UserName">UserName</label>
-                                <input class="form-control" type="text" data-val="true" data-val-required="The UserName field is required." id="UserName" name="UserName" value="">
-                                <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                    <form id="__AjaxAntiForgeryForm" onsubmit="return false" referrerpolicy="no-referrer">
+                        <h4 class="stroke-shadow-h3">Use a local account to log in.</h4>
+                        <hr>
+                        <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+                        </ul></div>
+                        <div class="form-group">
+                            <label for="UserName">UserName</label>
+                            <input class="form-control" type="text" data-val="true" data-val-required="The UserName field is required." id="UserName" name="UserName" value="">
+                            <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Password</label>
+                            <input class="form-control" type="password" data-val="true" data-val-required="The Password field is required." id="Password" name="Password">
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label for="RememberMe">
+                                    <input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true">
+                                    Remember me?
+                                </label>
                             </div>
-                            <div class="form-group">
-                                <label for="Password">Password</label>
-                                <input class="form-control" type="password" data-val="true" data-val-required="The Password field is required." id="Password" name="Password">
-                                <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                            </div>
-                            <div class="form-group">
-                                <div class="checkbox">
-                                    <label for="RememberMe">
-                                        <input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true">
-                                        Remember me?
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button id="form-btn-default" class="btn btn-default">Log in</button>
-                            </div>
-                            <div class="form-group">
-                                <p>
-                                    <a href="/Sealkeen/Account/ForgotPassword">Forgot your password?</a>
-                                </p>
-                                <p>
-                                    <a href="/Account/Register">Register as a new user?</a>
-                                </p>
-                            </div>
-                            <input name="__RequestVerificationToken" type="hidden">
-                            <input name="RememberMe" type="hidden" value="false">
-                        </form>
-                    </section>
+                        </div>
+                        <div class="form-group">
+                            <button id="form-btn-default" class="btn btn-default">Log in</button>
+                        </div>
+                        <div class="form-group">
+                            <p>
+                                <a href="/Sealkeen/Account/ForgotPassword">Forgot your password?</a>
+                            </p>
+                            <p>
+                                <a href="/Account/Register">Register as a new user?</a>
+                            </p>
+                        </div>
+                        <input name="__RequestVerificationToken" type="hidden">
+                        <input name="RememberMe" type="hidden" value="false">
+                    </form>
                 </div>
             </div>
         </main>
         <center>
             <a class="btm-footer2">
-                &copy; Sealkeen - 2022 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
+                &copy; Sealkeen - 2023 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
             </a>
         </center>
     </div>
@@ -130,6 +128,7 @@
     <script src="./../lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="./../lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script type="module" src="./../js/site.js" asp-append-version="true"></script>
+    <script type="module" src="./../js/Account/Identity/login.js" asp-append-version="true"></script>
 </body>
 
 </html>
