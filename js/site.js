@@ -44,7 +44,7 @@ $(document).ready(function () {
         const container = document.querySelector('body');
 
         container.onmousedown = (e) => {
-            console.log('[DBG] site.js/onmousedown' + e.target.id + ' ' + e.target.className);
+            console.log('[DBG] site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
             if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
                 $('#ctxmenu').innerHTML = '';
             }

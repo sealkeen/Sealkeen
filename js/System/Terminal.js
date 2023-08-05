@@ -33,15 +33,17 @@ export class Terminal {
 
     async onSubmit(e) {
         e.preventDefault();
-        if(this.button.textContent) /*search */ {
+        console.log(`[DBG] this.button.textContent === "Search" : ${this.button.textContent === 'Search'}`)
+        console.log(`[DBG] this.button.textContent === "Send" : ${this.button.textContent === 'Send'}`)
+        if(this.button.textContent === 'Search') { /*search */
             let resp = await fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`);
             console.error('response == false ' + resp.ok == false + ' reps.ok : ' + resp.ok )
             if( resp.ok == false )
             {
-                await createInfoMessage('Error occured while fetching the artist tracks. Server may be unavailable rught now.')
+                await createInfoMessage('Error occured while fetching the artist tracks. Server may be unavailable right now.');
             }
         }
-        else { // command executing
+        else if(this.button.textContent === 'Send') { /* command executing */
             const command = this.input.value;
             this.input.value = '';
             this.sendCommand({ Input: command });
