@@ -1,7 +1,7 @@
 // JS module for User sign up form inputs
 // Interaction logic for -> SignUpPage.cshtml
 import { LogMessageRequest } from './logging.js';
-import { setRegisterAntiForgeryOnClick } from './Account/verification.js';
+import { setRegisterAntiForgeryOnClick, setLoginAntiForgeryOnClick } from './Account/verification.js';
 
 var button = document.getElementById('form-btn-default');
 var username = document.getElementById('UserName');
@@ -9,12 +9,16 @@ var email = document.getElementById('Email');
 var password = document.getElementById('Password');
 var passwordCheck = document.getElementById('ConfirmPassword');
 
-button?.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    if(checkInputs())
-        setRegisterAntiForgeryOnClick();
-});
+if(button != null) {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(document.getElementById('ConfirmPassword') == null) // if login
+            setLoginAntiForgeryOnClick();
+        else
+            if(checkInputs())                   // else if register
+                setRegisterAntiForgeryOnClick();
+    });
+}
 
 export function checkInputs() {
     username = document.getElementById('UserName');

@@ -51,7 +51,7 @@ $(document).ready(function () {
         }
 
         container.addEventListener('click', function (e) {
-            console.log('[DBG] site.js/onclick' + e.target.id + ' ' + e.target.className);
+            console.log('[DBG] site.js/onclick(): ' + e.target.id + ' ' + e.target.className);
             // But only alert for elements that have an alert-button class
             //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
             let target = e.target;

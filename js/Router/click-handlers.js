@@ -543,7 +543,7 @@ export async function setCurrentPageLogin(event) {
 	
         event.preventDefault();
         toggleTopPageBackground(true);
-        console.log('Loading: ' + loc + 'Account/Login');
+        console.log('[INF] click-handlers.js/setCurrentPageLogin(): Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + prefix + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             var ftchPartLgn = await fetch(ctrl, {

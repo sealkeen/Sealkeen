@@ -1,14 +1,18 @@
 import urls from './../api.js'
-import { getCookie } from './../utilities.js'
 import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
-import { setCurrentPageArtists } from './../Router/click-handlers.js'
 import { checkInputs } from '../signup.js';
+import { addElementsForAuthorizedUser } from './authorized.js';
+import { createInfoMessage } from '../Errors/fetch-errors.js';
 
 
 export function setRegisterAntiForgeryOnClick() {
     try {
         if(!checkInputs())
             return;
+
+        if(document.getElementById('ConfirmPassword') == null)
+            return;
+
         $('#__AjaxAntiForgeryForm').removeAttr('action');
         let username = $('#UserName').val();
         let password= $('#Password').val();
@@ -28,9 +32,9 @@ export function setRegisterAntiForgeryOnClick() {
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify({
-                'UserName': username ?? "undefined",
-                'Email': email ?? "undefined",
-                'Password': password ?? "undefined",
+                'UserName': username == null ? "undefined" : username,
+                'Email': email == null ? "undefined" :  email,
+                'Password': password == null ? "undefined" : password,
                 'ConfirmPassword': cPassword,
                 __RequestVerificationToken: token
             })
@@ -58,15 +62,18 @@ export function setRegisterAntiForgeryOnClick() {
                     $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
                     toggleBodyBackground();
                 } else {
+                    createInfoMessage('[DBG] verification.js/setRegisterAntiForgeryOnClick() ajax response error')
                     console.log('[DBG] verification.js/setRegisterAntiForgeryOnClick() ajax response error');
                 }
             } catch (e) {
-                console.log('[ERR] verification.js/setRegisterAntiForgeryOnClick() try-catch-fetch-error' + e);
+                createInfoMessage(`[ERR] verification.js/setRegisterAntiForgeryOnClick() try-catch-fetch-error ${e}`)
+                console.log(`[ERR] verification.js/setRegisterAntiForgeryOnClick() try-catch-fetch-error ${e}`);
             }
         });
         return false;
     } catch (e) {
-        console.log('[ERR] verification.js/setRegisterAntiForgeryOnClick() %j', e);
+        createInfoMessage(`[ERR] verification.js/setRegisterAntiForgeryOnClick() ${e}`)
+        console.log(`[ERR] verification.js/setRegisterAntiForgeryOnClick() ${e}`, );
         alert(e);
     }
 }
@@ -94,8 +101,8 @@ export function setLoginAntiForgeryOnClick(e) {
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify({
-                'UserName': username ?? "undefined",
-                'Password': password ?? "undefined",
+                'UserName': username == null ? "undefined" : username,
+                'Password': password == null ? "undefined" : password,
                 __RequestVerificationToken: token,
                 'RememberMe': rememberMe
             })
@@ -107,8 +114,9 @@ export function setLoginAntiForgeryOnClick(e) {
                 $("#page-body-container").html('');
                 div.appendChild(sucH1); div.appendChild(sucH2);
                 $("#page-body-container").append(div);
+                addElementsForAuthorizedUser( () => { } );
             } else {
-                alert('Ошибка входа');
+                createInfoMessage('Ошибка входа. Возможно, сервер недоступен.')
             }
         }).catch(err => {
             try {
@@ -132,8 +140,3 @@ export function setLoginAntiForgeryOnClick(e) {
         alert(e);
     }
 };
-
-export function createSuccessBody()
-{
-
-}
