@@ -77,24 +77,30 @@ export function closeNav() {
 }
 
 export function openRightNav(e) {
-    document.getElementById("right-side-nav").style.width = getSideNavWidth();
+    let rNav= document.getElementById("right-side-nav");
+    if(rNav == null) return;
+
+    rNav.style.width = getSideNavWidth();
     //window.addEventListener('resizeend', () => { document.getElementById("right-side-nav").style.width = $('body').width() / 2; } )
     //document.getElementById("top-page-container").style.marginRight = "250px";
     document.querySelector("#vertical-volume-control").classList.add('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
     //document.getElementsByClassName("container")[0].style.opacity = 0.8;
-    document.getElementById("right-side-nav").style.paddingLeft = "5px"; 
-    document.getElementById("right-side-nav").style.paddingRight = "5px"; 
+    rNav.style.paddingLeft = "5px"; 
+    rNav.style.paddingRight = "5px"; 
 }
   
 export function closeRightNav(e) {
-    document.getElementById("right-side-nav").style.width = "0";
+    let rNav= document.getElementById("right-side-nav");
+    if(rNav == null) return;
+
+    rNav.style.width = "0";
     //document.getElementById("top-page-container").style.marginRight= "0";
     document.querySelector("#vertical-volume-control").classList.remove('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 1;
     //document.getElementsByClassName("container")[0].style.opacity = 1;
-    document.getElementById("right-side-nav").style.paddingLeft = "0px"; 
-    document.getElementById("right-side-nav").style.paddingRight = "0px"; 
+    rNav.style.paddingLeft = "0px"; 
+    rNav.style.paddingRight = "0px"; 
 }
 
 export function onPauseClicked(e)

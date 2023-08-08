@@ -7,6 +7,9 @@ export function FillLocalizationStore()
 {
     console.log('[INF] Call: FillLocalizationStore()');
 
+    if(document.getElementsByClassName('navbar')[0] == null )
+        return;
+
     window.fillLocalizationStore = FillLocalizationStore;
     window.translateWebsite = Localize;
     window.applyLanguageTranslations = applyLanguageTranslations;
