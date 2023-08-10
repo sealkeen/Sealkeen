@@ -1,5 +1,12 @@
-﻿import { fetchContentCrossOrigin } from "../Router/shared.js";
-import { createInfoMessage } from "../Errors/fetch-errors.js";
+﻿var fetchContentCrossOrigin = async () => { }
+var createInfoMessage = async () => { }
+
+import("../Router/shared.js").then( shared=> {
+    fetchContentCrossOrigin = shared.fetchContentCrossOrigin;
+});
+import("../Errors/fetch-errors.js").then(fErrors=>{
+    createInfoMessage = fErrors.createInfoMessage;
+});
 
 // Terminal.js
 export class Terminal {
