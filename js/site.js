@@ -17,6 +17,7 @@ import { FillLocalizationStore } from './Services/Localization/fill-localization
 import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 import { addSearchTerminal } from './System/search-terminal.js';
+import { transitionEnd } from './StyleHandlers/footer-handlers.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -128,7 +129,9 @@ $(document).ready(function () {
         }
     } catch (e) {
         console.log(e);
-    } 
+    } finally {
+        transitionEnd();
+    }
 });
 
 
