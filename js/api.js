@@ -1,7 +1,7 @@
 const urls = {
     getLocation() {
         if(this.isGithub()) {
-            return 'https://5732-95-24-217-81.ngrok-free.app/';
+            return 'https://136c-95-24-221-186.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';
         } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
@@ -68,8 +68,8 @@ export function ifUrlExist(url, callback) {
 export async function pushHistoryState(url)
 {
     try {
-        if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
-            return; // throw new NotImplementedException();
+        //if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
+        //    return; // throw new NotImplementedException();
 
         console.log('[DBG] api.js/pushHistoryState: History state URL:' + url);
         console.log('[DBG] api.js/pushHistoryState: prevstate not null');

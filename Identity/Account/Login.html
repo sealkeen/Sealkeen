@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MediaStreamer.WebApplication</title>
-    <link rel="stylesheet" href="./../lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./../css/site.css" />
+    <link rel="stylesheet" href="./../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./../../../css/site.css" />
     <style>
         .footer {
             position: fixed;
@@ -66,36 +66,45 @@
     <div class="spacer"></div>
     <div class="container">
         <main id="page-body-container" role="main" class="pb-3">
-            <h2 class="stroke-shadow">Sign up (Register)</h2>
+            <h2 class="stroke-shadow">Log in</h2>
             <div class="account-data-container">
                 <div class="account-data-container-body">
                     <form id="__AjaxAntiForgeryForm" onsubmit="return false" referrerpolicy="no-referrer">
-                        <h4 class="stroke-shadow-h3">Create a new account.</h4>
+                        <h4 class="stroke-shadow-h3">Use a local account to log in.</h4>
                         <hr>
                         <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
-                        </ul></div>           
+                        </ul></div>
                         <div class="form-group">
                             <label for="UserName">UserName</label>
                             <input class="form-control" type="text" data-val="true" data-val-required="The UserName field is required." id="UserName" name="UserName" value="">
                             <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
                         </div>
                         <div class="form-group">
-                            <label for="Email">Email</label>
-                            <input class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Email" name="Email" value="">
-                            <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-                        </div>
-                        <div class="form-group">
                             <label for="Password">Password</label>
-                            <input class="form-control" type="password" data-val="true" data-val-length="The Password must be at least 6 and at max 100 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="Password" maxlength="100" name="Password">
+                            <input class="form-control" type="password" data-val="true" data-val-required="The Password field is required." id="Password" name="Password">
                             <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
                         </div>
                         <div class="form-group">
-                            <label for="ConfirmPassword">Confirm password</label>
-                            <input class="form-control" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="ConfirmPassword" name="ConfirmPassword">
-                            <span class="text-danger field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                            <div class="checkbox">
+                                <label for="RememberMe">
+                                    <input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true">
+                                    Remember me?
+                                </label>
+                            </div>
                         </div>
-                        <button id="form-btn-default" class="btn btn-default">Register</button>
+                        <div class="form-group">
+                            <button id="form-btn-default" class="btn btn-default">Log in</button>
+                        </div>
+                        <div class="form-group">
+                            <p>
+                                <a href="/Sealkeen/Account/ForgotPassword">Forgot your password?</a>
+                            </p>
+                            <p>
+                                <a href="/Account/Register">Register as a new user?</a>
+                            </p>
+                        </div>
                         <input name="__RequestVerificationToken" type="hidden">
+                        <input name="RememberMe" type="hidden" value="false">
                     </form>
                 </div>
             </div>
@@ -116,10 +125,10 @@
         </div>
     </footer>
 
-    <script src="./../lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="./../lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script type="module" src="./../js/site.js" asp-append-version="true"></script>
-    <script type="module" src="./../js/Account/Identity/sign-up.js" asp-append-version="true"></script>
+    <script src="./../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="./../../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./../../js/site.js"></script>
+    <script type="module" src="./../../js/Account/Identity/login.js"></script>
 </body>
 
 </html>

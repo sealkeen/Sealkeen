@@ -416,7 +416,7 @@ export async function setCurrentPageManageAccount(event) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
-                    pushHistoryState(urls.getPostfix() + 'Manage/Index');
+                    pushHistoryState('Manage/Index');
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -449,7 +449,7 @@ export async function setCurrentPageSignUp(event) {
                     $("#page-body-container").append(responseText);
                     
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length);
-                    pushHistoryState('GetHtmlSignUpPage/');
+                    pushHistoryState(`Identity/Account/Register`);
 
                     const button = document.getElementById('form-btn-default');
                     button.addEventListener('click', (e) => {
@@ -494,7 +494,7 @@ export async function setCurrentPageRegister(event) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState('Account/Register/');
+                    pushHistoryState(`Identity/Account/Register`);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)                    
@@ -567,7 +567,7 @@ export async function setCurrentPageLogin(event) {
                         setLoginAntiForgeryOnClick(e)
                     });
                     $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
-                    pushHistoryState('Login/');
+                    pushHistoryState(`Identity/Account/Register`);
                 } else if (response.status === 429) {
                     createErrorMessage('Request rate is too high');
                 } else {
