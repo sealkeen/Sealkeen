@@ -23,6 +23,7 @@ export function setTitleByArtistAndTitle(el) {
             document.title = `${artist} – ${song}`;
             $(".track-artist-song-name").html('');
             $(".track-artist-song-name").append(`${artist} – ${song}`);
+            createArtistLink(`${artist} – ${song}`);
         }
     } catch (e) {
         console.log(e);
@@ -57,6 +58,7 @@ export function setArtistSongNameAsync() {
 export function createArtistLink(artistSong) {
     const [artist, track] = artistSong.split(' – '); // assuming "–" is the separator
     if (!artist || !track) {
+        console.error('[ERR] Artist and Track are null (createArtistLink).');
         return artistSong;
     }
 
@@ -69,6 +71,7 @@ export function createArtistLink(artistSong) {
 }
 
 function replaceArtistParamInUrl(artist) {
+    console.log("[INF] replaceArtistParamInUrl(), artist: " + artist);
     if (!urls.isGithub() && !urls.isNodeJSHost()) {
       return;
     }

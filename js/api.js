@@ -1,3 +1,5 @@
+import routes from './Router/routing-table.js';
+
 const urls = {
     getLocation() {
         if(this.isGithub()) {
@@ -74,21 +76,31 @@ export async function pushHistoryState(url)
         //if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
         //    return; // throw new NotImplementedException();
 
+        let loc = `${location.protocol}//${location.host}/`;
+        let newLc = loc + getLocationPath(url)
+        if( !Object.keys(routes).some( r => url.startsWith(r)) ) {  // Identity/Account/Register? starts with Identity/Account/Register
+            console.error('[ERR] pushHistoryState return of: ' + newLc)
+            return;
+        } 
+        console.log('[INF] pushHistoryState ok: ' + newLc)
+        
+
         console.log('[DBG] api.js/pushHistoryState: History state URL:' + url);
         //console.log('[DBG] api.js/pushHistoryState: prevstate not null');
-        let loc = `${location.protocol}//${location.host}/`;
-        window.history.pushState({ prevUrl: window.location.href }, null, getLocationPath(loc) + url);
+        window.history.pushState({ prevUrl: window.location.href }, null, newLc);
     } catch(e) {
         console.log(e);
     }
 }
 
 function getLocationPath(lc) {
+    let result = ""//urls.getContentPath();
     if(lc.indexOf(urls.getPostfix()) > -1) {
-        return lc;
+        result += lc;
     } else {
-        return lc + urls.getPostfix();
+        result += (lc + urls.getPostfix());
     }
+    return result;
 }
 
 export async function redirectIfServerIsReachable(path) // : String

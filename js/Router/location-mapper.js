@@ -1,22 +1,11 @@
 import urls, { pushHistoryState, redirectIfServerIsReachable } from './../api.js'
-import { setCurrentPageAlbums, setCurrentPageArtists, setCurrentPageCompositions, setCurrentPageGenres, setCurrentPageIndex, setCurrentPageLogin, setCurrentPageRegister } from './click-handlers.js';
+import routes from './routing-table.js';
 
 export const route = (event) => {
     event = event || window.event;
     event.preventDefault();
     window.history.pushState({}, "", event.target.href);
     handleLocation();
-};
-
-const routes = {
-    404: async () => { },
-    "/": async () => { setCurrentPageIndex() }, // "/pages/index.html"
-    "/Content/GetHtmlCompositionPage": setCurrentPageCompositions,
-    "/Content/GetHTMLArtistsPage": setCurrentPageArtists, 
-    "/Content/GetHTMLGenresPage": setCurrentPageGenres,
-    "/Content/GetHTMLAlbumsPage": setCurrentPageAlbums,
-    "Identity/Account/Login": setCurrentPageLogin, //window.location.href = urls.getLocation() + "Identity/Account/Login"
-    "Identity/Account/Register": setCurrentPageRegister// window.location.href = urls.getLocation() + "Identity/Account/Register" 
 };
 
 export const handleLocation = async () => {

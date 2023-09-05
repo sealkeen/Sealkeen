@@ -1,6 +1,7 @@
 import urls, { pushHistoryState } from './../api.js'
 import { toggleTopPageBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setDevelopmentMessages } from '../Development/news-data.js';
+import routes from './routing-table.js';
 
 //appendNavigationLink(navbarNav, library, 'GetPartialListenedPage')
 export function appendNavigationLink(navbarNav, element, path)
@@ -50,19 +51,15 @@ export async function fetchContentCrossOrigin(path) {
                 referrerPolicy: 'no-referrer'
             });
 
-            if (!response.ok) {
-                throw new Error('Fetch error.');
-            }
+            if (!response.ok) { throw new Error('Fetch error.'); }
+            
             let responseText = await response.text();
             $("#page-body-container").html('');
             $("#page-body-container").append(responseText);
             console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
             let goToPath = "";
-            if( !path.startsWith("http") ) {
-                if(path.indexOf('/Get') > -1)
-                    goToPath  += "Content/";
-                pushHistoryState(goToPath + path);
-            }
+            pushHistoryState(goToPath + path);
+            console.error(`Routes not some ${path}, %j`, routes);
             
             return response;
         }

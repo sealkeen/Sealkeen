@@ -12,6 +12,16 @@ import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
 import { createErrorMessage } from '../Errors/fetch-errors.js';
 import { create429ErrorMessageOrThrowError } from '../Errors/fetch-errors-4xx.js';
 import { addSearchTerminal } from '../System/search-terminal.js';
+import routes from './routing-table.js';
+
+routes[""] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
+routes["/"] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
+routes["/Content/GetHtmlCompositionPage"] = setCurrentPageCompositions,
+routes["/Content/GetHTMLArtistsPage"] = setCurrentPageArtists, 
+routes["/Content/GetHTMLGenresPage"] =setCurrentPageGenres,
+routes["/Content/GetHTMLAlbumsPage"] = setCurrentPageAlbums,
+routes["Identity/Account/Login"] = setCurrentPageLogin, //window.location.href = urls.getLocation() + "Identity/Account/Login"
+routes["Identity/Account/Register"] = setCurrentPageRegister// window.location.href = urls.getLocation() + "Identity/Account/Register" 
 
 const loc = urls.getLocation();
 
@@ -63,7 +73,7 @@ export async function setCurrentPageIndex(event) {
         }).then(async response => {
             if (response.ok) {
                 let responseText = await response.text();
-                pushHistoryState(urls.getPostfix());
+                pushHistoryState("");
                 const responseHtml = $.parseHTML(responseText);
                 $("#page-body-container").html('').append(responseHtml);
                 console.log(`fetch response key count: ${Object.keys(responseHtml).length}`);
@@ -128,7 +138,7 @@ export async function setCurrentPageCompositions(event) {
                     $("#page-body-container").html('');
                     appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
                     $("#page-body-container").append(trackDom);
-                    pushHistoryState(urls.getContentPath() + 'GetHTMLCompositionsPage');
+                    pushHistoryState('/Content/GetHTMLCompositionsPage');
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -159,7 +169,7 @@ export async function setCurrentPageAlbums(event) {
                     let data = await response.json();
                     console.log('[DBG] click-handlers.js/.. Handling response text');
                     let albumsDom = CreateAlbumsDOMFromJSON(data);
-                    pushHistoryState(urls.getContentPath() + 'GetHTMLAlbumsPage');
+                    pushHistoryState('/ContentGetHTMLAlbumsPage');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(albumsDom);
                     console.log('[DBG] fetch response key count: ' + Object.keys(albumsDom).length);
@@ -191,7 +201,7 @@ export async function setCurrentPageGenres(event) {
             }).then(async response => {
                 if (response.ok) { 
                     let data = await response.json();
-                    pushHistoryState(urls.getContentPath() + 'GetHTMLGenresPage');
+                    pushHistoryState('/Content/GetHTMLGenresPage');
                     console.log('[DBG] Handling response text');
                     let genresDom = CreateGenresDOMFromJSON(data);
                     $("#page-body-container").html('');
@@ -224,8 +234,8 @@ export async function setCurrentPageArtists(event) {
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
-                if (response.ok) { 
-                    pushHistoryState(urls.getContentPath() + 'GetHTMLArtistsPage');
+                if (response.ok) {     
+                    pushHistoryState('/Content/GetHTMLArtistsPage');
                     let data = await response.json();
                     console.log('[DBG] handling response text');
                     let artistsDom = CreateArtistsDOMFromJSON(data);
@@ -267,7 +277,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState(urls.getContentPath() + 'GetHtmlCompositionPageByArtistID/?id=' + id);
+                    pushHistoryState('/Content/GetHtmlCompositionPageByArtistID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
@@ -312,7 +322,7 @@ export async function setCurrentPageCompositionByID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState(urls.getContentPath() + 'GetHtmlCompositionPageByID/?id=' + id);
+                    pushHistoryState('/Content/GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
@@ -358,7 +368,7 @@ export async function setCurrentPageAlbumByID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState(urls.getContentPath() + 'GetHtmlAlbumPageByID/?id=' + id);
+                    pushHistoryState('/Content/GetHtmlAlbumPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                 } else if (response.status === 429) {
@@ -416,7 +426,7 @@ export async function setCurrentPageManageAccount(event) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
-                    pushHistoryState('Manage/Index');
+                    pushHistoryState('Identity/Manage/Index');
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
