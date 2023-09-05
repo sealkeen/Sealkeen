@@ -1,4 +1,5 @@
 import { fetchContentCrossOrigin } from "../Router/shared.js";
+import { handleLocation } from './../Router/location-mapper.js';
 
 export default class MusicAPI {
     constructor() {
@@ -9,6 +10,8 @@ export default class MusicAPI {
   
       if (artist) {
         this.search(artist, track);
+      } else {
+        handleLocation();
       }
     }
   

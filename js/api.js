@@ -9,11 +9,14 @@ const urls = {
         } else
             return 'https://localhost:5001/';
     },
-    getPostfix() {
+    getPostfix(forPath) {
+        let result = "";
         if (window.location.href.indexOf("github.io/Sealkeen") > -1)
-            return 'Sealkeen/';
-        else
-            return '';
+            result += 'Sealkeen/';
+        return result;
+    },
+    getContentPath() {
+        return this.isGithub || this.isNodeJSHost ? 'Content/' : ''; 
     },
     isGithub: () => (window.location.href.indexOf("github.io") > -1),
     isLocalhost: () => (window.location.href.indexOf('localhost:') > -1),
@@ -72,11 +75,19 @@ export async function pushHistoryState(url)
         //    return; // throw new NotImplementedException();
 
         console.log('[DBG] api.js/pushHistoryState: History state URL:' + url);
-        console.log('[DBG] api.js/pushHistoryState: prevstate not null');
+        //console.log('[DBG] api.js/pushHistoryState: prevstate not null');
         let loc = `${location.protocol}//${location.host}/`;
-        window.history.pushState({ prevUrl: window.location.href }, null, loc + urls.getPostfix() + url);
+        window.history.pushState({ prevUrl: window.location.href }, null, getLocationPath(loc) + url);
     } catch(e) {
         console.log(e);
+    }
+}
+
+function getLocationPath(lc) {
+    if(lc.indexOf(urls.getPostfix()) > -1) {
+        return lc;
+    } else {
+        return lc + urls.getPostfix();
     }
 }
 

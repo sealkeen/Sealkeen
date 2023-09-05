@@ -52,7 +52,7 @@ export function addEventHandlersOnBody() {
 
 export async function setCurrentPageIndex(event) {
     try {
-        event.preventDefault();
+        event?.preventDefault();
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'IndexPartial');
         if (!$("#page-body-container").length) return;
@@ -87,7 +87,6 @@ export async function setCurrentPageIndex(event) {
     }
 }
 
-
 export function setCurrentPageMockData()
 {
     $("#page-body-container").html('');
@@ -104,7 +103,7 @@ export function setCurrentPageMockData()
 
 export async function setCurrentPageCompositions(event) {
     try {
-        event.preventDefault();
+        event?.preventDefault();
         toggleTopPageBackground(true);
         let pageBodyContainer = document.getElementById("page-body-container");
 
@@ -129,7 +128,7 @@ export async function setCurrentPageCompositions(event) {
                     $("#page-body-container").html('');
                     appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
                     $("#page-body-container").append(trackDom);
-                    pushHistoryState('GetHTMLCompositionsPage/');
+                    pushHistoryState(urls.getContentPath() + 'GetHTMLCompositionsPage');
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -146,7 +145,7 @@ export async function setCurrentPageCompositions(event) {
 
 export async function setCurrentPageAlbums(event) {
     try {
-        event.preventDefault();
+        event?.preventDefault();
         toggleTopPageBackground(true);
         let ctrl = (loc + 'GetJSONAlbumsPage');
         if ($("#page-body-container") != undefined) {
@@ -160,7 +159,7 @@ export async function setCurrentPageAlbums(event) {
                     let data = await response.json();
                     console.log('[DBG] click-handlers.js/.. Handling response text');
                     let albumsDom = CreateAlbumsDOMFromJSON(data);
-                    pushHistoryState('GetHTMLAlbumsPage/');
+                    pushHistoryState(urls.getContentPath() + 'GetHTMLAlbumsPage');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(albumsDom);
                     console.log('[DBG] fetch response key count: ' + Object.keys(albumsDom).length);
@@ -180,7 +179,7 @@ export async function setCurrentPageAlbums(event) {
 
 export async function setCurrentPageGenres(event) {
     try {
-        event.preventDefault();
+        event?.preventDefault();
         toggleTopPageBackground(true);
         let ctrl = (loc + 'GetJSONGenresPage');
         if ($("#page-body-container") != undefined) {
@@ -192,7 +191,7 @@ export async function setCurrentPageGenres(event) {
             }).then(async response => {
                 if (response.ok) { 
                     let data = await response.json();
-                    pushHistoryState('GetHTMLGenresPage/');
+                    pushHistoryState(urls.getContentPath() + 'GetHTMLGenresPage');
                     console.log('[DBG] Handling response text');
                     let genresDom = CreateGenresDOMFromJSON(data);
                     $("#page-body-container").html('');
@@ -214,8 +213,9 @@ export async function setCurrentPageGenres(event) {
 
 export async function setCurrentPageArtists(event) {
     try {
+        event?.preventDefault();
         toggleTopPageBackground(true);
-        //event.preventDefault();
+        //event?.preventDefault();
         let ctrl = (loc + 'GetJSONArtistsPage');
         if ($("#page-body-container") != undefined) {
             var ftchArts = await fetch(ctrl, {
@@ -225,7 +225,7 @@ export async function setCurrentPageArtists(event) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
-                    pushHistoryState('GetHTMLArtistsPage/');
+                    pushHistoryState(urls.getContentPath() + 'GetHTMLArtistsPage');
                     let data = await response.json();
                     console.log('[DBG] handling response text');
                     let artistsDom = CreateArtistsDOMFromJSON(data);
@@ -267,7 +267,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState('GetHtmlCompositionPageByArtistID/?id=' + id);
+                    pushHistoryState(urls.getContentPath() + 'GetHtmlCompositionPageByArtistID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
@@ -312,7 +312,7 @@ export async function setCurrentPageCompositionByID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState('GetHtmlCompositionPageByID/?id=' + id);
+                    pushHistoryState(urls.getContentPath() + 'GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
@@ -358,7 +358,7 @@ export async function setCurrentPageAlbumByID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState('GetHtmlAlbumPageByID/?id=' + id);
+                    pushHistoryState(urls.getContentPath() + 'GetHtmlAlbumPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                 } else if (response.status === 429) {
@@ -402,7 +402,7 @@ export async function FetchGetPatialListenedPage(nextActionInPipeLine)
 
 export async function setCurrentPageManageAccount(event) {
     try {
-        event.preventDefault();
+        event?.preventDefault();
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'Manage/Index');
         if ($("#page-body-container").length) {
@@ -433,7 +433,7 @@ export async function setCurrentPageManageAccount(event) {
 
 export async function setCurrentPageSignUp(event) {
     try {
-        event.preventDefault();
+        event?.preventDefault();
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
@@ -476,7 +476,7 @@ export async function setCurrentPageSignUp(event) {
 
 export async function setCurrentPageRegister(event) {
     toggleTopPageBackground(true);
-    event.preventDefault();
+    event?.preventDefault();
     try {
         if( redirectIfServerIsReachable('Identity/Account/Register') ) return;
 
@@ -541,7 +541,7 @@ export async function setCurrentPageLogin(event) {
 
 	    let prefix = urls.isNgrok() ? 'Identity/' : '';
 	
-        event.preventDefault();
+        event?.preventDefault();
         toggleTopPageBackground(true);
         console.log('[INF] click-handlers.js/setCurrentPageLogin(): Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + prefix + 'Account/Login');
