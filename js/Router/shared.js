@@ -58,10 +58,12 @@ export async function fetchContentCrossOrigin(path) {
             $("#page-body-container").append(responseText);
             console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
             let goToPath = "";
-            if( !path.startsWith("http") && path.indexOf('/Get') > -1)
-                goToPath  += "Content/";
-
-            pushHistoryState(goToPath + path);
+            if( !path.startsWith("http") ) {
+                if(path.indexOf('/Get') > -1)
+                    goToPath  += "Content/";
+                pushHistoryState(goToPath + path);
+            }
+            
             return response;
         }
     } catch (e) {
