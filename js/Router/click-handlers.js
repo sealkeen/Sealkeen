@@ -169,7 +169,7 @@ export async function setCurrentPageAlbums(event) {
                     let data = await response.json();
                     console.log('[DBG] click-handlers.js/.. Handling response text');
                     let albumsDom = CreateAlbumsDOMFromJSON(data);
-                    pushHistoryState('/ContentGetHTMLAlbumsPage');
+                    pushHistoryState('/Content/GetHTMLAlbumsPage');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(albumsDom);
                     console.log('[DBG] fetch response key count: ' + Object.keys(albumsDom).length);

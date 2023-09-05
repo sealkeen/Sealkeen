@@ -76,15 +76,15 @@ export async function pushHistoryState(url)
         //if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
         //    return; // throw new NotImplementedException();
 
-        let loc = `${location.protocol}//${location.host}/`;
-        let newLc = loc + getLocationPath(url)
-        if( !Object.keys(routes).some( r => url.startsWith(r)) ) {  // Identity/Account/Register? starts with Identity/Account/Register
+        let loc = `${location.protocol}//${location.host}`;
+        let urlPath = getLocationPath(url)
+        let newLc = loc + urlPath[urlPath.length-1] == '/' ? urlPath : urlPath + '/' ;
+        if( !Object.keys(routes).some( r => url.indexOf(r) > -1) ) {  // Identity/Account/Register? starts with Identity/Account/Register
             console.error('[ERR] pushHistoryState return of: ' + newLc)
             return;
-        } 
-        console.log('[INF] pushHistoryState ok: ' + newLc)
-        
+        }
 
+        console.log('[INF] pushHistoryState ok: ' + newLc)
         console.log('[DBG] api.js/pushHistoryState: History state URL:' + url);
         //console.log('[DBG] api.js/pushHistoryState: prevstate not null');
         window.history.pushState({ prevUrl: window.location.href }, null, newLc);
