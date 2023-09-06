@@ -102,7 +102,7 @@ function getLocationPath(lc) {
     if(lc.indexOf(urls.getPostfix()) > -1) {
         result += lc;
     } else {
-        result += (lc + urls.getPostfix());
+        result += ( urls.getPostfix() + lc );
     }
     return result;
 }
