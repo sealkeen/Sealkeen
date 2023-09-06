@@ -3,7 +3,7 @@ import routes from './Router/routing-table.js';
 const urls = {
     getLocation() {
         if(this.isGithub()) {
-            return 'https://136c-95-24-221-186.ngrok-free.app/';
+            return 'https://2e22-95-24-221-186.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';
         } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
