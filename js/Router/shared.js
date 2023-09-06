@@ -60,7 +60,6 @@ export async function fetchContentCrossOrigin(path, shouldSaveState) {
             let goToPath = "";
             if(shouldSaveState !== false)
                 pushHistoryState(goToPath + path);
-            console.error(`Routes not some ${path}, %j`, routes);
             
             return response;
         }

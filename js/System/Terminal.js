@@ -1,4 +1,6 @@
-﻿var fetchContentCrossOrigin = async () => { }
+﻿import { replaceArtistParamInUrl } from "../Page/url-decoding.js";
+
+var fetchContentCrossOrigin = async () => { }
 var createInfoMessage = async () => { }
 
 import("../Router/shared.js").then( shared=> {
@@ -43,7 +45,11 @@ export class Terminal {
         console.log(`[DBG] this.button.textContent === "Search" : ${this.button.textContent === 'Search'}`)
         console.log(`[DBG] this.button.textContent === "Send" : ${this.button.textContent === 'Send'}`)
         if(this.button.textContent === 'Search') { /*search */
-            let resp = await fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`, false);
+            let resp = await fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`
+            , false).then(result => {
+                if(result.ok) { replaceArtistParamInUrl(this.input.value); }
+                return result;
+            });
             console.error('response == false ' + resp.ok == false + ' reps.ok : ' + resp.ok )
             if( resp.ok == false )
             {

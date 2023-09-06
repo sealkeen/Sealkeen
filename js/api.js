@@ -1,4 +1,4 @@
-import routes from './Router/routing-table.js';
+import routes, { GetNonRoutePaths } from './Router/routing-table.js';
 
 const urls = {
     getLocation() {
@@ -79,10 +79,12 @@ export async function pushHistoryState(url)
 
         let loc = `${location.protocol}//${location.host}`;
         let urlPath = getLocationPath(url)
-        let newLc = loc + urlPath[0] == '/' ? urlPath :'/' + urlPath  ;
+        let newLc = loc + urlPath//[0] == '/' ? urlPath :'/' + urlPath  ;
         if(url.indexOf('http') <= -1) {
-
-            if( !Object.keys(routes).some( r => url.indexOf(r) > -1) ) {  // Identity/Account/Register? starts with Identity/Account/Register
+            // Whether to ignore the PushHistory state specified
+            if( !Object.keys(routes).some( r => url.indexOf(r) > -1) 
+                || GetNonRoutePaths().some( r => url.indexOf(r) > -1)
+            ) {  
                 console.error('[ERR] pushHistoryState return of: ' + newLc)
                 return;
             }
@@ -99,6 +101,8 @@ export async function pushHistoryState(url)
 
 function getLocationPath(lc) {
     let result = ""//urls.getContentPath();
+    if( !urls.isGithub() || !urls.isNodeJSHost() )
+        lc = lc.replace('Content/', '')
     if(lc.indexOf(urls.getPostfix()) > -1) {
         result += lc;
     } else {

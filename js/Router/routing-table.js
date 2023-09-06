@@ -11,4 +11,10 @@ const routes = {
     "Identity/Account/Register": async () => { }// window.location.href = urls.getLocation() + "Identity/Account/Register" 
 };
 
+const nonRoutePaths = [
+    "GetPartialCompositionPageByArtistName"
+];
+
+export function GetNonRoutePaths() { return nonRoutePaths }
+
 export default routes;
