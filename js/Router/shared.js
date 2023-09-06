@@ -35,7 +35,7 @@ export function onDevelopmentCardClick()
     }
     setDevelopmentMessages();
 }
-export async function fetchContentCrossOrigin(path) {
+export async function fetchContentCrossOrigin(path, shouldSaveState) {
     try {
         toggleTopPageBackground(true);
         let ctrl = (path.startsWith("http") ? path : urls.getLocation() + path);
@@ -58,7 +58,8 @@ export async function fetchContentCrossOrigin(path) {
             $("#page-body-container").append(responseText);
             console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
             let goToPath = "";
-            pushHistoryState(goToPath + path);
+            if(shouldSaveState !== false)
+                pushHistoryState(goToPath + path);
             console.error(`Routes not some ${path}, %j`, routes);
             
             return response;

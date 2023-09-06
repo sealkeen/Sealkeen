@@ -19,7 +19,7 @@ export default class MusicAPI {
     search(artist, track) {
       console.log(`[INF] url-decoding.js/Searching for "${track}" by ${artist}...`);
       // Call the API with the given artist and track
-      fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${artist}`);
+      fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${artist}`, false);
     }
   }
   

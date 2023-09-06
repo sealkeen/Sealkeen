@@ -43,7 +43,7 @@ export class Terminal {
         console.log(`[DBG] this.button.textContent === "Search" : ${this.button.textContent === 'Search'}`)
         console.log(`[DBG] this.button.textContent === "Send" : ${this.button.textContent === 'Send'}`)
         if(this.button.textContent === 'Search') { /*search */
-            let resp = await fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`);
+            let resp = await fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`, false);
             console.error('response == false ' + resp.ok == false + ' reps.ok : ' + resp.ok )
             if( resp.ok == false )
             {
