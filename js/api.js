@@ -26,7 +26,8 @@ const urls = {
     isNodeJSHost: ()  =>
         ( window.location.href.indexOf('localhost:808') > -1
         || window.location.href.indexOf('127.0.0.1:808') > -1
-        || window.location.href.indexOf(':8081') > -1 ),
+        || window.location.href.indexOf(':8081') > -1 )
+        || window.location.href.indexOf(':65000') > -1,
     isNgrok: () => (window.location.href.indexOf('ngrok.io') > -1) 
         || (window.location.href.indexOf('ngrok-free.app') > -1),
     getHostRootPath: () => `${location.protocol}//${location.host}/`,

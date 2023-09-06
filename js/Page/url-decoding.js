@@ -17,7 +17,7 @@ export default class MusicAPI {
     }
   
     search(artist, track) {
-      console.log(`[INF] Searching for "${track}" by ${artist}...`);
+      console.log(`[INF] url-decoding.js/Searching for "${track}" by ${artist}...`);
       // Call the API with the given artist and track
       fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${artist}`);
     }
@@ -27,7 +27,7 @@ export default class MusicAPI {
   // const api = new MusicAPI();
 
 export function replaceArtistParamInUrl(artist) {
-    console.log("[INF] replaceArtistParamInUrl(), artist: " + artist);
+    console.log("[INF] url-decoding.js/replaceArtistParamInUrl(), artist: " + artist);
     if (!urls.isGithub() && !urls.isNodeJSHost()) {
       return;
     }

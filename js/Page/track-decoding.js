@@ -2,6 +2,7 @@ import { fetchContentCrossOrigin } from "../Router/shared.js";
 import { handleLocation } from './../Router/location-mapper.js';
 import { setNextComposition } from "../Utils/Audio.js";
 import urls from "./../api.js"
+import { _trackQueue } from './../Utils/Queue.js';
 
 export default class TrackAPI {
     constructor(callBack) {
@@ -19,12 +20,13 @@ export default class TrackAPI {
       console.log(`[INF] track-decoding.js/Tring to load direct for "${track}" ...`);
 
       // Call the API with the given track
+      _trackQueue.enqueue({id : track})
       this.callBack(track);
     }
   }
 
   export function replaceTrackParamInUrl(trackId) {
-      console.log("[INF] track-decoding.js/replaceArtistParamInUrl(), track id: " + trackId);
+      console.log("[INF] track-decoding.js/replaceTrackParamInUrl(), track id: " + trackId);
       if (!urls.isGithub() && !urls.isNodeJSHost()) {
           return;
       }
@@ -33,7 +35,7 @@ export default class TrackAPI {
     
       if (!params.has('trackId')) {
           console.log("[INF] track-decoding.js/No track parameter, so add it");
-          params.append('trackId', artist);
+          params.append('trackId', trackId);
       } else {
           console.log("[INF] track-decoding.js/Track parameter exists, so modify it");
           params.set('trackId', trackId);

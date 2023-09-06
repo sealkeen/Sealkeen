@@ -38,7 +38,6 @@ $(document).ready(function () {
         onSiteLoadIfAuthorized();
         
         let urlHandler = new MusicAPI();
-        let trackhandler = new TrackAPI(setFooterPlayerSourse);
         //addButtonOnClickHandlers();
         _trackQueue.onchange = () => {
             displayQueuedTracks(_trackQueue);
@@ -132,6 +131,7 @@ $(document).ready(function () {
         console.log(e);
     } finally {
         onTransitionEnd();
+        let trackhandler = new TrackAPI(setNextComposition);
     }
 });
 
