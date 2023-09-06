@@ -21,8 +21,7 @@ export default class TrackAPI {
 
       // Call the API with the given track
       _trackQueue.enqueue({id : track})
-      console.error('[ERR] track-decoding.js/callback()');
-      //this.callBack(track);
+      this.callBack(track);
     }
   }
 
