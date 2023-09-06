@@ -79,7 +79,7 @@ export async function pushHistoryState(url)
 
         let loc = `${location.protocol}//${location.host}`;
         let urlPath = getLocationPath(url)
-        let newLc = loc + urlPath//[urlPath.length-1] == '/' ? urlPath : urlPath + '/' ;
+        let newLc = loc + urlPath[0] == '/' ? urlPath :'/' + urlPath  ;
         if(url.indexOf('http') <= -1) {
 
             if( !Object.keys(routes).some( r => url.indexOf(r) > -1) ) {  // Identity/Account/Register? starts with Identity/Account/Register
