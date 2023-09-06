@@ -131,7 +131,7 @@ $(document).ready(function () {
         console.log(e);
     } finally {
         onTransitionEnd();
-        let trackhandler = new TrackAPI(setNextComposition);
+        setTimeout(() => { let trackhandler = new TrackAPI(setNextComposition) }, 3000);
     }
 });
 
