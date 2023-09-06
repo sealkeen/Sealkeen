@@ -1,5 +1,6 @@
 import { fetchContentCrossOrigin } from "../Router/shared.js";
 import { handleLocation } from './../Router/location-mapper.js';
+import urls from "./../api.js"
 
 export default class MusicAPI {
     constructor() {
@@ -24,3 +25,23 @@ export default class MusicAPI {
   
   // Create a new instance of the MusicAPI class
   // const api = new MusicAPI();
+
+export function replaceArtistParamInUrl(artist) {
+    console.log("[INF] replaceArtistParamInUrl(), artist: " + artist);
+    if (!urls.isGithub() && !urls.isNodeJSHost()) {
+      return;
+    }
+  
+    const params = new URLSearchParams(window.location.search);
+  
+    if (!params.has('artist')) {
+      // No artist parameter, so add it
+      params.append('artist', artist);
+    } else {
+      // Artist parameter exists, so modify it
+      params.set('artist', artist);
+    }
+  
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState(null, null, newUrl);
+  }

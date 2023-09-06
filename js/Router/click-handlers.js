@@ -277,7 +277,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState('/Content/GetHtmlCompositionPageByArtistID/?id=' + id);
+                    //pushHistoryState('/Content/GetHtmlCompositionPageByArtistID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
@@ -314,7 +314,7 @@ export async function setCurrentPageCompositionByID(el) {
 
         let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
-            var ftchPartCmpsById = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -322,7 +322,7 @@ export async function setCurrentPageCompositionByID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    pushHistoryState('/Content/GetHtmlCompositionPageByID/?id=' + id);
+                    //pushHistoryState('/Content/GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)

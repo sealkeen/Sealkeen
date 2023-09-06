@@ -1,6 +1,6 @@
 import { isEmpty, GetCurrentCompositionsId } from './../utilities.js'
 import urls from './../api.js'
-import MusicApi from './../Page/url-decoding.js'
+import MusicAPI, { replaceArtistParamInUrl } from './../Page/url-decoding.js'
 import { fetchContentCrossOrigin } from "../Router/shared.js";
 
 const loc = urls.getLocation();
@@ -69,26 +69,6 @@ export function createArtistLink(artistSong) {
     const artistLink = `<a id="artist-name-hrefable" href="${artistUrl}">${artist}</a>`;
     return `${artistLink} – ${track}`;
 }
-
-function replaceArtistParamInUrl(artist) {
-    console.log("[INF] replaceArtistParamInUrl(), artist: " + artist);
-    if (!urls.isGithub() && !urls.isNodeJSHost()) {
-      return;
-    }
-  
-    const params = new URLSearchParams(window.location.search);
-  
-    if (!params.has('artist')) {
-      // No artist parameter, so add it
-      params.append('artist', artist);
-    } else {
-      // Artist parameter exists, so modify it
-      params.set('artist', artist);
-    }
-  
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState(null, null, newUrl);
-  }
 
 export function fireOnInputValueChange(element)
 {

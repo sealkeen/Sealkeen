@@ -79,15 +79,18 @@ export async function pushHistoryState(url)
         let loc = `${location.protocol}//${location.host}`;
         let urlPath = getLocationPath(url)
         let newLc = loc + urlPath//[urlPath.length-1] == '/' ? urlPath : urlPath + '/' ;
-        if( !Object.keys(routes).some( r => url.indexOf(r) > -1) ) {  // Identity/Account/Register? starts with Identity/Account/Register
-            console.error('[ERR] pushHistoryState return of: ' + newLc)
-            return;
-        }
+        if(url.indexOf('http') <= -1) {
 
-        console.log('[INF] pushHistoryState ok: ' + newLc)
-        console.log('[DBG] api.js/pushHistoryState: History state URL:' + url);
-        //console.log('[DBG] api.js/pushHistoryState: prevstate not null');
-        window.history.pushState({ prevUrl: window.location.href }, null, newLc);
+            if( !Object.keys(routes).some( r => url.indexOf(r) > -1) ) {  // Identity/Account/Register? starts with Identity/Account/Register
+                console.error('[ERR] pushHistoryState return of: ' + newLc)
+                return;
+            }
+
+            console.log('[INF] api.js/pushHistoryState NLc: ' + newLc)
+            console.log('[INF] api.js/pushHistoryState url: ' + url);
+            //console.log('[DBG] api.js/pushHistoryState: prevstate not null');
+            window.history.pushState({ prevUrl: window.location.href }, null, newLc);
+        }
     } catch(e) {
         console.log(e);
     }
