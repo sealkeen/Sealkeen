@@ -38,7 +38,8 @@ $(document).ready(function () {
         onSiteLoadIfAuthorized();
         
         let urlHandler = new MusicAPI();
-        let trackhandler = new TrackAPI(setNextComposition) 
+        // set interval for load
+        setInterval(() => { let trackhandler = new TrackAPI(setNextComposition) }, 1000);
         //addButtonOnClickHandlers();
         _trackQueue.onchange = () => {
             displayQueuedTracks(_trackQueue);
