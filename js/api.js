@@ -101,7 +101,7 @@ export async function pushHistoryState(url)
 
 function getLocationPath(lc) {
     let result = ""//urls.getContentPath();
-    if( !urls.isGithub() && !urls.isNodeJSHost() )
+    if( !(urls.isGithub() || urls.isNodeJSHost()) )
         lc = lc.replace('Content/', '')
     if(lc.indexOf(urls.getPostfix()) > -1) {
         result += lc;
