@@ -18,6 +18,7 @@ import { appendSideNavigationBars } from './Page/Components/side-navigations.js'
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 import { addSearchTerminal } from './System/search-terminal.js';
 import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
+import Debug from './Extensions/cs-debug.js'
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 const loc = urls.getLocation();
@@ -47,14 +48,14 @@ $(document).ready(function () {
         const container = document.querySelector('body');
 
         container.onmousedown = (e) => {
-            console.log('[DBG] site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
+            Debug.WriteLine('[DBG] site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
             if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
                 $('#ctxmenu').innerHTML = '';
             }
         }
 
         container.addEventListener('click', function (e) {
-            console.log('[DBG] site.js/onclick(): ' + e.target.id + ' ' + e.target.className);
+            Debug.WriteLine('[DBG] site.js/onclick(): ' + e.target.id + ' ' + e.target.className);
             // But only alert for elements that have an alert-button class
             //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
             let target = e.target;
@@ -119,7 +120,7 @@ $(document).ready(function () {
         }
 
         document.querySelector('.container').oncontextmenu = (e) => {
-            console.log('[DBG] site.js/onContentMenu' + e.target.id + ' ' + e.target.className);
+            Debug.WriteLine('[DBG] site.js/onContentMenu' + e.target.id + ' ' + e.target.className);
             e.preventDefault();
             let target = e.target;
             if (containsClasses(target, 'card-text', 'card-title')) {

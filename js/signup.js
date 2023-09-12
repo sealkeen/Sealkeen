@@ -2,6 +2,7 @@
 // Interaction logic for -> SignUpPage.cshtml
 import { LogMessageRequest } from './logging.js';
 import { setRegisterAntiForgeryOnClick, setLoginAntiForgeryOnClick } from './Account/verification.js';
+import Debug from './Extensions/cs-debug.js';
 
 var button = document.getElementById('form-btn-default');
 var username = document.getElementById('UserName');
@@ -77,7 +78,7 @@ export function checkPassword(value) {
         return false;
     } else {
         setSuccessFor(password);
-        console.log('[DBG] signup.js/checkPassword(): ok');
+        Debug.WriteLine('[DBG] signup.js/checkPassword(): ok');
         return true;
     }
 }
@@ -94,7 +95,7 @@ export function checkPasswordRepeat(origin, repeat) {
         return false;
     } else {
         setSuccessFor(passwordCheck);
-        console.log('[DBG] signup.js/checkPasswordRepeat(): passwordChk: ok');
+        Debug.WriteLine('[DBG] signup.js/checkPasswordRepeat(): passwordChk: ok');
         return true;
     }
 }
@@ -104,7 +105,7 @@ export function setErrorFor(input, message) {
         return
     let group = input.parentElement;
     let small = group.querySelector('small')
-    console.log('[ERR] signup.js/setErrorFor: err, small: %j', small)
+    Debug.WriteLine('[ERR] signup.js/setErrorFor: err, small: %j', small)
     if(small == undefined) {
         small = document.createElement('small');
         group.appendChild(small);
@@ -112,7 +113,7 @@ export function setErrorFor(input, message) {
     small.innerText = message; // add error message inside small
     small.className = 'form-control-small.error';
     input.className = 'form-control form-control-error';
-    console.log('[DBG] signup.js/setErrorFor() set error for func completed ok');
+    Debug.WriteLine('[DBG] signup.js/setErrorFor() set error for func completed ok');
 }
 
 export function setSuccessFor(input) {
@@ -120,7 +121,7 @@ export function setSuccessFor(input) {
         return
     let group = input.parentElement; // .form-control
     let small = group.querySelector('small')
-    console.log('[DBG] signup.js/setSuccessFor() suc, small: %j', small)
+    Debug.WriteLine('[DBG] signup.js/setSuccessFor() suc, small: %j', small)
     if(small == undefined) {
         small = document.createElement('small');
         group.appendChild(small);
