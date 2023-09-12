@@ -1,16 +1,17 @@
 import urls from './../api.js'
 import { appendNavigationLink } from '../Router/shared.js';
 import { setCurrentPageLogin } from '../Router/click-handlers.js';
+import Debug from '../Extensions/cs-debug.cs';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
     try {
         window.isAuthorized = true;
         const navbarNavs = document.getElementsByClassName('navbar-nav');
-        console.log('[DBG] Seek navbar');
+        Debug.WriteLine('[DBG] Seek navbar');
         if(navbarNavs && navbarNavs[0] != null)
         {
-            console.log('[DBG] Seek navbar-nav');
+            Debug.WriteLine('[DBG] Seek navbar-nav');
             const navbarNav = navbarNavs[0];
             const lbPath = urls.getLocation() + 'GetPartialListenedPage';
             const uplPath = urls.getLocation() + 'GetPartialUploadedCompositionsPage'
@@ -47,7 +48,7 @@ function createLibraryElement(path)
 
 function appendLogOut()
 {
-    console.log('[DBG] Appending logout...')
+    Debug.WriteLine('[DBG] Appending logout...')
     const logoutUrl = urls.getLocation() + 'Identity/Account/Logout';
     const login = document.querySelector('#nav-lnk-login');
     if(login) {

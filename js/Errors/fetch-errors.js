@@ -1,3 +1,5 @@
+import Debug from "../Extensions/cs-debug.js";
+
 export function createErrorMessage(message) {
     createMessage(message, 'error')
 }
@@ -17,7 +19,7 @@ function createMessage(message, type)
     const pageBodyContainerRect = pageBodyContainer.getBoundingClientRect();
     const pageBodyContainerTop = pageBodyContainerRect.top + window.pageYOffset;
     
-    console.log(`[DBG] fetch-errors.js/createMessage() | type === error : ${type==='error'}, type : ${type} `);
+    Debug.WriteLine(`[DBG] fetch-errors.js/createMessage() | type === error : ${type==='error'}, type : ${type} `);
     // Set the top position of the error message to the top of the page-body-container element
     // if there are no existing error messages, otherwise position it below the previous messages
     const existingErrorMessages = document.querySelectorAll(".error-message, .info-message") ;

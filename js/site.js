@@ -88,7 +88,7 @@ $(document).ready(function () {
         /// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)
         document.querySelector('.container')?.addEventListener('touchend', function (e) {
             setTimeout( () => {
-                console.log('[DBG] site.js/touchend' + e.target.id + ' ' + e.target.className);
+                Debug.WriteLine('[DBG] site.js/touchend' + e.target.id + ' ' + e.target.className);
                 const highlightedItems = document.querySelectorAll("#ctxmenu");
                 highlightedItems.forEach((userItem) => {
                     userItem.outerHTML = "";
@@ -180,19 +180,19 @@ export function onCompositionRightMouseDown(e) {
 }
 
 export function bindPlayerButtons() {
-    console.log('[DBG] binding player buttons...');
+    Debug.WriteLine('[DBG] binding player buttons...');
     document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
-        console.log("[DBG] clicked");
+        Debug.WriteLine("[DBG] clicked");
 
         let id = "nextTrackId";
         if (_trackQueue.isEmpty()) {
-            console.log('[DBG] .footer-next-track-btn.click() : Track Query is Empty.');
+            Debug.WriteLine('[DBG] .footer-next-track-btn.click() : Track Query is Empty.');
             id = GetCurrentCompositionsId();
         }
         else {
-            console.log('[DBG] .footer-next-track-btn.click() : Track Query is Not Empty.');
+            Debug.WriteLine('[DBG] .footer-next-track-btn.click() : Track Query is Not Empty.');
             id = _trackQueue.peek().id;
-            console.log('[DBG] .footer-next-track-btn.click() : peeked item. Elts len: ' + _trackQueue.elts.length); 
+            Debug.WriteLine('[DBG] .footer-next-track-btn.click() : peeked item. Elts len: ' + _trackQueue.elts.length); 
         }
         setNextComposition(id);
     });

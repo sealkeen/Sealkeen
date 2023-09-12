@@ -1,5 +1,7 @@
 ﻿import { _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
 import urls from './api.js'
+import Debug from './Extensions/cs-debug.js';
+import Trace from './Extensions/cs-trace.js';
 
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
@@ -12,16 +14,16 @@ export function containsClasses (node, ...classes) {
 export function getIdFromElementData(el) {
     let id = el.target;
     if (!event.target.classList.contains('card-body')) {
-        console.log('[VRB] contains card-body. el.children[0].value');
-        console.log('%j', el.target.parentNode);//.querySelector('data'));
-        console.log('%j', el.target.parentNode.querySelector('data').value);
+        Trace.WriteLine('[VRB] contains card-body. el.children[0].value');
+        Trace.WriteLine('%j', el.target.parentNode);//.querySelector('data'));
+        Trace.WriteLine('%j', el.target.parentNode.querySelector('data').value);
         id = el.target.parentNode.querySelector('data').value;
-        console.log('[VRB] not contains card-body. el.currentTarget.parentNode.children[0].value');
+        Trace.WriteLine('[VRB] not contains card-body. el.currentTarget.parentNode.children[0].value');
     }
     else {
-        console.log('[VRB] contains card-body. el.children[0].value');
-        console.log('[VRB] %j', el.target.querySelector('data'));
-        console.log('[VRB] %j', el.target.querySelector('data').value);
+        Trace.WriteLine('[VRB] contains card-body. el.children[0].value');
+        Trace.WriteLine('[VRB] %j', el.target.querySelector('data'));
+        Trace.WriteLine('[VRB] %j', el.target.querySelector('data').value);
         id = el.target.querySelector('data').value;
     }
     return id;
@@ -31,7 +33,7 @@ export function getWebEntityObject(el) {
     let id = el.target;
     let artist = el.target;
     let title = el.target;
-    if (!event.target.classList.contains('card-body')) {
+    if (!el.target.classList.contains('card-body')) {
         id = el.target.parentNode.querySelector('data').value;
         artist = el.target.parentNode.querySelector('.card-title').innerHTML;
         title = el.target.parentNode.querySelector('.card-text').innerHTML;
@@ -65,7 +67,8 @@ export function createCardsFromQuery(_trackQueue)
     try {
         let cardcolumns = document.querySelector('.card-query-columns');
         cardcolumns.innerHTML = '';
-        console.log('[DBG] utilities.js/createCardsFromQuery() Elts length: ', _trackQueue?.elts.length);
+        
+        Debug.WriteLine('[DBG] utilities.js/createCardsFromQuery() Elts length: ', _trackQueue?.elts.length);
         _trackQueue?.elts.forEach(element => {
             let card = document.createElement("div")
             let comp = document.createElement("div")
@@ -104,7 +107,7 @@ export function sleep(ms) {
 
 export function safePlay()
 {
-    console.log('[DBG] utilities.js/safePlay() { -> ... } ')
+    Debug.WriteLine('[DBG] utilities.js/safePlay() { -> ... } ')
     try {
         var playPromise = document.querySelector("#player-audio-element")[0]?.play();
         if (playPromise !== undefined) {
@@ -112,7 +115,7 @@ export function safePlay()
                 // Automatic playback started!
                 // Show playing UI.
                 // We can now safely pause video...
-                console.log('[DBG] utilities.js/safePlay() { } -> ...');
+                Debug.WriteLine('[DBG] utilities.js/safePlay() { } -> ...');
             })
             .catch(error => {
                 // Auto-play was prevented
@@ -128,13 +131,13 @@ export function safePlay()
 
 export function safeSwitchTrack()
 {
-    console.log('[DBG] utilities.js/safeSwitchTrack() { -> ... }')
+    Debug.WriteLine('[DBG] utilities.js/safeSwitchTrack() { -> ... }')
     displayQueuedTracks();
     try {
         var loadPromise = document.querySelector("#player-audio-element")[0]?.load();
         if (loadPromise !== undefined) {
             loadPromise.then(_ => {
-                console.log('[DBG] utilities.js/safeLoadOK: safePlaying...');
+                Debug.WriteLine('[DBG] utilities.js/safeLoadOK: safePlaying...');
 
                 (async () => { await sleep(50); safePlay()})();
             })  
@@ -153,7 +156,7 @@ export function GetCurrentCompositionsId() {
     try {
         let audioSrc = $("#player-audio-element").get(0).children[0];
         if (audioSrc.src == null) {
-            console.log('[DBG] utilities.js/GetCurrentCompositionsId() error. audioSrc = null.');
+            Debug.WriteLine('[DBG] utilities.js/GetCurrentCompositionsId() error. audioSrc = null.');
             return '';
         }
         else 
@@ -164,7 +167,7 @@ export function GetCurrentCompositionsId() {
         if(audioSrc.includes('?url='))
             audioSrc = audioSrc.substring(audioSrc.indexOf('?url=') + '?url='.length);
             
-        console.log('[DBG] utilities.js/GetCurrentCompId = ' + audioSrc);
+        Debug.WriteLine('[DBG] utilities.js/GetCurrentCompId = ' + audioSrc);
         return audioSrc;
     } catch (e) {
         console.log(e);
