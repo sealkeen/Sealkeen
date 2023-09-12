@@ -1,7 +1,7 @@
 import urls from './../api.js'
 import { appendNavigationLink } from '../Router/shared.js';
 import { setCurrentPageLogin } from '../Router/click-handlers.js';
-import Debug from '../Extensions/cs-debug.cs';
+import Debug from '../Extensions/cs-debug.js';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
