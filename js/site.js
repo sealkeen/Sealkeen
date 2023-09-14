@@ -7,8 +7,7 @@ import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/c
 import { addSideNavElements, addSidenavEventListeners } from './StyleHandlers/side-nav-handlers.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
 from './Router/click-handlers.js';
-import { setArtistSongNameAsync, fireOnInputValueChange } from './Page/event-handlers.js';
-import { getNext } from './Store/mock-data.js';
+import { fireOnInputValueChange } from './Page/event-handlers.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import MusicAPI from './Page/url-decoding.js'
@@ -21,7 +20,6 @@ import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
 import Debug from './Extensions/cs-debug.js'
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
-const loc = urls.getLocation();
 
 /// On document loaded event
 $(document).ready(function () {
