@@ -1,5 +1,4 @@
 ﻿import { _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
-import urls from './api.js'
 import Debug from './Extensions/cs-debug.js';
 import Trace from './Extensions/cs-trace.js';
 

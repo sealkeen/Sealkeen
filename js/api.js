@@ -3,7 +3,7 @@ import routes, { GetNonRoutePaths } from './Router/routing-table.js';
 const urls = {
     getLocation() {
         if(this.isGithub()) {
-            return 'https://3fe1-95-24-224-108.ngrok-free.app/';
+            return 'https://44ad-95-24-224-108.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';
         } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
