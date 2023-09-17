@@ -8,10 +8,10 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
     try {
         window.isAuthorized = true;
         const navbarNavs = document.getElementsByClassName('navbar-nav');
-        Debug.WriteLine('[DBG] Seek navbar');
+        Debug.WriteLine('Seek navbar');
         if(navbarNavs && navbarNavs[0] != null)
         {
-            Debug.WriteLine('[DBG] Seek navbar-nav');
+            Debug.WriteLine('Seek navbar-nav');
             const navbarNav = navbarNavs[0];
             const lbPath = urls.getLocation() + 'GetPartialListenedPage';
             const uplPath = urls.getLocation() + 'GetPartialUploadedCompositionsPage'
@@ -48,7 +48,7 @@ function createLibraryElement(path)
 
 function appendLogOut()
 {
-    Debug.WriteLine('[DBG] Appending logout...')
+    Debug.WriteLine('Appending logout...')
     const logoutUrl = urls.getLocation() + 'Identity/Account/Logout';
     const login = document.querySelector('#nav-lnk-login');
     if(login) {
@@ -57,7 +57,7 @@ function appendLogOut()
         login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${logoutUrl}">Logout</a>`;
         login.removeEventListener('click', setCurrentPageLogin);
         login.addEventListener('click', (e) => {
-            console.log('Logout url: ' + logoutUrl)
+            Debug.WriteLine('Logout url: ' + logoutUrl)
             window.location = logoutUrl;
         });
         const register = document.getElementById('nav-lnk-register');

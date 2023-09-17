@@ -13,6 +13,7 @@ import { createErrorMessage } from '../Errors/fetch-errors.js';
 import { create429ErrorMessageOrThrowError } from '../Errors/fetch-errors-4xx.js';
 import { addSearchTerminal } from '../System/search-terminal.js';
 import routes from './routing-table.js';
+import Debug from '../Extensions/cs-debug.js'
 
 routes[""] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
 routes["/"] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
@@ -133,7 +134,7 @@ export async function setCurrentPageCompositions(event) {
             }).then(async (response) => {
                 if (response.ok) {
                     let data = await response.json();
-                    console.log('[DBG] handling response text');
+                    Debug.WriteLine('handling response text');
                     let trackDom = CreateDOMFromJSON(data);
                     $("#page-body-container").html('');
                     appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
@@ -167,12 +168,12 @@ export async function setCurrentPageAlbums(event) {
             }).then(async response => {
                 if (response.ok) { 
                     let data = await response.json();
-                    console.log('[DBG] click-handlers.js/.. Handling response text');
+                    Debug.WriteLine('click-handlers.js/.. Handling response text');
                     let albumsDom = CreateAlbumsDOMFromJSON(data);
                     pushHistoryState('/Content/GetHTMLAlbumsPage');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(albumsDom);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(albumsDom).length);
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(albumsDom).length);
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -202,11 +203,11 @@ export async function setCurrentPageGenres(event) {
                 if (response.ok) { 
                     let data = await response.json();
                     pushHistoryState('/Content/GetHTMLGenresPage');
-                    console.log('[DBG] Handling response text');
+                    Debug.WriteLine('Handling response text');
                     let genresDom = CreateGenresDOMFromJSON(data);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(genresDom);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(genresDom).length);
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(genresDom).length);
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -237,11 +238,11 @@ export async function setCurrentPageArtists(event) {
                 if (response.ok) {     
                     pushHistoryState('/Content/GetHTMLArtistsPage');
                     let data = await response.json();
-                    console.log('[DBG] handling response text');
+                    Debug.WriteLine('handling response text');
                     let artistsDom = CreateArtistsDOMFromJSON(data);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(artistsDom);  
-                    console.log('[DBG] fetch response key count: ' + Object.keys(artistsDom).length);
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(artistsDom).length);
                 } else 
                     create429ErrorMessageOrThrowError()
             })
@@ -280,7 +281,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
                     //pushHistoryState('/Content/GetHtmlCompositionPageByArtistID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)
                 } else if (response.status === 429) {
                     createErrorMessage('Request rate is too high');
                 } else {
@@ -325,7 +326,7 @@ export async function setCurrentPageCompositionByID(el) {
                     //pushHistoryState('/Content/GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)
                 } else if (response.status === 429) {
                     createErrorMessage('Request rate is too high');
                 } else {
@@ -342,7 +343,7 @@ export async function setCurrentPageCompositionByID(el) {
         }
     } catch (error) {
         setCurrentPageMockData();
-        console.log('[DBG] fetch error. Setting up mock data. Details: ' + e)
+        Debug.WriteLine('fetch error. Setting up mock data. Details: ' + e)
     } finally {
         onContentPageLoaded_Finally()
     }
@@ -425,7 +426,7 @@ export async function setCurrentPageManageAccount(event) {
                     let responseText = await response.text();
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)
                     pushHistoryState('Identity/Manage/Index');
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
@@ -458,7 +459,7 @@ export async function setCurrentPageSignUp(event) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length);
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length);
                     pushHistoryState(`Identity/Account/Register`);
 
                     const button = document.getElementById('form-btn-default');
@@ -507,7 +508,7 @@ export async function setCurrentPageRegister(event) {
                     pushHistoryState(`Identity/Account/Register`);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)                    
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)                    
                     $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                     $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                     $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");
@@ -567,7 +568,7 @@ export async function setCurrentPageLogin(event) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     
-                    console.log('[DBG] fetch response key count: ' + Object.keys(responseText).length)                    
+                    Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)                    
                     $('#__AjaxAntiForgeryForm').removeAttr('action'); //, location.host + 'Account/Login'
                     $('#__AjaxAntiForgeryForm').removeAttr('method');                    
                     $('#__AjaxAntiForgeryForm').attr('onsubmit', "return false");

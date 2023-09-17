@@ -1,6 +1,6 @@
 import urls from './../api.js'
 import { toggleForId } from '../Utils/ClassQuery.js';
-import { getTime_HH_MM_SS_MS } from '../Utils/Chrono/main.js';
+import Debug from '../Extensions/cs-debug.js';
 import { setDevelopmentMessages } from '../Development/news-data.js';
 import { FetchGetPatialListenedPage } from './click-handlers.js';
 import { addElementsForAuthorizedUser } from '../Account/authorized.js';
@@ -91,7 +91,7 @@ export function countCookies()
             count += val.split("; ").length;
         }
     });
-    console.log("[DBG] " + count + " cookies found");
+    Debug.WriteLine('" + count + " cookies found');
 }
 
 async function noOp() {}

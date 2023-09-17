@@ -1,5 +1,4 @@
-﻿import urls from './api.js';
-import { setNextComposition, setFooterPlayerSourse } from './Utils/Audio.js';
+﻿import { setNextComposition, setFooterPlayerSourse } from './Utils/Audio.js';
 import { _trackQueue } from './Utils/Queue.js';
 import { containsClasses, getWebEntityObject, 
     displayQueuedTracks, GetCurrentCompositionsId } from './utilities.js';
@@ -10,6 +9,7 @@ from './Router/click-handlers.js';
 import { fireOnInputValueChange } from './Page/event-handlers.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
+import Debug from './Extensions/cs-debug.js';
 import MusicAPI from './Page/url-decoding.js'
 import TrackAPI from './Page/track-decoding.js'
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
@@ -17,7 +17,6 @@ import { appendSideNavigationBars } from './Page/Components/side-navigations.js'
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 import { addSearchTerminal } from './System/search-terminal.js';
 import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
-import Debug from './Extensions/cs-debug.js'
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
@@ -39,21 +38,21 @@ $(document).ready(function () {
         let urlHandler = new MusicAPI();
         // set interval for load
         setTimeout(() => { let trackhandler = new TrackAPI(setNextComposition) }, 1000);
-        //addButtonOnClickHandlers();
+        
         _trackQueue.onchange = () => {
             displayQueuedTracks(_trackQueue);
         };
         const container = document.querySelector('body');
 
         container.onmousedown = (e) => {
-            Debug.WriteLine('[DBG] site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
+            Debug.WriteLine('site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
             if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
                 $('#ctxmenu').innerHTML = '';
             }
         }
 
         container.addEventListener('click', function (e) {
-            Debug.WriteLine('[DBG] site.js/onclick(): ' + e.target.id + ' ' + e.target.className);
+            Debug.WriteLine('site.js/onclick(): ' + e.target.id + ' ' + e.target.className);
             // But only alert for elements that have an alert-button class
             //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
             let target = e.target;
@@ -86,7 +85,7 @@ $(document).ready(function () {
         /// Mobile devices: toggle context menu through touch-end event (touch and scroll to see track's menu)
         document.querySelector('.container')?.addEventListener('touchend', function (e) {
             setTimeout( () => {
-                Debug.WriteLine('[DBG] site.js/touchend' + e.target.id + ' ' + e.target.className);
+                Debug.WriteLine('site.js/touchend' + e.target.id + ' ' + e.target.className);
                 const highlightedItems = document.querySelectorAll("#ctxmenu");
                 highlightedItems.forEach((userItem) => {
                     userItem.outerHTML = "";
@@ -118,7 +117,7 @@ $(document).ready(function () {
         }
 
         document.querySelector('.container').oncontextmenu = (e) => {
-            Debug.WriteLine('[DBG] site.js/onContentMenu' + e.target.id + ' ' + e.target.className);
+            Debug.WriteLine('site.js/onContentMenu' + e.target.id + ' ' + e.target.className);
             e.preventDefault();
             let target = e.target;
             if (containsClasses(target, 'card-text', 'card-title')) {
@@ -178,19 +177,19 @@ export function onCompositionRightMouseDown(e) {
 }
 
 export function bindPlayerButtons() {
-    Debug.WriteLine('[DBG] binding player buttons...');
+    Debug.WriteLine('binding player buttons...');
     document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
-        Debug.WriteLine("[DBG] clicked");
+        Debug.WriteLine("clicked");
 
         let id = "nextTrackId";
         if (_trackQueue.isEmpty()) {
-            Debug.WriteLine('[DBG] .footer-next-track-btn.click() : Track Query is Empty.');
+            Debug.WriteLine('.footer-next-track-btn.click() : Track Query is Empty.');
             id = GetCurrentCompositionsId();
         }
         else {
-            Debug.WriteLine('[DBG] .footer-next-track-btn.click() : Track Query is Not Empty.');
+            Debug.WriteLine('.footer-next-track-btn.click() : Track Query is Not Empty.');
             id = _trackQueue.peek().id;
-            Debug.WriteLine('[DBG] .footer-next-track-btn.click() : peeked item. Elts len: ' + _trackQueue.elts.length); 
+            Debug.WriteLine('.footer-next-track-btn.click() : peeked item. Elts len: ' + _trackQueue.elts.length); 
         }
         setNextComposition(id);
     });

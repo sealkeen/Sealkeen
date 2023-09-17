@@ -2,12 +2,13 @@ import { fetchContentCrossOrigin } from "../Router/shared.js";
 import { handleLocation } from './../Router/location-mapper.js';
 import { setNextComposition } from "../Utils/Audio.js";
 import urls from "./../api.js"
+import Trace from "../Extensions/cs-trace.js";
 import { _trackQueue } from './../Utils/Queue.js';
 
 export default class TrackAPI {
     constructor(callBack) {
       this.callBack = callBack;
-      console.log('[VRB] track-decoding.js/TrackAPI: %j', window.location);
+      Trace.WriteLine('track-decoding.js/TrackAPI: %j', window.location);
       const params = new URLSearchParams(window.location.search);
       const track = params.get("trackId") || "*";
   

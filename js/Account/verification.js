@@ -3,7 +3,8 @@ import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { checkInputs } from '../signup.js';
 import { addElementsForAuthorizedUser } from './authorized.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
-
+import Debug from '../Extensions/cs-debug.js';
+import Exception from '../Extensions/cs-exception.js';
 
 export function setRegisterAntiForgeryOnClick() {
     try {
@@ -48,7 +49,7 @@ export function setRegisterAntiForgeryOnClick() {
                 $("#page-body-container").append(div);
                 // <h1 class="text-info">Success.</h1>
                 // <h2 class="text-info">Your Account has been registered successfully.</h2>
-                console.log('%j', result)
+                Debug.WriteLine('%j', result)
             } else {
                 alert('Ошибка регистрации');
             }
@@ -62,19 +63,19 @@ export function setRegisterAntiForgeryOnClick() {
                     $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
                     toggleBodyBackground();
                 } else {
-                    createInfoMessage('[DBG] verification.js/setRegisterAntiForgeryOnClick() ajax response error')
-                    console.log('[DBG] verification.js/setRegisterAntiForgeryOnClick() ajax response error');
+                    createInfoMessage('[INF] verification.js/setRegisterAntiForgeryOnClick() ajax response error')
+                    Debug.WriteLine('verification.js/setRegisterAntiForgeryOnClick() ajax response error')
                 }
             } catch (e) {
                 createInfoMessage(`[ERR] verification.js/setRegisterAntiForgeryOnClick() try-catch-fetch-error ${e}`)
-                console.log(`[ERR] verification.js/setRegisterAntiForgeryOnClick() try-catch-fetch-error ${e}`);
+                console.log(`[ERR] verification.js/setRegisterAntiForgeryOnClick() try-catch-fetch-error ${e}`)
             }
         });
         return false;
     } catch (e) {
         createInfoMessage(`[ERR] verification.js/setRegisterAntiForgeryOnClick() ${e}`)
-        console.log(`[ERR] verification.js/setRegisterAntiForgeryOnClick() ${e}`, );
-        alert(e);
+        console.log(`[ERR] verification.js/setRegisterAntiForgeryOnClick() ${e}`, )
+        alert(e)
     }
 }
 
@@ -84,7 +85,7 @@ export function setLoginAntiForgeryOnClick(e) {
             return;
         $('#__AjaxAntiForgeryForm').removeAttr('action');
         let username = $('#UserName').val();
-        console.log('[DBG] verification.js/set... Username: ' + username);
+        Debug.WriteLine('verification.js/set... Username: ' + username);
         let password= $('#Password').val();
         let rememberMe = true;
         var form = $('#__AjaxAntiForgeryForm');
@@ -128,7 +129,7 @@ export function setLoginAntiForgeryOnClick(e) {
                     $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
                     toggleBodyBackground();
                 } else {
-                    console.log('[ERR] verification.js/set... ajax response error');
+                    Exception.Throw('[ERR] verification.js/set... ajax response error');
                 }
             } catch (e) {
                 console.log('[ERR] verification.js/set... try-catch-ajax-error' + e);

@@ -1,4 +1,3 @@
-import urls from './../api.js';
 import { replaceTrackParamInUrl } from './../Page/track-decoding.js'
 import { appendHorizontalVolumeControl } from "../Page/Components/volume-controls.js";
 import { setArtistSongNameAsync, setTitleByArtistAndTitle } from "../Page/event-handlers.js";
@@ -6,12 +5,14 @@ import { GetCurrentCompositionsId, displayQueuedTracks } from "../utilities.js";
 import { _trackQueue } from "./Queue.js";
 import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.js';
 import { safeSwitchTrack } from './../utilities.js';
+import urls from './../api.js';
+import Debug from '../Extensions/cs-debug.js';
 
 const loc = urls.getLocation();
 export async function loadDirect(source)
 {
     if(source.includes(':')) {
-        console.log('[DBG] loadDirect: $("#player-audio-element")[0] is %j', $("#player-audio-element")[0]);
+        Debug.WriteLine('loadDirect: $("#player-audio-element")[0] is %j', $("#player-audio-element")[0]);
         $("#player-source-element")[0].setAttribute('src', source);
         let loadPromise = await $("#player-audio-element")[0].load();
         if (loadPromise !== undefined) {
@@ -46,7 +47,7 @@ export function onCompositionSourceChanged(compId)
             
             id == null ? compId : id;
 
-            console.log('[DBG] Audio.js/onCompositionSourceChanged() id is :' + id);
+            Debug.WriteLine('Audio.js/onCompositionSourceChanged() id is :' + id);
             setNextComposition(id); //from here
         };
     }
@@ -55,20 +56,20 @@ export function onCompositionSourceChanged(compId)
 export function setNextComposition(compId) {
     try {
         if (compId == null) {
-            console.log('[DBG] Audio.js/setNextComposition() error, compId is undefined || null')
+            Debug.WriteLine('Audio.js/setNextComposition() error, compId is undefined || null')
             return;
         }
-        console.log('[DBG] setNextComposition(): compsId is ' + compId)
+        Debug.WriteLine('setNextComposition(): compsId is ' + compId)
         if(compId.includes('docs.google') || compId.includes(':')) {
             let newUrl = compId;
             if(_trackQueue.isEmpty()) {
-                console.log('[DBG] setNextComposition: Query=empty');
+                Debug.WriteLine('setNextComposition: Query=empty');
                 newUrl = getNext(compId);
             } else {
-                console.log('[DBG] setNextComposition: Query NOT empty');
+                Debug.WriteLine('setNextComposition: Query NOT empty');
                 newUrl = _trackQueue.dequeue().id;
             }
-            console.log('[DBG] setNextComposition: calling load Direct, compId = ' + newUrl);
+            Debug.WriteLine('setNextComposition: calling load Direct, compId = ' + newUrl);
             loadDirect(newUrl); //from here
             onCompositionSourceChanged(newUrl); //from here
             return;
@@ -85,8 +86,8 @@ export function setNextComposition(compId) {
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
-                    console.log('[DBG] setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
-                    console.log(htmlDom.documentElement.innerHTML);
+                    Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
+                    Debug.WriteLine(htmlDom.documentElement.innerHTML);
                     
                     let plr = $("#player-audio-element").get(0);
                     plr.load();
@@ -131,8 +132,8 @@ export async function setFooterPlayerSourse(el)
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
-                    console.log('[DBG] setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
-                    console.log(htmlDom.documentElement.innerHTML);
+                    Debug.WriteLine('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
+                    Debug.WriteLine(htmlDom.documentElement.innerHTML);
                     //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
                     replaceTrackParamInUrl(source);
 

@@ -78,7 +78,7 @@ export function checkPassword(value) {
         return false;
     } else {
         setSuccessFor(password);
-        Debug.WriteLine('[DBG] signup.js/checkPassword(): ok');
+        Debug.WriteLine('signup.js/checkPassword(): ok');
         return true;
     }
 }
@@ -95,7 +95,7 @@ export function checkPasswordRepeat(origin, repeat) {
         return false;
     } else {
         setSuccessFor(passwordCheck);
-        Debug.WriteLine('[DBG] signup.js/checkPasswordRepeat(): passwordChk: ok');
+        Debug.WriteLine('signup.js/checkPasswordRepeat(): passwordChk: ok');
         return true;
     }
 }
@@ -113,7 +113,7 @@ export function setErrorFor(input, message) {
     small.innerText = message; // add error message inside small
     small.className = 'form-control-small.error';
     input.className = 'form-control form-control-error';
-    Debug.WriteLine('[DBG] signup.js/setErrorFor() set error for func completed ok');
+    Debug.WriteLine('signup.js/setErrorFor() set error for func completed ok');
 }
 
 export function setSuccessFor(input) {
@@ -121,7 +121,7 @@ export function setSuccessFor(input) {
         return
     let group = input.parentElement; // .form-control
     let small = group.querySelector('small')
-    Debug.WriteLine('[DBG] signup.js/setSuccessFor() suc, small: %j', small)
+    Debug.WriteLine('signup.js/setSuccessFor() suc, small: %j', small)
     if(small == undefined) {
         small = document.createElement('small');
         group.appendChild(small);

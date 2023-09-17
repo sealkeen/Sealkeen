@@ -1,5 +1,6 @@
 import { openRightNav, openNav, closeRightNav, closeNav } from "../StyleHandlers/side-nav-handlers.js";
 import { containsClasses } from "../utilities.js";
+import Debug from "../Extensions/cs-debug.js";
 import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 
 export function getDevelopmentNewsData() {
@@ -129,7 +130,7 @@ export function setDevelopmentMessages() {
     if (window.location.href.indexOf("MJpeg") > -1)
         return;
 
-    console.log('[DBG] verification.js/setDevelopmentMessages:... set dev messages');
+    Debug.WriteLine('verification.js/setDevelopmentMessages:... set dev messages');
 
     let data = getDevelopmentNewsData();
     let devBody = document.getElementById("development-body");

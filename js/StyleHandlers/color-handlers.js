@@ -1,4 +1,5 @@
 import urls from './../api.js'
+import Debug from '../Extensions/cs-debug.js';
 import LocalizationService from './../Services/Localization/localization-service.js';
 
 const lS = LocalizationService.getInstance();
@@ -65,7 +66,7 @@ export function onClickBodyBackground() {
         default:
         break;
     }
-    setInterval(() => {
+    setTimeout(() => {
         el.style.opacity = 1;
     }, (2500)); 
 }
@@ -103,7 +104,7 @@ export function toggleBodyBackground() {
     window.translateGreetings(greetingKey);
 }
 
-function noOp() { console.log('[DBG] no-op') }
+function noOp() { Debug.WriteLine('no-op') }
 
 export function toggleTopPageBackground(on)
 {

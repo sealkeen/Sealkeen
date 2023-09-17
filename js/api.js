@@ -91,7 +91,7 @@ export async function pushHistoryState(url)
 
             console.log('[INF] api.js/pushHistoryState NLc: ' + newLc)
             console.log('[INF] api.js/pushHistoryState url: ' + url);
-            //console.log('[DBG] api.js/pushHistoryState: prevstate not null');
+            //Debug.WriteLine('api.js/pushHistoryState: prevstate not null');
             window.history.pushState({ prevUrl: window.location.href }, null, newLc);
         }
     } catch(e) {

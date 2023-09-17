@@ -1,10 +1,13 @@
 const Trace = {
     WriteLine: function(line, param)
     {
+        if(!window.isTraceEnabled)
+            return;
+
         if(param != null)
-            console.log(line, param)
+            console.log(`[VRB] ${line}`, param)
         else
-            console.log(line)
+            console.log(`[VRB] ${line}`)
     }
 };
 

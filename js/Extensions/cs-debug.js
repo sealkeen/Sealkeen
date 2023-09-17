@@ -1,10 +1,13 @@
 const Debug = {
     WriteLine: function(line, param)
     {
+        if(!window.isDebugEnabled)
+            return;
+        
         if(param != null)
-            console.log(line, param)
+            console.log(`[DBG] ${line}`, param)
         else
-            console.log(line)
+            console.log(`[DBG] ${line}`)
     }
 };
 

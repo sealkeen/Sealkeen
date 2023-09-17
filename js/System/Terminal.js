@@ -1,4 +1,5 @@
 ﻿import { replaceArtistParamInUrl } from "../Page/url-decoding.js";
+import Debug from "../Extensions/cs-debug.js";
 
 var fetchContentCrossOrigin = async () => { }
 var createInfoMessage = async () => { }
@@ -42,8 +43,8 @@ export class Terminal {
 
     async onSubmit(e) {
         e.preventDefault();
-        console.log(`[DBG] this.button.textContent === "Search" : ${this.button.textContent === 'Search'}`)
-        console.log(`[DBG] this.button.textContent === "Send" : ${this.button.textContent === 'Send'}`)
+        Debug.WriteLine(`this.button.textContent === "Search" : ${this.button.textContent === 'Search'}`)
+        Debug.WriteLine(`this.button.textContent === "Send" : ${this.button.textContent === 'Send'}`)
         if(this.button.textContent === 'Search') { /*search */
             let resp = await fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${this.input.value}`
             , false).then(result => {
