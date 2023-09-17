@@ -7,6 +7,7 @@ import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.
 import { safeSwitchTrack } from './../utilities.js';
 import urls from './../api.js';
 import Debug from '../Extensions/cs-debug.js';
+import { createInfoMessage } from '../Errors/fetch-errors.js';
 
 const loc = urls.getLocation();
 export async function loadDirect(source)
@@ -56,10 +57,12 @@ export function onCompositionSourceChanged(compId)
 export function setNextComposition(compId) {
     try {
         if (compId == null) {
-            Debug.WriteLine('Audio.js/setNextComposition() error, compId is undefined || null')
+            let msg = 'Audio.js/setNextComposition() error, compId is undefined || null'
+            Debug.WriteLine(msg)
+            createInfoMessage(msg)
             return;
         }
-        Debug.WriteLine('setNextComposition(): compsId is ' + compId)
+        console.log('[INF] setNextComposition(): compsId is ' + compId)
         if(compId.includes('docs.google') || compId.includes(':')) {
             let newUrl = compId;
             if(_trackQueue.isEmpty()) {
@@ -95,9 +98,9 @@ export function setNextComposition(compId) {
                     onCompositionSourceChanged(compId); //from here
                 },
                 error: async function (error_) {
-                    document.title = 'Medweb';
+                    document.title = 'Error service';
                     
-                    onAjaxSwitchPageError(compId, error_, safeSwitchTrack); // from './../utilities.js';
+                    onAjaxSwitchPageError(compId, safeSwitchTrack); // from './../utilities.js';
                 }
             });
         }
@@ -146,7 +149,7 @@ export async function setFooterPlayerSourse(el)
                     document.title = 'Medweb';
                     const errorMessage = `Error loading audio: ${error_.status} ${error_.statusText}`;
                     createErrorMessage(errorMessage);
-                    onAjaxLoadError(source, error_, safePlay); //from './../Errors/ajax-errors.js';
+                    onAjaxLoadError(source, safePlay); //from './../Errors/ajax-errors.js';
                 }
             });
         }

@@ -13,7 +13,7 @@ export function onAjaxLoadError(source, error_, safePlay)
     }
 }
 
-export function onAjaxSwitchPageError(source, error_, safeSwitch)
+export function onAjaxSwitchPageError(source, safeSwitch)
 {
     if (source.includes('http')) {
         //<source id="player-source-element" src="null" type="audio/mp3"></source>
