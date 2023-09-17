@@ -1,5 +1,5 @@
 
-export function onAjaxLoadError(source, error_, safePlay)
+export function onAjaxLoadError(source, safePlay)
 {
     if (source.includes('http')) {
         //<source id="player-source-element" src="null" type="audio/mp3"></source>
