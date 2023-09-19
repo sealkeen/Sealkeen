@@ -8,6 +8,7 @@ import { safeSwitchTrack } from './../utilities.js';
 import urls from './../api.js';
 import Debug from '../Extensions/cs-debug.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
+import { getNext } from '../Store/mock-data.js';
 
 const loc = urls.getLocation();
 export async function loadDirect(source)
