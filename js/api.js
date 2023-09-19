@@ -11,10 +11,14 @@ const urls = {
         } else
             return 'https://localhost:5001/';
     },
-    getPostfix(forPath) {
+    getPostfix(forwardPath) {
         let result = "";
         if (window.location.href.indexOf("github.io/Sealkeen") > -1)
-            result += 'Sealkeen/';
+            if (forwardPath !== null && (forwardPath[0] === '/' || forwardPath[0] === '\\')) {
+                result += '/Sealkeen'; }
+            else
+                result += 'Sealkeen/';
+        console.log(`[INF] getPostfix <${result}> forward path: <${forwardPath ?? ""}>`)
         return result;
     },
     getContentPath() {
@@ -103,10 +107,10 @@ function getLocationPath(lc) {
     let result = ""//urls.getContentPath();
     if( !(urls.isGithub() || urls.isNodeJSHost()) )
         lc = lc.replace('Content/', '')
-    if(lc.indexOf(urls.getPostfix()) > -1) {
+    if(lc.indexOf( urls.getPostfix() ) > -1) {
         result += lc;
     } else {
-        result += ( urls.getPostfix() + lc );
+        result += ( urls.getPostfix(lc) + lc );
     }
     return result;
 }
