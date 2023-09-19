@@ -14,7 +14,7 @@ const urls = {
     getPostfix(forwardPath) {
         let result = "";
         if (window.location.href.indexOf("github.io/Sealkeen") > -1)
-            if (forwardPath !== null && (forwardPath[0] === '/' || forwardPath[0] === '\\')) {
+            if (forwardPath != null && (forwardPath[0] === '/' || forwardPath[0] === '\\')) {
                 result += '/Sealkeen'; }
             else
                 result += 'Sealkeen/';
