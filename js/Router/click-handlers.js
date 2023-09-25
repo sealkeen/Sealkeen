@@ -5,7 +5,7 @@ import { CreateDOMFromJSON, CreateArtistsDOMFromJSON, CreateAlbumsDOMFromJSON, C
 import { toggleTopPageBackground, onClickBodyBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { transitionEnd } from './../StyleHandlers/footer-handlers.js';
 import { addEventOnWindowResize } from './../StyleHandlers/navbar-handlers.js';
-import { onClickGotoAboutMe } from './redirect.js';
+import { addRedirectEventListener } from './redirect.js';
 import { ConvertToDOM } from './../Store/mock-data.js'
 import { appendCheckBoxTo } from '../Page/data-processing.js';
 import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
@@ -47,7 +47,6 @@ export function addEventHandlersOnBody() {
         document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
     }
     document.querySelector('#nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
-    document.querySelector('.nav-lnk-about')?.addEventListener('click', onClickGotoAboutMe);
     
     document.querySelector('.nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
     document.querySelector('.nav-lnk-albums')?.addEventListener('click', setCurrentPageAlbums);
@@ -57,7 +56,8 @@ export function addEventHandlersOnBody() {
     document.querySelector('.nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
     document.querySelector('.nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
     document.querySelector('.nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
-    document.querySelector('.nav-lnk-about')?.addEventListener('click', onClickGotoAboutMe);
+    
+    addRedirectEventListener();
     addEventOnWindowResize();
 }
 

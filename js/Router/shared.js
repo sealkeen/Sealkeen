@@ -1,9 +1,7 @@
 import urls, { pushHistoryState } from './../api.js'
 import { toggleTopPageBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setDevelopmentMessages } from '../Development/news-data.js';
-import routes from './routing-table.js';
 
-//appendNavigationLink(navbarNav, library, 'GetPartialListenedPage')
 export function appendNavigationLink(navbarNav, element, path)
 {
     if(document.querySelector(`#${element.Id}`) != null) {
