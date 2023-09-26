@@ -1,6 +1,6 @@
 ﻿import { setNextComposition, setFooterPlayerSourse } from './Utils/Audio.js';
 import { _trackQueue } from './Utils/Queue.js';
-import { containsClasses, getWebEntityObject, 
+import { containsClasses, fromJQueryObject, 
     displayQueuedTracks, GetCurrentCompositionsId } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
 import { addSideNavElements, addSidenavEventListeners } from './StyleHandlers/side-nav-handlers.js';
@@ -155,7 +155,7 @@ export function onCompositionRightMouseDown(e) {
         cmiQueueSelected.innerHTML = "Enqueue";
         menu.id = "ctxmenu";
 
-        cmiQueueSelected.onclick = () => { _trackQueue.enqueue(getWebEntityObject(e)); };
+        cmiQueueSelected.onclick = () => { _trackQueue.enqueue(fromJQueryObject(e)); };
         menu.onfocusout = () => menu.outerHTML = '';
         menu.onmouseleave = () => menu.outerHTML = ''
         menu.appendChild(cmiQueueSelected)

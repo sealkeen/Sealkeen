@@ -1,7 +1,7 @@
 import { replaceTrackParamInUrl } from './../Page/track-decoding.js'
 import { appendHorizontalVolumeControl } from "../Page/Components/volume-controls.js";
 import { setArtistSongNameAsync, setTitleByArtistAndTitle } from "../Page/event-handlers.js";
-import { GetCurrentCompositionsId, displayQueuedTracks } from "../utilities.js";
+import { GetCurrentCompositionsId, displayQueuedTracks, fromDOMObject } from "../utilities.js";
 import { _trackQueue } from "./Queue.js";
 import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.js';
 import { safeSwitchTrack } from './../utilities.js';
@@ -93,7 +93,6 @@ export function setNextComposition(compId) {
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
                     Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                     Debug.WriteLine(htmlDom.documentElement.innerHTML);
-                    
                     let plr = $("#player-audio-element").get(0);
                     plr.load();
                     plr.play();
@@ -101,7 +100,6 @@ export function setNextComposition(compId) {
                 },
                 error: async function (error_) {
                     Exception.Throw('Error streaming service');
-
                     onAjaxSwitchPageError(compId, safeSwitchTrack); // from './../utilities.js';
                 }
             });
@@ -126,13 +124,11 @@ export async function setFooterPlayerSourse(el)
 
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
         if ($("#player-source-element") != undefined) {
-            await $.ajax({ //$.get({ //
+            await $.ajax({
                 url: ctrl,
                 type: 'GET',
                 contentType: 'html',
-                xhrFields: {
-                   withCredentials: true
-                },
+                xhrFields: { withCredentials: true },
                 crossDomain: true,
                 success: function (response) {
                     const htmlDom = new DOMParser().parseFromString(response, 'text/html');
@@ -143,8 +139,10 @@ export async function setFooterPlayerSourse(el)
                     replaceTrackParamInUrl(source);
 
                     let plr = $("#player-audio-element").get(0);
-                    if(isPlaying(plr) == true) {
-                        
+                    if(isPlaying(plr) === true) {
+                        let toQuery = fromDOMObject(el);
+                        _trackQueue.enqueue(toQuery);
+                        createInfoMessage('Queued: ' + toQuery?.artist + ' - ' + toQuery?.title)
                         return;
                     }
                     plr.load();
@@ -164,19 +162,19 @@ export async function setFooterPlayerSourse(el)
 
 export function isPlaying(plr) {
     let infoPlaying = false
-    let currentTime = plr.currentTime == 0 ? true : false
-    createInfoMessage('currentTime: ' + currentTime)
+    let atStart = plr.currentTime == 0 ? true : false
+    //createInfoMessage('currentTime: ' + plr.currentTime)
     let paused = plr.paused ? true : false
-    createInfoMessage('paused: ' + paused)
-    let ended = !plr.ended ? true : false
-    createInfoMessage('ended: ' + ended)
+    //createInfoMessage('paused: ' + paused)
+    let ended = plr.ended
+    //createInfoMessage('ended: ' + plr.ended)
     let readyState = plr.readyState == 0 ? true : false
-    createInfoMessage('readyState: ' + readyState)
-    if (currentTime && paused && ended && readyState) {
+    //createInfoMessage('readyState: ' + plr.readyState)
+    if ((atStart && paused) || (ended && readyState == 0)) {
         infoPlaying = false
-    } else if (!currentTime && !paused && ended && !readyState) {
+    } else { 
         infoPlaying = true
     }
-    createInfoMessage('player isPlaying: ' + infoPlaying)
+    //reateInfoMessage('player isPlaying: ' + infoPlaying, 50000)
     return infoPlaying
 }

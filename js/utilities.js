@@ -2,6 +2,7 @@
 import Debug from './Extensions/cs-debug.js';
 import Trace from './Extensions/cs-trace.js';
 import Exception from './Extensions/cs-exception.js';
+import { createInfoMessage } from './Errors/fetch-errors.js';
 
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
@@ -29,10 +30,11 @@ export function getIdFromElementData(el) {
     return id;
 }
 
-export function getWebEntityObject(el) {
+export function fromJQueryObject(el) {
     let id = el.target;
     let artist = el.target;
     let title = el.target;
+    createInfoMessage(el.target)
     if (!el.target.classList.contains('card-body')) {
         id = el.target.parentNode.querySelector('data').value;
         artist = el.target.parentNode.querySelector('.card-title').innerHTML;
@@ -43,6 +45,23 @@ export function getWebEntityObject(el) {
         artist = el.target.querySelector('.card-title').innerHTML;
         title = el.target.querySelector('.card-text').innerHTML;
         //id = el.target.children[0].value;
+    }
+    return { id, artist, title };
+}
+
+export function fromDOMObject(el) {
+    let id = el;
+    let artist = el;
+    let title = el;
+    if (!el.classList.contains('card-body')) {
+        id = el.parentNode.querySelector('data').value;
+        artist = el.parentNode.querySelector('.card-title').innerHTML;
+        title = el.parentNode.querySelector('.card-text').innerHTML;
+    }
+    else {
+        id = el.querySelector('data').value;
+        artist = el.querySelector('.card-title').innerHTML;
+        title = el.querySelector('.card-text').innerHTML;
     }
     return { id, artist, title };
 }

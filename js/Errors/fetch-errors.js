@@ -1,15 +1,15 @@
 import Debug from "../Extensions/cs-debug.js";
 
-export function createErrorMessage(message) {
-    createMessage(message, 'error')
+export function createErrorMessage(message, timeout = 5000) {
+    createMessage(message, 'error', timeout)
 }
 
-export function createInfoMessage(text)
+export function createInfoMessage(text, timeout = 5000)
 {
-    createMessage(text, 'info')
+    createMessage(text, 'info', timeout)
 }
 
-function createMessage(message, type)
+function createMessage(message, type, timeout = 5000)
 {
     const errorMessage = document.createElement("div");
     errorMessage.classList.add(type === 'error' ? "error-message" : "info-message");
@@ -41,5 +41,5 @@ function createMessage(message, type)
     // Remove the error message after 5 seconds
     setTimeout(() => {
       errorMessage.remove();
-    }, 5000);
+    }, timeout);
 }
