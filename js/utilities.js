@@ -140,10 +140,11 @@ export function safeSwitchTrack()
                 Debug.WriteLine('utilities.js/safeLoadOK: safePlaying...');
 
                 (async () => { await sleep(50); safePlay()})();
-            })  
+            })
             .catch(error => {
                 // Auto-play was prevented
                 (async () => { await sleep(50); safePlay()})();
+                Exception.Throw(error);
                 console.log('[ERR] safeSwitchTrack() err: player returned error on LOAD, autoplay prevented.');
             });
         }
