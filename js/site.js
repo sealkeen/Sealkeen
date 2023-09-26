@@ -9,7 +9,7 @@ from './Router/click-handlers.js';
 import { fireOnInputValueChange } from './Page/event-handlers.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
-import Debug from './Extensions/cs-debug.js';
+import Debug from './Extensions/cs-debug.js'
 import MusicAPI from './Page/url-decoding.js'
 import TrackAPI from './Page/track-decoding.js'
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';

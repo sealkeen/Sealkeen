@@ -7,6 +7,7 @@ import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.
 import { safeSwitchTrack } from './../utilities.js';
 import urls from './../api.js';
 import Debug from '../Extensions/cs-debug.js';
+import Exception from '../Extensions/cs-exception.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
 import { getNext } from '../Store/mock-data.js';
 
@@ -99,7 +100,7 @@ export function setNextComposition(compId) {
                     onCompositionSourceChanged(compId); //from here
                 },
                 error: async function (error_) {
-                    document.title = 'Error service';
+                    Exception.Throw('Error streaming service');
                     
                     onAjaxSwitchPageError(compId, safeSwitchTrack); // from './../utilities.js';
                 }
@@ -147,9 +148,7 @@ export async function setFooterPlayerSourse(el)
                     onCompositionSourceChanged(htmlDom.querySelector('#player-source-element').src);
                 },
                 error: async function (error_) {
-                    document.title = 'Medweb';
-                    const errorMessage = `Error loading audio: ${error_.status} ${error_.statusText}`;
-                    createErrorMessage(errorMessage);
+                    Exception.Throw(`Error loading audio: ${error_.status} ${error_.statusText}`);
                     onAjaxLoadError(source, safePlay); //from './../Errors/ajax-errors.js';
                 }
             });

@@ -9,11 +9,11 @@ import { addRedirectEventListener } from './redirect.js';
 import { ConvertToDOM } from './../Store/mock-data.js'
 import { appendCheckBoxTo } from '../Page/data-processing.js';
 import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
-import { createErrorMessage } from '../Errors/fetch-errors.js';
 import { create429ErrorMessageOrThrowError } from '../Errors/fetch-errors-4xx.js';
 import { addSearchTerminal } from '../System/search-terminal.js';
 import routes from './routing-table.js';
 import Debug from '../Extensions/cs-debug.js'
+import Exception from '../Extensions/cs-exception.js'
 
 routes[""] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
 routes["/"] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
@@ -83,14 +83,14 @@ export async function setCurrentPageIndex(event) {
                 create429ErrorMessageOrThrowError(response.status);
         }).catch((error) => {
             if (error.message === 'Too many requests.') {
-                createErrorMessage(error.message);
+                Exception.Throw(error.message);
             } else {
                 setCurrentPageMockData();
-                createErrorMessage('setCurrentPageIndex: ' + error);
+                Exception.Throw('setCurrentPageIndex: ' + error);
             }
         });
     } catch (error) {
-        createErrorMessage('setCurrentPageIndex: ' + error);
+        Exception.Throw('setCurrentPageIndex: ' + error);
     } finally {
         onDevelopmentCardClick();
         toggleBodyBackground();
@@ -144,11 +144,11 @@ export async function setCurrentPageCompositions(event) {
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
                     setCurrentPageMockData();
-                    createErrorMessage('setCurrentPageCompositions: ' + error); 
+                    Exception.Throw('setCurrentPageCompositions: ' + error); 
             });
         }
     } catch (error) {
-        createErrorMessage('setCurrentPageCompositions: ' + error);
+        Exception.Throw('setCurrentPageCompositions: ' + error);
     } finally {
         onContentPageLoaded_Finally()
     }
@@ -178,11 +178,11 @@ export async function setCurrentPageAlbums(event) {
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
                 setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageAlbums: ' + error); 
+                Exception.Throw('in setCurrentPageAlbums: ' + error); 
             });
         }
     } catch (error) {
-        createErrorMessage('in setCurrentPageAlbums: ' + error);
+        Exception.Throw('in setCurrentPageAlbums: ' + error);
     } finally {
         onContentPageLoaded_Finally()
     }
@@ -194,7 +194,7 @@ export async function setCurrentPageGenres(event) {
         toggleTopPageBackground(true);
         let ctrl = (loc + 'GetJSONGenresPage');
         if ($("#page-body-container") != undefined) {
-            var ftchGnrs = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -212,11 +212,11 @@ export async function setCurrentPageGenres(event) {
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
                 setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageGenres: ' + error);
+                Exception.Throw('in setCurrentPageGenres: ' + error);
             });
         }
     } catch (error) {
-        createErrorMessage('in setCurrentPageAlbums: ' + error);
+        Exception.Throw('in setCurrentPageAlbums: ' + error);
     } finally {
         onContentPageLoaded_Finally()
     }
@@ -229,7 +229,7 @@ export async function setCurrentPageArtists(event) {
         //event?.preventDefault();
         let ctrl = (loc + 'GetJSONArtistsPage');
         if ($("#page-body-container") != undefined) {
-            var ftchArts = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -248,11 +248,11 @@ export async function setCurrentPageArtists(event) {
             })
             .catch((error) => {
                 setCurrentPageMockData();
-                createErrorMessage('in setCurrentPageArtists: ' + error);
+                Exception.Throw('in setCurrentPageArtists: ' + error);
             });
         }
     } catch (error) {
-        createErrorMessage('in setCurrentPageArtists: ' + error);
+        Exception.Throw('in setCurrentPageArtists: ' + error);
     } finally {
         onContentPageLoaded_Finally()
     }
@@ -283,21 +283,21 @@ export async function setCurrentPageCompositionByArtistID(el) {
                     $("#page-body-container").append(responseText);
                     Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)
                 } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
+                    Exception.Throw('Request rate is too high');
                 } else {
                     throw new Error('Fetch error.');
                 }
             }).catch((error) => {
                 if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
+                    Exception.Throw(error.message);
                 } else {
                     setCurrentPageMockData();
-                    createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + id + '\n'+ error);
+                    Exception.Throw('in GetPartialCompositionPageByArtistID/?id=' + id + '\n'+ error);
                 }
             });
         }
     } catch (error) {
-        createErrorMessage('in GetPartialCompositionPageByArtistID/?id=' + '\n'+ e);
+        Exception.Throw('in GetPartialCompositionPageByArtistID/?id=' + '\n'+ e);
     } finally {
         onContentPageLoaded_Finally()
     }
@@ -328,16 +328,16 @@ export async function setCurrentPageCompositionByID(el) {
                     $("#page-body-container").append(responseText);
                     Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)
                 } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
+                    Exception.Throw('Request rate is too high');
                 } else {
                     throw new Error('Fetch error.');
                 }
             }).catch((error) => {
                 if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
+                    Exception.Throw(error.message);
                 } else {
                     setCurrentPageMockData();
-                    createErrorMessage('in GetPartialCompositionPageByID/?id=' + id + '\n' + error);
+                    Exception.Throw('in GetPartialCompositionPageByID/?id=' + id + '\n' + error);
                 }
             });
         }
@@ -373,22 +373,22 @@ export async function setCurrentPageAlbumByID(el) {
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                 } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
+                    Exception.Throw('Request rate is too high.');
                 } else {
                     throw new Error('Fetch error.');
                 }
             }).catch((error) => {
                 if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
+                    Exception.Throw(error.message);
                 } else {
                     setCurrentPageMockData();
-                    createErrorMessage('in setCurrentPageAlbumByID/?id=' + id + '\n' + error);
+                    Exception.Throw('in setCurrentPageAlbumByID/?id=' + id + '\n' + error);
                 }
             });
         }
     } catch (error) {
         setCurrentPageMockData();
-        createErrorMessage('in setCurrentPageAlbumByID: ' + error);
+        Exception.Throw('in setCurrentPageAlbumByID: ' + error);
     } finally {
         onContentPageLoaded_Finally()
     }
@@ -432,11 +432,11 @@ export async function setCurrentPageManageAccount(event) {
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
                 setCurrentPageMockData();    setCurrentPageMockData();
-                createErrorMessage('setCurrentPageManageAccount: ' + error);
+                Exception.Throw('setCurrentPageManageAccount: ' + error);
             });
         }
     } catch (error) {
-        createErrorMessage('setCurrentPageManageAccount: ' + error);
+        Exception.Throw('setCurrentPageManageAccount: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -471,15 +471,15 @@ export async function setCurrentPageSignUp(event) {
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {         
                 if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
+                    Exception.Throw(error.message);
                 } else {
                     setCurrentPageMockData();
-                    createErrorMessage('setCurrentPageSignUp: ' + error); 
+                    Exception.Throw('setCurrentPageSignUp: ' + error); 
                 }
             });
         }
     } catch (error) {
-        createErrorMessage('setCurrentPageSignUp: ' + error);
+        Exception.Throw('setCurrentPageSignUp: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -497,7 +497,7 @@ export async function setCurrentPageRegister(event) {
         console.log('Loading: ' + loc + 'Account/Register');
         let ctrl = (loc + prefix + 'Account/Register');
         if ($("#page-body-container") != undefined) {
-            var ftchPartRegister = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -525,21 +525,21 @@ export async function setCurrentPageRegister(event) {
                         if(checkInputs()) setRegisterAntiForgeryOnClick();
                     });
                 } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
+                    Exception.Throw('Request rate is too high');
                 } else {
                     throw new Error('Fetch error.');
                 }
             }).catch((error) => {
                 if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
+                    Exception.Throw(error.message);
                 } else {
                     setCurrentPageMockData();
-                    createErrorMessage('in setCurrentPageRegister: ' + error);
+                    Exception.Throw('in setCurrentPageRegister: ' + error);
                 }
             });
         }
     } catch (error) {
-        createErrorMessage('in setCurrentPageRegister: ' + error);
+        Exception.Throw('in setCurrentPageRegister: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
@@ -580,21 +580,21 @@ export async function setCurrentPageLogin(event) {
                     $('.btn-default').onclick = (e) => {setLoginAntiForgeryOnClick(e)}
                     pushHistoryState(`Identity/Account/Register`);
                 } else if (response.status === 429) {
-                    createErrorMessage('Request rate is too high');
+                    Exception.Throw('Request rate is too high');
                 } else {
                     throw new Error('Fetch error.');
                 }
             }).catch((error) => {
                 if (error.message === 'Too many requests.') {
-                    createErrorMessage(error.message);
+                    Exception.Throw(error.message);
                 } else {
                     setCurrentPageMockData();
-                    createErrorMessage('in setCurrentPageLogin: ' + error);
+                    Exception.Throw('in setCurrentPageLogin: ' + error);
                 }
             });
         }
     } catch (error) {
-        createErrorMessage('in setCurrentPageLogin: ' + error);
+        Exception.Throw('in setCurrentPageLogin: ' + error);
     } finally {
         toggleTopPageBackground(false);
     }
