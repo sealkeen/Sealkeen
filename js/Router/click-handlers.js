@@ -14,6 +14,7 @@ import { addSearchTerminal } from '../System/search-terminal.js';
 import routes from './routing-table.js';
 import Debug from '../Extensions/cs-debug.js'
 import Exception from '../Extensions/cs-exception.js'
+import redirects, { showPopup } from "./redirect-table.js";
 
 routes[""] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
 routes["/"] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
@@ -23,6 +24,9 @@ routes["/Content/GetHTMLGenresPage"] =setCurrentPageGenres,
 routes["/Content/GetHTMLAlbumsPage"] = setCurrentPageAlbums,
 routes["Identity/Account/Login"] = setCurrentPageLogin, //window.location.href = urls.getLocation() + "Identity/Account/Login"
 routes["Identity/Account/Register"] = setCurrentPageRegister// window.location.href = urls.getLocation() + "Identity/Account/Register" 
+
+redirects['login'] = setCurrentPageLogin;
+redirects['register'] = setCurrentPageRegister;
 
 const loc = urls.getLocation();
 
@@ -40,12 +44,6 @@ export function addEventHandlersOnBody() {
     document.querySelector('#nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
     document.querySelector('#nav-lnk-artists')?.addEventListener('click', setCurrentPageArtists);
     document.querySelector('#nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
-
-    // No event handlers for Razor pages <a href>'s
-    if( !urls.isNgrok() ) { 
-        document.querySelector('#nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
-        document.querySelector('#nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
-    }
     document.querySelector('#nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
     
     document.querySelector('.nav-lnk-genres')?.addEventListener('click', setCurrentPageGenres);
@@ -53,11 +51,16 @@ export function addEventHandlersOnBody() {
     document.querySelector('.nav-lnk-compositions')?.addEventListener('click', setCurrentPageCompositions);
     document.querySelector('.nav-lnk-artists')?.addEventListener('click', setCurrentPageArtists);
     document.querySelector('.nav-lnk-sign-up')?.addEventListener('click', setCurrentPageSignUp);
-    document.querySelector('.nav-lnk-register')?.addEventListener('click', setCurrentPageRegister);
-    document.querySelector('.nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
     document.querySelector('.nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
     
-    addRedirectEventListener("Redirect to about.me/sealkeen?");
+    addRedirectEventListener('.nav-lnk-about', redirects['about.me']);
+    // No event handlers for Razor pages <a href>'s
+    if( !urls.isNgrok() ) {
+        addRedirectEventListener('#nav-lnk-register', () => showPopup(setCurrentPageRegister,
+            "Redirect to auth service?", ['YES', 'NO']));
+        addRedirectEventListener('#nav-lnk-login', () => showPopup(setCurrentPageLogin, 
+            "Redirect to auth service?", ['YES', 'NO']));
+    }
     addEventOnWindowResize();
 }
 
@@ -126,7 +129,7 @@ export async function setCurrentPageCompositions(event) {
         }
         let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
         if (pageBodyContainer != null) {
-            var ftchComps = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -160,7 +163,7 @@ export async function setCurrentPageAlbums(event) {
         toggleTopPageBackground(true);
         let ctrl = (loc + 'GetJSONAlbumsPage');
         if ($("#page-body-container") != undefined) {
-            var ftchAlb = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -270,7 +273,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
 
         let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
         if ($("#page-body-container") != undefined) {
-            var ftchCmpsById = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -361,7 +364,7 @@ export async function setCurrentPageAlbumByID(el) {
         }
         let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
-            var ftchPartAlbmsById = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -417,7 +420,7 @@ export async function setCurrentPageManageAccount(event) {
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'Manage/Index');
         if ($("#page-body-container").length) {
-            var ftchMngAcc = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' },
                 redirect: 'follow', 
                 referrerPolicy: 'no-referrer'
@@ -448,7 +451,7 @@ export async function setCurrentPageSignUp(event) {
         toggleTopPageBackground(true);
         let ctrl = (urls.getLocation() + 'GetPartialSignUpPage');  // https://localhost:5001/GetPartialSignUpPage
         if ($("#page-body-container") != undefined) {
-            var ftchSignUp = await fetch(ctrl, {
+            await fetch(ctrl, {
             headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -486,13 +489,12 @@ export async function setCurrentPageSignUp(event) {
 }
 
 export async function setCurrentPageRegister(event) {
-    toggleTopPageBackground(true);
     event?.preventDefault();
     try {
         if( redirectIfServerIsReachable('Identity/Account/Register') ) return;
 
-	    let prefix = urls.isNgrok() ? 'Identity/' : '';
-	
+        let prefix = urls.isNgrok() ? 'Identity/' : '';
+    
         toggleTopPageBackground(true);
         console.log('Loading: ' + loc + 'Account/Register');
         let ctrl = (loc + prefix + 'Account/Register');
@@ -546,18 +548,16 @@ export async function setCurrentPageRegister(event) {
 }
 
 export async function setCurrentPageLogin(event) {
-    toggleTopPageBackground(true);
     try {
         if( redirectIfServerIsReachable('Identity/Account/Login') ) return;
-
-	    let prefix = urls.isNgrok() ? 'Identity/' : '';
-	
         event?.preventDefault();
+
+        let prefix = urls.isNgrok() ? 'Identity/' : '';
         toggleTopPageBackground(true);
         console.log('[INF] click-handlers.js/setCurrentPageLogin(): Loading: ' + loc + 'Account/Login');
         let ctrl = (loc + prefix + 'Account/Login');
         if ($("#page-body-container") != undefined) {
-            var ftchPartLgn = await fetch(ctrl, {
+            await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url

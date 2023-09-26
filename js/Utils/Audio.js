@@ -101,7 +101,7 @@ export function setNextComposition(compId) {
                 },
                 error: async function (error_) {
                     Exception.Throw('Error streaming service');
-                    
+
                     onAjaxSwitchPageError(compId, safeSwitchTrack); // from './../utilities.js';
                 }
             });
@@ -143,6 +143,10 @@ export async function setFooterPlayerSourse(el)
                     replaceTrackParamInUrl(source);
 
                     let plr = $("#player-audio-element").get(0);
+                    if(isPlaying(plr) == true) {
+                        
+                        return;
+                    }
                     plr.load();
                     plr.play();
                     onCompositionSourceChanged(htmlDom.querySelector('#player-source-element').src);
@@ -156,4 +160,18 @@ export async function setFooterPlayerSourse(el)
     } catch (e) {
         console.log(e)
     }
+}
+
+export function isPlaying(plr) {
+    let infoPlaying = false
+    let currentTime = plr.currentTime == 0 ? true : false
+    let paused = plr.paused ? true : false
+    let ended = !plr.ended ? true : false
+    let readyState = plr.readyState == 0 ? true : false
+    if (currentTime && paused && ended && readyState) {
+        infoPlaying = true
+    } else if (!currentTime && !paused && ended && !readyState) {
+        infoPlaying = true
+    }
+    return infoPlaying
 }
