@@ -165,13 +165,18 @@ export async function setFooterPlayerSourse(el)
 export function isPlaying(plr) {
     let infoPlaying = false
     let currentTime = plr.currentTime == 0 ? true : false
+    createInfoMessage('currentTime: ' + currentTime)
     let paused = plr.paused ? true : false
+    createInfoMessage('paused: ' + paused)
     let ended = !plr.ended ? true : false
+    createInfoMessage('ended: ' + ended)
     let readyState = plr.readyState == 0 ? true : false
+    createInfoMessage('readyState: ' + readyState)
     if (currentTime && paused && ended && readyState) {
-        infoPlaying = true
+        infoPlaying = false
     } else if (!currentTime && !paused && ended && !readyState) {
         infoPlaying = true
     }
+    createInfoMessage('player isPlaying: ' + infoPlaying)
     return infoPlaying
 }

@@ -56,7 +56,7 @@ export function showPopup(event_handler, text, buttons) {
     const modalBackground = document.getElementById('modal-window-background');
     (modalBackground ?? { style : {display : '' }}) .style.display = 'block';
     appendPopupButtonHandlers();
-    appendPopupYesHandler(() => { event_handler(); })
+    appendPopupYesHandler(() => { redirects[event_handler](); })
 }
 
 export default redirects;

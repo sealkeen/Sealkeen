@@ -56,9 +56,9 @@ export function addEventHandlersOnBody() {
     addRedirectEventListener('.nav-lnk-about', redirects['about.me']);
     // No event handlers for Razor pages <a href>'s
     if( !urls.isNgrok() ) {
-        addRedirectEventListener('#nav-lnk-register', () => showPopup(setCurrentPageRegister,
+        addRedirectEventListener('#nav-lnk-register', () => showPopup("register",
             "Redirect to auth service?", ['YES', 'NO']));
-        addRedirectEventListener('#nav-lnk-login', () => showPopup(setCurrentPageLogin, 
+        addRedirectEventListener('#nav-lnk-login', () => showPopup("login", 
             "Redirect to auth service?", ['YES', 'NO']));
     }
     addEventOnWindowResize();
