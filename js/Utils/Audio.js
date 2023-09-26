@@ -4,7 +4,7 @@ import { setArtistSongNameAsync, setTitleByArtistAndTitle } from "../Page/event-
 import { GetCurrentCompositionsId, displayQueuedTracks, fromDOMObject } from "../utilities.js";
 import { _trackQueue } from "./Queue.js";
 import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.js';
-import { safeSwitchTrack } from './../utilities.js';
+import { safeSwitchTrack, safePlay} from './../utilities.js';
 import urls from './../api.js';
 import Debug from '../Extensions/cs-debug.js';
 import Exception from '../Extensions/cs-exception.js';
