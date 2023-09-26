@@ -1,6 +1,6 @@
 import { appendPopup } from "../Page/Components/Popups/modal-window.js";
 
-export function addRedirectEventListener()
+export function addRedirectEventListener(text)
 {
     if(document.getElementById('modal-window-background') == null) {
         document.getElementsByTagName('body')[0].insertAdjacentHTML("afterbegin",
@@ -9,7 +9,7 @@ export function addRedirectEventListener()
         <div id="modal-window-background">
         <div id="modal-window">
             <span id="modal-window-close-btn">&times;</span>
-            <p class="modal-window-paragraph">Redirect to about.me/sealkeen?</p>
+            <p class="modal-window-paragraph">${text}</p>
             <div class="buttons">
             <button id="modal-window-yes-btn" class="modal-window-yes-btn popup-btn">
                 YES
@@ -22,7 +22,6 @@ export function addRedirectEventListener()
         </div>
         `);
     }
-
     // shows the modal when the user clicks open-btn
     document.querySelector('.nav-lnk-about')?.addEventListener('click', function(e) {
         onClickGotoAboutMe(e);

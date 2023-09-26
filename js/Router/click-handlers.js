@@ -57,7 +57,7 @@ export function addEventHandlersOnBody() {
     document.querySelector('.nav-lnk-login')?.addEventListener('click', setCurrentPageLogin);
     document.querySelector('.nav-lnk-background')?.addEventListener('click', onClickBodyBackground);
     
-    addRedirectEventListener();
+    addRedirectEventListener("Redirect to about.me/sealkeen?");
     addEventOnWindowResize();
 }
 
