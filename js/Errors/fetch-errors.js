@@ -29,7 +29,7 @@ function createMessage(message, type, timeout = 5000)
     } else {
       const lastErrorMessage = existingErrorMessages[existingErrorMessages.length - 1];
       const lastErrorMessageRect = lastErrorMessage.getBoundingClientRect();
-      topPosition = lastErrorMessageRect.bottom + window.pageYOffset + 10; // adjust 10 to desired spacing between error messages
+      topPosition = lastErrorMessageRect.bottom + 15; // adjust 10 to desired spacing between error messages
     }
     errorMessage.style.top = `${topPosition}px`;
     errorMessage.style.left = `15px`;
