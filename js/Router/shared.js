@@ -37,11 +37,12 @@ export function onDevelopmentCardClick()
 export async function fetchContentCrossOrigin(path, shouldSaveState) {
     try {
         toggleTopPageBackground(true);
-        let nPath = path.indexOf('Content/') ? path.replace('Content/', '') : path;
-        let ctrl = (path.startsWith("http") ? nPath : urls.getLocation() + nPath);
+        let ngPath = path.indexOf('Content/') > 0 ? path.replace('Content/', '') : path;
+        let ngCtrl = (path.startsWith("http") ? ngPath : urls.getLocation() + ngPath);
+        let ghCtrl = (path.startsWith("http") ? path : urls.getLocation() + path);
         if ($("#page-body-container") != undefined) {
-            console.log('[INF] Fecthing content CROSS ORIGIN (' + nPath +')');
-            let response = await fetch(ctrl, {
+            console.log('[INF] Fecthing content CROSS ORIGIN (' + ngPath +')');
+            let response = await fetch(ngCtrl, {
                 method: 'GET',
                 mode: 'cors',
                 cache: 'no-cache',
@@ -55,10 +56,14 @@ export async function fetchContentCrossOrigin(path, shouldSaveState) {
             
             let responseText = await response.text();
             $("#page-body-container").html('');
-            $("#page-body-container").append(responseText);
+            $("#page-body-container").append(responseText); 
             console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
-            if(shouldSaveState !== false)
-                pushHistoryState(nPath);
+            if(shouldSaveState !== false) {
+                if( (urls.isGithub() || urls.isNodeJSHost()) || urls.isRemoteWorkspace() )
+                    pushHistoryState(path);
+                else 
+                    pushHistoryState(ngPath)
+            }
             
             return response;
         }

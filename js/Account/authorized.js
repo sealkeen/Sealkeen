@@ -14,13 +14,13 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
         {
             Debug.WriteLine('Seek navbar-nav');
             const navbarNav = navbarNavs[0];
-            const lbPath = urls.getLocation() + 'Content/GetHTMLListenedPage';
+            const lbPath = urls.getLocation() + 'Content/GetPartialListenedPage';
             const uplPath = urls.getLocation() + 'Content/GetPartialUploadedCompositionsPage'
             const library = createLibraryElement(lbPath);
             const uploaded = createUploadedElement(uplPath);
             appendNavigationLink(navbarNav, library, lbPath)
             appendNavigationLink(navbarNav, uploaded, uplPath)
-            routes["Content/GetHTMLListenedPage"] = libraryEventHandler;
+            routes["Content/GetPartialListenedPage"] = libraryEventHandler;
             routes["Content/GetPartialUploadedCompositionsPage"] = uploadedEventHandler;
             appendLogOut();
         } else {

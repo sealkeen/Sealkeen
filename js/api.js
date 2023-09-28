@@ -95,7 +95,6 @@ export async function pushHistoryState(url)
                 console.error('[ERR] pushHistoryState return of: ' + newLc)
                 return;
             }
-
             console.log('[INF] api.js/pushHistoryState NLc: ' + newLc)
             console.log('[INF] api.js/pushHistoryState url: ' + url);
             //Debug.WriteLine('api.js/pushHistoryState: prevstate not null');
@@ -108,7 +107,7 @@ export async function pushHistoryState(url)
 
 export function getStructedPath(loc, lc) {
     let result = ""//urls.getContentPath();
-    if( !(urls.isGithub() || urls.isNodeJSHost()) )
+    if( !(urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace()) )
         lc = lc.replace('Content/', '')
     if(lc.indexOf( urls.getPostfix() ) > -1) {
         result += lc;

@@ -32,7 +32,7 @@ export default class MusicAPI {
 
 export function replaceArtistParamInUrl(artist) {
     console.log("[INF] url-decoding.js/replaceArtistParamInUrl(), artist: " + artist);
-    if (!urls.isGithub() && !urls.isNodeJSHost()) {
+    if (!urls.isGithub() && !urls.isNodeJSHost() && !urls.isRemoteWorkspace()) {
       return;
     }
   

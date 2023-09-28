@@ -28,7 +28,7 @@ export default class TrackAPI {
 
   export function replaceTrackParamInUrl(trackId) {
       console.log("[INF] track-decoding.js/replaceTrackParamInUrl(), track id: " + trackId);
-      if (!urls.isGithub() && !urls.isNodeJSHost()) {
+      if (!urls.isGithub() && !urls.isNodeJSHost() && !urls.isRemoteWorkspace()) {
           return;
       }
   
