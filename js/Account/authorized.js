@@ -33,7 +33,7 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
 
 async function libraryEventHandler(event) { 
     event?.preventDefault();
-    await fetchContentCrossOrigin("Content/GetHTMLListenedPage")
+    await fetchContentCrossOrigin("Content/GetPartialListenedPage")
 }
 
 async function uploadedEventHandler(event) { 

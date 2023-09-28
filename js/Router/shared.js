@@ -9,9 +9,10 @@ export function appendNavigationLink(navbarNav, element, path)
         return;
     }
 
+    let nPath = path.startsWith('Content/') ? path.replace('Content/', '') : path;
     element.innerHTML = element.innerHTML.replace('Partial', 'HTML')
-    console.info('[INF] appendNavigationLink : ' + path);
-    setElementOnClick(element, path);
+    console.info('[INF] appendNavigationLink : ' + nPath);
+    setElementOnClick(element, nPath);
     navbarNav.appendChild(element);
 }
 
@@ -36,7 +37,7 @@ export function onDevelopmentCardClick()
 export async function fetchContentCrossOrigin(path, shouldSaveState) {
     try {
         toggleTopPageBackground(true);
-        let nPath = path.startsWith('Content/') ? path.replace('Content/', '') : path;
+        let nPath = path.indexOf('Content/') ? path.replace('Content/', '') : path;
         let ctrl = (path.startsWith("http") ? nPath : urls.getLocation() + nPath);
         if ($("#page-body-container") != undefined) {
             console.log('[INF] Fecthing content CROSS ORIGIN (' + nPath +')');
