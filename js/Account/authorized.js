@@ -15,13 +15,13 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
             Debug.WriteLine('Seek navbar-nav');
             const navbarNav = navbarNavs[0];
             const lbPath = urls.getLocation() + 'Content/GetHTMLListenedPage';
-            const uplPath = urls.getLocation() + 'Content/GetHTMLUploadedCompositionsPage'
+            const uplPath = urls.getLocation() + 'Content/GetPartialUploadedCompositionsPage'
             const library = createLibraryElement(lbPath);
             const uploaded = createUploadedElement(uplPath);
             appendNavigationLink(navbarNav, library, lbPath)
             appendNavigationLink(navbarNav, uploaded, uplPath)
             routes["Content/GetHTMLListenedPage"] = libraryEventHandler;
-            routes["Content/GetHTMLUploadedCompositionsPage"] = uploadedEventHandler;
+            routes["Content/GetPartialUploadedCompositionsPage"] = uploadedEventHandler;
             appendLogOut();
         } else {
             console.log('[INF] Navbar-nav not found')
