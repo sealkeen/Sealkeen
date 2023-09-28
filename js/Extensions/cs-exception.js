@@ -4,7 +4,7 @@ const Exception = {
     Throw: function(message)
     {
         createErrorMessage(`[ERR] ${message}`);
-        console.log(`[ERR] ${message}`)
+        console.error(`[ERR] ${message}`)
     }
 };
 

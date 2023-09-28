@@ -1,3 +1,4 @@
+import Exception from './Extensions/cs-exception.js';
 import routes, { GetNonRoutePaths } from './Router/routing-table.js';
 
 const urls = {
@@ -99,7 +100,7 @@ export async function pushHistoryState(url)
             window.history.pushState({ prevUrl: window.location.href }, null, newLc);
         }
     } catch(e) {
-        console.log(e);
+        Exception.Throw(e);
     }
 }
 

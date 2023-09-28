@@ -20,7 +20,7 @@ routes[""] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
 routes["/"] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
 routes["/Content/GetHtmlCompositionPage"] = setCurrentPageCompositions,
 routes["/Content/GetHTMLArtistsPage"] = setCurrentPageArtists, 
-routes["/Content/GetHTMLGenresPage"] =setCurrentPageGenres,
+routes["/Content/GetHTMLGenresPage"] = setCurrentPageGenres,
 routes["/Content/GetHTMLAlbumsPage"] = setCurrentPageAlbums,
 routes["Identity/Account/Login"] = setCurrentPageLogin, //window.location.href = urls.getLocation() + "Identity/Account/Login"
 routes["Identity/Account/Register"] = setCurrentPageRegister// window.location.href = urls.getLocation() + "Identity/Account/Register" 
