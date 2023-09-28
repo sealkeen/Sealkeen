@@ -38,7 +38,7 @@ async function libraryEventHandler(event) {
 
 async function uploadedEventHandler(event) { 
     event?.preventDefault();
-    await fetchContentCrossOrigin("Content/GetHTMLUploadedCompositionsPage")
+    await fetchContentCrossOrigin("Content/GetPartialUploadedCompositionsPage")
 }
 
 function createUploadedElement(path)

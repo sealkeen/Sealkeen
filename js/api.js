@@ -1,3 +1,4 @@
+import { createInfoMessage } from './Errors/fetch-errors';
 import Exception from './Extensions/cs-exception.js';
 import routes, { GetNonRoutePaths } from './Router/routing-table.js';
 
@@ -83,7 +84,7 @@ export async function pushHistoryState(url)
         //    return; // throw new NotImplementedException();
 
         let loc = `${location.protocol}//${location.host}`;
-        let urlPath = getLocationPath(url)
+        let urlPath = toStructedFolderPath(loc, url)
         let newLc = loc + urlPath//[0] == '/' ? urlPath :'/' + urlPath  ;
         if(url.indexOf('http') <= -1) {
             // Whether to ignore the PushHistory state specified
@@ -104,7 +105,7 @@ export async function pushHistoryState(url)
     }
 }
 
-function getLocationPath(lc) {
+function toStructedFolderPath(loc, lc) {
     let result = ""//urls.getContentPath();
     if( !(urls.isGithub() || urls.isNodeJSHost()) )
         lc = lc.replace('Content/', '')
@@ -112,6 +113,15 @@ function getLocationPath(lc) {
         result += lc;
     } else {
         result += ( urls.getPostfix(lc) + lc );
+    }
+    lLocSmb = loc[loc.length - 1] || null;
+    fPathSmb = result[0] || null;
+    // Add Forward slash if none
+    if(fPathSmb !== '/' && fPathSmb !== '\\' && lLocSmb !== '/' && lLocSmb !== '\\') {
+        result = '/' + result
+        createInfoMessage(`[INF] Add slash from ${loc} to ${lc}`);
+    } else {
+        createInfoMessage(`[INF] No slash needed for ${loc} to ${lc}`);
     }
     return result;
 }
