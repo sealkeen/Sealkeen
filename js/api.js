@@ -114,8 +114,8 @@ function getStructedPath(loc, lc) {
     } else {
         result += ( urls.getPostfix(lc) + lc );
     }
-    lLocSmb = loc[loc.length - 1] || null;
-    fPathSmb = result[0] || null;
+    let lLocSmb = loc[loc.length - 1] || null;
+    let fPathSmb = result[0] || null;
     // Add Forward slash if none
     if(fPathSmb !== '/' && fPathSmb !== '\\' && lLocSmb !== '/' && lLocSmb !== '\\') {
         result = '/' + result
