@@ -2,6 +2,7 @@ import { fetchContentCrossOrigin } from "../Router/shared.js";
 import { handleLocation } from './../Router/location-mapper.js';
 import urls from "./../api.js"
 
+
 export default class MusicAPI {
     constructor() {
       console.log('%j', window.location)

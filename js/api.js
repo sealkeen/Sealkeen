@@ -81,28 +81,43 @@ export function ifUrlExist(url, callback) {
 export async function pushHistoryState(url)
 {
     try {
-        //if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
-        //    return; // throw new NotImplementedException();
-
         let loc = `${location.protocol}//${location.host}`;
-        let urlPath = getStructedPath(loc, url)
-        let newLc = loc + urlPath//[0] == '/' ? urlPath :'/' + urlPath  ;
+        let newLc = ""
         if(url.indexOf('http') <= -1) {
+            let urlPath = getStructedPath(loc, url)
+            newLc = loc + urlPath;
             // Whether to ignore the PushHistory state specified
             if( !Object.keys(routes).some( r => url.indexOf(r) > -1) 
                 || GetNonRoutePaths().some( r => url.indexOf(r) > -1)
             ) {  
-                console.error('[ERR] pushHistoryState return of: ' + newLc)
-                return;
+                console.log('[ERR] push...: return of: ' + newLc)
+                return; 
             }
-            console.log('[INF] api.js/pushHistoryState NLc: ' + newLc)
-            console.log('[INF] api.js/pushHistoryState url: ' + url);
+            console.log('[INF] api.js/push... NLc: ' + newLc);
+            console.log('[INF] api.js/push... url: ' + url);
             //Debug.WriteLine('api.js/pushHistoryState: prevstate not null');
             window.history.pushState({ prevUrl: window.location.href }, null, newLc);
+        } else {
+            if (url.startsWith(urls.getLocation())) {
+                newLc = url.replace(urls.getLocation(), loc + '/') .replace('GetPartial', 'GetHTML');
+                if( anyPathSpecified(newLc) ) {
+                    window.history.pushState({ prevUrl: window.location.href }, null, newLc);
+                    console.log( '[INF] api.js/push... : Pushed + NLc: ' + newLc);
+                } else {
+                    console.log( '[INF] api.js/push... : No push - state for NLc: ' + newLc);
+                }
+            }
+            console.log('[INF] api.js//push... : No push state for url: ' + url);
         }
     } catch(e) {
         Exception.Throw(e);
     }
+}
+
+export function anyPathSpecified(url)
+{
+    return Object.keys(routes).some( r => url.indexOf(r) > -1) && 
+    !(GetNonRoutePaths().some( r => url.indexOf(r) > -1));
 }
 
 export function getStructedPath(loc, lc) {

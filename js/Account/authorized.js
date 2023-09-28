@@ -20,8 +20,6 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
             const uploaded = createUploadedElement(uplPath);
             appendNavigationLink(navbarNav, library, lbPath)
             appendNavigationLink(navbarNav, uploaded, uplPath)
-            routes["Content/GetPartialListenedPage"] = libraryEventHandler;
-            routes["Content/GetPartialUploadedCompositionsPage"] = uploadedEventHandler;
             appendLogOut();
         } else {
             console.log('[INF] Navbar-nav not found')
@@ -31,15 +29,6 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
     }  
 }
 
-async function libraryEventHandler(event) { 
-    event?.preventDefault();
-    await fetchContentCrossOrigin("Content/GetPartialListenedPage")
-}
-
-async function uploadedEventHandler(event) { 
-    event?.preventDefault();
-    await fetchContentCrossOrigin("Content/GetPartialUploadedCompositionsPage")
-}
 
 function createUploadedElement(path)
 {

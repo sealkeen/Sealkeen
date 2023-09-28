@@ -10,8 +10,9 @@ export const route = (event) => {
 
 export const handleLocation = async () => {
     const path = window.location.pathname;
-    console.log("[INF] router location: " + path);
-    let key = Object.keys(routes).filter(k => k.startsWith(path))[0]
+    let rPath = path.replace('/GetPartial', '/GetHTML')//.replace('/Content', 'Content');
+    console.log("[INF] router location: " + rPath);
+    let key = Object.keys(routes).filter(k => k.startsWith(rPath))[0]
     console.log("[INF] router starts with: " + key);
     const goToAction = routes[key] || routes[404];
     if(goToAction && goToAction !== "")

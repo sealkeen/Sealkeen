@@ -37,11 +37,11 @@ export function onDevelopmentCardClick()
 export async function fetchContentCrossOrigin(path, shouldSaveState) {
     try {
         toggleTopPageBackground(true);
-        let ngPath = path.indexOf('Content/') > 0 ? path.replace('Content/', '') : path;
+        let ngPath = path.indexOf('Content/') > -1 ? path.replace('Content/', '') : path;
         let ngCtrl = (path.startsWith("http") ? ngPath : urls.getLocation() + ngPath);
         let ghCtrl = (path.startsWith("http") ? path : urls.getLocation() + path);
         if ($("#page-body-container") != undefined) {
-            console.log('[INF] Fecthing content CROSS ORIGIN (' + ngPath +')');
+            console.log('[INF] Fecthing content CROSS ORIGIN (' + ngCtrl +')');
             let response = await fetch(ngCtrl, {
                 method: 'GET',
                 mode: 'cors',

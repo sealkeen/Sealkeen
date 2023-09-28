@@ -1,4 +1,4 @@
-import urls from './../api.js'
+import urls, { anyPathSpecified } from './../api.js'
 import { toggleForId } from '../Utils/ClassQuery.js';
 import Debug from '../Extensions/cs-debug.js';
 import { setDevelopmentMessages } from '../Development/news-data.js';
@@ -69,12 +69,16 @@ export async function onPerformHandShakeInterval(onSuccessAction)
 
 export async function onSiteLoadIfAuthorized(skipLibraryFetch)
 {
-    let result = "";
-    if(urls.isHomePage() || skipLibraryFetch === true) {
-        // Only 
+    if ( window.isAuthorized === false && anyPathSpecified(window.location.href)) {
+        skipLibraryFetch = true
+    }
+    if(
+        urls.isHomePage() || skipLibraryFetch === true
+    ) {
+        // Only
         const nextActionInPipeLine = //urls.isGithub() || urls.isNodeJSHost() ? 
             addElementsForAuthorizedUser 
-        //: noOp;
+        // noOp;
         if(skipLibraryFetch === true)
             onPerformHandShakeInterval(nextActionInPipeLine);
         else
