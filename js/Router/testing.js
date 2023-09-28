@@ -11,8 +11,8 @@ const MAX_INTERVAL = 48500; // Max value for the HandShake Health condition in m
 const DEFAULT_INTERVAL = 8000; // Default handshake interval value is ms
 const INTERVAL_INCREASE = 1450; // Increase interval after the handshake is failed in ms
 var g_interval = DEFAULT_INTERVAL;
-const isVisibilityHiddenState = 'hidden';
 var g_inProcess = false;
+const isVisibilityHiddenState = 'hidden';
 
 export async function runBackgroundHandShakes()
 {
@@ -78,7 +78,7 @@ export async function onSiteLoadIfAuthorized(skipLibraryFetch)
         if(skipLibraryFetch === true)
             onPerformHandShakeInterval(nextActionInPipeLine);
         else
-            onPerformHandShakeInterval(async () => {FetchGetPatialListenedPage(nextActionInPipeLine); });
+            onPerformHandShakeInterval(async () => { FetchGetPatialListenedPage(nextActionInPipeLine); });
     } else {
         onPerformHandShakeInterval(noOp);
     }

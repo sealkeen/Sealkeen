@@ -399,7 +399,7 @@ export async function setCurrentPageAlbumByID(el) {
 
 export async function FetchGetPatialListenedPage(nextActionInPipeLine)
 {
-    await fetchContentCrossOrigin('Content/GetPartialListenedPage').then(result => {
+    await fetchContentCrossOrigin('GetPartialListenedPage', false).then(result => {
         if(result.ok) {
             nextActionInPipeLine();
         }
