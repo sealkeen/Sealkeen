@@ -175,7 +175,7 @@ export function safeSwitchTrack()
 
 export function GetCurrentCompositionsId() { 
     try {
-        let audioSrc = $("#player-audio-element").get(0).children[0];
+        let audioSrc = getAudioNode().children[0];
         if (audioSrc.src == null) {
             Debug.WriteLine('utilities.js/GetCurrentCompositionsId() error. audioSrc = null.');
             return '';
