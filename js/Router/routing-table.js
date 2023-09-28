@@ -8,7 +8,7 @@ const routes = {
     "Content/GetHTMLGenresPage": async () => { },
     "Content/GetHTMLCompositionsPage": async () => { },
     "Content/GetHTMLListenedPage": async () => { },
-    "Content/GetPartialUploadedCompositionsPage": async () => { },
+    "Content/GetHTMLUploadedCompositionsPage": async () => { },
     "Identity/Account/Login": async () => { }, //window.location.href = urls.getLocation() + "Identity/Account/Login"
     "Identity/Account/Register": async () => { }// window.location.href = urls.getLocation() + "Identity/Account/Register" 
 };

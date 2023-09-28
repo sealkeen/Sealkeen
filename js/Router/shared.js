@@ -36,9 +36,10 @@ export function onDevelopmentCardClick()
 export async function fetchContentCrossOrigin(path, shouldSaveState) {
     try {
         toggleTopPageBackground(true);
-        let ctrl = (path.startsWith("http") ? path : urls.getLocation() + path);
+        let nPath = path.startsWith('Content/') ? path.replace('Content/', '') : path;
+        let ctrl = (path.startsWith("http") ? nPath : urls.getLocation() + nPath);
         if ($("#page-body-container") != undefined) {
-            console.log('[INF] Fecthing content CROSS ORIGIN (' + path +')');
+            console.log('[INF] Fecthing content CROSS ORIGIN (' + nPath +')');
             let response = await fetch(ctrl, {
                 method: 'GET',
                 mode: 'cors',
@@ -55,9 +56,8 @@ export async function fetchContentCrossOrigin(path, shouldSaveState) {
             $("#page-body-container").html('');
             $("#page-body-container").append(responseText);
             console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
-            let goToPath = "";
             if(shouldSaveState !== false)
-                pushHistoryState(goToPath + path);
+                pushHistoryState(nPath);
             
             return response;
         }

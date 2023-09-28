@@ -106,7 +106,7 @@ export async function pushHistoryState(url)
     }
 }
 
-function getStructedPath(loc, lc) {
+export function getStructedPath(loc, lc) {
     let result = ""//urls.getContentPath();
     if( !(urls.isGithub() || urls.isNodeJSHost()) )
         lc = lc.replace('Content/', '')
