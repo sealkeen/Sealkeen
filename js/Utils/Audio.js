@@ -15,7 +15,7 @@ const loc = urls.getLocation();
 
 export function getAudioNode()
 {
-    let res = document.querySelector("#player-audio-element")[0];
+    let res = document.querySelector("#player-audio-element");
     if (res == null) Exception.Throw('Audio element not found.');
     return res;
 }
