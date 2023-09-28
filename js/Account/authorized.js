@@ -1,5 +1,5 @@
 import urls from './../api.js'
-import { appendNavigationLink } from '../Router/shared.js';
+import { appendNavigationLink, fetchContentCrossOrigin } from '../Router/shared.js';
 import { setCurrentPageLogin } from '../Router/click-handlers.js';
 import Debug from '../Extensions/cs-debug.js';
 import routes from '../Router/routing-table.js';
@@ -14,13 +14,13 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
         {
             Debug.WriteLine('Seek navbar-nav');
             const navbarNav = navbarNavs[0];
-            const lbPath = urls.getLocation() + 'Content/GetPartialListenedPage';
-            const uplPath = urls.getLocation() + 'Content/GetPartialUploadedCompositionsPage'
+            const lbPath = urls.getLocation() + 'Content/GetHTMLListenedPage';
+            const uplPath = urls.getLocation() + 'Content/GetHTMLUploadedCompositionsPage'
             const library = createLibraryElement(lbPath);
             const uploaded = createUploadedElement(uplPath);
             appendNavigationLink(navbarNav, library, lbPath)
             appendNavigationLink(navbarNav, uploaded, uplPath)
-            routes["Content/GetPartialListenedPage"] = libraryEventHandler;
+            routes["Content/GetHTMLListenedPage"] = libraryEventHandler;
             routes["Content/GetHTMLUploadedCompositionsPage"] = uploadedEventHandler;
             appendLogOut();
         } else {
@@ -33,7 +33,7 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
 
 async function libraryEventHandler(event) { 
     event?.preventDefault();
-    await fetchContentCrossOrigin("Content/GetPartialListenedPage")
+    await fetchContentCrossOrigin("Content/GetHTMLListenedPage")
 }
 
 async function uploadedEventHandler(event) { 

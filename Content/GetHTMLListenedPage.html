@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediaStreamer.WebApplication</title>
+    <link rel="stylesheet" href="./../lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./../css/site.css" />
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            /*color: white;*/
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image-div"></div>
+    <div id="top-page-container">
+    </div>
+    <div class="side-hover-bar right-hover-bar"></div>  
+    <div class="side-hover-bar left-hover-bar"></div> 
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ninty-percent-transparency border-bottom box-shadow mb-3">
+            <a id="navbar-logo-title" class="navbar-brand" asp-area="" asp-page="/Index">MediaStreamer.WebApplication</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li id="nav-lnk-artists" class="nav-item">
+                        <a href="/Content/GetHTMLArtistsPage" class="nav-link text-dark stroke-shadow-h3-white">Artists</a>
+                    </li>
+                    <li id="nav-lnk-compositions" class="nav-item nav-lnk-compositions">
+                        <a href="/Content/GetHtmlCompositionPage" class="nav-link text-dark stroke-shadow-h3-white" >Home</a>
+                    </li>
+                    <li id="nav-lnk-albums" class="nav-item">
+                        <a href="/Content/GetHTMLAlbumsPage" class="nav-link text-dark stroke-shadow-h3-white">Albums</a>
+                    </li>
+                    <li id="nav-lnk-genres" class="nav-item">
+                        <a href="/Content/GetHTMLGenresPage" class="nav-link text-dark stroke-shadow-h3-white">Genres</a>
+                    </li>
+                    <!-- <li id="nav-lnk-sign-up" class="nav-item">
+                        <a class="nav-link text-dark">Sign up</a>
+                    </li> -->
+                    <li id="nav-lnk-background" class="nav-item">
+                        <a class="nav-link text-dark stroke-shadow-h3-white">Background</a>
+                    </li>
+                </ul>
+                <ul id="navbar-nav-user-register-login" class="navbar-nav">
+                    <li href="Identity/Account/Register" id="nav-lnk-register" class="nav-item">
+                        <a id="btn-identity-account-register" class="nav-link text-dark stroke-shadow-h3-white">Register</a>
+                    </li>
+                    <li href="Identity/Account/Login" id="nav-lnk-login" class="nav-item">
+                        <a id="btn-identity-account-login" class="nav-link text-dark stroke-shadow-h3-white">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="spacer"></div>
+    <div class="container">
+        <main id="page-body-container" role="main" class="pb-3">
+            <div class="text-center">
+                <h1 id="welcome" class="display-4 stroke-shadow">Welcome</h1>
+                <p class="stroke-shadow-h3">Hello there</p>
+            </div>
+            <div id="development-body"></div>
+        </main>
+        <center>
+            <a class="btm-footer2">
+                &copy; Sealkeen - 2023 - MediaStreamer.WebApplication <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </a>
+        </center>
+    </div>
+    <footer class="footer ninty-percent-transparency">
+        <div class="spacer srv-status">
+            <span id="srv-status-light" class="srv-status-dot srv-status-disabled"></span>
+            <h3 class="lbl-srv-status  stroke-shadow-h3">Server status</h3>
+        </div>
+        <div id="player-audio-div">
+            <div class="track-artist-song-name">Unknown – null</div>
+            <audio id="player-audio-element" class="player-audio-element" controls="controls" height="80" width="100%" autoplay>
+                <source id="player-source-element" src="" type="audio/mp3">
+            </audio>
+            <span class="openNavSpan">&#9776;</span>
+            <span class="openRightNavSpan">&#9776;</span>
+        </div>
+    </footer>  
+    <div id="mobile-detect" class="d-sm-none d-md-block"> </div>
+    <script src="./../lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="./../lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="./../js/site.js" type="module" asp-append-version="true"></script>
+</body>
+
+</html>
