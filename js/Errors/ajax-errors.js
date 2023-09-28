@@ -1,3 +1,4 @@
+import { getAudioNode } from "../Utils/Audio.js";
 
 export function onAjaxLoadError(source, safePlay)
 {
@@ -7,8 +8,8 @@ export function onAjaxLoadError(source, safePlay)
         src.setAttribute('id', "player-source-element");
         src.setAttribute('src', source);
         src.setAttribute('type', 'audio/mp3');
-        $("#player-audio-element").html('');
-        $("#player-audio-element").append(src);
+        getAudioNode().innerHTML = '';
+        getAudioNode().appendChild(src);
         safePlay();
     }
 }
@@ -21,8 +22,8 @@ export function onAjaxSwitchPageError(source, safeSwitch)
         src.setAttribute('id', "player-source-element");
         src.setAttribute('src', source);
         src.setAttribute('type', 'audio/mp3');
-        $("#player-audio-element").html('');
-        $("#player-audio-element").append(src);
+        getAudioNode().innerHTML = '';
+        getAudioNode().appendChild(src);
         safeSwitch();
     }
 }

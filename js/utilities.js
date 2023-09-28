@@ -3,6 +3,7 @@ import Debug from './Extensions/cs-debug.js';
 import Trace from './Extensions/cs-trace.js';
 import Exception from './Extensions/cs-exception.js';
 import { createInfoMessage } from './Errors/fetch-errors.js';
+import { getAudioNode } from './Utils/Audio.js';
 
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
@@ -128,7 +129,7 @@ export function safePlay()
 {
     Debug.WriteLine('utilities.js/safePlay() { -> ... } ')
     try {
-        var playPromise = document.querySelector("#player-audio-element")[0]?.play();
+        var playPromise = getAudioNode().play();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
                 // Automatic playback started!
@@ -153,7 +154,7 @@ export function safeSwitchTrack()
     Debug.WriteLine('utilities.js/safeSwitchTrack() { -> ... }')
     displayQueuedTracks();
     try {
-        var loadPromise = document.querySelector("#player-audio-element")[0]?.load();
+        var loadPromise = getAudioNode()?.load();
         if (loadPromise !== undefined) {
             loadPromise.then(_ => {
                 Debug.WriteLine('utilities.js/safeLoadOK: safePlaying...');

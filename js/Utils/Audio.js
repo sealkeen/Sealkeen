@@ -5,22 +5,37 @@ import { GetCurrentCompositionsId, displayQueuedTracks, fromDOMObject } from "..
 import { _trackQueue } from "./Queue.js";
 import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.js';
 import { safeSwitchTrack, safePlay} from './../utilities.js';
+import { createInfoMessage } from '../Errors/fetch-errors.js';
+import { getNext } from '../Store/mock-data.js';
 import urls from './../api.js';
 import Debug from '../Extensions/cs-debug.js';
 import Exception from '../Extensions/cs-exception.js';
-import { createInfoMessage } from '../Errors/fetch-errors.js';
-import { getNext } from '../Store/mock-data.js';
 
 const loc = urls.getLocation();
+
+export function getAudioNode()
+{
+    let res = document.querySelector("#player-audio-element")[0];
+    if (res == null) Exception.Throw('Audio element not found.');
+    return res;
+}
+
+export function isPlaying(plr) {
+    let atStart = plr.currentTime == 0 ? true : false
+    if ((atStart && plr.paused) || (plr.ended && plr.readyState == 0))
+        return false
+    return true
+}
+
 export async function loadDirect(source)
 {
     if(source.includes(':')) {
-        Debug.WriteLine('loadDirect: $("#player-audio-element")[0] is %j', $("#player-audio-element")[0]);
+        Debug.WriteLine('loadDirect: $("#player-audio-element")[0] is %j', getAudioNode());
         $("#player-source-element")[0].setAttribute('src', source);
-        let loadPromise = await $("#player-audio-element")[0].load();
+        let loadPromise = await getAudioNode().load();
         if (loadPromise !== undefined) {
             loadPromise.then(() => {
-                $("#player-audio-element")[0].play()
+                getAudioNode().play();
                 return true;
             }).catch((error) => {
                 if (error.name === "NotAllowedError") {
@@ -43,7 +58,7 @@ export function onCompositionSourceChanged(compId)
     appendHorizontalVolumeControl(); //from "../Page/Components/volume-controls.js"; 
     
     //setTitleByArtistAndTitle(el);
-    let plr = $("#player-audio-element").get(0);
+    let plr = getAudioNode();
     if(plr != null) {
         plr.onended = function () {
             let id = GetCurrentCompositionsId(); //from "../utilities.js";
@@ -93,7 +108,7 @@ export function setNextComposition(compId) {
                     document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
                     Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                     Debug.WriteLine(htmlDom.documentElement.innerHTML);
-                    let plr = $("#player-audio-element").get(0);
+                    let plr = getAudioNode();
                     plr.load();
                     plr.play();
                     onCompositionSourceChanged(compId); //from here
@@ -138,7 +153,7 @@ export async function setFooterPlayerSourse(el)
                     //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
                     replaceTrackParamInUrl(source);
 
-                    let plr = $("#player-audio-element").get(0);
+                    let plr = getAudioNode();
                     if(isPlaying(plr) === true) {
                         let toQuery = fromDOMObject(el);
                         _trackQueue.enqueue(toQuery);
@@ -157,15 +172,5 @@ export async function setFooterPlayerSourse(el)
         }
     } catch (e) {
         console.log(e)
-    }
-}
-
-export function isPlaying(plr) {
-    let atStart = plr.currentTime == 0 ? true : false
-    let paused = plr.paused ? true : false
-    if ((atStart && paused) || (plr.ended && plr.readyState == 0)) {
-        return false
-    } else { 
-        return true
     }
 }
