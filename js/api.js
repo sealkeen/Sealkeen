@@ -1,6 +1,7 @@
 import { createInfoMessage } from './Errors/fetch-errors.js';
-import Exception from './Extensions/cs-exception.js';
 import routes, { GetNonRoutePaths } from './Router/routing-table.js';
+import Exception from './Extensions/cs-exception.js';
+import Debug from './Extensions/cs-debug.js';
 
 const urls = {
     getLocation() {
@@ -119,9 +120,9 @@ function getStructedPath(loc, lc) {
     // Add Forward slash if none
     if(fPathSmb !== '/' && fPathSmb !== '\\' && lLocSmb !== '/' && lLocSmb !== '\\') {
         result = '/' + result
-        createInfoMessage(`[INF] api.js/getStructedPath(): Add slash from ${loc} to ${lc}`);
+        Debug.WriteLine(`[INF] api.js/getStructedPath(): Add slash from ${loc} to ${lc}`);
     } else {
-        createInfoMessage(`[INF] api.js/getStructedPath(): No slash needed for ${loc} to ${lc}`);
+        Debug.WriteLine(`[INF] api.js/getStructedPath(): No slash needed for ${loc} to ${lc}`);
     }
     return result;
 }
