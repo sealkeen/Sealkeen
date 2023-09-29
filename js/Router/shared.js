@@ -1,6 +1,7 @@
 import urls, { pushHistoryState } from './../api.js'
 import { toggleTopPageBackground, toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { setDevelopmentMessages } from '../Development/news-data.js';
+import Exception from '../Extensions/cs-exception.js';
 
 export function appendNavigationLink(navbarNav, element, path)
 {
@@ -21,7 +22,11 @@ function setElementOnClick(element, path)
     element.addEventListener('click', 
     (event) => {
         event.preventDefault();
-        fetchContentCrossOrigin(path)
+        if(window.isAuthorized !== true) 
+            Exception.Throw("[401] Unauthorized - Forbidden");
+        else {
+            fetchContentCrossOrigin(path, true, 'error')
+        }
     });
 }
 
@@ -34,41 +39,45 @@ export function onDevelopmentCardClick()
     }
     setDevelopmentMessages();
 }
-export async function fetchContentCrossOrigin(path, shouldSaveState) {
+
+export async function fetchContentCrossOrigin(path, shouldSaveState, shouldRedirect) {
     try {
         toggleTopPageBackground(true);
+        shouldRedirect = shouldRedirect || 'follow';
         let ngPath = path.indexOf('Content/') > -1 ? path.replace('Content/', '') : path;
         let ngCtrl = (path.startsWith("http") ? ngPath : urls.getLocation() + ngPath);
         let ghCtrl = (path.startsWith("http") ? path : urls.getLocation() + path);
         if ($("#page-body-container") != undefined) {
-            console.log('[INF] Fecthing content CROSS ORIGIN (' + ngCtrl +')');
+            console.log('[INF] Fetching content CROSS ORIGIN (' + ngCtrl +')');
             let response = await fetch(ngCtrl, {
                 method: 'GET',
                 mode: 'cors',
                 cache: 'no-cache',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                redirect: 'follow',
+                redirect: shouldRedirect,
                 referrerPolicy: 'no-referrer'
             });
 
-            if (!response.ok) { throw new Error('Fetch error.'); }
+            if (!response.ok) { 
+                throw new Error(`Fetch error for <${ngCtrl}>: ` + JSON.stringify(response)); 
+            }
             
             let responseText = await response.text();
             $("#page-body-container").html('');
             $("#page-body-container").append(responseText); 
             console.log('[INF] fetch response key count: ' + Object.keys(responseText).length);
             if(shouldSaveState !== false) {
-                if( (urls.isGithub() || urls.isNodeJSHost()) || urls.isRemoteWorkspace() )
-                    pushHistoryState(path);
-                else 
+                if( urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace() )
+                    pushHistoryState(path)
+                else
                     pushHistoryState(ngPath)
             }
             
             return response;
         }
     } catch (e) {
-        console.log(e);
+        Exception.Throw('shared.js/fetch(): ' + e)
         return { ok : false };
     } finally {
         toggleTopPageBackground(false);

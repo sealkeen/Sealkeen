@@ -90,8 +90,8 @@ export async function pushHistoryState(url)
             if( !Object.keys(routes).some( r => url.indexOf(r) > -1) 
                 || GetNonRoutePaths().some( r => url.indexOf(r) > -1)
             ) {  
-                console.log('[ERR] push...: return of: ' + newLc)
-                return; 
+                createInfoMessage('[INF] Skip states for: <' + newLc + '>, <' + url + '>')
+                return;
             }
             console.log('[INF] api.js/push... NLc: ' + newLc);
             console.log('[INF] api.js/push... url: ' + url);

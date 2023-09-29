@@ -1,23 +1,23 @@
 import urls from './../api.js'
+import Debug from '../Extensions/cs-debug.js';
 import { appendNavigationLink, fetchContentCrossOrigin } from '../Router/shared.js';
 import { setCurrentPageLogin } from '../Router/click-handlers.js';
-import Debug from '../Extensions/cs-debug.js';
-import routes from '../Router/routing-table.js';
+import Exception from '../Extensions/cs-exception.js';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
     try {
-        window.isAuthorized = true;
-        const navbarNavs = document.getElementsByClassName('navbar-nav');
-        Debug.WriteLine('Seek navbar');
+        window.isAuthorized = true
+        const navbarNavs = document.getElementsByClassName('navbar-nav')
+        Debug.WriteLine('Seek navbar')
         if(navbarNavs && navbarNavs[0] != null)
         {
-            Debug.WriteLine('Seek navbar-nav');
-            const navbarNav = navbarNavs[0];
-            const lbPath = urls.getLocation() + 'Content/GetPartialListenedPage';
+            Debug.WriteLine('Seek navbar-nav')
+            const navbarNav = navbarNavs[0]
+            const lbPath = urls.getLocation() + 'Content/GetPartialListenedPage'
             const uplPath = urls.getLocation() + 'Content/GetPartialUploadedCompositionsPage'
-            const library = createLibraryElement(lbPath);
-            const uploaded = createUploadedElement(uplPath);
+            const library = createLibraryElement(lbPath)
+            const uploaded = createUploadedElement(uplPath)
             appendNavigationLink(navbarNav, library, lbPath)
             appendNavigationLink(navbarNav, uploaded, uplPath)
             appendLogOut();
@@ -25,10 +25,9 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
             console.log('[INF] Navbar-nav not found')
         }
     } catch (e) {
-        console.error('addElementsForAuthorizedUser: ' + e);
+        Exception.Throw('addElementsForAuthorizedUser: ' + e)
     }  
 }
-
 
 function createUploadedElement(path)
 {
@@ -55,7 +54,6 @@ function appendLogOut()
     const login = document.querySelector('#nav-lnk-login');
     if(login) {
         login.className = 'nav-lnk-logout'
-        //login.textContent = '';
         login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${logoutUrl}">Logout</a>`;
         login.removeEventListener('click', setCurrentPageLogin);
         login.addEventListener('click', (e) => {

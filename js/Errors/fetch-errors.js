@@ -30,6 +30,9 @@ function createMessage(message, type, timeout = 5000)
       const lastErrorMessage = existingErrorMessages[existingErrorMessages.length - 1];
       const lastErrorMessageRect = lastErrorMessage.getBoundingClientRect();
       topPosition = lastErrorMessageRect.bottom + 15; // adjust 10 to desired spacing between error messages
+      console.log('[INF] topPosition before: ' + topPosition)
+      topPosition = (topPosition > window.innerHeight) ? pageBodyContainerTop : topPosition;
+      console.log('[INF] topPosition after: ' + topPosition)
     }
     errorMessage.style.top = `${topPosition}px`;
     errorMessage.style.left = `15px`;

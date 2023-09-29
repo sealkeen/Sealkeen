@@ -15,22 +15,23 @@ import routes from './routing-table.js';
 import Debug from '../Extensions/cs-debug.js'
 import Exception from '../Extensions/cs-exception.js'
 import redirects, { showPopup } from "./redirect-table.js";
+import { createInfoMessage } from '../Errors/fetch-errors.js'
 
-routes[""] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
-routes["/"] = async () => { setCurrentPageIndex() }, // "/pages/index.html"
-routes["/Content/GetHTMLCompositionsPage"] = setCurrentPageCompositions,
-routes["/Content/GetHTMLArtistsPage"] = setCurrentPageArtists, 
-routes["/Content/GetHTMLGenresPage"] = setCurrentPageGenres,
-routes["/Content/GetHTMLAlbumsPage"] = setCurrentPageAlbums,
+routes[""] = async () => { setCurrentPageIndex() } // "/pages/index.html"
+routes["/"] = async () => { setCurrentPageIndex() } // "/pages/index.html"
+routes["/Content/GetHTMLCompositionsPage"] = setCurrentPageCompositions
+routes["/Content/GetHTMLArtistsPage"] = setCurrentPageArtists
+routes["/Content/GetHTMLGenresPage"] = setCurrentPageGenres
+routes["/Content/GetHTMLAlbumsPage"] = setCurrentPageAlbums
 
-routes["/Content/GetHTMLListenedPage"] = libraryEventHandler;
-routes["/Content/GetHTMLUploadedCompositionsPage"] = uploadedEventHandler;
+routes["/Content/GetHTMLListenedPage"] = libraryEventHandler
+routes["/Content/GetHTMLUploadedCompositionsPage"] = uploadedEventHandler
 
-routes["Identity/Account/Login"] = setCurrentPageLogin, //window.location.href = urls.getLocation() + "Identity/Account/Login"
-routes["Identity/Account/Register"] = setCurrentPageRegister// window.location.href = urls.getLocation() + "Identity/Account/Register" 
+routes["Identity/Account/Login"] = setCurrentPageLogin //window.location.href = urls.getLocation() + "Identity/Account/Login"
+routes["Identity/Account/Register"] = setCurrentPageRegister // window.location.href = urls.getLocation() + "Identity/Account/Register" 
 
-redirects['login'] = setCurrentPageLogin;
-redirects['register'] = setCurrentPageRegister;
+redirects['login'] = setCurrentPageLogin
+redirects['register'] = setCurrentPageRegister
 
 const loc = urls.getLocation();
 
@@ -42,12 +43,22 @@ function onContentPageLoaded_Finally()
 
 export async function libraryEventHandler(event) { 
     event?.preventDefault();
-    await fetchContentCrossOrigin("Content/GetPartialListenedPage")
+    if(window.isAuthorized !== true) 
+        Exception.Throw("[401] Unauthorized - Forbidden");
+    else {
+        createInfoMessage("[INF] Ok. Authorized.")
+        //await fetchContentCrossOrigin("Content/GetPartialListenedPage", true, 'error') 
+    }
 }
 
 export async function uploadedEventHandler(event) { 
     event?.preventDefault();
-    await fetchContentCrossOrigin("Content/GetPartialUploadedCompositionsPage")
+    if (window.isAuthorized !== true) {
+        Exception.Throw("[401] Unauthorized - Forbidden");
+    } else {
+        createInfoMessage("[INF] Ok. Authorized.")
+        //await fetchContentCrossOrigin("Content/GetPartialUploadedCompositionsPage", true, 'error')
+    }
 }
 
 export function addEventHandlersOnBody() {
