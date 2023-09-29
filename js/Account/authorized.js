@@ -3,6 +3,9 @@ import Debug from '../Extensions/cs-debug.js';
 import { appendNavigationLink, fetchContentCrossOrigin } from '../Router/shared.js';
 import { setCurrentPageLogin } from '../Router/click-handlers.js';
 import Exception from '../Extensions/cs-exception.js';
+import { showPopup } from '../Router/redirect-table.js';
+import { InvokeAddEventListener, addRedirectEventListener } from '../Router/redirect.js';
+import { createInfoMessage } from '../Errors/fetch-errors.js';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
@@ -20,9 +23,9 @@ export async function addElementsForAuthorizedUser(pipeLineNext)
             const uploaded = createUploadedElement(uplPath)
             appendNavigationLink(navbarNav, library, lbPath)
             appendNavigationLink(navbarNav, uploaded, uplPath)
-            appendLogOut();
+            Authorized();
         } else {
-            console.log('[INF] Navbar-nav not found')
+            console.log('[INF/ERR] Navbar-nav not found')
         }
     } catch (e) {
         Exception.Throw('addElementsForAuthorizedUser: ' + e)
@@ -47,20 +50,31 @@ function createLibraryElement(path)
     return library;
 }
 
-function appendLogOut()
+function Authorized()
 {
+    createInfoMessage('Authorized')
     Debug.WriteLine('Appending logout...')
-    const logoutUrl = urls.getLocation() + 'Identity/Account/Logout';
-    const login = document.querySelector('#nav-lnk-login');
+    const logoutUrl = urls.getLocation() + 'Identity/Account/Logout'
+    const login = document.querySelector('#nav-lnk-login')
     if(login) {
         login.className = 'nav-lnk-logout'
-        login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${logoutUrl}">Logout</a>`;
-        login.removeEventListener('click', setCurrentPageLogin);
-        login.addEventListener('click', (e) => {
-            Debug.WriteLine('Logout url: ' + logoutUrl)
-            window.location = logoutUrl;
-        });
-        const register = document.getElementById('nav-lnk-register');
-        if(register) register.remove();
+        login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${logoutUrl}">Logout</a>`
+        login.removeEventListener('click', setCurrentPageLogin)
+        InvokeAddEventListener(login, () => showPopup("logout", "Redirect to auth service?", ['YES', 'NO']))
+        
+        const register = document.getElementById('nav-lnk-register')
+        if(register) register.style.display = 'none'
     }
+}
+
+export function Unauthorized()
+{
+    createInfoMessage('Unauthorized')
+    addRedirectEventListener('#nav-lnk-login', () => showPopup("login", "Redirect to auth service?", ['YES', 'NO']))
+    const loginUrl = urls.getLocation() + 'Identity/Account/Login'
+    const login = document.querySelector('#nav-lnk-login')
+    login.className = 'nav-item'
+    login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${loginUrl}">Login</a>`
+    const register = document.getElementById('nav-lnk-register')
+    if(register) register.style.display = 'item-list'
 }

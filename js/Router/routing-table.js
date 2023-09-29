@@ -3,19 +3,25 @@ const routes = {
     404: async () => { },
     "": async () => { },
     "/": async () => { }, // "/pages/index.html"
-    "/Content/GetHTMLArtistsPage": async () => { console.log('/Content/GetHTMLArtistsPage') }, 
-    "/Content/GetHTMLAlbumsPage": async () => { console.log("/Content/GetHTMLAlbumsPage") },
-    "/Content/GetHTMLGenresPage": async () => { console.log("/Content/GetHTMLGenresPage") },
-    "/Content/GetHTMLCompositionsPage": async () => { console.log("/Content/GetHTMLCompositionsPage") },
-    "/Content/GetHTMLListenedPage": async () => { console.log("/Content/GetHTMLListenedPage") },
-    "/Content/GetHTMLUploadedCompositionsPage": async () => { console.log("/Content/GetHTMLUploadedCompositionsPage") },
-    "Identity/Account/Login": async () => { console.log("Identity/Account/Login") }, 
-    "Identity/Account/Register": async () => { console.log("Identity/Account/Register") }
+    "/Content/GetHTMLArtistsPage": async () => { console.error('!/Content/GetHTMLArtistsPage!') }, 
+    "/Content/GetHTMLAlbumsPage": async () => { console.error("!/Content/GetHTMLAlbumsPage!") },
+    "/Content/GetHTMLGenresPage": async () => { console.error("!/Content/GetHTMLGenresPage!") },
+    "/Content/GetHTMLCompositionsPage": async () => { console.error("!/Content/GetHTMLCompositionsPage!") },
+    "/Content/GetHTMLListenedPage": async () => { console.error("/!Content/GetHTMLListenedPage!") },
+    "/Content/GetHTMLUploadedCompositionsPage": async () => { console.error("!/Content/GetHTMLUploadedCompositionsPage!") },
+    "Identity/Account/Login": async () => { console.error("!Identity/Account/Login!") }, 
+    "Identity/Account/Logout": async () => { console.error("!Identity/Account/Logout!") }, 
+    "Identity/Account/Register": async () => { console.error("!Identity/Account/Register!") }
 };
 
 const nonRoutePaths = [
     "GetPartialCompositionPageByArtistName"
 ];
+
+export function getNonRootPaths()
+{
+    return Object.keys(routes).filter((p) => p !== '' && p != '/')
+}
 
 export function GetNonRoutePaths() { return nonRoutePaths }
 

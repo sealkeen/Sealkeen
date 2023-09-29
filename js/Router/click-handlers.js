@@ -11,10 +11,10 @@ import { appendCheckBoxTo } from '../Page/data-processing.js';
 import { onDevelopmentCardClick, fetchContentCrossOrigin } from './shared.js';
 import { create429ErrorMessageOrThrowError } from '../Errors/fetch-errors-4xx.js';
 import { addSearchTerminal } from '../System/search-terminal.js';
-import routes from './routing-table.js';
 import Debug from '../Extensions/cs-debug.js'
 import Exception from '../Extensions/cs-exception.js'
 import redirects, { showPopup } from "./redirect-table.js";
+import routes from './routing-table.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js'
 
 routes[""] = async () => { setCurrentPageIndex() } // "/pages/index.html"
@@ -30,6 +30,7 @@ routes["/Content/GetHTMLUploadedCompositionsPage"] = uploadedEventHandler
 routes["Identity/Account/Login"] = setCurrentPageLogin //window.location.href = urls.getLocation() + "Identity/Account/Login"
 routes["Identity/Account/Register"] = setCurrentPageRegister // window.location.href = urls.getLocation() + "Identity/Account/Register" 
 
+redirects['logout'] = setCurrentPageLogout
 redirects['login'] = setCurrentPageLogin
 redirects['register'] = setCurrentPageRegister
 
@@ -80,10 +81,9 @@ export function addEventHandlersOnBody() {
     
     addRedirectEventListener('.nav-lnk-about', redirects['about.me']);
     // No event handlers for Razor pages <a href>'s
+    
     if( !urls.isNgrok() ) {
         addRedirectEventListener('#nav-lnk-register', () => showPopup("register",
-            "Redirect to auth service?", ['YES', 'NO']));
-        addRedirectEventListener('#nav-lnk-login', () => showPopup("login", 
             "Redirect to auth service?", ['YES', 'NO']));
     }
     addEventOnWindowResize();
@@ -422,11 +422,24 @@ export async function setCurrentPageAlbumByID(el) {
     }
 }
 
-export async function FetchGetPatialListenedPage(nextActionInPipeLine)
+export async function FetchGetPartialListenedPage(nextActionInPipeLine, onCatchPipelineAction)
 {
     await fetchContentCrossOrigin('GetPartialListenedPage', false).then(result => {
         if(result.ok) {
             nextActionInPipeLine();
+        } else {
+            (onCatchPipelineAction ?? (()=>{})) ();
+        }
+    });
+}
+
+export async function FetchPublicHandShake(nextActionInPipeLine, onCatchPipelineAction)
+{
+    await fetch(urls.getLocation() + 'PerformPublicHandShake').then(result => {
+        if(result.ok) {
+            nextActionInPipeLine();
+        } else {
+            (onCatchPipelineAction ?? (()=>{})) ();
         }
     });
 }
@@ -459,7 +472,7 @@ export async function setCurrentPageManageAccount(event) {
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
-                setCurrentPageMockData();    setCurrentPageMockData();
+                setCurrentPageMockData();
                 Exception.Throw('setCurrentPageManageAccount: ' + error);
             });
         }
@@ -570,6 +583,14 @@ export async function setCurrentPageRegister(event) {
     } finally {
         toggleTopPageBackground(false);
     }
+}
+
+export async function setCurrentPageLogout(e)
+{
+    e?.preventDefault();
+    const logoutUrl = urls.getLocation() + 'Identity/Account/Logout';
+    Debug.WriteLine('Logout url: ' + logoutUrl)
+    window.location = logoutUrl;
 }
 
 export async function setCurrentPageLogin(event) {

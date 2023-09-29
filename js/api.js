@@ -1,5 +1,5 @@
 import { createInfoMessage } from './Errors/fetch-errors.js';
-import routes, { GetNonRoutePaths } from './Router/routing-table.js';
+import routes, { GetNonRoutePaths, getNonRootPaths } from './Router/routing-table.js';
 import Exception from './Extensions/cs-exception.js';
 import Debug from './Extensions/cs-debug.js';
 
@@ -116,8 +116,8 @@ export async function pushHistoryState(url)
 
 export function anyPathSpecified(url)
 {
-    return Object.keys(routes).some( r => url.indexOf(r) > -1) && 
-    !(GetNonRoutePaths().some( r => url.indexOf(r) > -1));
+    createInfoMessage(`Url: <${url}>`)
+    return getNonRootPaths().some( r => url.indexOf(r) > -1) && !(GetNonRoutePaths().some( r => url.indexOf(r) > -1));
 }
 
 export function getStructedPath(loc, lc) {

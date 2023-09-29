@@ -1,3 +1,4 @@
+import Exception from "../Extensions/cs-exception.js";
 import { appendPopupButtonHandlers, appendPopupYesHandler } from "../Page/Components/Popups/modal-window.js";
 
 const redirects = {
@@ -5,8 +6,9 @@ const redirects = {
     "": () => { },
     "/": () => { }, // "/pages/index.html"
     "about.me": (e) => { onClickGotoAboutMe(e) }, 
-    "login": async () => { },
-    "register": async () => { }
+    "login": async () => { console.error('login') },
+    "register": async () => { console.error('register') },
+    "logout": async () => { console.error('logout') }
 };
 
 function dropExisting()
@@ -56,7 +58,11 @@ export function showPopup(event_handler, text, buttons) {
     const modalBackground = document.getElementById('modal-window-background');
     (modalBackground ?? { style : {display : '' }}) .style.display = 'block';
     appendPopupButtonHandlers();
-    appendPopupYesHandler(() => { redirects[event_handler](); })
+    let delegate = redirects[event_handler];
+    console.warn("Handler = %j", delegate);
+    if(delegate == null) Exception.Throw(`redirects[${event_handler}] is NULL`)
+
+    appendPopupYesHandler(() => { delegate() })
 }
 
 export default redirects;

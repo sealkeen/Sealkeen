@@ -2,8 +2,11 @@ import urls, { anyPathSpecified } from './../api.js'
 import { toggleForId } from '../Utils/ClassQuery.js';
 import Debug from '../Extensions/cs-debug.js';
 import { setDevelopmentMessages } from '../Development/news-data.js';
-import { FetchGetPatialListenedPage } from './click-handlers.js';
-import { addElementsForAuthorizedUser } from '../Account/authorized.js';
+import { FetchGetPartialListenedPage, FetchPublicHandShake } from './click-handlers.js';
+import { addElementsForAuthorizedUser, Unauthorized } from '../Account/authorized.js';
+import { addRedirectEventListener } from './redirect.js';
+import { showPopup } from './redirect-table.js';
+import { createInfoMessage } from '../Errors/fetch-errors.js';
 
 window.handShakeCondition = false;
 
@@ -69,20 +72,21 @@ export async function onPerformHandShakeInterval(onSuccessAction)
 
 export async function onSiteLoadIfAuthorized(skipLibraryFetch)
 {
-    if ( window.isAuthorized === false && anyPathSpecified(window.location.href)) {
+    if ( window.isAuthorized !== true 
+        && anyPathSpecified(window.location.href)
+        ) {
+        createInfoMessage('Skip library fetch')
         skipLibraryFetch = true
     }
     if(
         urls.isHomePage() || skipLibraryFetch === true
     ) {
-        // Only
-        const nextActionInPipeLine = //urls.isGithub() || urls.isNodeJSHost() ? 
-            addElementsForAuthorizedUser 
-        // noOp;
+        const nextActionInPipeLine = addElementsForAuthorizedUser;
+        
         if(skipLibraryFetch === true)
-            onPerformHandShakeInterval(nextActionInPipeLine);
+            onPerformHandShakeInterval( async () => { FetchPublicHandShake(nextActionInPipeLine, Unauthorized ); } );
         else
-            onPerformHandShakeInterval(async () => { FetchGetPatialListenedPage(nextActionInPipeLine); });
+            onPerformHandShakeInterval( async () => { FetchGetPartialListenedPage(nextActionInPipeLine, Unauthorized); } );
     } else {
         onPerformHandShakeInterval(noOp);
     }
