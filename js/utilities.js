@@ -31,7 +31,33 @@ export function getIdFromElementData(el) {
     return id;
 }
 
+export function fromJSObject(el) {
+    //createInfoMessage('[INF] el' + el)
+    createInfoMessage('[INF] el.target' + Object.keys(el.target))
+    let id = el.target;
+    let artist = el.target;
+    let title = el.target;
+    if(el.target == null) { Exception.Throw("el.target: " + el.target) }
+    if(el.target.classList == null) { Exception.Throw("el.target.classList: " + el.target.classList) }
+    if (!el.target.classList.contains('card-body')) {
+
+        createInfoMessage("el.target.parentNode.querySelector('data'): " + el.target.parentNode.querySelector('data'))
+        createInfoMessage("el.target.parentNode.querySelector('data').value: " + el.target.parentNode.querySelector('data')?.value)
+        id = el.target.parentNode.querySelector('data')?.value;
+        artist = el.target.parentNode.querySelector('.card-title').innerHTML;
+        title = el.target.parentNode.querySelector('.card-text').innerHTML;
+    }
+    else {
+        id = el.target.querySelector('data').value;
+        artist = el.target.querySelector('.card-title').innerHTML;
+        title = el.target.querySelector('.card-text').innerHTML;
+        //id = el.target.children[0].value;
+    }
+    return { id, artist, title };
+}
+
 export function fromJQueryObject(el) {
+    createInfoMessage('[INF] ' + Object.keys(el))
     let id = el.target;
     let artist = el.target;
     let title = el.target;
@@ -51,6 +77,8 @@ export function fromJQueryObject(el) {
 }
 
 export function fromDOMObject(el) {
+    createInfoMessage('el: '+el)
+    //createInfoMessage('el.target: '+el.target)
     let id = el;
     let artist = el;
     let title = el;

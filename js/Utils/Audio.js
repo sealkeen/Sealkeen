@@ -156,8 +156,8 @@ export async function setFooterPlayerSourse(el)
                     let plr = getAudioNode();
                     if(isPlaying(plr) === true) {
                         let toQuery = fromDOMObject(el);
-                        _trackQueue.enqueue(toQuery);
-                        createInfoMessage('Queued: ' + toQuery?.artist + ' - ' + toQuery?.title)
+                        _trackQueue.push_front(toQuery);
+                        createInfoMessage('Queued first: ' + toQuery?.artist + ' - ' + toQuery?.title)
                         return;
                     }
                     plr.load();

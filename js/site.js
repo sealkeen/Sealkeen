@@ -146,20 +146,35 @@ export function onCardTapped(e)
     }
 }
 
+export function createPushListItem(e) { 
+    let push = document.createElement("p");
+    push.id = 'ctxmenu-button';
+    push.innerHTML = "Add first";
+    push.onclick = () => { _trackQueue.push_front(fromJQueryObject(e)); };
+    return push
+}
+export function createQueueListItem(e) { 
+    let queue = document.createElement("p")
+    queue.id = 'ctxmenu-button';
+    queue.innerHTML = "Enqueue";
+    queue.onclick = () => { _trackQueue.enqueue(fromJQueryObject(e)); };
+    return queue
+}
 
 export function onCompositionRightMouseDown(e) {
     try {
         let menu = document.createElement("div")
-        let cmiQueueSelected = document.createElement("p")
-        cmiQueueSelected.id = 'ctxmenu-button';
-        cmiQueueSelected.innerHTML = "Enqueue";
-        menu.id = "ctxmenu";
-
-        cmiQueueSelected.onclick = () => { _trackQueue.enqueue(fromJQueryObject(e)); };
         menu.onfocusout = () => menu.outerHTML = '';
         menu.onmouseleave = () => menu.outerHTML = ''
-        menu.appendChild(cmiQueueSelected)
-        
+        menu.id = "ctxmenu"
+
+        let push = createPushListItem(e)
+
+        let queue = createQueueListItem(e)
+
+        menu.appendChild(push)
+        menu.appendChild(queue)
+
         console.log(e.target)
         let insertTarget = {};
         if(e.target.classList.contains('card-body'))

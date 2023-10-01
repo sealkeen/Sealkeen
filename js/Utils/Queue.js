@@ -5,6 +5,11 @@ export function newQueue() {
         headIdx: 0,
         tailIdx: 0,
         elts: [],
+        push_front: (elt) => {
+            queue.elts.unshift(elt)
+            queue.tailIdx++
+            queue.onchange()
+        },
         enqueue: (elt) => {
             queue.elts[queue.tailIdx++] = elt;
             queue.onchange();
