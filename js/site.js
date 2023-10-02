@@ -17,6 +17,7 @@ import { appendSideNavigationBars } from './Page/Components/side-navigations.js'
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 import { addSearchTerminal } from './System/search-terminal.js';
 import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
+import Exception from './Extensions/cs-exception.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
@@ -46,8 +47,10 @@ $(document).ready(function () {
 
         container.onmousedown = (e) => {
             Debug.WriteLine('site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
-            if (!containsClasses('ctxmenu', 'ctxmenu-button')) {
-                $('#ctxmenu').innerHTML = '';
+            if (!containsClasses(e?.target, 'ctxmenu', 'ctxmenu-button')) {
+                document.querySelectorAll('.ctxmenu').forEach(el => { 
+                    el.innerHTML = ''; 
+                })
             }
         }
 
@@ -74,9 +77,6 @@ $(document).ready(function () {
             if (target.classList.contains('artist-card-div')) {
                 setCurrentPageCompositionByArtistID(e.target);
             }
-            if (target.classList.contains('btn-default')) {
-                //$('.btn-default').onclick = (e) => { e.preventDefault(); };
-            }
             if (target.id == 'ctxmenu') {
                 document.querySelector('#ctxmenu').outerHTML = "";
             }
@@ -86,7 +86,7 @@ $(document).ready(function () {
         document.querySelector('.container')?.addEventListener('touchend', function (e) {
             setTimeout( () => {
                 Debug.WriteLine('site.js/touchend' + e.target.id + ' ' + e.target.className);
-                const highlightedItems = document.querySelectorAll("#ctxmenu");
+                const highlightedItems = document.querySelectorAll(".ctxmenu");
                 highlightedItems.forEach((userItem) => {
                     userItem.outerHTML = "";
                 });
@@ -128,7 +128,7 @@ $(document).ready(function () {
             }
         }
     } catch (e) {
-        console.log(e);
+        Exception.Throw(e)
     } finally {
         onTransitionEnd();
     }
@@ -146,19 +146,19 @@ export function onCardTapped(e)
     }
 }
 
-export function createPushListItem(e) { 
+export function appendPushListItem(e, menu /* : ContextMenuHTML */) { 
     let push = document.createElement("p");
     push.className = 'ctxmenu-button';
     push.innerHTML = "Add first";
     push.onclick = () => { _trackQueue.push_front(fromJQueryObject(e)); };
-    return push
+    menu.appendChild(push)
 }
-export function createQueueListItem(e) { 
+export function appendQueueListItem(e, menu /* : ContextMenuHTML */) { 
     let queue = document.createElement("p")
     queue.className = 'ctxmenu-button';
     queue.innerHTML = "Add last";
     queue.onclick = () => { _trackQueue.enqueue(fromJQueryObject(e)); };
-    return queue
+    menu.appendChild(queue)
 }
 
 export function onCompositionRightMouseDown(e) {
@@ -167,13 +167,8 @@ export function onCompositionRightMouseDown(e) {
         menu.onfocusout = () => menu.outerHTML = '';
         menu.onmouseleave = () => menu.outerHTML = ''
         menu.className = "ctxmenu"
-
-        let push = createPushListItem(e)
-
-        let queue = createQueueListItem(e)
-
-        menu.appendChild(push)
-        menu.appendChild(queue)
+        appendPushListItem(e, menu)
+        appendQueueListItem(e, menu)
 
         console.log(e.target)
         let insertTarget = {};
@@ -185,7 +180,6 @@ export function onCompositionRightMouseDown(e) {
             insertTarget = e.target.parentElement.parentElement;
         
         insertTarget.appendChild(menu);
-
     } catch (err) {
         console.log(err)
     }

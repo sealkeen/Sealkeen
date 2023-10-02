@@ -77,7 +77,7 @@ export function fromJQueryObject(el) {
 }
 
 export function fromDOMObject(el) {
-    createInfoMessage('el: '+el)
+    Debug.WriteLine('utilities.js/fromDOMObject() : el: ' + el)
     //createInfoMessage('el.target: '+el.target)
     let id = el;
     let artist = el;
