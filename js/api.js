@@ -116,7 +116,7 @@ export async function pushHistoryState(url)
 
 export function anyPathSpecified(url)
 {
-    createInfoMessage(`Url: <${url}>`)
+    Debug.WriteLine(`api.js/anyPathSpecified(), Url: <${url}>`)
     return getNonRootPaths().some( r => url.indexOf(r) > -1) && !(GetNonRoutePaths().some( r => url.indexOf(r) > -1));
 }
 

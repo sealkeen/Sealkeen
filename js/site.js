@@ -148,15 +148,15 @@ export function onCardTapped(e)
 
 export function createPushListItem(e) { 
     let push = document.createElement("p");
-    push.id = 'ctxmenu-button';
+    push.className = 'ctxmenu-button';
     push.innerHTML = "Add first";
     push.onclick = () => { _trackQueue.push_front(fromJQueryObject(e)); };
     return push
 }
 export function createQueueListItem(e) { 
     let queue = document.createElement("p")
-    queue.id = 'ctxmenu-button';
-    queue.innerHTML = "Enqueue";
+    queue.className = 'ctxmenu-button';
+    queue.innerHTML = "Add last";
     queue.onclick = () => { _trackQueue.enqueue(fromJQueryObject(e)); };
     return queue
 }
@@ -166,7 +166,7 @@ export function onCompositionRightMouseDown(e) {
         let menu = document.createElement("div")
         menu.onfocusout = () => menu.outerHTML = '';
         menu.onmouseleave = () => menu.outerHTML = ''
-        menu.id = "ctxmenu"
+        menu.className = "ctxmenu"
 
         let push = createPushListItem(e)
 
