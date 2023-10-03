@@ -1,7 +1,8 @@
 import LocalizationService from './localization-service.js';
 import { CreateLocalization } from './../../Store/localization-store.js'
 
-var lS = LocalizationService.getInstance();
+const lS = LocalizationService.getInstance();
+export default lS;
 
 export function FillLocalizationStore()
 {

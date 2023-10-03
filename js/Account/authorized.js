@@ -1,5 +1,6 @@
 import urls from './../api.js'
 import Debug from '../Extensions/cs-debug.js';
+import lS from '../Services/Localization/fill-localization-store.js';
 import { appendNavigationLink, fetchContentCrossOrigin } from '../Router/shared.js';
 import { setCurrentPageLogin } from '../Router/click-handlers.js';
 import Exception from '../Extensions/cs-exception.js';
@@ -50,6 +51,17 @@ function createLibraryElement(path)
     return library;
 }
 
+function createNavAElement(id, href, innerText) {
+    let result = document.createElement('a')
+    result.innerText = innerText
+    result.id = id
+    result.href = href
+    result.className = "nav-link text-dark stroke-shadow-h3-white"
+    return result
+}
+
+var authorizedCallback = () => { }
+const authorizedHandler = () => { showPopup("logout", "Redirect to auth service?", ['Redirect', 'Stay']) }
 function Authorized()
 {
     createInfoMessage('Authorized')
@@ -57,24 +69,32 @@ function Authorized()
     const logoutUrl = urls.getLocation() + 'Identity/Account/Logout'
     const login = document.querySelector('#nav-lnk-login')
     if(login) {
+        let loginA = createNavAElement("btn-identity-account-login", logoutUrl, "Logout");
+        authorizedCallback = InvokeAddEventListener(loginA, () => authorizedHandler() );
         login.className = 'nav-lnk-logout'
-        login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${logoutUrl}">Logout</a>`
+        login.appendChild(loginA)
         login.removeEventListener('click', setCurrentPageLogin)
-        InvokeAddEventListener(login, () => showPopup("logout", "Redirect to auth service?", ['YES', 'NO']))
         
         const register = document.getElementById('nav-lnk-register')
         if(register) register.style.display = 'none'
     }
 }
 
+var unauthorizedCallback = () => { }
+const unauthorizedHandler = () => { showPopup("login", "Redirect to auth service?", ['Redirect', 'Stay']) }
 export function Unauthorized()
 {
     createInfoMessage('Unauthorized')
-    addRedirectEventListener('#nav-lnk-login', () => showPopup("login", "Redirect to auth service?", ['YES', 'NO']))
-    const loginUrl = urls.getLocation() + 'Identity/Account/Login'
+    const loginUrl = 'Identity/Account/Login'
+    let text = lS.getDefault("nav-lnk-login")
+    let loginA = createNavAElement("btn-identity-account-register", loginUrl, text);
+    unauthorizedCallback = InvokeAddEventListener(loginA, () => unauthorizedHandler() );
+    loginA.removeEventListener('click', authorizedCallback)
+
     const login = document.querySelector('#nav-lnk-login')
     login.className = 'nav-item'
-    login.innerHTML = `<a class="nav-link text-dark stroke-shadow-h3-white" href="${loginUrl}">Login</a>`
+    login.innerHTML = '';
+    login.appendChild(loginA)
     const register = document.getElementById('nav-lnk-register')
     if(register) register.style.display = 'item-list'
 }

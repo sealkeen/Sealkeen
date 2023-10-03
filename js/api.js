@@ -29,6 +29,7 @@ const urls = {
     },
     isGithub: () => (window.location.href.indexOf("github.io") > -1),
     isLocalhost: () => (window.location.href.indexOf('localhost:') > -1),
+    isVSDebug: () => (window.location.href.indexOf('localhost:500') > -1),
     isRemoteWorkspace: () => window.location.href.indexOf(':65000') > -1,
     isNodeJSHost: ()  =>
         ( window.location.href.indexOf('localhost:808') > -1
