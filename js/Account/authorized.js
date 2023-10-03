@@ -1,12 +1,13 @@
 import urls from './../api.js'
 import Debug from '../Extensions/cs-debug.js';
 import lS from '../Services/Localization/fill-localization-store.js';
-import { appendNavigationLink, fetchContentCrossOrigin } from '../Router/shared.js';
-import { setCurrentPageLogin } from '../Router/click-handlers.js';
+import { appendNavigationLink } from '../Router/shared.js';
+import { setCurrentPageLogin, setCurrentPageRegister } from '../Router/click-handlers.js';
 import Exception from '../Extensions/cs-exception.js';
 import { showPopup } from '../Router/redirect-table.js';
-import { InvokeAddEventListener, addRedirectEventListener } from '../Router/redirect.js';
+import { InvokeAddEventListener } from '../Router/redirect.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
+import { appendPopupNoHandler } from '../Page/Components/Popups/modal-window.js'
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
@@ -61,7 +62,10 @@ function createNavAElement(id, href, innerText) {
 }
 
 var authorizedCallback = () => { }
-const authorizedHandler = () => { showPopup("logout", "Redirect to auth service?", ['Redirect', 'Stay']) }
+const authorizedHandler = () => { 
+    showPopup("logout", "Redirect to auth service?", ['Redirect', 'Stay'])
+    //appendPopupNoHandler(setCurrentPageRegister)
+}
 function Authorized()
 {
     createInfoMessage('Authorized')
@@ -74,18 +78,22 @@ function Authorized()
         login.className = 'nav-lnk-logout'
         login.appendChild(loginA)
         login.removeEventListener('click', setCurrentPageLogin)
+        loginA.removeEventListener('click', unauthorizedCallback)
         
         const register = document.getElementById('nav-lnk-register')
         if(register) register.style.display = 'none'
     }
 }
 
+const loginUrl = 'Identity/Account/Login'
 var unauthorizedCallback = () => { }
-const unauthorizedHandler = () => { showPopup("login", "Redirect to auth service?", ['Redirect', 'Stay']) }
+const unauthorizedHandler = () => { 
+    showPopup("login", "Redirect to auth service?", ['Redirect', 'Stay']) 
+    //appendPopupNoHandler(setCurrentPageLogin)
+}
 export function Unauthorized()
 {
     createInfoMessage('Unauthorized')
-    const loginUrl = 'Identity/Account/Login'
     let text = lS.getDefault("nav-lnk-login")
     let loginA = createNavAElement("btn-identity-account-register", loginUrl, text);
     unauthorizedCallback = InvokeAddEventListener(loginA, () => unauthorizedHandler() );

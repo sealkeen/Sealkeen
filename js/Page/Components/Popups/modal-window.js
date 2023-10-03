@@ -28,9 +28,17 @@ export function appendPopupButtonHandlers() {
 export function appendPopupYesHandler(onYes)
 {
     let yesBtn = document.getElementById('modal-window-yes-btn')
-    
     yesBtn.addEventListener('click', function(e) {
         e.preventDefault();
         onYes(e);
+    })
+}
+
+export function appendPopupNoHandler(onNo)
+{
+    let yesBtn = document.getElementById('modal-window-no-btn')
+    yesBtn.addEventListener('click', function(e) {
+        //e.preventDefault();
+        onNo(e);
     })
 }
