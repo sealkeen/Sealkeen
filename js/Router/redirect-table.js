@@ -43,7 +43,7 @@ function recreate(text, buttons)
 
 export function onClickGotoAboutMe(e)
 {
-    e.preventDefault();
+    //e.preventDefault();
     recreate("Go to about.me/sealkeen?", ['YES','NO']);
 
     const modalBackground = document.getElementById('modal-window-background');
