@@ -73,8 +73,9 @@ function Authorized()
     const logoutUrl = urls.getLocation() + 'Identity/Account/Logout'
     const login = document.querySelector('#nav-lnk-login')
     if(login) {
-        let loginA = createNavAElement("btn-identity-account-login", logoutUrl, "Logout");
-        authorizedCallback = InvokeAddEventListener(loginA, () => authorizedHandler() );
+        let loginA = createNavAElement("btn-identity-account-login", logoutUrl, "Logout")
+        authorizedCallback = InvokeAddEventListener(loginA, () => authorizedHandler() )
+        login.innerHTML = ''
         login.className = 'nav-lnk-logout'
         login.appendChild(loginA)
         login.removeEventListener('click', setCurrentPageLogin)
@@ -95,13 +96,13 @@ export function Unauthorized()
 {
     createInfoMessage('Unauthorized')
     let text = lS.getDefault("nav-lnk-login")
-    let loginA = createNavAElement("btn-identity-account-register", loginUrl, text);
-    unauthorizedCallback = InvokeAddEventListener(loginA, () => unauthorizedHandler() );
+    let loginA = createNavAElement("btn-identity-account-register", loginUrl, text)
+    unauthorizedCallback = InvokeAddEventListener(loginA, () => unauthorizedHandler() )
     loginA.removeEventListener('click', authorizedCallback)
 
     const login = document.querySelector('#nav-lnk-login')
     login.className = 'nav-item'
-    login.innerHTML = '';
+    login.innerHTML = ''
     login.appendChild(loginA)
     const register = document.getElementById('nav-lnk-register')
     if(register) register.style.display = 'item-list'
