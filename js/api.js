@@ -82,6 +82,10 @@ export function ifUrlExist(url, callback) {
 export async function pushHistoryState(url)
 {
     try {
+        if(urls.isNgrok() || urls.isVSDebug()) {
+            console.log('[INF] Skip state management for Asp.Net Core hosts.'); return;
+        }
+
         let loc = `${location.protocol}//${location.host}`;
         let newLc = ""
         if(url.indexOf('http') <= -1) {
