@@ -68,6 +68,8 @@ const authorizedHandler = () => {
 }
 function Authorized()
 {
+    if(urls.isNgrok() || urls.isVSDebug())
+        return;
     createInfoMessage('Authorized')
     Debug.WriteLine('Appending logout...')
     const logoutUrl = urls.getLocation() + 'Identity/Account/Logout'
@@ -94,6 +96,8 @@ const unauthorizedHandler = () => {
 }
 export function Unauthorized()
 {
+    if(urls.isNgrok() || urls.isVSDebug())
+        return;
     createInfoMessage('Unauthorized')
     let text = lS.getDefault("nav-lnk-login")
     let loginA = createNavAElement("btn-identity-account-register", loginUrl, text)
