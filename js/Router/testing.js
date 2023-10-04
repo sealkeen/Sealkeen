@@ -84,7 +84,7 @@ export async function onSiteLoadIfAuthorized(skipLibraryFetch)
         const nextActionInPipeLine = addElementsForAuthorizedUser;
         
         if(skipLibraryFetch === true)
-            onPerformHandShakeInterval( async () => { FetchPublicHandShake(nextActionInPipeLine, Unauthorized ); } );
+            onPerformHandShakeInterval( async () => { FetchPublicHandShake(() => {}, Unauthorized ); } );
         else
             onPerformHandShakeInterval( async () => { FetchGetPartialListenedPage(nextActionInPipeLine, Unauthorized); } );
     } else {
