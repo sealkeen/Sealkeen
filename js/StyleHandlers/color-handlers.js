@@ -20,17 +20,18 @@ function setGradientLateEveningBackground() { setCertainImage('late-evening'); }
 
 function setCertainImage(name)
 {
+    if ($(imageDiv) == null || $(imageDiv)[0] == null || $(imageDiv)[0].className == null)
+        return
     $(imageDiv)[0].className = (classNames + name); console.log(classNames + name);
 }
 
 export async function setBackgroundOpacityInterval()
 {
     let elts = document.getElementsByClassName('background-image-div');
-    if(elts != null && elts[0] != null)
-    {
-        console.log('[INF] Transform-Increase opacity ...')
-        elts[0].style.opacity = 1
-    } 
+    if (elts == null || elts[0] == null)
+        return
+    console.log('[INF] Transform-Increase opacity ...')
+    elts[0].style.opacity = 1
 }
 
 function customSleep(delay) {
@@ -39,6 +40,9 @@ function customSleep(delay) {
 }
 
 export function onClickBodyBackground() {
+    if ($(imageDiv) == null || $(imageDiv)[0] == null || $(imageDiv)[0].className == null)
+        return;
+
     const bodyClass = $(imageDiv)[0].className;
     let el = document.getElementsByClassName('background-image-div')[0]
     el.style.opacity = 0;
@@ -100,8 +104,9 @@ export function toggleBodyBackground() {
         setGradientLateEveningBackground();
         greetingKey = 'greeting_late_evening';
     }
-    
-    window.translateGreetings(greetingKey);
+
+    if (window.translateGreetings != null)
+        window.translateGreetings(greetingKey);
 }
 
 function noOp() { Debug.WriteLine('no-op') }

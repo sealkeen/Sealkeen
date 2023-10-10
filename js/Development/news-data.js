@@ -161,12 +161,15 @@ export function setDevelopmentMessages() {
         cardText.className = 'card-text';
         cardText.innerHTML = element.cardText;
         cardBody.appendChild(cardText);
-
+        if (document.getElementById('development-body') == null)
+            return
         document.getElementById('development-body').appendChild(card);
     });
 
     document.querySelectorAll('#september-twenty-eight-sidebars,#september-thirty-sidebars').forEach(card => {
         card.addEventListener('click', (e) => {
+            if (document.getElementById("left-side-nav") == null)
+                return;
             if (document.getElementById("left-side-nav").getBoundingClientRect().width === 0) {
                 openNav();
                 openRightNav();

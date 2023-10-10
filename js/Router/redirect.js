@@ -3,6 +3,8 @@ export function addRedirectEventListener(query_selector, event_handler)
 {
     // shows the modal when the user clicks "query_selector"
     let element = document.querySelector(query_selector)
+    if (element == null)
+        return
     element?.addEventListener('click', function(e) {
         e.preventDefault();
         event_handler();
