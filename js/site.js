@@ -12,12 +12,13 @@ import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import Debug from './Extensions/cs-debug.js'
 import MusicAPI from './Page/url-decoding.js'
 import TrackAPI from './Page/track-decoding.js'
+import Exception from './Extensions/cs-exception.js';
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
 import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 import { addSearchTerminal } from './System/search-terminal.js';
 import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
-import Exception from './Extensions/cs-exception.js';
+import { attachDraggableEventsToQueue } from './Utils/QueueExtensions/draggable-query-extensions.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
@@ -48,6 +49,7 @@ $(document).ready(function () {
         _trackQueue.onchange = () => {
             displayQueuedTracks(_trackQueue);
         };
+        attachDraggableEventsToQueue();
         const container = document.querySelector('body');
 
         container.onmousedown = (e) => {
