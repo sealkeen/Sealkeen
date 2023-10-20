@@ -51,7 +51,7 @@ export function setRegisterAntiForgeryOnClick() {
                 // <h2 class="text-info">Your Account has been registered successfully.</h2>
                 Debug.WriteLine('%j', result)
             } else {
-                alert('Ошибка регистрации');
+                Exception.Throw('Ошибка регистрации');
             }
         }).catch(err => {
             try {
@@ -90,7 +90,7 @@ export function setLoginAntiForgeryOnClick(e) {
         let rememberMe = true;
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
-        var stLgnAntFrgNClk = 
+
         fetch(urls.getLocation() + 'Account/LoginCors', {
             method: 'POST',
             mode: 'cors', // no-cors, *cors, same-origin
