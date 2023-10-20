@@ -1,5 +1,7 @@
 export function addEventOnWindowResize() {
     try {
+        if (document.querySelector('.spacer') == null)
+            return;
         document.querySelector('.spacer').style.height = $('.navbar').height() * 1.5 + 'px';
         console.log('[INF] Adding sidenav resize handlers...')
         $('.sidenav').each(function() {

@@ -32,6 +32,8 @@ export function addSideNavElements()
         rightLine.className = 'line right-line'
         leftCircle.appendChild(leftLine)
         rightCircle.appendChild(rightLine)
+        if (document.querySelector('.closeRightNavBtn') == null)
+            return;
         document.querySelector('.closeRightNavBtn').after(rightCircle)
         document.querySelector('.closebtn').after(leftCircle)
         

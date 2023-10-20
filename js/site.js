@@ -29,11 +29,16 @@ $(document).ready(function () {
         appendSideNavigationBars();
         FillLocalizationStore();
         runBackgroundHandShakes();
-        addSideNavElements(); addSidenavEventListeners();
+
+        addSideNavElements();
+        addSidenavEventListeners();
         addEventHandlersOnBody();
-        toggleBodyBackground(); bindPlayerButtons();
-        toggleTopPageBackground(false); initializeKeyboardHook();
+        toggleBodyBackground();
+        bindPlayerButtons();
+        toggleTopPageBackground(false);
+        initializeKeyboardHook();
         appendHorizontalVolumeControl();
+
         onSiteLoadIfAuthorized();
         
         let urlHandler = new MusicAPI();
@@ -187,6 +192,8 @@ export function onCompositionRightMouseDown(e) {
 
 export function bindPlayerButtons() {
     Debug.WriteLine('binding player buttons...');
+    if (document.querySelector('.footer-next-track-btn') == null)
+        return
     document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
         Debug.WriteLine("clicked");
 
