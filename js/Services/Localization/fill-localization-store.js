@@ -6,7 +6,7 @@ export default lS;
 
 export function FillLocalizationStore()
 {
-    console.log('[INF] Call: FillLocalizationStore()');
+    console.log('[INF] Start of FillLocalizationStore()');
 
     if(document.getElementsByClassName('navbar')[0] == null )
         return;
@@ -20,7 +20,7 @@ export function FillLocalizationStore()
     AddLanguageDropDown();
     applyLanguageTranslations();
 
-    console.log('[INF] Call ok.');
+    console.log('[INF] End of FillLocalizationStore()');
     return lS;
 }
 
