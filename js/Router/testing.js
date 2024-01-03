@@ -90,8 +90,8 @@ export async function onSiteLoadIfAuthorized(skipLibraryFetch)
             onPerformHandShakeInterval( async () => { FetchPublicHandShake(() => {}, Unauthorized ); }, Unauthorized );
         }
         else {
-            console.log('[INF] No pass of catch error delegate if handshake successfull, but library not')
-            onPerformHandShakeInterval( async () => { FetchGetPartialListenedPage(nextActionInPipeLine); }, Unauthorized );
+            console.log('[INF] Pass catch error delegate if handshake not successfull, and library not')
+            onPerformHandShakeInterval( async () => { FetchGetPartialListenedPage(nextActionInPipeLine, Unauthorized); }, Unauthorized );
         }
     } else {
         onPerformHandShakeInterval(noOp);
