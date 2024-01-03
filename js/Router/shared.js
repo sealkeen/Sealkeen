@@ -60,7 +60,9 @@ export async function fetchContentCrossOrigin(path, shouldSaveState, shouldRedir
             });
 
             if (!response.ok) { 
-                throw new Error(`Fetch error for <${ngCtrl}>: ` + JSON.stringify(response)); 
+                console.log('fetchContentCrossOrigin() -> response not ok, returning { ok: false }')
+                Exception.Throw(`Fetch error for <${ngCtrl}>: ` + JSON.stringify(response)); 
+                return { ok : false };
             }
             
             let responseText = await response.text();

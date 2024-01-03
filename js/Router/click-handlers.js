@@ -105,11 +105,9 @@ export async function setCurrentPageIndex(event) {
         }).then(async response => {
             if (response.ok) {
                 let responseText = await response.text();
-                pushHistoryState("");
                 const responseHtml = $.parseHTML(responseText);
                 $("#page-body-container").html('').append(responseHtml);
                 console.log(`fetch response key count: ${Object.keys(responseHtml).length}`);
-                toggleBodyBackground();
             } else 
                 create429ErrorMessageOrThrowError(response.status);
         }).catch((error) => {
@@ -126,6 +124,7 @@ export async function setCurrentPageIndex(event) {
         onDevelopmentCardClick();
         toggleBodyBackground();
         onContentPageLoaded_Finally()
+        pushHistoryState('/')
     }
 }
 
@@ -170,7 +169,6 @@ export async function setCurrentPageCompositions(event) {
                     $("#page-body-container").html('');
                     appendCheckBoxTo(pageBodyContainer, isFirstLoad ? true : isCheckedAlready);
                     $("#page-body-container").append(trackDom);
-                    pushHistoryState('/Content/GetHTMLCompositionsPage');
                 } else 
                     create429ErrorMessageOrThrowError(response.status);
             }).catch((error) => {
@@ -181,6 +179,8 @@ export async function setCurrentPageCompositions(event) {
     } catch (error) {
         Exception.Throw('setCurrentPageCompositions: ' + error);
     } finally {
+        // Push Anyway (even if not loaded)
+        pushHistoryState('/Content/GetHTMLCompositionsPage');
         onContentPageLoaded_Finally()
     }
 }
@@ -201,7 +201,6 @@ export async function setCurrentPageAlbums(event) {
                     let data = await response.json();
                     Debug.WriteLine('click-handlers.js/.. Handling response text');
                     let albumsDom = CreateAlbumsDOMFromJSON(data);
-                    pushHistoryState('/Content/GetHTMLAlbumsPage');
                     $("#page-body-container").html('');
                     $("#page-body-container").append(albumsDom);
                     Debug.WriteLine('fetch response key count: ' + Object.keys(albumsDom).length);
@@ -215,6 +214,7 @@ export async function setCurrentPageAlbums(event) {
     } catch (error) {
         Exception.Throw('in setCurrentPageAlbums: ' + error);
     } finally {
+        pushHistoryState('/Content/GetHTMLAlbumsPage');
         onContentPageLoaded_Finally()
     }
 }
@@ -233,7 +233,6 @@ export async function setCurrentPageGenres(event) {
             }).then(async response => {
                 if (response.ok) { 
                     let data = await response.json();
-                    pushHistoryState('/Content/GetHTMLGenresPage');
                     Debug.WriteLine('Handling response text');
                     let genresDom = CreateGenresDOMFromJSON(data);
                     $("#page-body-container").html('');
@@ -249,6 +248,7 @@ export async function setCurrentPageGenres(event) {
     } catch (error) {
         Exception.Throw('in setCurrentPageAlbums: ' + error);
     } finally {
+        pushHistoryState('/Content/GetHTMLGenresPage');
         onContentPageLoaded_Finally()
     }
 }
@@ -267,7 +267,6 @@ export async function setCurrentPageArtists(event) {
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) {     
-                    pushHistoryState('/Content/GetHTMLArtistsPage');
                     let data = await response.json();
                     Debug.WriteLine('handling response text');
                     let artistsDom = CreateArtistsDOMFromJSON(data);
@@ -285,6 +284,7 @@ export async function setCurrentPageArtists(event) {
     } catch (error) {
         Exception.Throw('in setCurrentPageArtists: ' + error);
     } finally {
+        pushHistoryState('/Content/GetHTMLArtistsPage');
         onContentPageLoaded_Finally()
     }
 }
@@ -309,7 +309,6 @@ export async function setCurrentPageCompositionByArtistID(el) {
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    //pushHistoryState('/Content/GetHtmlCompositionPageByArtistID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)
@@ -330,14 +329,21 @@ export async function setCurrentPageCompositionByArtistID(el) {
     } catch (error) {
         Exception.Throw('in GetPartialCompositionPageByArtistID/?id=' + '\n'+ e);
     } finally {
+        // Disabled push: History state is pushed 
+        // by the concrete Track Id handler (NO PUSH HERE)
+        // pushHistoryState('/Content/GetHtmlCompositionPageByArtistID/?id=' + id);
         onContentPageLoaded_Finally()
     }
 }
 
+/* Sets the compositions page based on the ALBUM ID
+ * el - dom element on which the call invokes
+*/
 export async function setCurrentPageCompositionByID(el) {
     try {
         toggleTopPageBackground(true);
         let id = el;
+        //TODO: event?
         if (!event.target.classList.contains('card-body')) {
             id = el.parentNode.children[0].value;
         } else {
@@ -347,14 +353,13 @@ export async function setCurrentPageCompositionByID(el) {
         let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
+                headers: { 'Content-Type': 'application/json'  },
                 redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                referrerPolicy: 'no-referrer'//, // *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     // body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();
-                    //pushHistoryState('/Content/GetHtmlCompositionPageByID/?id=' + id);
                     $("#page-body-container").html('');
                     $("#page-body-container").append(responseText);
                     Debug.WriteLine('fetch response key count: ' + Object.keys(responseText).length)
@@ -376,6 +381,9 @@ export async function setCurrentPageCompositionByID(el) {
         setCurrentPageMockData();
         Debug.WriteLine('fetch error. Setting up mock data. Details: ' + e)
     } finally {
+        // Disabled push: History state is pushed 
+        // by the concrete Track Id handler (NO PUSH HERE)
+        //pushHistoryState('/Content/GetHtmlCompositionPageByID/?id=' + id);
         onContentPageLoaded_Finally()
     }
 }
@@ -431,18 +439,23 @@ export async function FetchGetPartialListenedPage(nextActionInPipeLine, onCatchP
         if(result.ok) {
             nextActionInPipeLine();
         } else {
-            (onCatchPipelineAction ?? (()=>{})) ();
+            (onCatchPipelineAction ?? (()=>{
+                 console.log('[INF] No action executed for catch in get library handshake.')
+            })) ();
         }
     });
 }
 
 export async function FetchPublicHandShake(nextActionInPipeLine, onCatchPipelineAction)
 {
+    console.log('Authroized must be false. Fetching public handshake instead...')
     await fetch(urls.getLocation() + 'PerformPublicHandShake').then(result => {
         if(result.ok) {
             nextActionInPipeLine();
         } else {
-            (onCatchPipelineAction ?? (()=>{})) ();
+            (onCatchPipelineAction ?? (( ) => { 
+                Exception.Throw('FetchPublicHandShake() -> onCatchPipelineAction argument was null.' )
+            }))();
         }
     });
 }
