@@ -66,10 +66,13 @@ const authorizedHandler = () => {
     showPopup("logout", "Redirect to auth service?", ['Redirect', 'Stay'])
     //appendPopupNoHandler(setCurrentPageRegister)
 }
+
 function Authorized()
 {
-    if(urls.isNgrok() || urls.isVSDebug())
+    if(urls.isNgrok() || urls.isVSDebug()) {
+        console.log('Skip <Authorized()> handler (isNgrok or VSDebug)')
         return;
+    }
     createInfoMessage('Authorized')
     Debug.WriteLine('Appending logout...')
     const logoutUrl = urls.getLocation() + 'Identity/Account/Logout'
@@ -85,6 +88,8 @@ function Authorized()
         
         const register = document.getElementById('nav-lnk-register')
         if(register) register.style.display = 'none'
+    } else {
+        console.log('js/Account/authorized.js/Authorized() ? no.')
     }
 }
 
@@ -96,8 +101,10 @@ const unauthorizedHandler = () => {
 }
 export function Unauthorized()
 {
-    if(urls.isNgrok() || urls.isVSDebug())
+    if(urls.isNgrok() || urls.isVSDebug()) {
+        console.log('Skip <Unauthorized()> handler (isNgrok or VSDebug)')
         return;
+    }
     createInfoMessage('Unauthorized')
     let text = lS.getDefault("nav-lnk-login")
     let loginA = createNavAElement("btn-identity-account-register", loginUrl, text)
