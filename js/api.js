@@ -6,7 +6,7 @@ import Debug from './Extensions/cs-debug.js';
 const urls = {
     getLocation() {
         if(this.isGithub()) {
-            return 'https://25f6-31-134-188-209.ngrok-free.app/';
+            return 'https://5979-31-134-188-209.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';
         } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
