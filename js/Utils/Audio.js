@@ -134,9 +134,13 @@ export async function setFooterPlayerSourse(el)
             source = songInfo.querySelector('data').value; //data
 
         setTitleByArtistAndTitle(el);
-        let direct = loadDirect(source);
-        if($("#player-source-element") == null || (direct != null && direct === true))
+        let direct = await loadDirect(source);
+        if ($("#player-source-element") == null || (direct != null && direct === true) ) {
+            return; 
+        } else if (direct === false && source.includes(':')) {
+            Exception.Throw('Direct play prevented: audio source loading failed.');
             return;
+        }
 
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
 
