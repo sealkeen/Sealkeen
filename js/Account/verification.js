@@ -1,7 +1,7 @@
 import urls from './../api.js'
 import { toggleBodyBackground } from './../StyleHandlers/color-handlers.js'
 import { checkInputs } from '../signup.js';
-import { addElementsForAuthorizedUser } from './authorized.js';
+import { Unauthorized, addElementsForAuthorizedUser } from './authorized.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
 import Debug from '../Extensions/cs-debug.js';
 import Exception from '../Extensions/cs-exception.js';
@@ -51,7 +51,7 @@ export function setRegisterAntiForgeryOnClick() {
                 // <h2 class="text-info">Your Account has been registered successfully.</h2>
                 Debug.WriteLine('%j', result)
             } else {
-                alert('Ошибка регистрации');
+                Exception.Throw('Ошибка регистрации');
             }
         }).catch(err => {
             try {
@@ -90,7 +90,7 @@ export function setLoginAntiForgeryOnClick(e) {
         let rememberMe = true;
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
-        var stLgnAntFrgNClk = 
+
         fetch(urls.getLocation() + 'Account/LoginCors', {
             method: 'POST',
             mode: 'cors', // no-cors, *cors, same-origin
@@ -128,6 +128,7 @@ export function setLoginAntiForgeryOnClick(e) {
                     $("#page-body-container").css("background-color: ", "rgba(255, 255, 255)");
                     $("#page-body-container").css("border-radius", "5% 5% 40% 85%");
                     toggleBodyBackground();
+                    Unauthorized();
                 } else {
                     Exception.Throw('[ERR] verification.js/set... ajax response error');
                 }

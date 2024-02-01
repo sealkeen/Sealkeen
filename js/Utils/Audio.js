@@ -73,12 +73,13 @@ export function onCompositionSourceChanged(compId)
 
 export function setNextComposition(compId) {
     try {
-        if (compId == null) {
+        if (compId == null || $("#player-source-element") == undefined) {
             let msg = 'Audio.js/setNextComposition() error, compId is undefined || null'
             Debug.WriteLine(msg)
             createInfoMessage(msg)
             return;
         }
+        
         console.log('[INF] setNextComposition(): compsId is ' + compId)
         if(compId.includes('docs.google') || compId.includes(':')) {
             let newUrl = compId;
@@ -94,31 +95,31 @@ export function setNextComposition(compId) {
             onCompositionSourceChanged(newUrl); //from here
             return;
         }
+
         let path = 'GetHtmlNextTrackPlayer/?id=';
         if (!_trackQueue.isEmpty()) {
             compId = _trackQueue.dequeue().id;
             path = 'GetHtmlStreamPlayer/?url=';
         }
+
         let ctrl = (loc + path + compId);
-        if ($("#player-source-element") != undefined) {
-            $.ajax({ 
-                url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true }, crossDomain: true,
-                success: function (response) {
-                    const htmlDom = new DOMParser().parseFromString(response, 'text/html');
-                    document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
-                    Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
-                    Debug.WriteLine(htmlDom.documentElement.innerHTML);
-                    let plr = getAudioNode();
-                    plr.load();
-                    plr.play();
-                    onCompositionSourceChanged(compId); //from here
-                },
-                error: async function (error_) {
-                    Exception.Throw('Error streaming service');
-                    onAjaxSwitchPageError(compId, safeSwitchTrack); // from './../utilities.js';
-                }
-            });
-        }
+        $.ajax({ 
+            url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true }, crossDomain: true,
+            success: function (response) {
+                const htmlDom = new DOMParser().parseFromString(response, 'text/html');
+                document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
+                Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
+                Debug.WriteLine(htmlDom.documentElement.innerHTML);
+                let plr = getAudioNode();
+                plr.load();
+                plr.play();
+                onCompositionSourceChanged(compId); //from here
+            },
+            error: async function (error_) {
+                Exception.Throw('Error streaming service');
+                onAjaxSwitchPageError(compId, safeSwitchTrack); // from './../utilities.js';
+            }
+        });
     } catch (e) {
         console.log(e);
     } 
@@ -133,43 +134,47 @@ export async function setFooterPlayerSourse(el)
             source = songInfo.querySelector('data').value; //data
 
         setTitleByArtistAndTitle(el);
-        let direct = loadDirect(source);
-        if(direct != null && direct === true)
+        let direct = await loadDirect(source);
+        if ($("#player-source-element") == null || (direct != null && direct === true) ) {
+            return; 
+        } else if (direct === false && source.includes(':')) {
+            Exception.Throw('Direct play prevented: audio source loading failed.');
             return;
+        }
 
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
-        if ($("#player-source-element") != undefined) {
-            await $.ajax({
-                url: ctrl,
-                type: 'GET',
-                contentType: 'html',
-                xhrFields: { withCredentials: true },
-                crossDomain: true,
-                success: function (response) {
-                    const htmlDom = new DOMParser().parseFromString(response, 'text/html');
-                    document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
-                    Debug.WriteLine('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
-                    Debug.WriteLine(htmlDom.documentElement.innerHTML);
-                    //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
-                    replaceTrackParamInUrl(source);
 
-                    let plr = getAudioNode();
-                    if(isPlaying(plr) === true) {
-                        let toQuery = fromDOMObject(el);
-                        _trackQueue.push_front(toQuery);
-                        createInfoMessage('Queued first: ' + toQuery?.artist + ' - ' + toQuery?.title)
-                        return;
-                    }
-                    plr.load();
-                    plr.play();
-                    onCompositionSourceChanged(htmlDom.querySelector('#player-source-element').src);
-                },
-                error: async function (error_) {
-                    Exception.Throw(`Error loading audio: ${error_.status} ${error_.statusText}`);
-                    onAjaxLoadError(source, safePlay); //from './../Errors/ajax-errors.js';
+        await $.ajax({
+            url: ctrl,
+            type: 'GET',
+            contentType: 'html',
+            xhrFields: { withCredentials: true },
+            crossDomain: true,
+            success: function (response) {
+                const htmlDom = new DOMParser().parseFromString(response, 'text/html');
+                document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
+                Debug.WriteLine('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
+                Debug.WriteLine(htmlDom.documentElement.innerHTML);
+                //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
+                replaceTrackParamInUrl(source);
+
+                let plr = getAudioNode();
+                if(isPlaying(plr) === true) {
+                    let toQuery = fromDOMObject(el);
+                    _trackQueue.push_front(toQuery);
+                    createInfoMessage('Queued first: ' + toQuery?.artist + ' - ' + toQuery?.title)
+                    return;
                 }
-            });
-        }
+                plr.load();
+                plr.play();
+                onCompositionSourceChanged(htmlDom.querySelector('#player-source-element').src);
+            },
+            error: async function (error_) {
+                Exception.Throw(`Error loading audio: ${error_.status} ${error_.statusText}`);
+                onAjaxLoadError(source, safePlay); //from './../Errors/ajax-errors.js';
+            }
+        });
+        
     } catch (e) {
         console.log(e)
     }

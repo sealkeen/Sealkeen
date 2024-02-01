@@ -30,7 +30,7 @@ export async function runBackgroundHandShakes()
     }, g_interval);
 }
 
-export async function onPerformHandShakeInterval(onSuccessAction)
+export async function onPerformHandShakeInterval(onSuccessAction, onErrorAction)
 {
     try {
         let ctrl = (urls.getLocation() + 'PerformPublicHandShake');
@@ -59,12 +59,14 @@ export async function onPerformHandShakeInterval(onSuccessAction)
                 if(g_interval < MAX_INTERVAL) 
                     g_interval += INTERVAL_INCREASE;
                     
-                console.log(`[INF] HandShake not sucessfull. Increased handshake interval to ${g_interval} ⛔%j`, error);
+                console.log(`[INF] HandShake not sucessfull. Increased handshake interval to ${g_interval} ⛔%j. \nCalling onErrorActon delegate.`, error);
+                (onErrorAction ?? (() => {}))();
                 setDevelopmentMessages();
             });
         }
     } catch (e) {
         console.log(e)
+        (onErrorAction ?? (() => {}))();
     } finally {
         g_inProcess = false;
     }
@@ -83,10 +85,14 @@ export async function onSiteLoadIfAuthorized(skipLibraryFetch)
     ) {
         const nextActionInPipeLine = addElementsForAuthorizedUser;
         
-        if(skipLibraryFetch === true)
-            onPerformHandShakeInterval( async () => { FetchPublicHandShake(() => {}, Unauthorized ); } );
-        else
-            onPerformHandShakeInterval( async () => { FetchGetPartialListenedPage(nextActionInPipeLine, Unauthorized); } );
+        if(skipLibraryFetch === true) {
+            console.log('[INF] chain 2 handshake requests if one was not successful')
+            onPerformHandShakeInterval( async () => { FetchPublicHandShake(() => {}, Unauthorized ); }, Unauthorized );
+        }
+        else {
+            console.log('[INF] Pass catch error delegate if handshake not successfull, and library not')
+            onPerformHandShakeInterval( async () => { FetchGetPartialListenedPage(nextActionInPipeLine, Unauthorized); }, Unauthorized );
+        }
     } else {
         onPerformHandShakeInterval(noOp);
     }
