@@ -1,7 +1,26 @@
 import { createErrorMessage, createInfoMessage } from "../../Errors/fetch-errors.js";
-import Debug from "../../Extensions/cs-debug.js";
-import { displayQueuedTracks } from "../../utilities.js";
-import { _trackQueue, swapQueryElements } from '../Queue.js';
+import { _trackQueue } from '../Queue.js';
+
+function getQueryCardById(id) {
+    const cardColumns = document.querySelector('.card-query-columns'); // Find all elements with the class "card small-card"
+    const cardElements = cardColumns.querySelectorAll('.card.small-card');
+    for (const cardElement of cardElements) { // Loop through each "card small-card" element
+        const dataElement = cardElement.querySelector('data'); // Find the <data> element within the current card element
+        if(dataElement == null) {
+            createErrorMessage('Query card has no data element for some reason');
+            continue;
+        }
+        const dataId = dataElement.getAttribute('value'); // Retrieve the ID from the <data> element's value attribute
+        if(dataId == null) {
+            createErrorMessage('Query card data node has no value attribute for some reason');
+            continue;
+        }
+        if (dataId === id) { // Check if the dataId matches the provided ID
+            return cardElement; // Return the parent "card small-card" element
+        }
+    }
+    return null;
+}
 
 export function attachDraggableEventsToQueue() {
     // Attach the drag and drop event listeners to elements with the class "card-query-columns"
@@ -46,6 +65,27 @@ function checkTarget(target, description) {
     return true;
 }
 
+function swapElements(sourceElement, targetElement, sourceId, targetId)
+{
+    // Swap the elements in the DOM
+    //const parent = document.querySelector('.card-query-columns');
+    // Swap the elements in the DOM
+    const parent = targetElement.parentElement;
+    const placeholder = document.createElement('div');
+    parent.insertBefore(placeholder, targetElement);
+    parent.replaceChild(sourceElement, targetElement);
+    parent.replaceChild(targetElement, placeholder);
+
+    // Update the _trackQueue array
+    const sourceIndex = _trackQueue.elts.findIndex((elt) => elt.id === sourceId);
+    const targetIndex = _trackQueue.elts.findIndex((elt) => elt.id === targetId);
+    
+    if (sourceIndex !== -1 && targetIndex !== -1) {
+        const [sourceElement] = _trackQueue.elts.splice(sourceIndex, 1);
+        _trackQueue.elts.splice(targetIndex, 0, sourceElement);
+    }
+}
+
 // Function to handle the drop event
 function drop(event) {
     event.preventDefault();
@@ -59,40 +99,29 @@ function drop(event) {
     if(checkTarget(data, 'data node') == false) { return; }
 
     const targetId = data.getAttribute('value');
-    Debug.WriteLine('1) Retrieve the target ID from the data transfer');
+    //createInfoMessage('targetId = ' + targetId)
+    console.log('1) Retrieve the target ID from the data transfer');
     const sourceId = event.dataTransfer.getData('text/plain');
-    Debug.WriteLine('2) Retrieve the dragged ID from the data transfer');
+    //createInfoMessage('sourceId = ' + sourceId)
+    console.log('2) Retrieve the dragged ID from the data transfer');
 
     if (sourceId && targetId) {
-        Debug.WriteLine('3) Find the dragged and target elements based on their IDs');
+        console.log('3) Find the dragged and target elements based on their IDs');
         const cardQueryColumns = document.querySelector('.card-query-columns');
         const sourceElement = cardQueryColumns.querySelector(`.card.small-card data[value="${sourceId}"]`);
         const targetElement = cardQueryColumns.querySelector(`.card.small-card data[value="${targetId}"]`);
+        console.log("4) Source element: %j", sourceElement);
+        console.log("5) Target element: %j", targetElement);
+
+        console.log('6) Swap the elements in the DOM and update _trackQueue as needed // ...');
         
-        Debug.WriteLine("4) Source element: %j", sourceElement);
-        Debug.WriteLine("5) Target element: %j", targetElement);
-        Debug.WriteLine('6) Swap the elements in the DOM and update _trackQueue as needed // ...');
+        //let fromCard = getQueryCardById(targetId)
+        if(checkTarget(sourceElement, 'Source dragged node') == false) { return; }
+        //let toCard = crdBody.parentElement;
+        if(checkTarget(targetElement, 'Target dragging node') == false) { return; }
         
-        SwapNode(sourceElement.parentNode, targetElement.parentNode);
-        swapQueryElements(sourceId, targetId);
-        displayQueuedTracks(_trackQueue);
+        swapElements(sourceElement, targetElement, sourceId, targetId)
     }
-}
-
-function SwapNode(N1, N2)  {
-    var P1 = N1.parentNode;
-    var T1 = document.createElement("span");    
-    P1.insertBefore(T1, N1);
-
-    var P2 = N2.parentNode;
-    var T2 = document.createElement("span");
-    P2.insertBefore(T2, N2);
-
-    P1.insertBefore(N2, T1);
-    P2.insertBefore(N1, T2);
-
-    P1.removeChild(T1);
-    P2.removeChild(T2);
 }
 
 // Function to handle the drag over event and allow dropping

@@ -18,7 +18,6 @@ export const handleLocation = async () => {
     let dpRPath = dropPrefix(dpRPath)
     console.log("[INF] unprefixed: " + dpRPath);
     let key = Object.keys(routes).filter(k => k.startsWith(dpRPath))[0]
-    //let key = Object.keys(routes).filter(k => k.startsWith(rPath))[0]
     console.log("[INF] router starts with: " + key);
     const goToAction = routes[key] || routes[404];
     if(goToAction && goToAction !== "")

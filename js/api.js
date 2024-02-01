@@ -5,7 +5,9 @@ import Debug from './Extensions/cs-debug.js';
 
 const urls = {
     getLocation() {
-        if(this.isGithub()) {
+        if (window.hostLocation != null) {
+            return window.hostLocation; // custom location set from command line if needed
+        } else if (this.isGithub()) {
             return 'https://5979-31-134-188-209.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';

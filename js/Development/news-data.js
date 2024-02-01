@@ -6,6 +6,11 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 export function getDevelopmentNewsData() {
 return [  
     {
+        cardTitle: 'DNS resolution await, ', date: 'February 2024', cardText: 
+        'Host address is temporarily freezed (waiting for domain resolution). You can contact me if you need direct access to music.',
+        id: 'february-first--dns-resolution'
+    },
+    {
         cardTitle: 'Artist and TrackId links, ', date: 'September 2023', cardText: 
         'Added artist + trackid links: ' +
         "<br>" + '<a href="https://sealkeen.github.io/?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre">https://sealkeen.github.io/?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre</a>,' +
