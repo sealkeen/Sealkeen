@@ -188,7 +188,6 @@ export function ConvertToDOM(message) {
         display4.innerHTML = 'Host address is temporarily freezed (waiting for domain resolution). The google links were also rejected temporarily. You can contact me if you need direct access to the music.';
     }
 
-    
     textcenter.appendChild(display4);
     center.appendChild(textcenter);
 
