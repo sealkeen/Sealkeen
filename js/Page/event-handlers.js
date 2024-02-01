@@ -1,7 +1,8 @@
 import { isEmpty, GetCurrentCompositionsId } from './../utilities.js'
 import urls from './../api.js'
-import MusicAPI, { replaceArtistParamInUrl } from './../Page/url-decoding.js'
+import { replaceArtistParamInUrl } from './../Page/url-decoding.js'
 import { fetchContentCrossOrigin } from "../Router/shared.js";
+import Exception from '../Extensions/cs-exception.js';
 
 const loc = urls.getLocation();
 
@@ -9,7 +10,7 @@ export function setTitleByArtistAndTitle(el) {
     try {
         let artist = el; let song = el; let songInfo = el;
         if(el.target == null) {
-            console.log('[Err] NRE setTitleByArtistAndTitle(): %j', el.target );
+            Exception.Throw('[Err] NRE setTitleByArtistAndTitle(): %j', el.target );
             return;
         }
         if (!el.target.classList.contains('card-body')) {
@@ -73,7 +74,6 @@ export function createArtistLink(artistSong) {
 export function fireOnInputValueChange(element)
 {
     var event = new Event('change');
-    // Dispatch it.
     element.dispatchEvent(event);
 }
 

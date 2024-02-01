@@ -34,8 +34,6 @@ redirects['logout'] = setCurrentPageLogout
 redirects['login'] = setCurrentPageLogin
 redirects['register'] = setCurrentPageRegister
 
-const loc = urls.getLocation();
-
 function onContentPageLoaded_Finally()
 {
     toggleTopPageBackground(false);
@@ -154,7 +152,7 @@ export async function setCurrentPageCompositions(event) {
         if(isFirstLoad === true || isCheckedAlready === true) { 
             appendText = '?reverse=true'; 
         }
-        let ctrl = (loc + 'GetJSONCompositionsPage/' + appendText);
+        let ctrl = (urls.getLocation() + 'GetJSONCompositionsPage/' + appendText);
         if (pageBodyContainer != null) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -189,7 +187,7 @@ export async function setCurrentPageAlbums(event) {
     try {
         event?.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (loc + 'GetJSONAlbumsPage');
+        let ctrl = (urls.getLocation() + 'GetJSONAlbumsPage');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -223,7 +221,7 @@ export async function setCurrentPageGenres(event) {
     try {
         event?.preventDefault();
         toggleTopPageBackground(true);
-        let ctrl = (loc + 'GetJSONGenresPage');
+        let ctrl = (urls.getLocation() + 'GetJSONGenresPage');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -258,7 +256,7 @@ export async function setCurrentPageArtists(event) {
         event?.preventDefault();
         toggleTopPageBackground(true);
         //event?.preventDefault();
-        let ctrl = (loc + 'GetJSONArtistsPage');
+        let ctrl = (urls.getLocation() + 'GetJSONArtistsPage');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -299,7 +297,7 @@ export async function setCurrentPageCompositionByArtistID(el) {
             id = el.children[0].value;
         }
 
-        let ctrl = (loc + 'GetPartialCompositionPageByArtistID/?id=' + id);
+        let ctrl = (urls.getLocation() + 'GetPartialCompositionPageByArtistID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -350,7 +348,7 @@ export async function setCurrentPageCompositionByID(el) {
             id = el.children[0].value;
         }
 
-        let ctrl = (loc + 'GetPartialCompositionPageByID/?id=' + id);
+        let ctrl = (urls.getLocation() + 'GetPartialCompositionPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json'  },
@@ -398,7 +396,7 @@ export async function setCurrentPageAlbumByID(el) {
         else {
             id = el.children[0].value;
         }
-        let ctrl = (loc + 'GetPartialAlbumPageByID/?id=' + id);
+        let ctrl = (urls.getLocation() + 'GetPartialAlbumPageByID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -550,8 +548,8 @@ export async function setCurrentPageRegister(event) {
         let prefix = urls.isNgrok() ? 'Identity/' : '';
     
         toggleTopPageBackground(true);
-        console.log('Loading: ' + loc + 'Account/Register');
-        let ctrl = (loc + prefix + 'Account/Register');
+        console.log('Loading: ' + urls.getLocation() + 'Account/Register');
+        let ctrl = (urls.getLocation() + prefix + 'Account/Register');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
@@ -616,8 +614,8 @@ export async function setCurrentPageLogin(event) {
 
         let prefix = urls.isNgrok() ? 'Identity/' : '';
         toggleTopPageBackground(true);
-        console.log('[INF] click-handlers.js/setCurrentPageLogin(): Loading: ' + loc + 'Account/Login');
-        let ctrl = (loc + prefix + 'Account/Login');
+        console.log('[INF] click-handlers.js/setCurrentPageLogin(): Loading: ' + urls.getLocation() + 'Account/Login');
+        let ctrl = (urls.getLocation() + prefix + 'Account/Login');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
                 headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },

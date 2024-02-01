@@ -6,21 +6,22 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 export function getDevelopmentNewsData() {
 return [  
     {
-        cardTitle: 'Language switcher, ', date: '01.05.2023', cardText: 
+        cardTitle: 'Artist and TrackId links, ', date: 'September 2023', cardText: 
+        'Added artist + trackid links: ' +
+        "<br>" + '<a href="https://sealkeen.github.io/?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre">https://sealkeen.github.io/?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre</a>,' +
+        "<br>" + '<a href="https://sealkeen.github.io/?artist=неж&trackId=f5b0f5ab-2fc4-41ed-b565-d5cdffc2a102">https://sealkeen.github.io/?artist=неж&trackId=f5b0f5ab-2fc4-41ed-b565-d5cdffc2a102</a>',
+        id: 'september-tw-three--artist-trackid'
+    },
+    {
+        cardTitle: 'Language switcher, ', date: 'the 7th of May 2023', cardText: 
         'Added language localizations to several menus.',
         id: 'may-seven-tw-three--localization-services'
-    },   
+    },
     {
         cardTitle: 'New appearances, ', date: '01.05.2023', cardText: 
         'New artists, albums, tracks, genres card colors added. ',
         id: 'may-first-tw-three--card-colors'
-    },  
-    // {
-    //     cardTitle: 'Hosting down, ', date: '08.04.2023', cardText: 
-    //     '1) My tunnel service has restricted the free usage and re-targeted the free traffic into an unsafe zone. Turning my site down for some time (⛔).'
-    //     + "<br>" + '2) As for 14.04.2023 the hosting is up, as the warning is removed (✅).',
-    //     id: 'april-nine--tunnel-disabled'
-    // },  
+    },
     {
         cardTitle: 'Clickable artist names, ', date: '26.02.2023', cardText: 
         '1) Artist links are now clickable when playing audio (with running server) ' +

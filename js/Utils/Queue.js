@@ -44,6 +44,18 @@ export function newQueue() {
     return queue;
 }
 
+export function swapQueryElements(sourceId, targetId)
+{
+    // Update the _trackQueue array
+    const sourceIndex = _trackQueue.elts.findIndex((elt) => elt.id === sourceId);
+    const targetIndex = _trackQueue.elts.findIndex((elt) => elt.id === targetId);
+    
+    if (sourceIndex !== -1 && targetIndex !== -1) {
+        const [sourceElement] = _trackQueue.elts.splice(sourceIndex, 1);
+        _trackQueue.elts.splice(targetIndex, 0, sourceElement);
+    }
+}
+
 export function peekObjectsArtistsAndTitles()
 {
     return 'Queue: ' + _trackQueue.elts?.map(a => a.artist + ' - ' + a.title).join(', ');

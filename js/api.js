@@ -43,6 +43,22 @@ const urls = {
     isHomePage : () => { return window.location.origin + "/" + urls.getPostfix() == window.location.href }
 }; export default urls;
 
+const PREFIX_LENGTH = 8, SLASH_LENGTH = 1; 
+export function dropPrefix(url)
+{
+    if( url.indexOf('/Sealkeen') )
+        return url.substring(PREFIX_LENGTH + SLASH_LENGTH)
+    if( url.indexOf('Sealkeen/') === 0 )
+        return url.substring(PREFIX_LENGTH)
+}
+export function addPrefixIfNeeded(url)
+{
+    if(url.indexOf('/Sealkeen'))
+        return url.substring(PREFIX_LENGTH + SLASH_LENGTH)
+    if(url.indexOf('Sealkeen/') === 0 )
+        return url.substring(PREFIX_LENGTH)
+}
+
 export async function getLocationResponse() {
     return $.ajax({
         url: (urls.getLocation() + 'PerformPublicHandShake'),

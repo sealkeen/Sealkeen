@@ -126,6 +126,7 @@ export function createCardsFromQuery(_trackQueue)
 
             card.className = 'card small-card';
             comp.className = 'card-body card-body-composition';
+            card.setAttribute('draggable', 'true');
             data.setAttribute("value", element.id);
             h6.innerHTML = element.artist;
             h7.innerHTML = element.title;
