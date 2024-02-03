@@ -184,7 +184,7 @@ export function ConvertToDOM(message) {
         display4.innerHTML = message ;
     }
     else {
-        display4.className = 'display-4-server-fault stroke-shadow';
+        display4.className = 'display-4-server-fault stroke-shadow-h3-dark-red';
         display4.innerHTML = 'Host address is temporarily freezed (waiting for domain resolution). The google links were also rejected temporarily. You can contact me if you need direct access to the music.';
     }
 
