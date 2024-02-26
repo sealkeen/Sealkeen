@@ -41,13 +41,13 @@ export function CreateLocalization()
         'lbl-srv-status': { 
             en: 'Server Status',        ru: 'Статус сервера', de: 'Serverstatus', sv: 'Serverstatus' },
         'nav-lnk-about': { 
-            en: 'About',                ru: 'О нас',        de: 'Über uns', sv: 'Om oss' },
+            en: 'About',                ru: 'Об авторе',    de: 'Über den Autor', sv: 'Om författaren' },
         'nav-lnk-home': { 
             en: 'Home',                 ru: 'Главная',      de: 'Startseite', sv: 'Hem' },
         'btn-submit': { 
             en: 'Submit',               ru: 'Отправить',    de: 'Absenden', sv: 'Skicka' },
         'navbar-brand': {
-            en: 'MediaStreamer.WebApp', ru: 'Медиа.Поток', de: 'Medienstrom', sv: 'Mediaström' }
+            en: 'MediaStreamer.WebApp', ru: 'Медиа.Поток',  de: 'Medienstrom', sv: 'Mediaström' }
     };
 
     // Set the translations in local storage
