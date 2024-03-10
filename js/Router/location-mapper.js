@@ -9,13 +9,13 @@ export const route = (event) => {
 };
 
 export const handleLocation = async () => {
-    if(urls.isNgrok() || urls.isVSDebug()) // No location handling for razor pages
-        return;
+    //if(urls.isNgrok() || urls.isVSDebug()) // location handling for razor pages
+    //    return;
 
     const path = window.location.pathname;
     let rPath = path.replace('/GetPartial', '/GetHTML')//.replace('/Content', 'Content');
     console.log("[INF] router location: " + rPath);
-    let dpRPath = dropPrefix(dpRPath)
+    let dpRPath = dropPrefix(rPath)
     console.log("[INF] unprefixed: " + dpRPath);
     let key = Object.keys(routes).filter(k => k.startsWith(dpRPath))[0]
     console.log("[INF] router starts with: " + key);

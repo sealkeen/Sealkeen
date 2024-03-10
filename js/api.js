@@ -2,6 +2,8 @@ import { createInfoMessage } from './Errors/fetch-errors.js';
 import routes, { GetNonRoutePaths, getNonRootPaths } from './Router/routing-table.js';
 import Exception from './Extensions/cs-exception.js';
 import Debug from './Extensions/cs-debug.js';
+import { isHostNameValidIP } from './Utils/WindowLocation/AddressParser.js';
+import { sleep } from './utilities.js';
 
 const urls = {
     getLocation() {
@@ -27,22 +29,29 @@ const urls = {
         return result;
     },
     getContentPath() {
-        return this.isGithub || this.isNodeJSHost ? 'Content/' : ''; 
+        return this.isGithub() || this.isNodeJSHost() ? 'Content/' : ''; 
+    },
+    isAspNetCore: async () => {
+        let times = 0;
+        while(urls == null && (times++ < 10)) {
+            console.warn('[WRN] URLs object was null await for 100 ms!');
+            await sleep(100);
+        }
+        (urls.isNgrok() || urls.isVSDebug() || isHostNameValidIP())
     },
     isGithub: () => (window.location.href.indexOf("github.io") > -1),
     isLocalhost: () => (window.location.href.indexOf('localhost:') > -1),
     isVSDebug: () => (window.location.href.indexOf('localhost:500') > -1),
     isRemoteWorkspace: () => window.location.href.indexOf(':65000') > -1,
-    isNodeJSHost: ()  =>
-        ( window.location.href.indexOf('localhost:808') > -1
+    isNodeJSHost: ()  => (  ( window.location.href.indexOf('localhost:808') > -1
         || window.location.href.indexOf('127.0.0.1:808') > -1
         || window.location.href.indexOf(':8081') > -1 )
-        || window.location.href.indexOf(':65000') > -1,
-    isNgrok: () => (window.location.href.indexOf('ngrok.io') > -1) 
-        || (window.location.href.indexOf('ngrok-free.app') > -1),
+        || window.location.href.indexOf(':65000') > -1  ),
+    isNgrok: () => ((window.location.href.indexOf('.ngrok') > -1) 
+        || (window.location.href.indexOf('ngrok-free.app') > -1)),
     getHostRootPath: () => `${location.protocol}//${location.host}/`,
     isLocationReachable: async () => await getLocationResponse(),
-    isHomePage : () => { return window.location.origin + "/" + urls.getPostfix() == window.location.href }
+    isHomePage : () => { return window.location.origin + "/" + urls.getPostfix() == window.location.href; }
 }; export default urls;
 
 const PREFIX_LENGTH = 8, SLASH_LENGTH = 1; 
@@ -100,11 +109,11 @@ export function ifUrlExist(url, callback) {
 export async function pushHistoryState(url)
 {
     try {
-        if(urls.isNgrok() || urls.isVSDebug()) {
-            console.log('[INF] Skip state management for Asp.Net Core hosts.'); 
+        if (window.location.search) {
+            console.log('[ING] Skip history push: Search Exists.') 
             return;
         }
-
+        
         let loc = `${location.protocol}//${location.host}`;
         let newLc = ""
         if(url.indexOf('http') <= -1) {
@@ -119,7 +128,6 @@ export async function pushHistoryState(url)
             }
             console.log('[INF] api.js/push... NLc: ' + newLc);
             console.log('[INF] api.js/push... url: ' + url);
-            //Debug.WriteLine('api.js/pushHistoryState: prevstate not null');
             window.history.pushState({ prevUrl: window.location.href }, null, newLc);
         } else {
             if (url.startsWith(urls.getLocation())) {

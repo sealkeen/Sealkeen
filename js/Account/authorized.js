@@ -8,6 +8,7 @@ import { showPopup } from '../Router/redirect-table.js';
 import { InvokeAddEventListener } from '../Router/redirect.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
 import { appendPopupNoHandler } from '../Page/Components/Popups/modal-window.js'
+import { isHostNameValidIP } from '../Utils/WindowLocation/AddressParser.js';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
@@ -69,8 +70,8 @@ const authorizedHandler = () => {
 
 function Authorized()
 {
-    if(urls.isNgrok() || urls.isVSDebug()) {
-        console.log('Skip <Authorized()> handler (isNgrok or VSDebug)')
+    if (urls.isNgrok() || urls.isVSDebug() || isHostNameValidIP()) {
+        console.log('Skip <Authorized()> handler (isNgrok, localhost, IP or VSDebug)')
         return;
     }
     createInfoMessage('Authorized')
@@ -101,7 +102,7 @@ const unauthorizedHandler = () => {
 }
 export function Unauthorized()
 {
-    if(urls.isNgrok() || urls.isVSDebug()) {
+    if (urls.isNgrok() || urls.isVSDebug() || isHostNameValidIP()) {
         console.log('Skip <Unauthorized()> handler (isNgrok or VSDebug)')
         return;
     }

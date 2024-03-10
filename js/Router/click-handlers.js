@@ -16,6 +16,7 @@ import Exception from '../Extensions/cs-exception.js'
 import redirects, { showPopup } from "./redirect-table.js";
 import routes from './routing-table.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js'
+import { isHostNameValidIP } from '../Utils/WindowLocation/AddressParser.js'
 
 routes[""] = async () => { setCurrentPageIndex() } // "/pages/index.html"
 routes["/"] = async () => { setCurrentPageIndex() } // "/pages/index.html"
@@ -27,8 +28,11 @@ routes["/Content/GetHTMLAlbumsPage"] = setCurrentPageAlbums
 routes["/Content/GetHTMLListenedPage"] = libraryEventHandler
 routes["/Content/GetHTMLUploadedCompositionsPage"] = uploadedEventHandler
 
-routes["Identity/Account/Login"] = setCurrentPageLogin //window.location.href = urls.getLocation() + "Identity/Account/Login"
-routes["Identity/Account/Register"] = setCurrentPageRegister // window.location.href = urls.getLocation() + "Identity/Account/Register" 
+// Disable location handling for AspNetCore Apps.
+if(!urls.isAspNetCore()) {
+    routes["Identity/Account/Login"] = setCurrentPageLogin //window.location.href = urls.getLocation() + "Identity/Account/Login"
+    routes["Identity/Account/Register"] = setCurrentPageRegister // window.location.href = urls.getLocation() + "Identity/Account/Register" 
+}
 
 redirects['logout'] = setCurrentPageLogout
 redirects['login'] = setCurrentPageLogin
@@ -80,7 +84,7 @@ export function addEventHandlersOnBody() {
     addRedirectEventListener('.nav-lnk-about', redirects['about.me']);
     // No event handlers for Razor pages <a href>'s
     
-    if( !urls.isNgrok() && !urls.isVSDebug() ) {
+    if (!urls.isNgrok() && !urls.isVSDebug() || !isHostNameValidIP()) {
         addRedirectEventListener('#btn-identity-account-register', 
             () => {
                 showPopup("register", "Redirect to auth service?", ['Redirect', 'Stay']);
