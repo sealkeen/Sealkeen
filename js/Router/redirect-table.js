@@ -13,7 +13,7 @@ const redirects = {
 
 function dropExisting()
 {
-    let modalContainer = document.getElementById('modal-window-background')
+    let modalContainer = document.getElementsByClassName('modal-window')[0];
     if (modalContainer != null) 
         modalContainer.remove()
 }
@@ -24,17 +24,17 @@ function recreate(text, buttons)
     document.getElementsByTagName('body')[0].insertAdjacentHTML("afterbegin",
     `
     <!-- Modal Background and Modal -->
-    <div id="modal-window-background">
-    <div id="modal-window" class ="modal-window-popup">
-        <span id="modal-window-close-btn">&times;</span>
-        <p class="modal-window-paragraph">${text}</p>
-        <div class="buttons">
-        <button id="modal-window-yes-btn" class="modal-window-yes-btn popup-btn">
-            ${buttons[0]}
-        </button>
-        <button id="modal-window-no-btn" class="modal-window-no-btn popup-btn">
-            ${buttons[1]}
-        </button>
+    <div class="modal-window">
+    <div class="modal-window__background">
+        <span class="modal-window__close-btn">&times;</span>
+        <p class="modal-window__paragraph">${text}</p>
+        <div class="modal-window__buttons">
+            <button class="modal-window__button modal-window__yes-btn">
+                ${buttons[0]}
+            </button>
+            <button class="modal-window__button modal-window__no-btn">
+                ${buttons[1]}
+            </button>
         </div>
     </div>
     </div>
@@ -46,7 +46,7 @@ export function onClickGotoAboutMe(e)
     //e.preventDefault();
     recreate("Go to about.me/sealkeen?", ['YES','NO']);
 
-    const modalBackground = document.getElementById('modal-window-background');
+    const modalBackground = document.getElementsByClassName('modal-window')[0];
     (modalBackground ?? { style : {display : '' }}) .style.display = 'block';
     appendPopupButtonHandlers();
     appendPopupYesHandler(() => { console.log('[INF] Going to about.me/sealkeen...'); window.location = "https://about.me/sealkeen"; })
@@ -55,7 +55,7 @@ export function onClickGotoAboutMe(e)
 export function showPopup(event_handler, text, buttons) {
     recreate(text, buttons);
     
-    const modalBackground = document.getElementById('modal-window-background');
+    const modalBackground = document.getElementsByClassName('modal-window')[0];
     (modalBackground ?? { style : {display : '' }}) .style.display = 'block';
     appendPopupButtonHandlers();
     let delegate = redirects[event_handler];

@@ -1,10 +1,10 @@
 
 export function appendPopupButtonHandlers() {
     // select the modal-background
-    let modalBackground = document.getElementById('modal-window-background');
+    let modalBackground = document.getElementsByClassName('modal-window')[0];
     // select the close-btn 
-    let closeBtn = document.getElementById('modal-window-close-btn');
-    let noBtn = document.getElementById('modal-window-no-btn');
+    let closeBtn = document.getElementsByClassName('modal-window__close-btn')[0];
+    let noBtn = document.getElementsByClassName('modal-window__no-btn')[0];
 
     // hides the modal when the user clicks close-btn
     const array = [closeBtn, noBtn]
@@ -27,7 +27,7 @@ export function appendPopupButtonHandlers() {
 
 export function appendPopupYesHandler(onYes)
 {
-    let yesBtn = document.getElementById('modal-window-yes-btn')
+    let yesBtn = document.getElementsByClassName('modal-window__yes-btn')[0];
     yesBtn.addEventListener('click', function(e) {
         e.preventDefault();
         onYes(e);
@@ -36,7 +36,7 @@ export function appendPopupYesHandler(onYes)
 
 export function appendPopupNoHandler(onNo)
 {
-    let yesBtn = document.getElementById('modal-window-no-btn')
+    let yesBtn = document.getElementsByClassName('modal-window__no-btn')[0];
     yesBtn.addEventListener('click', function(e) {
         //e.preventDefault();
         onNo(e);
