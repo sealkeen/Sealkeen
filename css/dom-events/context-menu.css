@@ -1,0 +1,27 @@
+.ctxmenu {
+    position: absolute;
+    transition: opacity 2.5s ease-in-out;
+    color: black;
+    cursor: pointer;
+    border: 1px #ffe200 solid;
+    left: 2%;
+    top: 5%;
+    background: #ffffffd8;
+    width: 96%;
+    height: 90%;
+    opacity: 100;
+}
+
+.ctxmenu > p {
+    padding: 0 1rem;
+    margin: 0;
+    color: #ffd400;
+}
+
+.ctxmenu > p:hover {
+    background: hsl(48deg 89% 50% / 87%);
+    color: ghostwhite
+}
+.ctxmenu__button {
+    background: #000000bd;;
+}

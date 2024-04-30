@@ -188,7 +188,7 @@ export function setDevelopmentMessages() {
             menu.id = "ctxmenu";
 
             let cmiQueueSelected = document.createElement("p");
-            cmiQueueSelected.className = 'ctxmenu-button';
+            cmiQueueSelected.className = 'ctxmenu__button';
             cmiQueueSelected.innerHTML = "Click left button (mouse) or scroll on tap (phone) to open enqueue menu on composition";
             menu.appendChild(cmiQueueSelected);
 
