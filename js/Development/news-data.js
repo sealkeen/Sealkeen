@@ -137,7 +137,7 @@ window.onload = function() {
     postFixCache = urls.getPostfix("/")
 };
 
-export function getRealOriginCached() {
+export function getRealOrigin() {
     return window.location.origin + postFixCache;
 }
 

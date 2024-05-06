@@ -51,7 +51,7 @@ const urls = {
         || (window.location.href.indexOf('ngrok-free.app') > -1)),
     getHostRootPath: () => `${location.protocol}//${location.host}/`,
     isLocationReachable: async () => await getLocationResponse(),
-    isHomePage : () => { return window.location.origin + "/" + urls.getPostfix() == window.location.href },
+    isHomePage : () => { return (window.location.origin + "/" + urls.getPostfix()) == window.location.href },
     isOrigin : () => { return isCurrentHostIp() || isNgrok() || isVSDebug(); }
 }; export default urls;
 
