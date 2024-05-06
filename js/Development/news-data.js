@@ -6,8 +6,8 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 export function getDevelopmentNewsData() {
 return [  
     {
-        cardTitle: 'DNS resolution await, ', date: 'February 2024', cardText: 
-        'Host address is temporarily freezed (waiting for domain resolution). You can contact me if you need direct access to music.',
+        cardTitle: 'Connection issues, ', date: 'February 2024', cardText: 
+        'Host address could be temporarily freezed (no connection available). Contact me to receive persistent access to the music.',
         id: 'february-first--dns-resolution'
     },
     {
