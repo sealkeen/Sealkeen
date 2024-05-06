@@ -16,7 +16,7 @@ function getQueryCardById(id) {
             continue;
         }
         if (dataId === id) { // Check if the dataId matches the provided ID
-            return cardElement; // Return the parent "card small-card" element
+            return cardElement; // Return the parent "card small-card" element 
         }
     }
     return null;

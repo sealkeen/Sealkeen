@@ -26,12 +26,12 @@ export default class TrackAPI {
     }
   }
 
-  export function replaceTrackParamInUrl(trackId) {
+export function replaceTrackParamInUrl(trackId) {
+      //if (!urls.isGithub() && !urls.isNodeJSHost() && !urls.isRemoteWorkspace()) {
+      //    console.log('[INF] track-decoding.js: DISABLED.');
+      //    return;
+      //}
       console.log("[INF] track-decoding.js/replaceTrackParamInUrl(), track id: " + trackId);
-      if (!urls.isGithub() && !urls.isNodeJSHost() && !urls.isRemoteWorkspace()) {
-          return;
-      }
-  
       const params = new URLSearchParams(window.location.search);
     
       if (!params.has('trackId')) {

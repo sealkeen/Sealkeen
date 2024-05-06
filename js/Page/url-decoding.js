@@ -2,7 +2,6 @@ import { fetchContentCrossOrigin } from "../Router/shared.js";
 import { handleLocation } from './../Router/location-mapper.js';
 import urls from "./../api.js"
 
-
 export default class MusicAPI {
     constructor() {
       console.log('%j', window.location)
@@ -21,21 +20,15 @@ export default class MusicAPI {
       console.log(`[INF] url-decoding.js/Searching for "${track}" by ${artist}...`);
       // Call the API with the given artist and track
       fetchContentCrossOrigin(`GetPartialCompositionPageByArtistName?artistName=${artist}`
-      , false).then(result => {
+      , false, false).then(result => {
         if(result.ok) { replaceArtistParamInUrl(artist); }
           return result;
       });;
     }
   }
   
-  // Create a new instance of the MusicAPI class
-  // const api = new MusicAPI();
-
 export function replaceArtistParamInUrl(artist) {
     console.log("[INF] url-decoding.js/replaceArtistParamInUrl(), artist: " + artist);
-    if (!urls.isGithub() && !urls.isNodeJSHost() && !urls.isRemoteWorkspace()) {
-      return;
-    }
   
     const params = new URLSearchParams(window.location.search);
   
@@ -46,7 +39,7 @@ export function replaceArtistParamInUrl(artist) {
       // Artist parameter exists, so modify it
       params.set('artist', artist);
     }
-  
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
+
+    const newUrl = `${window.location.origin}?${params.toString()}`;
     window.history.replaceState(null, null, newUrl);
   }

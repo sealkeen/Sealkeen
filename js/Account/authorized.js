@@ -7,7 +7,7 @@ import Exception from '../Extensions/cs-exception.js';
 import { showPopup } from '../Router/redirect-table.js';
 import { InvokeAddEventListener } from '../Router/redirect.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
-import { appendPopupNoHandler } from '../Page/Components/Popups/modal-window.js'
+import { isHostNameValidIP } from '../Utils/WindowLocation/AddressParser.js';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {
@@ -63,14 +63,13 @@ function createNavAElement(id, href, innerText) {
 
 var authorizedCallback = () => { }
 const authorizedHandler = () => { 
-    showPopup("logout", "Redirect to auth service?", ['Redirect', 'Stay'])
-    //appendPopupNoHandler(setCurrentPageRegister)
+    showPopup("logout", "Redirect to auth service?", ['Redirect', 'Stay']);
 }
 
 function Authorized()
 {
-    if(urls.isNgrok() || urls.isVSDebug()) {
-        console.log('Skip <Authorized()> handler (isNgrok or VSDebug)')
+    if (urls.isNgrok() || urls.isVSDebug() || isHostNameValidIP()) {
+        console.log('Skip <Authorized()> handler (isNgrok, localhost, IP or VSDebug)')
         return;
     }
     createInfoMessage('Authorized')
@@ -96,12 +95,11 @@ function Authorized()
 const loginUrl = 'Identity/Account/Login'
 var unauthorizedCallback = () => { }
 const unauthorizedHandler = () => { 
-    showPopup("login", "Redirect to auth service?", ['Redirect', 'Stay']) 
-    //appendPopupNoHandler(setCurrentPageLogin)
+    showPopup("login", "Redirect to auth service?", ['Redirect', 'Stay']);
 }
 export function Unauthorized()
 {
-    if(urls.isNgrok() || urls.isVSDebug()) {
+    if (urls.isNgrok() || urls.isVSDebug() || isHostNameValidIP()) {
         console.log('Skip <Unauthorized()> handler (isNgrok or VSDebug)')
         return;
     }
