@@ -132,17 +132,20 @@ return [
 ];
 }
 
-export function getRealOrigin() {
-    return window.location.origin + urls.getPostfix("/");
+var postFixCache = "";
+window.onload = function() {
+    postFixCache = urls.getPostfix("/")
+};
+
+export function getRealOriginCached() {
+    return window.location.origin + postFixCache;
 }
 
 export function setDevelopmentMessages() {
-
     if (window.location.href.indexOf("MJpeg") > -1)
         return;
 
     Debug.WriteLine('verification.js/setDevelopmentMessages:... set dev messages');
-
     let data = getDevelopmentNewsData();
     let devBody = document.getElementById("development-body");
     if (!devBody) {
@@ -153,7 +156,6 @@ export function setDevelopmentMessages() {
     } else { devBody.className = "news-columns"; }
 
     document.getElementById('development-body').innerHTML = '';
-
     data.forEach(element => {
         let card = document.createElement('div');
         card.className = 'card';
