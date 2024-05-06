@@ -1,7 +1,7 @@
 import { openRightNav, openNav, closeRightNav, closeNav } from "../StyleHandlers/side-nav-handlers.js";
-import { containsClasses } from "../utilities.js";
-import Debug from "../Extensions/cs-debug.js";
 import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
+import Debug from "../Extensions/cs-debug.js";
+import urls from "../api.js";
 
 export function getDevelopmentNewsData() {
 return [  
@@ -13,8 +13,8 @@ return [
     {
         cardTitle: 'Artist and TrackId links, ', date: 'September 2023', cardText: 
         'Added artist + trackid links: ' +
-        "<br>" + `<a href="${window.location.href}?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre">${window.location.href}?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre</a>,` +
-        "<br>" + `<a href="${window.location.href}?artist=неж&trackId=f5b0f5ab-2fc4-41ed-b565-d5cdffc2a102">${window.location.href}?artist=неж&trackId=f5b0f5ab-2fc4-41ed-b565-d5cdffc2a102</a>`,
+        "<br>" + `<a href="${getRealOrigin()}?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre">${getRealOrigin()}?trackId=46c34498-7f18-42c3-9116-a1a49fde3f2a&artist=The+Birthday+Massacre</a>,` +
+        "<br>" + `<a href="${getRealOrigin()}?artist=неж&trackId=f5b0f5ab-2fc4-41ed-b565-d5cdffc2a102">${getRealOrigin()}?artist=неж&trackId=f5b0f5ab-2fc4-41ed-b565-d5cdffc2a102</a>`,
         id: 'september-tw-three--artist-trackid'
     },
     {
@@ -30,20 +30,20 @@ return [
     {
         cardTitle: 'Clickable artist names, ', date: '26.02.2023', cardText: 
         '1) Artist links are now clickable when playing audio (with running server) ' +
-        "<br>" + `<a href="${window.location.href}?artist=Demotional">${window.location.href}?artist=Demotional</a>` +
+        "<br>" + `<a href="${getRealOrigin()}?artist=Demotional">${getRealOrigin()}?artist=Demotional</a>` +
         '<img src="../Images/Development/clickable-artist-links.png">' + 
-        "<br>" + `<a href="${window.location.href}?artist=In+Flames">${window.location.href}?artist=In+Flames</a>` +
+        "<br>" + `<a href="${getRealOrigin()}?artist=In+Flames">${getRealOrigin()}?artist=In+Flames</a>` +
         '<img src="../Images/Development/clickable-artist-links-in-flames.png">'+
-        "<br>" + `<a href="${window.location.href}?artist=Dead by April">Dead by April</a>`,
+        "<br>" + `<a href="${getRealOrigin()}?artist=Dead by April">Dead by April</a>`,
         id: 'february-tw-three--clickable-artists'
     }, 
     {
         cardTitle: 'Search query added, ', date: '25.02.2023', cardText: 
         '1) Added search query in browser url' +
-        "<br>" + `<a href="${window.location.href}?artist=Cold%20Insight">Cold Insight</a>`+
-        "<br>" + `<a href="${window.location.href}?artist=Rammstein">Rammstein</a>`+
-        "<br>" + `<a href="${window.location.href}?artist=Parkway%20Drive">Parkway Drive</a>`+
-        "<br>" + `<a href="${window.location.href}?artist=Essenger">Essenger</a>` + 
+        "<br>" + `<a href="${getRealOrigin()}?artist=Cold%20Insight">Cold Insight</a>`+
+        "<br>" + `<a href="${getRealOrigin()}?artist=Rammstein">Rammstein</a>`+
+        "<br>" + `<a href="${getRealOrigin()}?artist=Parkway%20Drive">Parkway Drive</a>`+
+        "<br>" + `<a href="${getRealOrigin()}?artist=Essenger">Essenger</a>` + 
         "<br>" + 
         "2) Added press 'space' => pause action.",
         id: 'february-tw-five--search--query'
@@ -131,6 +131,11 @@ return [
     }
 ];
 }
+
+export function getRealOrigin() {
+    return window.location.origin + urls.getPostfix("/");
+}
+
 export function setDevelopmentMessages() {
 
     if (window.location.href.indexOf("MJpeg") > -1)
