@@ -19,12 +19,15 @@ import { appendHorizontalVolumeControl } from './Page/Components/volume-controls
 import { addSearchTerminal } from './System/search-terminal.js';
 import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
 import { attachDraggableEventsToQueue } from './Utils/QueueExtensions/draggable-query-extensions.js';
+import { registerDependencies } from './Extensions/di-registration.js';
+import { serviceProvider } from './Services/di-container.js';
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
 /// On document loaded event
 $(document).ready(function () {
     try {
+        registerDependencies();
         addSearchTerminal();
         window.isAuthorized = (window.isAuthorized === true) ? true : false;
         appendSideNavigationBars();
@@ -41,8 +44,7 @@ $(document).ready(function () {
         appendHorizontalVolumeControl();
 
         onSiteLoadIfAuthorized();
-        
-        let urlHandler = new MusicAPI();
+        serviceProvider.resolve('musicApi');
         // set interval for load
         setTimeout(() => { let trackhandler = new TrackAPI(setNextComposition) }, 1000);
         
