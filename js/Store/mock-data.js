@@ -178,7 +178,7 @@ export function ConvertToDOM(message) {
 
     let textcenter = document.createElement('div');
     let display4 = document.createElement('h3');
-    textcenter.className = 'text-center';
+    textcenter.className = 'text-center shadow-box';
     if(message) {
         display4.className = 'display-4 stroke-shadow';
         display4.innerHTML = message ;

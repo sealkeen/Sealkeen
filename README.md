@@ -1,10 +1,10 @@
 ### Hello there 👋
 #### visit my dev resource here: [sealkeen.github.io](https://sealkeen.github.io)
 
-- 🔭 I’m currently working on MediaStreamer (C# .Net) [sealkeen.github.io](https://sealkeen.github.io)
-- 🌱 I’m currently learning: Angular, ASP.Net Core, Node.JS, Docker, Kubernetes
+- 🔭 I’m currently working on MediaStreamer (with ASP.Net Core and C# .Net) [sealkeen.github.io](https://sealkeen.github.io)
+- 🌱 I’m currently learning: Angular, Node.JS, Docker, TypeScript.
 - 👯 I’m looking to collaborate on Sound Production
 - 🤔 I’m looking for help with Front-End development
 - 💬 Ask me about Music
 - 📫 How to reach me: about.me/sealkeen
-- ⚡ Fun fact: I never wanted to make any web-sites (or resources) using C#, I felt like this is the worst language for that but right now It is probably the main purpose and the use case for it.
+- ⚡ Fun fact: Google had probably banned the direct media content play from Google Drive after some time that I placed direct links to google drive audio whichi was playing at my website.

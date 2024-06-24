@@ -1,4 +1,3 @@
-import { createInfoMessage } from './Errors/fetch-errors.js';
 import routes, { GetNonRoutePaths, getNonRootPaths } from './Router/routing-table.js';
 import Exception from './Extensions/cs-exception.js';
 import Debug from './Extensions/cs-debug.js';
@@ -10,7 +9,7 @@ const urls = {
         if (window.hostLocation != null) {
             return window.hostLocation; // custom location set from command line if needed
         } else if (this.isGithub()) {
-            return 'https://051a-31-134-149-42.ngrok-free.app/';
+            return 'https://9bfb-31-134-149-42.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';
         } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
@@ -100,7 +99,7 @@ export async function pushHistoryState(url)
         if(url.indexOf('http') <= -1) {
             let urlPath = getStructedPath(loc, url)
             newLc = loc + urlPath;
-            // Whether to ignore the PushHistory state specified
+            // Whether the ignorance of Push History state specified
             if( !Object.keys(routes).some( r => url.indexOf(r) > -1) 
                 || GetNonRoutePaths().some( r => url.indexOf(r) > -1)
             ) {  
@@ -134,7 +133,7 @@ export function anyPathSpecified(url)
 }
 
 export function getStructedPath(loc, lc) {
-    let result = ""//urls.getContentPath();
+    let result = "";
     if( !(urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace()) )
         lc = lc.replace('Content/', '')
     if(lc.indexOf( urls.getPostfix() ) > -1) {
