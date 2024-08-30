@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "http-server -c-1 -p 65000"
+  },
+  "devDependencies": {
+    "kill-port": "^2.0.1"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "lint": "^0.8.19"
+  }
+}

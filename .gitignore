@@ -28,7 +28,6 @@ node_modules
 css/vscorecssjson.txt
 
 node_modules/
-package.json
 package-lock.json
 
 # User-specific files
@@ -39,7 +38,6 @@ package-lock.json
 *.sln.docstates
 
 #.vs folder
-<<<<<<< HEAD
 *.v2
 =======
 *.[Vv]2
@@ -50,7 +48,6 @@ package-lock.json
 
 # Mono auto generated files
 mono_crash.*
->>>>>>> M03
 
 # Build results
 [Dd]ebug/
