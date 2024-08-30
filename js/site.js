@@ -1,5 +1,5 @@
-﻿import { setNextComposition, setFooterPlayerSourse } from './Utils/Audio.js';
-import { _trackQueue } from './Utils/Queue.js';
+﻿import { setNextComposition, setFooterPlayerSourse } from './Shared/Audio.js';
+import { _trackQueue } from './Shared/Queue.js';
 import { containsClasses, fromJQueryObject, 
     displayQueuedTracks, GetCurrentCompositionsId } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
@@ -10,7 +10,6 @@ import { fireOnInputValueChange } from './Page/event-handlers.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
 import Debug from './Extensions/cs-debug.js'
-import MusicAPI from './Page/url-decoding.js'
 import TrackAPI from './Page/track-decoding.js'
 import Exception from './Extensions/cs-exception.js';
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
@@ -18,7 +17,7 @@ import { appendSideNavigationBars } from './Page/Components/side-navigations.js'
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 import { addSearchTerminal } from './System/search-terminal.js';
 import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
-import { attachDraggableEventsToQueue } from './Utils/QueueExtensions/draggable-query-extensions.js';
+import { attachDraggableEventsToQueue } from './Shared/QueueExtensions/draggable-query-extensions.js';
 import { registerDependencies } from './Extensions/di-registration.js';
 import { serviceProvider } from './Services/di-container.js';
 
@@ -46,7 +45,7 @@ $(document).ready(function () {
         onSiteLoadIfAuthorized();
         serviceProvider.resolve('musicApi');
         // set interval for load
-        setTimeout(() => { let trackhandler = new TrackAPI(setNextComposition) }, 1000);
+        setTimeout(() => { new TrackAPI(setNextComposition) }, 1000);
         
         _trackQueue.onchange = () => {
             displayQueuedTracks(_trackQueue);
@@ -65,17 +64,13 @@ $(document).ready(function () {
 
         container.addEventListener('click', function (e) {
             Debug.WriteLine('site.js/onclick(): ' + e.target.id + ' ' + e.target.className);
-            // But only alert for elements that have an alert-button class
-            //if (containsClasses(e.target, 'card-body', 'card-text', 'card-title', 'card-body-composition')) {
+            
             let target = e.target;
             if (containsClasses(target, 'card-text', 'card-title')) {
                 target = e.target.parentNode;
             }
             if (target.classList.contains('card-body-composition')) {
                 setFooterPlayerSourse(e.target)
-                if (e.which === 3) {/* Right Mouse Click */
-                    //onCompositionRightMouseDown(); 
-                }
             }
             if (target.classList.contains('album-card-div')) {
                 setCurrentPageCompositionByID(e.target);

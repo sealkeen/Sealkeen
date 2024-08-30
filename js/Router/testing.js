@@ -1,5 +1,5 @@
 import urls, { anyPathSpecified } from './../api.js'
-import { toggleForId } from '../Utils/ClassQuery.js';
+import { toggleForId } from '../Shared/ClassQuery.js';
 import Debug from '../Extensions/cs-debug.js';
 import { setDevelopmentMessages } from '../Development/news-data.js';
 import { FetchGetPartialListenedPage, FetchPublicHandShake } from './click-handlers.js';

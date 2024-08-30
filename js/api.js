@@ -1,7 +1,7 @@
 import routes, { GetNonRoutePaths, getNonRootPaths } from './Router/routing-table.js';
 import Exception from './Extensions/cs-exception.js';
 import Debug from './Extensions/cs-debug.js';
-import { isHostNameValidIP } from './Utils/WindowLocation/AddressParser.js';
+import { isHostNameValidIP } from './Shared/WindowLocation/AddressParser.js';
 import { sleep } from './utilities.js';
 
 const urls = {

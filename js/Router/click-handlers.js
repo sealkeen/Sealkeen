@@ -16,7 +16,7 @@ import Exception from '../Extensions/cs-exception.js'
 import redirects, { showPopup } from "./redirect-table.js";
 import routes from './routing-table.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js'
-import { isHostNameValidIP } from '../Utils/WindowLocation/AddressParser.js'
+import { isHostNameValidIP } from '../Shared/WindowLocation/AddressParser.js'
 
 routes[""] = async () => { setCurrentPageIndex() } // "/pages/index.html"
 routes["/"] = async () => { setCurrentPageIndex() } // "/pages/index.html"

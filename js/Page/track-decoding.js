@@ -1,9 +1,9 @@
 import { fetchContentCrossOrigin } from "../Router/shared.js";
 import { handleLocation } from './../Router/location-mapper.js';
-import { setNextComposition } from "../Utils/Audio.js";
+import { setNextComposition } from "../Shared/Audio.js";
 import urls from "./../api.js"
 import Trace from "../Extensions/cs-trace.js";
-import { _trackQueue } from './../Utils/Queue.js';
+import { _trackQueue } from './../Shared/Queue.js';
 
 export default class TrackAPI {
     constructor(callBack) {
