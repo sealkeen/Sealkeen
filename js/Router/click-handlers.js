@@ -90,6 +90,11 @@ export function addEventHandlersOnBody() {
                 showPopup("register", "Redirect to auth service?", ['Redirect', 'Stay']);
             }
         );
+        addRedirectEventListener('#btn-identity-account-login', 
+            () => {
+                showPopup("login", "Redirect to auth service?", ['Redirect', 'Stay']);
+            }
+        );
     }
     addEventOnWindowResize();
 }
