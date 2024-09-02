@@ -20,6 +20,7 @@ import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
 import { attachDraggableEventsToQueue } from './Shared/QueueExtensions/draggable-query-extensions.js';
 import { registerDependencies } from './Extensions/di-registration.js';
 import { serviceProvider } from './Services/di-container.js';
+import { useVirtualMouseIfMobile } from './Page/Components/Inputs/virtual-mouse.js'
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
@@ -43,6 +44,7 @@ $(document).ready(function () {
         appendHorizontalVolumeControl();
 
         onSiteLoadIfAuthorized();
+        useVirtualMouseIfMobile();
         serviceProvider.resolve('musicApi');
         // set interval for load
         setTimeout(() => { new TrackAPI(setNextComposition) }, 1000);
