@@ -6,7 +6,7 @@ export function useVirtualMouseIfMobile() {
     let img = document.querySelector('img');
     let footer = document.querySelector('.footer');
     if(img) {
-        let isMobileOrTablet = serviceProvider.resolve('tabletAndMobileCheck');
+        let isMobileOrTablet = (window.isMobileOrTablet == null) ?? serviceProvider?.resolve('tabletAndMobileCheck');
         if(!isMobileOrTablet) { 
             createInfoMessage('Desktop device');
             return;
