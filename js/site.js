@@ -22,6 +22,8 @@ import { registerDependencies } from './Extensions/di-registration.js';
 import { serviceProvider } from './Services/di-container.js';
 import { useVirtualMouseIfMobile } from './Page/Components/Inputs/virtual-mouse.js'
 
+const RIGHT_MOUNT_BUTTON = 3;
+
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
 /// On document loaded event
@@ -46,7 +48,7 @@ $(document).ready(function () {
         onSiteLoadIfAuthorized();
         useVirtualMouseIfMobile();
         serviceProvider.resolve('musicApi');
-        // set interval for load
+        
         setTimeout(() => { new TrackAPI(setNextComposition) }, 1000);
         
         _trackQueue.onchange = () => {
@@ -73,6 +75,9 @@ $(document).ready(function () {
             }
             if (target.classList.contains('card-body-composition')) {
                 setFooterPlayerSourse(e.target)
+                if (e.which === RIGHT_MOUNT_BUTTON) {
+                    //onCompositionRightMouseDown(); 
+                }
             }
             if (target.classList.contains('album-card-div')) {
                 setCurrentPageCompositionByID(e.target);

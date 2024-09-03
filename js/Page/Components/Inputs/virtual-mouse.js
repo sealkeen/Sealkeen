@@ -3,14 +3,16 @@ import { createInfoMessage } from './../../../Errors/fetch-errors.js';
 import { serviceProvider } from './../../../Services/di-container.js';
 
 export function useVirtualMouseIfMobile() {
-    let cnt = document.querySelector('#top-page-container');
+    let cnt = document.querySelector('body');
     let footer = document.querySelector('.footer');
-    if(cnt && !footer) {
+    if(cnt) {
         let isMobileOrTablet = serviceProvider.resolve('tabletAndMobileCheck');
         if(!isMobileOrTablet) { 
             createInfoMessage('Desktop device');
+            return;
         }
         createInfoMessage('Mobile device');
+        if (footer) return;
 
         cnt.insertAdjacentHTML('afterbegin', `<style>
 .virtual-mouse:active{opacity:1}
