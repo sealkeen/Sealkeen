@@ -30,6 +30,7 @@ document.documentElement.style.setProperty('--scrollbar-width', (window.innerWid
 $(document).ready(function () {
     try {
         registerDependencies();
+        useVirtualMouseIfMobile();
         addSearchTerminal();
         window.isAuthorized = (window.isAuthorized === true) ? true : false;
         appendSideNavigationBars();
@@ -46,7 +47,6 @@ $(document).ready(function () {
         appendHorizontalVolumeControl();
 
         onSiteLoadIfAuthorized();
-        useVirtualMouseIfMobile();
         serviceProvider.resolve('musicApi');
         
         setTimeout(() => { new TrackAPI(setNextComposition) }, 1000);
