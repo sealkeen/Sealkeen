@@ -11,6 +11,9 @@ export function registerDependencies() {
             return check;
         }, []
     );
+
+    // additional configuration
+    window.isMobileOrTablet = serviceProvider.resolve('tabletAndMobileCheck');
 }
 
 function Example() {
