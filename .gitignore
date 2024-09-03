@@ -7,6 +7,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# CSS-SASS bundles
+css/site.css.map
+css/site.css
+
 #local config
 tsconfig.json
 
