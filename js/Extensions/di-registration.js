@@ -22,7 +22,6 @@ function Example() {
     serviceProvider.register('config', function() { return { apiUrl: 'https://api.example.com', apiKey: '12345' }; }, []);
     serviceProvider.register('userService', UserService, ['logger', 'config']);
 
-
     // Resolution
     var userService1 = serviceProvider.resolve('userService');
     var userService2 = serviceProvider.resolve('userService');

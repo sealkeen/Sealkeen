@@ -20,7 +20,7 @@ import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
 import { attachDraggableEventsToQueue } from './Shared/QueueExtensions/draggable-query-extensions.js';
 import { registerDependencies } from './Extensions/di-registration.js';
 import { serviceProvider } from './Services/di-container.js';
-import { useVirtualMouseIfMobile } from './Page/Components/Inputs/virtual-mouse.js'
+import { usePageModifyingComponents } from './Page/index.js'
 
 const RIGHT_MOUNT_BUTTON = 3;
 
@@ -30,7 +30,7 @@ document.documentElement.style.setProperty('--scrollbar-width', (window.innerWid
 $(document).ready(function () {
     try {
         registerDependencies();
-        useVirtualMouseIfMobile();
+        usePageModifyingComponents();
         addSearchTerminal();
         window.isAuthorized = (window.isAuthorized === true) ? true : false;
         appendSideNavigationBars();

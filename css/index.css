@@ -4,6 +4,7 @@
 @import url('./status-bar/status-bar.css');
 @import url('./popup/popup.css');
 @import url('./common/plain-text.css');
+@import url('./common/tap-circle.css');
 @import url('./custom/card-columns.css');
 @import url('./text/text.css');
 @import url('./page.css');
