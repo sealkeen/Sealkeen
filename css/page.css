@@ -291,6 +291,18 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+.navbar-brand-flexbox {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    align-items: center;
+}
+
+.brand-favicon {
+    width: 24px;
+    height: 24px;
+}
+
 a {
   color: #0366d6;
 }
