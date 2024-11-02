@@ -294,7 +294,7 @@ a.navbar-brand {
 .navbar-brand-flexbox {
     display: flex;
     flex-direction: row;
-    column-gap: 5px;
+    column-gap: 8px;
     align-items: center;
 }
 
