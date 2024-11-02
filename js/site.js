@@ -59,7 +59,7 @@ $(document).ready(function () {
 
         container.onmousedown = (e) => {
             Debug.WriteLine('site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
-            if (!containsClasses(e?.target, 'ctxmenu', 'ctxmenu-button')) {
+            if (!containsClasses(e?.target, 'ctxmenu', 'ctxmenu__button')) {
                 document.querySelectorAll('.ctxmenu').forEach(el => { 
                     el.innerHTML = ''; 
                 })
@@ -159,14 +159,14 @@ export function onCardTapped(e)
 
 export function appendPushListItem(e, menu /* : ContextMenuHTML */) { 
     let push = document.createElement("p");
-    push.className = 'ctxmenu-button';
+    push.className = 'ctxmenu__button';
     push.innerHTML = "Add first";
     push.onclick = () => { _trackQueue.push_front(fromJQueryObject(e)); };
     menu.appendChild(push)
 }
 export function appendQueueListItem(e, menu /* : ContextMenuHTML */) { 
     let queue = document.createElement("p")
-    queue.className = 'ctxmenu-button';
+    queue.className = 'ctxmenu__button';
     queue.innerHTML = "Add last";
     queue.onclick = () => { _trackQueue.enqueue(fromJQueryObject(e)); };
     menu.appendChild(queue)

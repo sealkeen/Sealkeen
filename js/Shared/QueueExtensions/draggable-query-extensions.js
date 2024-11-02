@@ -22,6 +22,7 @@ function getQueryCardById(id) {
     return null;
 }
 
+// TODO: fix dragging
 export function attachDraggableEventsToQueue() {
     // Attach the drag and drop event listeners to elements with the class "card-query-columns"
     const cardColumns = document.querySelector('.card-query-columns');
