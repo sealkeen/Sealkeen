@@ -11,7 +11,7 @@ export function LogMessageRequest(message) {
         type: 'POST',
         url: urls.getLocation() + 'api/Logger',
         success: function (msg) {
-            //alert('wow' + msg);
+            //console.log('wow' + msg);
         },
         data:
             JSON.stringify({ "message": message })

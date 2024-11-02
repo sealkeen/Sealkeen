@@ -1,9 +1,9 @@
-﻿import { _trackQueue, peekObjectsArtistsAndTitles } from './Utils/Queue.js';
+﻿import { _trackQueue, peekObjectsArtistsAndTitles } from './Shared/Queue.js';
 import Debug from './Extensions/cs-debug.js';
 import Trace from './Extensions/cs-trace.js';
 import Exception from './Extensions/cs-exception.js';
 import { createInfoMessage } from './Errors/fetch-errors.js';
-import { getAudioNode } from './Utils/Audio.js';
+import { getAudioNode } from './Shared/Audio.js';
 
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;

@@ -7,4 +7,4 @@
 - 🤔 I’m looking for help with Front-End development
 - 💬 Ask me about Music
 - 📫 How to reach me: about.me/sealkeen
-- ⚡ Fun fact: C# seemed to me as the worst in WEB, but right now this is probably the main purpose of the language.
+- ⚡ Fun fact: C# seemed to me as the worst for WEB development, but right now this is probably the main purpose of the language.

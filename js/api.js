@@ -1,8 +1,7 @@
-import { createInfoMessage } from './Errors/fetch-errors.js';
 import routes, { GetNonRoutePaths, getNonRootPaths } from './Router/routing-table.js';
 import Exception from './Extensions/cs-exception.js';
 import Debug from './Extensions/cs-debug.js';
-import { isHostNameValidIP } from './Utils/WindowLocation/AddressParser.js';
+import { isHostNameValidIP } from './Shared/WindowLocation/AddressParser.js';
 import { sleep } from './utilities.js';
 
 const urls = {
@@ -10,7 +9,7 @@ const urls = {
         if (window.hostLocation != null) {
             return window.hostLocation; // custom location set from command line if needed
         } else if (this.isGithub()) {
-            return 'https://051a-31-134-149-42.ngrok-free.app/';
+            return 'https://2370-31-134-149-42.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';
         } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
@@ -51,7 +50,8 @@ const urls = {
         || (window.location.href.indexOf('ngrok-free.app') > -1)),
     getHostRootPath: () => `${location.protocol}//${location.host}/`,
     isLocationReachable: async () => await getLocationResponse(),
-    isHomePage : () => { return window.location.origin + "/" + urls.getPostfix() == window.location.href; }
+    isHomePage : () => { return (window.location.origin + "/" + urls.getPostfix()) == window.location.href },
+    isOrigin : () => { return isCurrentHostIp() || isNgrok() || isVSDebug(); }
 }; export default urls;
 
 const PREFIX_LENGTH = 8, SLASH_LENGTH = 1; 
@@ -85,26 +85,6 @@ export async function getLocationResponse() {
     });
 };
 
-// if-url-exist.js v1
-export function ifUrlExist(url, callback) {
-    let request = new XMLHttpRequest;
-    request.open('GET', url, true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    request.setRequestHeader('Accept', '*/*');
-    request.onprogress = function(event) {
-        let status = event.target.status;
-        let statusFirstNumber = (status).toString()[0];
-        switch (statusFirstNumber) {
-            case '2':
-                request.abort();
-                return callback(true);
-            default:
-                request.abort();
-                return callback(false);
-        };
-    };
-    request.send('');
-};
 
 export async function pushHistoryState(url)
 {
@@ -119,11 +99,11 @@ export async function pushHistoryState(url)
         if(url.indexOf('http') <= -1) {
             let urlPath = getStructedPath(loc, url)
             newLc = loc + urlPath;
-            // Whether to ignore the PushHistory state specified
+            // Whether the ignorance of Push History state specified
             if( !Object.keys(routes).some( r => url.indexOf(r) > -1) 
                 || GetNonRoutePaths().some( r => url.indexOf(r) > -1)
             ) {  
-                createInfoMessage('[INF] Skip states for: <' + newLc + '>, <' + url + '>')
+                console.warn('[WRN] Skip states for: <' + newLc + '>, <' + url + '>')
                 return;
             }
             console.log('[INF] api.js/push... NLc: ' + newLc);
@@ -153,7 +133,7 @@ export function anyPathSpecified(url)
 }
 
 export function getStructedPath(loc, lc) {
-    let result = ""//urls.getContentPath();
+    let result = "";
     if( !(urls.isGithub() || urls.isNodeJSHost() || urls.isRemoteWorkspace()) )
         lc = lc.replace('Content/', '')
     if(lc.indexOf( urls.getPostfix() ) > -1) {
@@ -182,4 +162,12 @@ export async function redirectIfServerIsReachable(path) // : String
     } 
     else 
         return false;
+}
+
+function isCurrentHostIp() { 
+    const containsLetter = /[a-zA-z]/.test(location.hostname)
+    const isIPv6 = 
+        location.hostname.startsWith('[') && 
+        location.hostname.endsWith(']')
+   return !containsLetter || isIPv6
 }

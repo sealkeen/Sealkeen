@@ -7,7 +7,7 @@ import Exception from '../Extensions/cs-exception.js';
 import { showPopup } from '../Router/redirect-table.js';
 import { InvokeAddEventListener } from '../Router/redirect.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
-import { isHostNameValidIP } from '../Utils/WindowLocation/AddressParser.js';
+import { isHostNameValidIP } from '../Shared/WindowLocation/AddressParser.js';
 
 export async function addElementsForAuthorizedUser(pipeLineNext)
 {

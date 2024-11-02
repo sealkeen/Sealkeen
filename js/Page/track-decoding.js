@@ -1,9 +1,6 @@
-import { fetchContentCrossOrigin } from "../Router/shared.js";
-import { handleLocation } from './../Router/location-mapper.js';
-import { setNextComposition } from "../Utils/Audio.js";
-import urls from "./../api.js"
+
 import Trace from "../Extensions/cs-trace.js";
-import { _trackQueue } from './../Utils/Queue.js';
+import { _trackQueue } from './../Shared/Queue.js';
 
 export default class TrackAPI {
     constructor(callBack) {
@@ -19,18 +16,12 @@ export default class TrackAPI {
   
     search(track) {
       console.log(`[INF] track-decoding.js/Tring to load direct for "${track}" ...`);
-
-      // Call the API with the given track
       _trackQueue.enqueue({id : track})
       this.callBack(track);
     }
   }
 
 export function replaceTrackParamInUrl(trackId) {
-      //if (!urls.isGithub() && !urls.isNodeJSHost() && !urls.isRemoteWorkspace()) {
-      //    console.log('[INF] track-decoding.js: DISABLED.');
-      //    return;
-      //}
       console.log("[INF] track-decoding.js/replaceTrackParamInUrl(), track id: " + trackId);
       const params = new URLSearchParams(window.location.search);
     

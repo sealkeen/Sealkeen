@@ -1,0 +1,15 @@
+    .tap-circle {
+        position: absolute;
+        width: 20px; /* Diameter of the circle */
+        height: 20px; /* Diameter of the circle */
+        background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.589), rgba(238, 255, 0, 0.836));
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none; /* Make the circle not interfere with further clicks */
+        z-index: 9998;
+        transition: opacity .1s ease-in-out;
+    }
+    
+    .tap-circle__faded {
+        opacity: 0.1;
+    }

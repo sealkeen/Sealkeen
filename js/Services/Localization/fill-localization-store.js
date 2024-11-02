@@ -1,5 +1,6 @@
 import LocalizationService from './localization-service.js';
 import { CreateLocalization } from './../../Store/localization-store.js'
+import Debug from '../../Extensions/cs-debug.js';
 
 const lS = LocalizationService.getInstance();
 export default lS;
@@ -63,7 +64,7 @@ function AddLanguageDropDown()
             return; // Exit the function
         }
         // Continue with the function
-        console.log("[INF] No dropdown toggles found");
+        Debug.WriteLine("[INF] No dropdown toggles found");
 
         // Create language combobox button
         const languageComboBoxButton = document.createElement('li');

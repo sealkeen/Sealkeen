@@ -4,6 +4,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# CSS-SASS bundles
+css/site.css.map
+css/site.css
+
+#local config
+tsconfig.json
+
 # stashes
 Sealkeen
 
@@ -16,7 +23,6 @@ node_modules
 css/vscorecssjson.txt
 
 node_modules/
-package.json
 package-lock.json
 
 # User-specific files
