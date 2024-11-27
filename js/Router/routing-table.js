@@ -3,6 +3,7 @@ const routes = {
     404: async () => { },
     "": async () => { },
     "/": async () => { }, // "/pages/index.html"
+    "/about": async () => { console.error('!/about!') }, 
     "/Content/GetHTMLArtistsPage": async () => { console.error('!/Content/GetHTMLArtistsPage!') }, 
     "/Content/GetHTMLAlbumsPage": async () => { console.error("!/Content/GetHTMLAlbumsPage!") },
     "/Content/GetHTMLGenresPage": async () => { console.error("!/Content/GetHTMLGenresPage!") },
@@ -18,11 +19,12 @@ const nonRoutePaths = [
     "GetPartialCompositionPageByArtistName"
 ];
 
-export function getNonRootPaths()
-{
-    return Object.keys(routes).filter((p) => p !== '' && p != '/')
-}
+const noActionPaths = [
+    '/about'
+];
 
+export function isNoActionPath(path) { return noActionPaths.indexOf(path) > -1; }
+export function getNonRootPaths() { return Object.keys(routes).filter((p) => p !== '' && p != '/'); }
 export function GetNonRoutePaths() { return nonRoutePaths }
 
 export default routes;

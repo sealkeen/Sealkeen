@@ -4,8 +4,6 @@ import Debug from '../Extensions/cs-debug.js';
 import { setDevelopmentMessages } from '../Development/news-data.js';
 import { FetchGetPartialListenedPage, FetchPublicHandShake } from './click-handlers.js';
 import { addElementsForAuthorizedUser, Unauthorized } from '../Account/authorized.js';
-import { addRedirectEventListener } from './redirect.js';
-import { showPopup } from './redirect-table.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
 
 window.handShakeCondition = false;
@@ -15,7 +13,6 @@ const DEFAULT_INTERVAL = 8000; // Default handshake interval value is ms
 const INTERVAL_INCREASE = 1450; // Increase interval after the handshake is failed in ms
 var g_interval = DEFAULT_INTERVAL;
 var g_inProcess = false;
-const isVisibilityHiddenState = 'hidden';
 
 export async function runBackgroundHandShakes()
 {

@@ -9,9 +9,6 @@ export const route = (event) => {
 };
 
 export const handleLocation = async () => {
-    //if(urls.isNgrok() || urls.isVSDebug()) // location handling for razor pages
-    //    return;
-
     const path = window.location.pathname;
     let rPath = path.replace('/GetPartial', '/GetHTML')//.replace('/Content', 'Content');
     console.log("[INF] router location: " + rPath);

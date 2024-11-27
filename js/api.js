@@ -57,10 +57,12 @@ const urls = {
 const PREFIX_LENGTH = 8, SLASH_LENGTH = 1; 
 export function dropPrefix(url)
 {
-    if( url.indexOf('/Sealkeen') )
-        return url.substring(PREFIX_LENGTH + SLASH_LENGTH)
-    if( url.indexOf('Sealkeen/') === 0 )
-        return url.substring(PREFIX_LENGTH)
+    let indexOfPrefix = url.indexOf('/Sealkeen');
+    if ( indexOfPrefix > -1 )
+        return url.substring(PREFIX_LENGTH + SLASH_LENGTH);
+    if ( url.indexOf('Sealkeen/') === 0 )
+        return url.substring(PREFIX_LENGTH);
+    return url;
 }
 export function addPrefixIfNeeded(url)
 {
@@ -128,8 +130,9 @@ export async function pushHistoryState(url)
 
 export function anyPathSpecified(url)
 {
+    let isAnyPathSpecified = getNonRootPaths().some( r => url.indexOf(r) > -1) && !(GetNonRoutePaths().some( r => url.indexOf(r) > -1))
     Debug.WriteLine(`api.js/anyPathSpecified(), Url: <${url}>`)
-    return getNonRootPaths().some( r => url.indexOf(r) > -1) && !(GetNonRoutePaths().some( r => url.indexOf(r) > -1));
+    return isAnyPathSpecified;
 }
 
 export function getStructedPath(loc, lc) {

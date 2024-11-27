@@ -1,10 +1,11 @@
 import Exception from "../Extensions/cs-exception.js";
 import { appendPopupButtonHandlers, appendPopupYesHandler } from "../Page/Components/Popups/modal-window.js";
+import { serviceProvider } from "../Services/di-container.js";
 
 const redirects = {
     404: () => { },
     "": () => { },
-    "/": () => { }, // "/pages/index.html"
+    "/": () => { },
     "about.me": (e) => { onClickGotoAboutMe(e) },
     "login": async () => { console.error('login') },
     "register": async () => { console.error('register') },
@@ -43,7 +44,19 @@ function recreate(text, buttons)
 
 export function onClickGotoAboutMe(e)
 {
-    //e.preventDefault();
+    window.history.pushState(null, null, '/about');
+
+    let router = serviceProvider.resolve('nativeRouter');
+    Exception.Throw('router resolved: ', router);
+    let routeActions = router.routes;
+    
+    if (routeActions)
+        routeActions['/about']();
+    else
+        Exception.Throw('Error when executing about action route.'); 
+
+    //setAboutHtmlPage();
+    return; // about.me blocked in Russia
     recreate("Go to about.me/sealkeen?", ['YES','NO']);
 
     const modalBackground = document.getElementsByClassName('modal-window')[0];

@@ -4,3 +4,22 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 1.4);
     padding: 4px 15px 0px 15px;
 }
+
+.shadow-box__white {
+    background-color: rgba(255, 255, 255, 0.87);
+    border-radius: 65px 65px 65px 65px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 1.4);
+    padding: 20px 14px 0px 26px;;
+}
+
+h1.m-weight-600 {
+    font-weight: 600;
+}
+
+.m-cursive {
+    font-family: cursive;
+}
+
+.m-dark-blue {
+    color: rgb(9 80 116);
+}

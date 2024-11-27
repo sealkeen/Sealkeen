@@ -40,7 +40,10 @@ $(document).ready(function () {
         addSideNavElements();
         addSidenavEventListeners();
         addEventHandlersOnBody();
-        toggleBodyBackground();
+        
+        let pathHelper = serviceProvider.resolve('actionPathHelper');
+        toggleBodyBackground(!pathHelper.isNoActionPath(window.location.pathname));
+
         bindPlayerButtons();
         toggleTopPageBackground(false);
         initializeKeyboardHook();

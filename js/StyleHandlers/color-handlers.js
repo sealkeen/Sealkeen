@@ -75,7 +75,7 @@ export function onClickBodyBackground() {
     }, (2500)); 
 }
 
-export function toggleBodyBackground() {
+export function toggleBodyBackground(shouldAppendTimeText = true) {
     setBackgroundOpacityInterval();
 
     window.toggleBodyBackground = toggleBodyBackground;
@@ -105,11 +105,9 @@ export function toggleBodyBackground() {
         greetingKey = 'greeting_late_evening';
     }
 
-    if (window.translateGreetings != null)
+    if (window.translateGreetings != null && shouldAppendTimeText)
         window.translateGreetings(greetingKey);
 }
-
-function noOp() { Debug.WriteLine('no-op') }
 
 export function toggleTopPageBackground(on)
 {

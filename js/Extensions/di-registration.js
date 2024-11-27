@@ -1,8 +1,10 @@
 import { serviceProvider } from '../Services/di-container.js';
 import MusicAPI from '../Page/url-decoding.js';
+import routes, { isNoActionPath } from '../Router/routing-table.js';
 
 export function registerDependencies() {
-    //serviceProvider.register();
+    serviceProvider.register('nativeRouter', () => { return { routes } }, []);
+    serviceProvider.register('actionPathHelper', () => { return { isNoActionPath } }, []);
     serviceProvider.register('musicApi', MusicAPI, []);
     serviceProvider.register('tabletAndMobileCheck', 
         function() {
