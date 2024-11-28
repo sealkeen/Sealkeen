@@ -39,3 +39,14 @@ h1.m-weight-600 {
 .m-flex-box {
     display: flex;
 }
+
+.m-fit-content {
+    width: fit-content;
+}
+
+.stroke-shadow__box-padding {
+    padding-bottom: 15px;
+    padding-top: 15px;
+    padding-left: 28px;
+    padding-right: 28px;
+}
