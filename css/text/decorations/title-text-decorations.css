@@ -2,7 +2,6 @@
     background-color: rgba(0, 0, 0, 0.66);
     border-radius: 65px 65px 65px 65px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 1.4);
-    padding: 4px 15px 0px 15px;
 }
 
 .shadow-box__white {
@@ -22,4 +21,13 @@ h1.m-weight-600 {
 
 .m-dark-blue {
     color: rgb(9 80 116);
+}
+
+.m-lowered-padding {
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.m-increased-padding {
+    padding: 24px 15px 24px 15px;
 }

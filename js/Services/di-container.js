@@ -1,5 +1,6 @@
 import { createInfoMessage } from '../Errors/fetch-errors.js';
 import Exception from '../Extensions/cs-exception.js';
+import Debug from '../Extensions/cs-debug.js';
 
 // Pre ES-6 DI container.js
 function DIContainer() {
@@ -30,8 +31,9 @@ DIContainer.prototype.resolve = function(name) {
       // factory function
       instance = definition.apply(null, dependencies);
     }
+    
     this.resolvedDependencies[name] = instance; // Cache
-    createInfoMessage(`Resolved: "${name}"`)
+    Debug.WriteLine(`Resolved: "${name}"`);
     return instance;
 };
   

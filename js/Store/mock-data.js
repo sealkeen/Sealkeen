@@ -1,4 +1,6 @@
-import { setTitleByArtistAndTitle } from './../Page/event-handlers.js'
+import Exception from '../Extensions/cs-exception.js';
+import { setTitleByArtistAndTitle } from './../Page/event-handlers.js';
+import { serviceProvider } from './../Services/di-container.js';
 
 export function CreateDOMFromJSON(jsonSource) {
     let center = document.createElement('center');
@@ -178,7 +180,7 @@ export function ConvertToDOM(message) {
 
     let textcenter = document.createElement('div');
     let display4 = document.createElement('h3');
-    textcenter.className = 'text-center shadow-box';
+    textcenter.className = 'text-center shadow-box m-increased-padding';
     if(message) {
         display4.className = 'display-4 stroke-shadow';
         display4.innerHTML = message ;
@@ -190,6 +192,7 @@ export function ConvertToDOM(message) {
 
     textcenter.appendChild(display4);
     center.appendChild(textcenter);
+    insertAboutRedirect(display4);
 
     let data = [];/*JSON.parse(fromBinary(takeStore()));*/
 
@@ -219,6 +222,36 @@ export function ConvertToDOM(message) {
     return center;
 }
 
+function insertAboutRedirect(display4) {
+    let aboutLinkDiv = document.createElement('div');
+    let headLineH2 = createH2();
+    let aAbout = createAboutAhref();
+    aboutLinkDiv.className = 'shadow-box__white m-lowered-padding';
+    headLineH2.innerHTML = `<span class="roles"><span>Contacts are listed at this page: </span>`
+    headLineH2.insertAdjacentElement('beforeend', aAbout);
+    aboutLinkDiv.insertAdjacentElement('afterbegin', headLineH2)
+
+    display4.insertAdjacentElement('afterend', aboutLinkDiv);
+}
+
+function createAboutAhref() {
+    let routeActions = serviceProvider.resolve('nativeRouter').routes;
+    Exception.Throw('Routes: ' + routeActions);
+    let aAbout = document.createElement('a');
+    aAbout.href = "/about"; 
+    aAbout.innerHTML = "/About"
+    aAbout.addEventListener('click', (e) => { 
+        e.preventDefault();
+        if (routeActions) routeActions['/about']();
+    });
+    return aAbout;
+}
+
+function createH2() {
+    let h2 = document.createElement('h2');
+    h2.className = "headline";
+    return h2;
+}
 
 export function onMockDataLoaded() {
     const container = document.querySelector('#card-columns');

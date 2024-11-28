@@ -47,7 +47,6 @@ export function onClickGotoAboutMe(e)
     window.history.pushState(null, null, '/about');
 
     let router = serviceProvider.resolve('nativeRouter');
-    Exception.Throw('router resolved: ', router);
     let routeActions = router.routes;
     
     if (routeActions)
