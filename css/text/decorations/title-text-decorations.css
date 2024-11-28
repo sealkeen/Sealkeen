@@ -28,6 +28,14 @@ h1.m-weight-600 {
     padding-top: 4px;
 }
 
+.m-title-section__padding {
+    padding-bottom: 10px;
+}
+
 .m-increased-padding {
     padding: 24px 15px 24px 15px;
+}
+
+.m-flex-box {
+    display: flex;
 }
