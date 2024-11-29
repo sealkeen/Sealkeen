@@ -3,6 +3,7 @@
     "start": "http-server -c-1 -p 65000"
   },
   "devDependencies": {
+    "eslint": "^9.9.1",
     "kill-port": "^2.0.1"
   },
   "dependencies": {
