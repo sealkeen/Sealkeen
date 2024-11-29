@@ -8,7 +8,7 @@ export function getDevelopmentNewsData() {
 return [  
 {
     cardTitle: '<a href="/about" id="november-tw-four--about-modernized__label">About</a> page modernized, ', date: 'November 2024', cardText: 
-    'Host address could be temporarily freezed (no connection available). Contact me to receive persistent access to the music.',
+    'The /about page now contains some persistent information about the website\'s author, it is being filled with content and styles. Some are in progress, watch out for new features.',
     id: 'november-tw-four--about-modernized'
 },
 {
