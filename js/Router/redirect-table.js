@@ -44,8 +44,6 @@ function recreate(text, buttons)
 
 export function onClickGotoAboutMe(e)
 {
-    window.history.pushState(null, null, '/about');
-
     let router = serviceProvider.resolve('nativeRouter');
     let routeActions = router.routes;
     

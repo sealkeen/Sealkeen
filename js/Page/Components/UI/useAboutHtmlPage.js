@@ -7,6 +7,8 @@ export function useAboutHtmlPage() {
 export async function setAboutHtmlPage() {
     let container=document.querySelector('#page-body-container');
     if(!container) return;
+    window.history.pushState(null, null, '/about');
+    
     let socialLinksCLass = 'social-links__list ' + (window.isMobileOrTablet ? 'm-grid-rows__mobile' : 'm-grid-rows__desktop');
     container.innerHTML = 
 `
