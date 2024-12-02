@@ -9,4 +9,5 @@
 @use './custom/card-columns';
 @use './containers/social-links.css';
 @use './text/text';
+@use './text/decorations/title-text-decorations.css'; // manually include
 @use './page.css';
