@@ -3,7 +3,7 @@ import { _trackQueue } from './Shared/Queue.js';
 import { containsClasses, fromJQueryObject, 
     displayQueuedTracks, GetCurrentCompositionsId } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
-import { addSideNavElements, addSidenavEventListeners } from './StyleHandlers/side-nav-handlers.js';
+import { addSideNavElements, addSidenavEventListeners } from './Page/Components/navigations/side-nav-handlers.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
 from './Router/click-handlers.js';
 import { fireOnInputValueChange } from './Page/event-handlers.js';
@@ -13,7 +13,6 @@ import Debug from './Extensions/cs-debug.js'
 import TrackAPI from './Page/track-decoding.js'
 import Exception from './Extensions/cs-exception.js';
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
-import { appendSideNavigationBars } from './Page/Components/side-navigations.js';
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
 import { addSearchTerminal } from './System/search-terminal.js';
 import { onTransitionEnd } from './StyleHandlers/footer-handlers.js';
@@ -33,7 +32,6 @@ $(document).ready(function () {
         usePageModifyingComponents();
         addSearchTerminal();
         window.isAuthorized = (window.isAuthorized === true) ? true : false;
-        appendSideNavigationBars();
         FillLocalizationStore();
         runBackgroundHandShakes();
 

@@ -1,4 +1,4 @@
-import { onPauseClicked } from "../StyleHandlers/side-nav-handlers.js";
+import { onPauseClicked } from "../Page/Components/navigations/side-nav-handlers.js";
 
 export function initializeKeyboardHook()
 {

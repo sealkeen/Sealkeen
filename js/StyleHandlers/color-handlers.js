@@ -22,7 +22,8 @@ function setCertainImage(name)
 {
     if ($(imageDiv) == null || $(imageDiv)[0] == null || $(imageDiv)[0].className == null)
         return
-    $(imageDiv)[0].className = (classNames + name); console.log(classNames + name);
+    $(imageDiv)[0].className = (classNames + name); 
+    Debug.WriteLine('[TRACE] ', classNames + name);
 }
 
 export async function setBackgroundOpacityInterval()
@@ -30,13 +31,8 @@ export async function setBackgroundOpacityInterval()
     let elts = document.getElementsByClassName('background-image-div');
     if (elts == null || elts[0] == null)
         return
-    console.log('[INF] Transform-Increase opacity ...')
+    Debug.WriteLine('[INF] Transform-Increase opacity ...')
     elts[0].style.opacity = 1
-}
-
-function customSleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay);
 }
 
 export function onClickBodyBackground() {

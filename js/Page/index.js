@@ -2,7 +2,8 @@ import { useTapCircle } from "./Components/ScreenStyles/tap-circle.js";
 import { useVirtualMouseIfMobile } from './Components/Inputs/virtual-mouse.js'
 import { useFaviconDynamic } from "./Components/Images/useFaviconDynamic.js";
 import { useAboutHtmlPage } from "./Components/UI/useAboutHtmlPage.js";
-import { serviceProvider } from "../Services/di-container.js";
+import { appendSideNavigationBars } from "./Components/navigations/side-navigation-bars.js"
+import { useSideNavigationsBlink } from "./Components/navigations/use-side-navigations-blink.js";
 
 useVirtualMouseIfMobile();
 export function usePageModifyingComponents() {
@@ -10,4 +11,6 @@ export function usePageModifyingComponents() {
     useTapCircle();
     useFaviconDynamic();
     useAboutHtmlPage();
+    appendSideNavigationBars();
+    useSideNavigationsBlink();
 }

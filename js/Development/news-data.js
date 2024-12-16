@@ -1,4 +1,4 @@
-import { openRightNav, openNav, closeRightNav, closeNav } from "../StyleHandlers/side-nav-handlers.js";
+import { openRightNav, openNav, closeRightNav, closeNav } from "../Page/Components/navigations/side-nav-handlers.js";
 import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 import Debug from "../Extensions/cs-debug.js";
 import urls from "../api.js";

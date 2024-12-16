@@ -61,33 +61,29 @@ function getSideNavWidth() {
 }
 
 export function openNav() {
-    document.getElementById("left-side-nav").style.width = getSideNavWidth();
-    //window.addEventListener('resizeend', () => { document.getElementById("left-side-nav").style.width = $('body').width() / 2; } )
-    //document.getElementById("top-page-container").style.marginLeft = "250px";
+    let leftnav = document.getElementById("left-side-nav");
+    if (!leftnav) return;
+    leftnav.style.width = getSideNavWidth();
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
-    document.getElementById("left-side-nav").style.paddingLeft = "5px"; 
-    document.getElementById("left-side-nav").style.paddingRight = "5px"; 
+    leftnav.style.paddingLeft = "5px"; 
+    leftnav.style.paddingRight = "5px"; 
 }
   
 export function closeNav() {
-    document.getElementById("left-side-nav").style.width = "0";
-    //document.getElementById("top-page-container").style.marginLeft= "0";
+    let leftnav = document.getElementById("left-side-nav");
+    if (!leftnav) return;
+    leftnav.style.width = "0";
     document.getElementsByClassName("navbar")[0].style.opacity = 1;
-    //document.getElementsByClassName("container")[0].style.opacity = 1;
-    document.getElementById("left-side-nav").style.paddingLeft = "0px"; 
-    document.getElementById("left-side-nav").style.paddingRight = "0px"; 
+    leftnav.style.paddingLeft = "0px"; 
+    leftnav.style.paddingRight = "0px"; 
 }
 
 export function openRightNav(e) {
     let rNav= document.getElementById("right-side-nav");
     if(rNav == null) return;
-
     rNav.style.width = getSideNavWidth();
-    //window.addEventListener('resizeend', () => { document.getElementById("right-side-nav").style.width = $('body').width() / 2; } )
-    //document.getElementById("top-page-container").style.marginRight = "250px";
-    document.querySelector("#vertical-volume-control").classList.add('volume-control-absolute');
+    document.querySelector("#vertical-volume-control")?.classList.add('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 0.9;
-    //document.getElementsByClassName("container")[0].style.opacity = 0.8;
     rNav.style.paddingLeft = "5px"; 
     rNav.style.paddingRight = "5px"; 
 }
@@ -97,10 +93,8 @@ export function closeRightNav(e) {
     if(rNav == null) return;
 
     rNav.style.width = "0";
-    //document.getElementById("top-page-container").style.marginRight= "0";
     document.querySelector("#vertical-volume-control").classList.remove('volume-control-absolute');
     document.getElementsByClassName("navbar")[0].style.opacity = 1;
-    //document.getElementsByClassName("container")[0].style.opacity = 1;
     rNav.style.paddingLeft = "0px"; 
     rNav.style.paddingRight = "0px"; 
 }
