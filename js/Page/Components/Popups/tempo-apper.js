@@ -21,7 +21,6 @@ export function useTempoTapper()
     let timeoutId = null;
     let intervals = []; // Array to store intervals between taps
 
-    // Function to update the label and show the tempo
     function updateTempoLabel() {
         if (tempo > 0) {
         tempoLabel.textContent = `${tempo.toFixed(3)} BPM`;
@@ -30,40 +29,53 @@ export function useTempoTapper()
         tempoLabel.style.display = "none";
         }
     }
+
+    function resetTempo()
+    {
+        tempo = 0;
+        lastTapTime = null;
+        intervals = []; // Clear stored intervals
+        updateTempoLabel();
+    }
+
+    function updateTempoInterval()
+    {
+        // Clear any existing timeout to reset the tempo
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(() => {
+            resetTempo();
+        }, 6000);
+    }
     
     // Function to handle tap events
     function handleTap() {
         const currentTime = Date.now();
     
         if (lastTapTime !== null) {
-        const interval = (currentTime - lastTapTime) / 1000; // Time in seconds
-        intervals.push(interval); // Store the interval
-    
-        if (intervals.length > 1) {
-            const averageInterval = intervals.reduce((sum, val) => sum + val, 0) / intervals.length;
-            tempo = 60 / averageInterval; // Calculate average BPM
-        }
+            const interval = (currentTime - lastTapTime) / 1000; // Time in seconds
+            intervals.push(interval); // Store the interval
+        
+            if (intervals.length > 1) {
+                const averageInterval = intervals.reduce((sum, val) => sum + val, 0) / intervals.length;
+                tempo = 60 / averageInterval; // Calculate average BPM
+            }
         }
     
         lastTapTime = currentTime;
         updateTempoLabel();
     
-        // Clear any existing timeout to reset the tempo
-        clearTimeout(timeoutId);
-    
-        // Set a timeout to zero the tempo after 6 seconds of inactivity
-        timeoutId = setTimeout(() => {
-        tempo = 0;
-        lastTapTime = null;
-        intervals = []; // Clear stored intervals
-        updateTempoLabel();
-        }, 6000);
+        updateTempoInterval();
     }
     
     // Listen for the "Pause/Break" key press
     document.addEventListener("keydown", (event) => {
         if (event.code === "Pause") {
-        handleTap();
+            handleTap();
+        }
+        
+        if (event.code === "Escape") {
+            resetTempo();
         }
     });
 }
