@@ -1,11 +1,10 @@
 
 export function useTempoTapper()
 {
-    // Create a floating label in the upper-right corner to display the tempo
     const tempoLabel = document.createElement("div");
     tempoLabel.style.position = "fixed";
-    tempoLabel.style.top = "10px";
-    tempoLabel.style.right = "10px";
+    tempoLabel.style.top = "20px";
+    tempoLabel.style.right = "20px";
     tempoLabel.style.fontSize = "24px";
     tempoLabel.style.fontFamily = "Arial, sans-serif";
     tempoLabel.style.color = "yellow";
@@ -34,7 +33,7 @@ export function useTempoTapper()
     {
         tempo = 0;
         lastTapTime = null;
-        intervals = []; // Clear stored intervals
+        intervals = [];
         updateTempoLabel();
     }
 

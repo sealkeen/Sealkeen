@@ -188,7 +188,7 @@ export function ConvertToDOM(message) {
     }
     else {
         display4.className = 'display-4-server-fault stroke-shadow-h3-dark-red';
-        display4.innerHTML = 'Server unreachable.';
+        display4.innerHTML = 'Server\'s temporarily unreachable.';
     }
 
     textcenter.appendChild(display4);

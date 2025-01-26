@@ -13,8 +13,7 @@ const LocalizationService = (function () {
 
     function init() { 
         return { getString, setString, setDefaultLanguage, getDefaultLanguage, getLanguages, getDefault };
-        function getDefault(key)
-        {
+        function getDefault(key) {
             return getString(defaultLanguage, key);
         };
         function getString(language, key) {
@@ -31,20 +30,12 @@ const LocalizationService = (function () {
         };
         function setString(language, key, value) {
             if (!language) return;
-            if (!strings[language]) {
-                strings[language] = {};
-            }
+            if (!strings[language]) { strings[language] = {}; }
             strings[language][key] = value;
         };
-        function setDefaultLanguage(language) {
-            defaultLanguage = language;
-        };
-        function getDefaultLanguage() {
-            return defaultLanguage;
-        };
-        function getLanguages() {
-            return Object.keys(strings);
-        };
+        function setDefaultLanguage(language) { defaultLanguage = language; };
+        function getDefaultLanguage() { return defaultLanguage; };
+        function getLanguages() { return Object.keys(strings); };
     }
     return {
         getInstance: function () {

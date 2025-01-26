@@ -17,6 +17,9 @@ const keyToFrequency = {
     KeyM: 493.88, // B4
 };
 
+// Cache for oscillators and gain nodes
+const activeNotes = {};
+
 export function useSynthKeyboard()
 {
     // Event listeners for key press
@@ -69,49 +72,93 @@ export function useSynthKeyboard()
         }
     }
     
+    // Event listeners for key press and release
+    document.addEventListener("keydown", (event) => {
+        const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
+        if (keyToFrequency[event.code] && keyElement && !event.repeat) {
+            startTone(keyToFrequency[event.code], event.code);
+            highlightKey(keyElement);
+        }
+    });
+    
+    document.addEventListener("keyup", (event) => {
+        const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
+        if (keyToFrequency[event.code] && keyElement) {
+            stopTone(event.code);
+            unhighlightKey(keyElement);
+        }
+    });
+    
     // Event listener for mouse clicks on piano keys
-    synthPiano.addEventListener("click", (event) => {
+    synthPiano.addEventListener("mousedown", (event) => {
         const keyElement = event.target.closest(".key");
         if (keyElement && keyToFrequency[keyElement.dataset.code]) {
-            playTone(keyToFrequency[keyElement.dataset.code]);
+            startTone(keyToFrequency[keyElement.dataset.code], keyElement.dataset.code);
             highlightKey(keyElement);
+        }
+    });
+    
+    synthPiano.addEventListener("mouseup", (event) => {
+        const keyElement = event.target.closest(".key");
+        if (keyElement && keyToFrequency[keyElement.dataset.code]) {
+            stopTone(keyElement.dataset.code);
+            unhighlightKey(keyElement);
         }
     });
     
     synthPiano.insertAdjacentHTML( 'beforebegin', `
         <style>
-        .synth-piano { width: 640px; height: 320px; min-width: 80%; position: relative; justify-self: center; top: 0; left: 0; background: black; opacity: 0.77; border-radius: 14px; display: flex }
+        .synth-piano { width: 640px; height: 320px; min-width: 80%; max-width: 100%; position: relative; justify-self: center; top: 0; left: 0; background: black; opacity: 0.77; border-radius: 14px; display: flex }
         .key.white { background: white; flex-grow: 1; border: 1px solid black;}
         .key.black { font-color: white; background: black; height: 50%; width: 50%; justify-self: flex-end; }
         .key.active { background: grey; }
         .key { border-radius: 10px; }
         <style/>`
     );
+    if (window.isMobileOrTablet) {
+        synthPiano.insertAdjacentHTML( 'beforebegin', `
+            <style>
+            .key.black { min-width: 75%; }
+            <style/>`
+        );
+    }
 }
 
-// Create and play a tone
-function playTone(frequency) {
+// Create and start a tone
+function startTone(frequency, key) {
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
-
+  
     oscillator.type = "sine"; // Type of wave: sine, square, triangle, sawtooth
     oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // Set frequency
-
+  
     // Connect oscillator to gain node, then to output
     oscillator.connect(gainNode);
     gainNode.connect(audioCtx.destination);
-
-    // Set gain envelope
-    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime); // Volume
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1); // Fade out
-
+  
+    // Start the oscillator
+    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime); // Set volume
     oscillator.start();
-    oscillator.stop(audioCtx.currentTime + 1); // Stop after 1 second
+  
+    activeNotes[key] = { oscillator, gainNode };
 }
 
-// Function to highlight the pressed key
+// Stop a tone
+function stopTone(key) {
+    const note = activeNotes[key];
+    if (note) {
+        const { oscillator, gainNode } = note;
+        const fadeTimeout = 0.5;
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + fadeTimeout);
+        oscillator.stop(audioCtx.currentTime + fadeTimeout);
+        delete activeNotes[key];
+    }
+}
+
 function highlightKey(keyElement) {
     keyElement.classList.add("active");
-    setTimeout(() => keyElement.classList.remove("active"), 200);
 }
-
+  
+function unhighlightKey(keyElement) {
+    keyElement.classList.remove("active");
+}
