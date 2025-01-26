@@ -17,6 +17,7 @@ export function usePageModifyingComponents() {
     appendSideNavigationBars();
     useSideNavigationsBlink();
 
-    serviceProvider.register('tempoTapper', function() { return { useTempoTapper } }, []);
+    const { handleTap } = useTempoTapper();
+    serviceProvider.register('tempoTapper', function() { return { handleTap } }, []);
     serviceProvider.register('synthKeyboard', function() { return { activate: useSynthKeyboard } }, []);
 }

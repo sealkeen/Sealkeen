@@ -157,7 +157,6 @@ export function getRealOrigin() {
 }
 
 export function setDevelopmentMessages() {
-    createInfoMessage("Setting dev messages... ");
     if (window.location.href.indexOf("MJpeg") > -1)
         return;
 

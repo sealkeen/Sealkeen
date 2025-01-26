@@ -237,7 +237,6 @@ function insertAboutRedirect(display4) {
 
 function createAboutAhref() {
     let routeActions = serviceProvider.resolve('nativeRouter').routes;
-    Exception.Throw('Routes: ' + routeActions);
     let aAbout = document.createElement('a');
     aAbout.href = "/about"; 
     aAbout.innerHTML = "/About"
