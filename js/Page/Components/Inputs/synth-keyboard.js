@@ -1,8 +1,24 @@
-// Create an audio context
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+import { createInfoMessage } from "../../../Errors/fetch-errors.js";
+import { serviceProvider } from "../../../Services/di-container.js";
+
+let audioCtx;
+
+function initializeAudioContext() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+    }
+}
+
+document.addEventListener("click", initializeAudioContext, { once: true });
+// 0 = default octave (C4), -1 = lower octave, +1 = higher octave
+let currentOctave = 0; 
 
 // Frequency mapping for 7 white keys (Z-M keys) and 5 black keys (S-J keys)
-const keyToFrequency = {
+const baseFrequencies = {
     KeyZ: 261.63, // C4
     KeyS: 277.18, // C#4
     KeyX: 293.66, // D4
@@ -17,21 +33,48 @@ const keyToFrequency = {
     KeyM: 493.88, // B4
 };
 
+// Adjust frequency by the current octave
+function getFrequencyForKey(key) {
+  const baseFrequency = baseFrequencies[key];
+  return baseFrequency ? baseFrequency * Math.pow(2, currentOctave) : null;
+}
+
 // Cache for oscillators and gain nodes
 const activeNotes = {};
 
-export function useSynthKeyboard()
-{
-    // Event listeners for key press
-    document.addEventListener("keydown", (event) => {
-        const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
-        if (keyToFrequency[event.code] && keyElement) {
-            playTone(keyToFrequency[event.code]);
-            highlightKey(keyElement);
-        }
+function getOctaveDiv() {
+    const octaveDiv = document.createElement("div");
+    const octaveDown = document.createElement("button");
+    const octaveUp = document.createElement("button");
+    const octaveDisplay = document.createElement("span");
+    octaveDisplay.className = "shadow-box";
+    octaveDiv.id = "octave-div";
+    octaveUp.id = "octave-up"; octaveUp.innerText = "Octave +";
+    octaveDown.id = "octave-down"; octaveDown.innerText = "Octave -";
+    octaveDisplay.id = "octave-display"; octaveDown.innerText = "Octave: 0";
+    
+    // octave buttons
+    octaveUp.addEventListener("click", () => {
+        if (currentOctave < 2) currentOctave++;
+            updateOctaveDisplay();
+    });
+    octaveDown.addEventListener("click", () => {
+        if (currentOctave > -2) currentOctave--;
+            updateOctaveDisplay();
     });
     
-    // Create piano keys in the DOM
+    for (const oct of [octaveDown, octaveUp, octaveDisplay])
+        octaveDiv.appendChild(oct);
+
+    return octaveDiv;
+};
+
+export function useSynthKeyboard()
+{
+    if (document.querySelector("#synth-piano") != null) {
+        return;
+    }
+    initializeAudioContext();
     const synthPiano = document.createElement("div");
     synthPiano.className = "synth-piano";
 
@@ -58,51 +101,59 @@ export function useSynthKeyboard()
     });
     
     let contentCenter = document.querySelector("#content-center");
+    let pageContainer = document.querySelector("#page-body-container");
+    let octEltsDiv = getOctaveDiv();
     if (contentCenter) {
+        //if (contentCenter != null)
+        //    contentCenter.innerHTML = '';
+
+        contentCenter.insertAdjacentElement('afterend', octEltsDiv);
+
         contentCenter.appendChild(synthPiano);
     } else {
-        let pageContainer = document.querySelector("#page-body-container");
         if (pageContainer) {
-            if (pageContainer != null) {
-                pageContainer.innerHTML = '';
-            }
+            //if (pageContainer != null)
+            //    pageContainer.innerHTML = '';
+
+            pageContainer.insertAdjacentElement('afterend', octEltsDiv);
             pageContainer.appendChild(synthPiano);
         } else {
             console.error("No container elements found.");
         }
     }
-    
-    // Event listeners for key press and release
+
+    // key press and release
     document.addEventListener("keydown", (event) => {
-        const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
-        if (keyToFrequency[event.code] && keyElement && !event.repeat) {
-            startTone(keyToFrequency[event.code], event.code);
-            highlightKey(keyElement);
+        const frequency = getFrequencyForKey(event.code);
+        if (frequency) {
+            startTone(frequency, event.code);
+            highlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
         }
     });
-    
     document.addEventListener("keyup", (event) => {
         const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
-        if (keyToFrequency[event.code] && keyElement) {
+        if (baseFrequencies[event.code] && keyElement) {
             stopTone(event.code);
             unhighlightKey(keyElement);
         }
     });
-    
-    // Event listener for mouse clicks on piano keys
+    // Mouse down and up event listeners on the piano keys
     synthPiano.addEventListener("mousedown", (event) => {
-        const keyElement = event.target.closest(".key");
-        if (keyElement && keyToFrequency[keyElement.dataset.code]) {
-            startTone(keyToFrequency[keyElement.dataset.code], keyElement.dataset.code);
-            highlightKey(keyElement);
+        const keyElement = event.target.closest(".key"); // Find the closest key element
+        if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
+            const frequency = getFrequencyForKey(keyElement.dataset.code); // Get frequency from data-code
+            if (frequency) {
+                startTone(frequency, keyElement.dataset.code); // Start the tone
+                highlightKey(keyElement); // Highlight the key
+            }
         }
     });
     
     synthPiano.addEventListener("mouseup", (event) => {
-        const keyElement = event.target.closest(".key");
-        if (keyElement && keyToFrequency[keyElement.dataset.code]) {
-            stopTone(keyElement.dataset.code);
-            unhighlightKey(keyElement);
+        const keyElement = event.target.closest(".key"); // Find the closest key element
+        if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
+            stopTone(keyElement.dataset.code); // Stop the tone
+            unhighlightKey(keyElement); // Unhighlight the key
         }
     });
     
@@ -113,6 +164,10 @@ export function useSynthKeyboard()
         .key.black { font-color: white; background: black; height: 50%; width: 50%; justify-self: flex-end; }
         .key.active { background: grey; }
         .key { border-radius: 10px; }
+        #octave-down { height: 30px; flex-grow: 1; }
+        #octave-up { height: 30px; flex-grow: 1; }
+        #octave-display { height: 30px; flex-grow: 1; color: white; font-size: 1.45rem; text-align: center; }
+        #octave-div { display: flex; flex-direction: row; justify-self: center; min-width: 80%; max-width: 100%;}
         <style/>`
     );
     if (window.isMobileOrTablet) {
@@ -121,7 +176,20 @@ export function useSynthKeyboard()
             .key.black { min-width: 75%; }
             <style/>`
         );
+    };
+
+    // TODO: убрать костыль, разобраться почему не добавляется ранее или удаляется.
+    let devBody = document.getElementById("development-body");
+    if (!devBody) {
+        const newsData = serviceProvider.resolve('newsData');
+        if (newsData.setDevelopmentMessages) {
+            newsData.setDevelopmentMessages();
+        }
     }
+}
+
+function updateOctaveDisplay() {
+    document.querySelector("#octave-display").innerText = `Octave: ${4 + currentOctave}`;
 }
 
 // Create and start a tone

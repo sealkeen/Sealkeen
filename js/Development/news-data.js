@@ -3,6 +3,9 @@ import { onClickBodyBackground } from './../StyleHandlers/color-handlers.js'
 import Debug from "../Extensions/cs-debug.js";
 import urls from "../api.js";
 import { serviceProvider } from "../Services/di-container.js";
+import { createInfoMessage } from "../Errors/fetch-errors.js";
+
+serviceProvider.register('newsData', function() { return setDevelopmentMessages }, []);
 
 export function getDevelopmentNewsData() {
 return [
@@ -154,6 +157,7 @@ export function getRealOrigin() {
 }
 
 export function setDevelopmentMessages() {
+    createInfoMessage("Setting dev messages... ");
     if (window.location.href.indexOf("MJpeg") > -1)
         return;
 
@@ -233,5 +237,10 @@ export function setDevelopmentMessages() {
             e.preventDefault();
             routeActions['/about']();
         }
+    });
+
+    document.getElementById('january-tw-five--tempo-tapper').addEventListener('click', (e) => {
+        let tapper = serviceProvider.resolve('tempoTapper');
+        tapper.handleTap();
     });
 }

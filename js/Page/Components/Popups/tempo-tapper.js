@@ -1,4 +1,3 @@
-
 export function useTempoTapper()
 {
     const tempoLabel = document.createElement("div");
@@ -67,14 +66,12 @@ export function useTempoTapper()
         updateTempoInterval();
     }
     
-    // Listen for the "Pause/Break" key press
     document.addEventListener("keydown", (event) => {
-        if (event.code === "Pause") {
+        if (event.code === "Pause") 
             handleTap();
-        }
-        
-        if (event.code === "Escape") {
+        if (event.code === "Escape")
             resetTempo();
-        }
     });
+
+    return { handleTap };
 }

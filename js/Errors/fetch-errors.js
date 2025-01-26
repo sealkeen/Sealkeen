@@ -46,3 +46,5 @@ function createMessage(message, type, timeout = 5000)
       errorMessage.remove();
     }, timeout);
 }
+
+window.createInfoMessage = createInfoMessage;

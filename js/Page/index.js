@@ -5,6 +5,8 @@ import { useAboutHtmlPage } from "./Components/UI/useAboutHtmlPage.js";
 import { appendSideNavigationBars } from "./Components/navigations/side-navigation-bars.js"
 import { useSideNavigationsBlink } from "./Components/navigations/use-side-navigations-blink.js";
 import { useTempoTapper } from "./Components/Popups/tempo-tapper.js";
+import { serviceProvider } from "../Services/di-container.js";
+import { useSynthKeyboard } from "./Components/Inputs/synth-keyboard.js";
 
 useVirtualMouseIfMobile();
 export function usePageModifyingComponents() {
@@ -14,5 +16,7 @@ export function usePageModifyingComponents() {
     useAboutHtmlPage();
     appendSideNavigationBars();
     useSideNavigationsBlink();
-    useTempoTapper();
+
+    serviceProvider.register('tempoTapper', function() { return { useTempoTapper } }, []);
+    serviceProvider.register('synthKeyboard', function() { return { activate: useSynthKeyboard } }, []);
 }
