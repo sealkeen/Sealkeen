@@ -26,11 +26,10 @@ const RIGHT_MOUNT_BUTTON = 3;
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
 /// On document loaded event
-$(document).ready(function () {
+$(document).ready(async function () {
     try {
         registerDependencies();
         usePageModifyingComponents();
-        addSearchTerminal();
         window.isAuthorized = (window.isAuthorized === true) ? true : false;
         FillLocalizationStore();
         runBackgroundHandShakes();
@@ -47,7 +46,8 @@ $(document).ready(function () {
         initializeKeyboardHook();
         appendHorizontalVolumeControl();
 
-        onSiteLoadIfAuthorized();
+        await onSiteLoadIfAuthorized(false, addSearchTerminal);
+        
         serviceProvider.resolve('musicApi');
         
         setTimeout(() => { new TrackAPI(setNextComposition) }, 1000);

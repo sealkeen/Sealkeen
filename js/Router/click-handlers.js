@@ -17,6 +17,7 @@ import redirects, { showPopup } from "./redirect-table.js";
 import routes from './routing-table.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js'
 import { isHostNameValidIP } from '../Shared/WindowLocation/AddressParser.js'
+import { useSynthKeyboard } from '../Page/Components/Inputs/synth-keyboard.js'
 
 routes[""] = async () => { setCurrentPageIndex() } // "/pages/index.html"
 routes["/"] = async () => { setCurrentPageIndex() } // "/pages/index.html"
@@ -38,7 +39,7 @@ redirects['logout'] = setCurrentPageLogout
 redirects['login'] = setCurrentPageLogin
 redirects['register'] = setCurrentPageRegister
 
-function onContentPageLoaded_Finally()
+function onContentPageLoaded_Success()
 {
     toggleTopPageBackground(false);
     addSearchTerminal();
@@ -125,12 +126,12 @@ export async function setCurrentPageIndex(event) {
                 Exception.Throw('setCurrentPageIndex: ' + error);
             }
         });
+        onContentPageLoaded_Success();
     } catch (error) {
         Exception.Throw('setCurrentPageIndex: ' + error);
     } finally {
         onDevelopmentCardClick();
         toggleBodyBackground();
-        onContentPageLoaded_Finally()
         pushHistoryState('/')
     }
 }
@@ -139,6 +140,7 @@ export function setCurrentPageMockData()
 {
     $("#page-body-container").html('');
     $("#page-body-container").append(ConvertToDOM());
+    useSynthKeyboard();
 }
 
 /* <summary> 
@@ -183,12 +185,12 @@ export async function setCurrentPageCompositions(event) {
                     Exception.Throw('setCurrentPageCompositions: ' + error); 
             });
         }
+        onContentPageLoaded_Success();
     } catch (error) {
         Exception.Throw('setCurrentPageCompositions: ' + error);
     } finally {
         // Push Anyway (even if not loaded)
         pushHistoryState('/Content/GetHTMLCompositionsPage');
-        onContentPageLoaded_Finally()
     }
 }
 
@@ -218,11 +220,11 @@ export async function setCurrentPageAlbums(event) {
                 Exception.Throw('in setCurrentPageAlbums: ' + error); 
             });
         }
+        onContentPageLoaded_Success();
     } catch (error) {
         Exception.Throw('in setCurrentPageAlbums: ' + error);
     } finally {
         pushHistoryState('/Content/GetHTMLAlbumsPage');
-        onContentPageLoaded_Finally()
     }
 }
 
@@ -252,11 +254,11 @@ export async function setCurrentPageGenres(event) {
                 Exception.Throw('in setCurrentPageGenres: ' + error);
             });
         }
+        onContentPageLoaded_Success();
     } catch (error) {
         Exception.Throw('in setCurrentPageAlbums: ' + error);
     } finally {
         pushHistoryState('/Content/GetHTMLGenresPage');
-        onContentPageLoaded_Finally()
     }
 }
 
@@ -288,11 +290,11 @@ export async function setCurrentPageArtists(event) {
                 Exception.Throw('in setCurrentPageArtists: ' + error);
             });
         }
+        onContentPageLoaded_Success();
     } catch (error) {
         Exception.Throw('in setCurrentPageArtists: ' + error);
     } finally {
         pushHistoryState('/Content/GetHTMLArtistsPage');
-        onContentPageLoaded_Finally()
     }
 }
 
@@ -333,13 +335,13 @@ export async function setCurrentPageCompositionByArtistID(el) {
                 }
             });
         }
+        onContentPageLoaded_Success()
     } catch (error) {
         Exception.Throw('in GetPartialCompositionPageByArtistID/?id=' + '\n'+ e);
     } finally {
         // Disabled push: History state is pushed 
         // by the concrete Track Id handler (NO PUSH HERE)
         // pushHistoryState('/Content/GetHtmlCompositionPageByArtistID/?id=' + id);
-        onContentPageLoaded_Finally()
     }
 }
 
@@ -384,6 +386,7 @@ export async function setCurrentPageCompositionByID(el) {
                 }
             });
         }
+        onContentPageLoaded_Success();
     } catch (error) {
         setCurrentPageMockData();
         Debug.WriteLine('fetch error. Setting up mock data. Details: ' + e)
@@ -391,7 +394,6 @@ export async function setCurrentPageCompositionByID(el) {
         // Disabled push: History state is pushed 
         // by the concrete Track Id handler (NO PUSH HERE)
         //pushHistoryState('/Content/GetHtmlCompositionPageByID/?id=' + id);
-        onContentPageLoaded_Finally()
     }
 }
 
@@ -432,11 +434,11 @@ export async function setCurrentPageAlbumByID(el) {
                 }
             });
         }
+        onContentPageLoaded_Success();
     } catch (error) {
         setCurrentPageMockData();
         Exception.Throw('in setCurrentPageAlbumByID: ' + error);
     } finally {
-        onContentPageLoaded_Finally()
     }
 }
 

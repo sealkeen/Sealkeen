@@ -69,26 +69,51 @@ export async function onPerformHandShakeInterval(onSuccessAction, onErrorAction)
     }
 }
 
-export async function onSiteLoadIfAuthorized(skipLibraryFetch)
+function changeSearchBoxVisibility(shouldShow) 
+{
+    let searchBox = document.getElementById("terminal-container");
+    if (searchBox) {
+        searchBox.style.display = shouldShow ? "block" : "none";
+    }
+}
+
+export async function onSiteLoadIfAuthorized(skipLibraryFetch, onSuccess = () => {})
 {
     if ( window.isAuthorized !== true 
         && anyPathSpecified(window.location.href)
-        ) {
-        createInfoMessage('Skip library fetch')
-        skipLibraryFetch = true
+    ) {
+        createInfoMessage('Library fetch skipped.');
+        skipLibraryFetch = true;
     }
-    if(
+    if (
         urls.isHomePage() || skipLibraryFetch === true
     ) {
         const nextActionInPipeLine = addElementsForAuthorizedUser;
         
-        if(skipLibraryFetch === true) {
+        if (skipLibraryFetch === true) {
             console.log('[INF] chain 2 handshake requests if one was not successful')
-            onPerformHandShakeInterval( async () => { FetchPublicHandShake(() => {}, Unauthorized ); }, Unauthorized );
+            onPerformHandShakeInterval( async () => { 
+                FetchPublicHandShake(
+                    () => { 
+                        onSuccess();
+                        changeSearchBoxVisibility(true);
+                    },
+                    () => { Unauthorized(); changeSearchBoxVisibility(false); }
+                ); 
+            }, Unauthorized );
         }
         else {
-            console.log('[INF] Pass catch error delegate if handshake not successfull, and library not')
-            onPerformHandShakeInterval( async () => { FetchGetPartialListenedPage(nextActionInPipeLine, Unauthorized); }, Unauthorized );
+            console.log('[INF] Pass catch error delegate if handshake not successfull, and library not');
+            onPerformHandShakeInterval( async () => { 
+                FetchGetPartialListenedPage(
+                    () => {
+                        nextActionInPipeLine();
+                        onSuccess();
+                        changeSearchBoxVisibility(true);
+                    },
+                    () => { Unauthorized(); changeSearchBoxVisibility(false); }
+                )
+            }, Unauthorized );
         }
     } else {
         onPerformHandShakeInterval(noOp);

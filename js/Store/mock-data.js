@@ -175,6 +175,7 @@ export function CreateGenresDOMFromJSON(jsonSource) {
 
 export function ConvertToDOM(message) {
     let center = document.createElement('center');
+    center.id = "content-center";
     let cardcolumns = document.createElement("div")
     cardcolumns.className = 'card-columns';
 
@@ -187,7 +188,7 @@ export function ConvertToDOM(message) {
     }
     else {
         display4.className = 'display-4-server-fault stroke-shadow-h3-dark-red';
-        display4.innerHTML = 'Host address is temporarily freezed (waiting for domain resolution). The google links were also rejected temporarily. You can contact me if you need direct access to the music.';
+        display4.innerHTML = 'Server unreachable.';
     }
 
     textcenter.appendChild(display4);
@@ -227,7 +228,7 @@ function insertAboutRedirect(display4) {
     let headLineH2 = createH2();
     let aAbout = createAboutAhref();
     aboutLinkDiv.className = 'shadow-box__white m-lowered-padding';
-    headLineH2.innerHTML = `<span class="roles"><span>Contacts are listed at this page: </span>`
+    headLineH2.innerHTML = `<span class="roles"><span>Contacts: </span>`
     headLineH2.insertAdjacentElement('beforeend', aAbout);
     aboutLinkDiv.insertAdjacentElement('afterbegin', headLineH2)
 
