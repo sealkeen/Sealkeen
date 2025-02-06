@@ -1,5 +1,6 @@
 import { createInfoMessage } from "../../../Errors/fetch-errors.js";
 import Debug from "../../../Extensions/cs-debug.js";
+import Exception from "../../../Extensions/cs-exception.js";
 import { serviceProvider } from "../../../Services/di-container.js";
 
 let audioCtx;
@@ -106,92 +107,95 @@ export function useSynthKeyboard()
         const whiteKey = synthPiano.children[whiteKeyIndex];
         whiteKey.appendChild(blackKey);
     });
-    
-    let contentCenter = document.querySelector("#content-center");
-    let pageContainer = document.querySelector("#page-body-container");
-    let octEltsDiv = getOctaveDiv();
-    if (contentCenter) {
-        //if (contentCenter != null)
-        //    contentCenter.innerHTML = '';
+    try {
+        let contentCenter = document.querySelector("#content-center");
+        let pageContainer = document.querySelector("#page-body-container");
+        let octEltsDiv = getOctaveDiv();
+        if (contentCenter) {
+            //if (contentCenter != null)
+            //    contentCenter.innerHTML = '';
 
-        contentCenter.insertAdjacentElement('afterend', octEltsDiv);
+            contentCenter.insertAdjacentElement('afterend', octEltsDiv);
 
-        contentCenter.appendChild(synthPiano);
-    } else {
-        if (pageContainer) {
-            //if (pageContainer != null)
-            //    pageContainer.innerHTML = '';
-
-            pageContainer.insertAdjacentElement('afterend', octEltsDiv);
-            pageContainer.appendChild(synthPiano);
+            contentCenter.appendChild(synthPiano);
         } else {
-            console.error("No container elements found.");
-        }
-    }
+            if (pageContainer) {
+                //if (pageContainer != null)
+                //    pageContainer.innerHTML = '';
 
-    // key press and release
-    document.addEventListener("keydown", (event) => {
-        const frequency = getFrequencyForKey(event.code);
-        if (frequency) {
-            startTone(frequency, event.code);
-            highlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
-        }
-    });
-    document.addEventListener("keyup", (event) => {
-        const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
-        if (baseFrequencies[event.code] && keyElement) {
-            stopTone(event.code);
-            unhighlightKey(keyElement);
-        }
-    });
-    // Mouse down and up event listeners on the piano keys
-    synthPiano.addEventListener("mousedown", (event) => {
-        const keyElement = event.target.closest(".key"); // Find the closest key element
-        if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
-            const frequency = getFrequencyForKey(keyElement.dataset.code); // Get frequency from data-code
-            if (frequency) {
-                startTone(frequency, keyElement.dataset.code); // Start the tone
-                highlightKey(keyElement); // Highlight the key
+                pageContainer.insertAdjacentElement('afterend', octEltsDiv);
+                pageContainer.appendChild(synthPiano);
+            } else {
+                console.error("No container elements found.");
             }
         }
-    });
-    
-    synthPiano.addEventListener("mouseup", (event) => {
-        const keyElement = event.target.closest(".key"); // Find the closest key element
-        if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
-            stopTone(keyElement.dataset.code); // Stop the tone
-            unhighlightKey(keyElement); // Unhighlight the key
-        }
-    });
-    
-    synthPiano.insertAdjacentHTML( 'beforebegin', `
-        <style>
-        .synth-piano { width: 640px; height: 320px; min-width: 80%; max-width: 100%; position: relative; justify-self: center; top: 0; left: 0; background: black; opacity: 0.77; border-radius: 14px; display: flex }
-        .key.white { background: white; flex-grow: 1; border: 1px solid black;}
-        .key.black { font-color: white; background: black; height: 50%; width: 50%; justify-self: flex-end; }
-        .key.active { background: grey; }
-        .key { border-radius: 10px; }
-        #octave-down { height: 30px; flex-grow: 1; }
-        #octave-up { height: 30px; flex-grow: 1; }
-        #octave-display { height: 30px; flex-grow: 1; color: white; font-size: 1.45rem; text-align: center; }
-        #octave-div { display: flex; flex-direction: row; justify-self: center; min-width: 80%; max-width: 100%;}
-        <style/>`
-    );
-    if (window.isMobileOrTablet) {
+
+        // key press and release
+        document.addEventListener("keydown", (event) => {
+            const frequency = getFrequencyForKey(event.code);
+            if (frequency) {
+                startTone(frequency, event.code);
+                highlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
+            }
+        });
+        document.addEventListener("keyup", (event) => {
+            const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
+            if (baseFrequencies[event.code] && keyElement) {
+                stopTone(event.code);
+                unhighlightKey(keyElement);
+            }
+        });
+        // Mouse down and up event listeners on the piano keys
+        synthPiano.addEventListener("mousedown", (event) => {
+            const keyElement = event.target.closest(".key"); // Find the closest key element
+            if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
+                const frequency = getFrequencyForKey(keyElement.dataset.code); // Get frequency from data-code
+                if (frequency) {
+                    startTone(frequency, keyElement.dataset.code); // Start the tone
+                    highlightKey(keyElement); // Highlight the key
+                }
+            }
+        });
+        
+        synthPiano.addEventListener("mouseup", (event) => {
+            const keyElement = event.target.closest(".key"); // Find the closest key element
+            if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
+                stopTone(keyElement.dataset.code); // Stop the tone
+                unhighlightKey(keyElement); // Unhighlight the key
+            }
+        });
+        
         synthPiano.insertAdjacentHTML( 'beforebegin', `
             <style>
-            .key.black { min-width: 75%; }
+            .synth-piano { width: 640px; height: 320px; min-width: 80%; max-width: 100%; position: relative; justify-self: center; top: 0; left: 0; background: black; opacity: 0.77; border-radius: 14px; display: flex }
+            .key.white { background: white; flex-grow: 1; border: 1px solid black;}
+            .key.black { font-color: white; background: black; height: 50%; width: 50%; justify-self: flex-end; }
+            .key.active { background: grey; }
+            .key { border-radius: 10px; }
+            #octave-down { height: 30px; flex-grow: 1; }
+            #octave-up { height: 30px; flex-grow: 1; }
+            #octave-display { height: 30px; flex-grow: 1; color: white; font-size: 1.45rem; text-align: center; }
+            #octave-div { display: flex; flex-direction: row; justify-self: center; min-width: 80%; max-width: 100%;}
             <style/>`
         );
-    };
+        if (window.isMobileOrTablet) {
+            synthPiano.insertAdjacentHTML( 'beforebegin', `
+                <style>
+                .key.black { min-width: 75%; }
+                <style/>`
+            );
+        };
 
-    // TODO: убрать костыль, разобраться почему не добавляется ранее или удаляется.
-    let devBody = document.getElementById("development-body");
-    if (!devBody) {
-        const newsData = serviceProvider.resolve('newsData');
-        if (newsData.setDevelopmentMessages) {
-            newsData.setDevelopmentMessages();
+        // TODO: убрать костыль, разобраться почему не добавляется ранее или удаляется.
+        let devBody = document.getElementById("development-body");
+        if (!devBody) {
+            const newsData = serviceProvider.resolve('newsData');
+            if (newsData.setDevelopmentMessages) {
+                newsData.setDevelopmentMessages();
+            }
         }
+    } catch {
+        Exception.Throw("Some error occured during synth application...");
     }
 }
 
