@@ -43,6 +43,11 @@ function getFrequencyForKey(key) {
 const activeNotes = {};
 
 function getOctaveDiv() {
+    if (document.querySelector("#octave-div") != null) {
+        Debug.WriteLine("Skipping octave application.");
+        return;
+    }
+
     const octaveDiv = document.createElement("div");
     const octaveDown = document.createElement("button");
     const octaveUp = document.createElement("button");
@@ -72,6 +77,7 @@ function getOctaveDiv() {
 export function useSynthKeyboard()
 {
     if (document.querySelector("#synth-piano") != null || (document.querySelector('.synth-piano') ?? []) [0] != null) {
+        Debug.WriteLine("Skipping Synth application.");
         return;
     }
     initializeAudioContext();
