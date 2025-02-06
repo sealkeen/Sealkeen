@@ -71,7 +71,7 @@ function getOctaveDiv() {
 
 export function useSynthKeyboard()
 {
-    if (document.querySelector("#synth-piano") != null) {
+    if (document.querySelector("#synth-piano") != null || (document.querySelector('.synth-piano') ?? []) [0] != null) {
         return;
     }
     initializeAudioContext();

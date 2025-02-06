@@ -1,10 +1,14 @@
 
+import Debug from '../Extensions/cs-debug.js';
 import { Terminal } from '../System/Terminal.js';
 export function addSearchTerminal()
 {
     try {
-        if(document.getElementById('terminal-container') != null)
+        if (window.location.pathname === '/about' || 
+            document.getElementById('terminal-container') != null) {
+            Debug.WriteLine("Skipping terminal application.");
             return;
+        }
             
         let text = document.getElementsByClassName("text-center");
             if(text[0]) {
