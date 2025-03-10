@@ -45,15 +45,12 @@ function getFrequencyForKey(key) {
 const activeNotes = {};
 
 function getOctaveDiv() {
-    if (document.querySelector("#octave-div") != null) {
-        Debug.WriteLine("Skipping octave application.");
-        return;
-    }
 
     const octaveDiv = document.createElement("div");
     const octaveDown = document.createElement("button");
     const octaveUp = document.createElement("button");
     const octaveDisplay = document.createElement("span");
+    
     octaveDisplay.className = "shadow-box";
     octaveDiv.id = "octave-div";
     octaveUp.id = "octave-up"; octaveUp.innerText = "Octave +";
@@ -77,10 +74,12 @@ function getOctaveDiv() {
 };
 
 export function useSynthKeyboard()
-{
-    if (document.querySelector("#synth-piano") != null || (document.querySelector('.synth-piano') ?? []) [0] != null) {
-        Debug.WriteLine("Skipping Synth application.");
-        return;
+{ //  || 
+    if (document.querySelector("#octave-div") != null) {
+        document.querySelector("#octave-div").remove();
+    }
+    if ((document.querySelector('.synth-piano') ?? [])[0] != null){
+        (document.querySelector('.synth-piano') ?? [])[0].remove();
     }
     initializeAudioContext();
     const synthPiano = document.createElement("div");
@@ -185,6 +184,7 @@ export function useSynthKeyboard()
                 <style/>`
             );
         };
+        updateOctaveDisplay();
 
         // TODO: убрать костыль, разобраться почему не добавляется ранее или удаляется.
         let devBody = document.getElementById("development-body");
