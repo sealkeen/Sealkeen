@@ -1,4 +1,7 @@
 /* Cards - CardColumns { */
+    .card-columns .card .card-body {
+        padding: 0.55rem;
+    }
     .card-columns {
         display: grid;
         transition: all .5s;
