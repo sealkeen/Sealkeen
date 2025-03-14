@@ -299,8 +299,9 @@ a.navbar-brand {
 }
 
 .brand-favicon {
-    width: 24px;
-    height: 24px;
+    width: 2.0rem;
+    height: 2.0rem;
+    margin-right: 2px;
 }
 
 a {
