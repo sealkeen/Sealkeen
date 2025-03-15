@@ -9,7 +9,7 @@ const urls = {
         if (window.hostLocation != null) {
             return window.hostLocation; // custom location set from command line if needed
         } else if (this.isGithub()) {
-            return 'https://c2e1-146-70-83-76.ngrok-free.app/';
+            return 'https://cd43-190-2-132-135.ngrok-free.app/';
         } else if ( this.isRemoteWorkspace() ) {
             return 'https://localhost:443/';
         } else if ( !this.isNodeJSHost() || this.isNgrok() ) {
