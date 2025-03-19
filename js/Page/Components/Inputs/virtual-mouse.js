@@ -4,14 +4,16 @@ import { serviceProvider } from './../../../Services/di-container.js';
 
 export function useVirtualMouseIfMobile() {
     let img = document.querySelector('img');
-    let footer = document.querySelector('.footer');
     if(img) {
-        let isMobileOrTablet = (window.isMobileOrTablet == null) ?? serviceProvider?.resolve('tabletAndMobileCheck');
-        if(!isMobileOrTablet) { 
+        let isMobOrTab = (window.isMobileOrTablet == null) ?? serviceProvider?.resolve('tabletAndMobileCheck');
+        if(!isMobOrTab) { 
             createInfoMessage('Desktop device');
             return;
+        } else {
+            createInfoMessage('Mobile device');
         }
-        createInfoMessage('Mobile device');
+        
+        let footer = document.querySelector('.footer');
         if (footer) return;
 
         img.parentElement.insertAdjacentHTML('beforeend', `<style>

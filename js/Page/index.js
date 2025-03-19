@@ -8,14 +8,13 @@ import { useTempoTapper } from "./Components/Popups/tempo-tapper.js";
 import { serviceProvider } from "../Services/di-container.js";
 import { useSynthKeyboard } from "./Components/Inputs/synth-keyboard.js";
 
-useVirtualMouseIfMobile();
 export function usePageModifyingComponents() {
-    useVirtualMouseIfMobile();
     useTapCircle();
     useFaviconDynamic();
     useAboutHtmlPage();
     appendSideNavigationBars();
     useSideNavigationsBlink();
+    setTimeout( () => useVirtualMouseIfMobile(), 550 );
 
     const { handleTap } = useTempoTapper();
     serviceProvider.register('tempoTapper', function() { return { handleTap } }, []);
