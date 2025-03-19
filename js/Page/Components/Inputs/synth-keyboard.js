@@ -74,7 +74,7 @@ function getOctaveDiv() {
 };
 
 export function useSynthKeyboard()
-{ //  || 
+{
     if (document.querySelector("#octave-div") != null) {
         document.querySelector("#octave-div").remove();
     }
@@ -106,24 +106,13 @@ export function useSynthKeyboard()
         const whiteKey = synthPiano.children[whiteKeyIndex];
         whiteKey.appendChild(blackKey);
     });
+
     try {
-        let contentCenter = document.querySelector("#content-center");
-        let pageContainer = document.querySelector("#page-body-container");
-        let octEltsDiv = getOctaveDiv();
-        if (contentCenter) {
-            //if (contentCenter != null)
-            //    contentCenter.innerHTML = '';
-
-            contentCenter.insertAdjacentElement('afterend', octEltsDiv);
-
-            contentCenter.appendChild(synthPiano);
-        } else {
-            if (pageContainer) {
-                //if (pageContainer != null)
-                //    pageContainer.innerHTML = '';
-
-                pageContainer.insertAdjacentElement('afterend', octEltsDiv);
-                pageContainer.appendChild(synthPiano);
+        let keybContainer = document.querySelector("#content-center") ?? document.querySelector("#page-body-container");
+        if (keybContainer) {
+            if (keybContainer) {
+                keybContainer.insertAdjacentElement('afterend', getOctaveDiv());
+                keybContainer.appendChild(synthPiano);
             } else {
                 console.error("No container elements found.");
             }
