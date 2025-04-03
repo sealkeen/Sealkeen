@@ -126,7 +126,6 @@ export function useSynthKeyboard()
                 // Check focus status after starting the tone
                 setTimeout(() => {
                     if (isInputFocused() || !document.querySelector(".synth-piano")) {
-                        createInfoMessage("Trigger the sound off");
                         stopTone(event.code);
                         unhighlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
                     }
