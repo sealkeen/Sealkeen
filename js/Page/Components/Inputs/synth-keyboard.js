@@ -116,14 +116,23 @@ export function useSynthKeyboard()
             console.error("No container elements found.");
         }
 
-        // key press and release
+        // Key press and release handling
         document.addEventListener("keydown", (event) => {
             const frequency = getFrequencyForKey(event.code);
-            if (frequency) {
+            if (frequency && !activeNotes[event.code]) {
                 startTone(frequency, event.code);
                 highlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
+
+                // Check focus status after starting the tone
+                setTimeout(() => {
+                    if (isInputFocused() || !document.querySelector(".synth-piano")) {
+                        stopTone(event.code);
+                        unhighlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
+                    }
+                }, 10); // Delay slightly to allow the sound to start before checking
             }
         });
+
         document.addEventListener("keyup", (event) => {
             const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
             if (baseFrequencies[event.code] && keyElement) {
@@ -186,12 +195,28 @@ export function useSynthKeyboard()
     }
 }
 
+// Prevent playing tones when focus is on an input field
+function isInputFocused() {
+    return document.activeElement && (
+        document.activeElement.tagName === "INPUT" || 
+        document.activeElement.tagName === "TEXTAREA" || 
+        document.activeElement.isContentEditable
+    );
+}
+
+// Stop sound when page loses focus
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopAllTones();
+});
+
 function updateOctaveDisplay() {
     document.querySelector("#octave-display").innerText = `Octave: ${4 + currentOctave}`;
 }
 
 // Create and start a tone
 function startTone(frequency, key) {
+    if (activeNotes[key]) return; // Prevent multiple oscillators for the same key
+
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
   
