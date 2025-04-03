@@ -5,5 +5,5 @@ export function useFaviconDynamic() {
         link.rel = 'icon';
         document.head.appendChild(link);
     }
-    link.href = 'favicon.ico';
+    link.href = '/favicon.ico';
 }

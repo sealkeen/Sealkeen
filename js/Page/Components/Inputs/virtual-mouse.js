@@ -19,7 +19,7 @@ export function useVirtualMouseIfMobile() {
 
         img.parentElement.insertAdjacentHTML('beforeend', `<style>
 .virtual-mouse:active{opacity:1}
-.virtual-mouse{ 
+.virtual-mouse{ s
 grid-template-columns: 50% 50%;
     grid-template-rows: 50% 50%;
     display: grid;
