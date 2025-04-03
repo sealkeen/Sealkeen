@@ -246,6 +246,15 @@ function stopTone(key) {
     }
 }
 
+// Stop all tones
+function stopAllTones() {
+    for (const key in activeNotes) {
+        stopTone(key);
+    }
+}
+
+window.stopAllTones = stopAllTones;
+
 function highlightKey(keyElement) {
     keyElement.classList.add("active");
 }

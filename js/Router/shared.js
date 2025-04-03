@@ -84,5 +84,8 @@ export async function fetchContentCrossOrigin(path, shouldSaveState, shouldRedir
     } finally {
         toggleTopPageBackground(false);
         toggleBodyBackground();
+        if (window.stopAllTones) {
+            window.stopAllTones();
+        }
     }
 }
