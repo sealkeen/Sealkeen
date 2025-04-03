@@ -110,12 +110,10 @@ export function useSynthKeyboard()
     try {
         let keybContainer = document.querySelector("#content-center") ?? document.querySelector("#page-body-container");
         if (keybContainer) {
-            if (keybContainer) {
-                keybContainer.insertAdjacentElement('afterend', getOctaveDiv());
-                keybContainer.appendChild(synthPiano);
-            } else {
-                console.error("No container elements found.");
-            }
+            keybContainer.appendChild(synthPiano); // Ensure synthPiano is inside keybContainer
+            synthPiano.insertAdjacentElement('afterend', getOctaveDiv()); // Insert octave div right after synthPiano
+        } else {
+            console.error("No container elements found.");
         }
 
         // key press and release
