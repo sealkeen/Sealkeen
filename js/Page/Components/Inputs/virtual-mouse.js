@@ -3,6 +3,10 @@ import { createInfoMessage } from './../../../Errors/fetch-errors.js';
 import { serviceProvider } from './../../../Services/di-container.js';
 
 export function useVirtualMouseIfMobile() {
+    setTimeout(addVirtualMouseIfMobile, 1000);
+}
+
+function addVirtualMouseIfMobile() {
     let img = document.querySelector('img');
     if(img) {
         let isMobOrTab = window.isMobileOrTablet;

@@ -37,3 +37,4 @@ DIContainer.prototype.resolve = function(name) {
 };
   
 export var serviceProvider = new DIContainer();
+window.serviceProvider = serviceProvider;
