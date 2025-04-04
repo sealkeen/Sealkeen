@@ -57,7 +57,6 @@ function getOctaveDiv() {
     octaveDown.id = "octave-down"; octaveDown.innerText = "Octave -";
     octaveDisplay.id = "octave-display"; octaveDown.innerText = "Octave: 0";
     
-    // octave buttons
     octaveUp.addEventListener("click", () => {
         if (currentOctave < 2) currentOctave++;
             updateOctaveDisplay();
@@ -85,8 +84,6 @@ export function useSynthKeyboard()
     initializeAudioContext();
     const synthPiano = document.createElement("div");
     synthPiano.className = "synth-piano";
-
-    // Create white keys
     ["KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM"].forEach((key) => {
         const whiteKey = document.createElement("div");
         whiteKey.className = "key white";
@@ -94,8 +91,6 @@ export function useSynthKeyboard()
         whiteKey.innerHTML = key.substring(3);
         synthPiano.appendChild(whiteKey);
     });
-
-    // Create black keys
     ["KeyS", "KeyD", "KeyG", "KeyH", "KeyJ"].forEach((key, index) => {
         const blackKey = document.createElement("div");
         blackKey.className = "key black";
@@ -107,7 +102,6 @@ export function useSynthKeyboard()
         const whiteKey = synthPiano.children[whiteKeyIndex];
         whiteKey.appendChild(blackKey);
     });
-
     try {
         let keybContainer = document.querySelector("#content-center") ?? document.querySelector("#page-body-container");
         if (keybContainer && !areEventsAdded) {
@@ -118,23 +112,20 @@ export function useSynthKeyboard()
             return;
         }
         
-        // Key press and release handling
         document.addEventListener("keydown", (event) => {
             const frequency = getFrequencyForKey(event.code);
             if (frequency && !activeNotes[event.code]) {
                 startTone(frequency, event.code);
                 highlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
-
-                // Check focus status after starting the tone
+                
                 setTimeout(() => {
                     if (isInputFocused() || !document.querySelector(".synth-piano")) {
                         stopTone(event.code);
                         unhighlightKey(document.querySelector(`.key[data-code="${event.code}"]`));
                     }
-                }, 10); // Delay slightly to allow the sound to start before checking
+                }, 10);
             }
         });
-
         document.addEventListener("keyup", (event) => {
             const keyElement = document.querySelector(`.key[data-code="${event.code}"]`);
             if (baseFrequencies[event.code] && keyElement) {
@@ -142,28 +133,31 @@ export function useSynthKeyboard()
                 unhighlightKey(keyElement);
             }
         });
-        // Mouse down and up event listeners on the piano keys
         synthPiano.addEventListener("mousedown", (event) => {
-            const keyElement = event.target.closest(".key"); // Find the closest key element
-            if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
-                const frequency = getFrequencyForKey(keyElement.dataset.code); // Get frequency from data-code
+            const keyElement = event.target.closest(".key");
+            if (keyElement && keyElement.dataset.code) {
+                const frequency = getFrequencyForKey(keyElement.dataset.code);
                 if (frequency) {
-                    startTone(frequency, keyElement.dataset.code); // Start the tone
-                    highlightKey(keyElement); // Highlight the key
+                    startTone(frequency, keyElement.dataset.code);
+                    highlightKey(keyElement);
                 }
             }
         });
-        
         synthPiano.addEventListener("mouseup", (event) => {
-            const keyElement = event.target.closest(".key"); // Find the closest key element
-            if (keyElement && keyElement.dataset.code) { // Check if it's a valid key
-                stopTone(keyElement.dataset.code); // Stop the tone
-                unhighlightKey(keyElement); // Unhighlight the key
+            const keyElement = event.target.closest(".key");
+            if (keyElement && keyElement.dataset.code) {
+                stopTone(keyElement.dataset.code);
+                unhighlightKey(keyElement);
             }
         });
-        
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) stopAllTones();
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Escape") stopAllTones();
+        });
         areEventsAdded = true;
-        
+
         synthPiano.insertAdjacentHTML( 'beforebegin', `
             <style>
             .synth-piano { width: 640px; height: 320px; min-width: 80%; max-width: 100%; position: relative; justify-self: center; top: 0; left: 0; background: black; opacity: 0.77; border-radius: 14px; display: flex }
@@ -207,11 +201,6 @@ function isInputFocused() {
         document.activeElement.isContentEditable
     );
 }
-
-// Stop sound when page loses focus
-document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stopAllTones();
-});
 
 function updateOctaveDisplay() {
     document.querySelector("#octave-display").innerText = `Octave: ${4 + currentOctave}`;
