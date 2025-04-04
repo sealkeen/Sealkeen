@@ -103,14 +103,24 @@ export function useSynthKeyboard()
         whiteKey.appendChild(blackKey);
     });
     try {
-        let keybContainer = document.querySelector("#content-center") ?? document.querySelector("#page-body-container");
-        if (keybContainer && !areEventsAdded) {
-            keybContainer.appendChild(synthPiano); // Ensure synthPiano is inside keybContainer
-            synthPiano.insertAdjacentElement('afterend', getOctaveDiv()); // Insert octave div right after synthPiano
-        } else {
-            console.error("No container elements found for synth-keyboard.");
-            return;
-        }
+        let contentCenter = document.querySelector("#content-center");
+        let terminalContainer = document.querySelector("#terminal-container");
+        let pageBody = document.querySelector("#page-body-container");
+        
+        ///if (!document) {
+            if (contentCenter) {
+                contentCenter.insertAdjacentElement('afterend', synthPiano);
+            } else if (terminalContainer) {
+                terminalContainer.insertAdjacentElement('afterend', synthPiano);
+            } else if (pageBody) {
+                pageBody.insertBefore(synthPiano, pageBody.firstChild);
+            } else {
+                console.error("No container elements found for synth-keyboard.");
+                return;
+            }
+        
+            synthPiano.insertAdjacentElement('afterend', getOctaveDiv());
+        //}
         
         document.addEventListener("keydown", (event) => {
             const frequency = getFrequencyForKey(event.code);
