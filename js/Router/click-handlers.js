@@ -50,7 +50,6 @@ function onContentPageLoaded_Finally()
     if (window.stopAllTones) {
         window.stopAllTones();
     }
-    setTimeout(() => serviceProvider.resolve('synthKeyboard').activate(), 250);
 }
 
 export async function libraryEventHandler(event) { 
@@ -276,14 +275,13 @@ export async function setCurrentPageArtists(event) {
     try {
         event?.preventDefault();
         toggleTopPageBackground(true);
-        //event?.preventDefault();
+        
         let ctrl = (urls.getLocation() + 'GetJSONArtistsPage');
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
             }).then(async response => {
                 if (response.ok) {     
                     let data = await response.json();
@@ -322,10 +320,9 @@ export async function setCurrentPageCompositionByArtistID(el) {
         let ctrl = (urls.getLocation() + 'GetPartialCompositionPageByArtistID/?id=' + id);
         if ($("#page-body-container") != undefined) {
             await fetch(ctrl, {
-                headers: { 'Content-Type': 'application/json' /* 'Content-Type': 'application/x-www-form-urlencoded',*/ },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer'//, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    // body: JSON.stringify(data) // body data type must match "Content-Type" header
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
             }).then(async response => {
                 if (response.ok) { 
                     let responseText = await response.text();

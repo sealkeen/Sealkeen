@@ -10,10 +10,9 @@ serviceProvider.register('newsData', function() { return setDevelopmentMessages 
 export function getDevelopmentNewsData() {
 return [
 {
-    cardTitle: 'Tempo tapper', date: 'January 2025', cardText: 
-    '<img src="../Images/Popups/tempo-tapper.png">'+
-    "<br> A tempo tapper have been added use \"Pause / Break\" key to tap the beats (manual BPM recognition).",
-    id: 'january-tw-five--tempo-tapper'
+    cardTitle: 'Synth Keyboard 🎹', date: 'April 2025', cardText: 
+    "Synth keyboard added (click to activate).",
+    id: 'april-four-tw-five--synth-keyboard'
 },
 {
     cardTitle: '<a href="/about" id="november-tw-four--about-modernized__label">About</a> page modernized, ', date: 'November 2024', cardText: 
@@ -193,6 +192,8 @@ export function setDevelopmentMessages() {
             return
         document.getElementById('development-body').appendChild(card);
     });
+    
+    document.querySelector('#april-four-tw-five--synth-keyboard')?.addEventListener('click', (e) => { serviceProvider.resolve('synthKeyboard').activate() });
 
     document.querySelectorAll('#september-twenty-eight-sidebars,#september-thirty-sidebars').forEach(card => {
         card.addEventListener('click', (e) => {
