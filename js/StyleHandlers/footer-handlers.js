@@ -1,3 +1,5 @@
+import { serviceProvider } from "../Services/di-container.js";
+
 export function transitionEnd()
 {
     try {
@@ -15,3 +17,14 @@ export function onTransitionEnd()
     if(horScrollBar != null && footer != null)
         horScrollBar.style.marginBottom = footer.clientHeight - 5 + 'px';
 }
+
+function useOpacityTransitions() {
+    setTimeout(() => {
+        document.querySelectorAll('.lbl-srv-status').forEach(el => {
+            el.classList.add('invisibly-hidden');
+        });
+    }, 2000);
+}
+
+serviceProvider?.register('opacityTransitions', function() { return { activate: useOpacityTransitions } }, []);
+serviceProvider?.resolve('opacityTransitions').activate()

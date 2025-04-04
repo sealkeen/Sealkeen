@@ -15,6 +15,12 @@ return [
     id: 'april-four-tw-five--synth-keyboard'
 },
 {
+    cardTitle: 'Tempo tapper', date: 'January 2025', cardText: 
+     '<img src="../Images/Popups/tempo-tapper.png">'+
+     "<br> A tempo tapper have been added use \"Pause / Break\" key to tap the beats (manual BPM recognition).",
+     id: 'january-tw-five--tempo-tapper'
+},
+{
     cardTitle: '<a href="/about" id="november-tw-four--about-modernized__label">About</a> page modernized, ', date: 'November 2024', cardText: 
     'The /about page now contains some persistent information about the website\'s author, it is being filled with content and styles. Some are in progress, watch out for new features.',
     id: 'november-tw-four--about-modernized'

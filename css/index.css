@@ -3,6 +3,7 @@
 @import url('./modal-window/modal-window.css');
 @import url('./status-bar/status-bar.css');
 @import url('./popup/popup.css');
+@import url('./common/any-element.css');
 @import url('./common/plain-text.css');
 @import url('./common/tap-circle.css');
 @import url('./images/svg-inline.css');
