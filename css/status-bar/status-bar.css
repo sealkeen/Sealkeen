@@ -19,7 +19,7 @@
         margin-right: 10px;
     }
     .lbl-srv-status {
-        font-weight: 400; font-size: 20px; text-shadow: 2px 1px 1px #fcff24 !important; transition: opacity 5s ease;
+        font-weight: 400; font-size: 20px; text-shadow: 2px 1px 1px #fcff24 !important; transition: opacity 3s ease;
     }
     .srv-status-disabled { background: #c71313; box-shadow: 0px 1px 5px 1px #f00; }
     .srv-status-enabled { background: #27ff00; box-shadow: 0px 1px 5px 1px #91ff00; }

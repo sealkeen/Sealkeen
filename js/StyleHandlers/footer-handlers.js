@@ -19,11 +19,9 @@ export function onTransitionEnd()
 }
 
 function useOpacityTransitions() {
-    setTimeout(() => {
-        document.querySelectorAll('.lbl-srv-status').forEach(el => {
-            el.classList.add('invisibly-hidden');
-        });
-    }, 2000);
+    document.querySelectorAll('.lbl-srv-status').forEach(el => {
+        el.classList.add('invisibly-hidden');
+    });
 }
 
 serviceProvider?.register('opacityTransitions', function() { return { activate: useOpacityTransitions } }, []);
