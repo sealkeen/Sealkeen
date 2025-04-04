@@ -46,9 +46,11 @@ function onContentPageLoaded_Success()
 
 function onContentPageLoaded_Finally()
 {
-    serviceProvider.resolve('synthKeyboard').activate();
-        
     toggleTopPageBackground(false);
+    if (window.stopAllTones) {
+        window.stopAllTones();
+    }
+    setTimeout(() => serviceProvider.resolve('synthKeyboard').activate(), 250);
 }
 
 export async function libraryEventHandler(event) { 

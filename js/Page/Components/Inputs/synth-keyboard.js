@@ -73,6 +73,7 @@ function getOctaveDiv() {
     return octaveDiv;
 };
 
+var areEventsAdded = false;
 export function useSynthKeyboard()
 {
     if (document.querySelector("#octave-div") != null) {
@@ -109,13 +110,14 @@ export function useSynthKeyboard()
 
     try {
         let keybContainer = document.querySelector("#content-center") ?? document.querySelector("#page-body-container");
-        if (keybContainer) {
+        if (keybContainer && !areEventsAdded) {
             keybContainer.appendChild(synthPiano); // Ensure synthPiano is inside keybContainer
             synthPiano.insertAdjacentElement('afterend', getOctaveDiv()); // Insert octave div right after synthPiano
         } else {
-            console.error("No container elements found.");
+            console.error("No container elements found for synth-keyboard.");
+            return;
         }
-
+        
         // Key press and release handling
         document.addEventListener("keydown", (event) => {
             const frequency = getFrequencyForKey(event.code);
@@ -159,6 +161,8 @@ export function useSynthKeyboard()
                 unhighlightKey(keyElement); // Unhighlight the key
             }
         });
+        
+        areEventsAdded = true;
         
         synthPiano.insertAdjacentHTML( 'beforebegin', `
             <style>
