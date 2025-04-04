@@ -1,4 +1,4 @@
-﻿import { setNextComposition, setFooterPlayerSourse } from './Shared/Audio.js';
+import { setNextComposition, setFooterPlayerSourse } from './Shared/Audio.js';
 import { _trackQueue } from './Shared/Queue.js';
 import { containsClasses, fromJQueryObject, 
     displayQueuedTracks, GetCurrentCompositionsId } from './utilities.js';
@@ -158,14 +158,14 @@ export function onCardTapped(e)
     }
 }
 
-export function appendPushListItem(e, menu /* : ContextMenuHTML */) { 
+function appendPushListItem(e, menu ) { 
     let push = document.createElement("p");
     push.className = 'ctxmenu__button';
     push.innerHTML = "Add first";
     push.onclick = () => { _trackQueue.push_front(fromJQueryObject(e)); };
     menu.appendChild(push)
 }
-export function appendQueueListItem(e, menu /* : ContextMenuHTML */) { 
+function appendQueueListItem(e, menu) { 
     let queue = document.createElement("p")
     queue.className = 'ctxmenu__button';
     queue.innerHTML = "Add last";
