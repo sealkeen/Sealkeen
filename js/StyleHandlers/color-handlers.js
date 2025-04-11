@@ -78,25 +78,25 @@ export function toggleBodyBackground(shouldAppendTimeText = true) {
     
     const hours = new Date().getHours();
     let greetingKey = '';
-    if (hours >= 22 || hours <= 7) {
+    if (hours >= 2 && hours <= 5) {
         setGradientEarlyMidnightBackground();
         greetingKey = 'greeting_midnight';
-    } else if (hours > 7 && hours < 11) {
+    } else if (hours > 5 && hours < 6) {
         setGradientLateMorningBackground();
         greetingKey = 'greeting_morning';
-    } else if (hours >= 11 && hours <= 13) {
+    } else if (hours >= 6 && hours <= 7) {
         setGradientDaylightBackground();
         greetingKey = 'greeting_day';
-    } else if (hours > 13 && hours < 16) {
+    } else if (hours > 7 && hours < 21) {
         setGradientEarlyAfternoonBackground();
         greetingKey = 'greeting_early_afternoon';
-    } else if (hours >= 16 && hours <= 18) {
+    } else if (hours >= 21 && hours <= 23) {
         setGradientLateAfternoonBackground();
         greetingKey = 'greeting_late_afternoon';
-    } else if (hours > 18 && hours < 20) {
+    } else if (hours > 23 || hours < 1) {
         setGradientEarlyEveningBackground();
         greetingKey = 'greeting_early_evening';
-    } else if (hours >= 20 && hours < 22) {
+    } else if (hours > 0 && hours < 2) {
         setGradientLateEveningBackground();
         greetingKey = 'greeting_late_evening';
     }
