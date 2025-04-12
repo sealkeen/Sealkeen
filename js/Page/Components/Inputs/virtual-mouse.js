@@ -3,7 +3,7 @@ import { createInfoMessage } from './../../../Errors/fetch-errors.js';
 import { serviceProvider } from './../../../Services/di-container.js';
 
 export function useVirtualMouseIfMobile() {
-    setTimeout(addVirtualMouseIfMobile, 1000);
+    setTimeout(addVirtualMouseIfMobile, 350);
 }
 
 function addVirtualMouseIfMobile() {
