@@ -3,7 +3,7 @@ import { toggleTopPageBackground, toggleBodyBackground } from './../StyleHandler
 import { setDevelopmentMessages } from '../Development/news-data.js';
 import Exception from '../Extensions/cs-exception.js';
 
-const ignoreErrorsArray = ["/GetPartialListenedPage>"];
+const ignoreErrorsArray = ["/GetPartialListenedPage"];
 
 export function appendNavigationLink(navbarNav, element, path)
 {

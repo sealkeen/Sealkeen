@@ -87,13 +87,13 @@ export function toggleBodyBackground(shouldAppendTimeText = true) {
     } else if (hours >= 6 && hours <= 7) {
         setGradientDaylightBackground();
         greetingKey = 'greeting_day';
-    } else if (hours > 7 && hours < 21) {
+    } else if (hours > 7 && hours < 19) {
         setGradientEarlyAfternoonBackground();
         greetingKey = 'greeting_early_afternoon';
-    } else if (hours >= 21 && hours <= 23) {
+    } else if (hours >= 19 && hours <= 21) {
         setGradientLateAfternoonBackground();
         greetingKey = 'greeting_late_afternoon';
-    } else if (hours > 23 || hours < 1) {
+    } else if (hours > 21 || hours < 1) {
         setGradientEarlyEveningBackground();
         greetingKey = 'greeting_early_evening';
     } else if (hours > 0 && hours < 2) {
