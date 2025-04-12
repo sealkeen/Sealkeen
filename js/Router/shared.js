@@ -3,6 +3,8 @@ import { toggleTopPageBackground, toggleBodyBackground } from './../StyleHandler
 import { setDevelopmentMessages } from '../Development/news-data.js';
 import Exception from '../Extensions/cs-exception.js';
 
+const ignoreErrorsArray = ["/GetPartialListenedPage>"];
+
 export function appendNavigationLink(navbarNav, element, path)
 {
     if(document.querySelector(`#${element.Id}`) != null) {
@@ -60,9 +62,11 @@ export async function fetchContentCrossOrigin(path, shouldSaveState, shouldRedir
             });
 
             if (!response.ok) { 
-                console.log('fetchContentCrossOrigin() -> response not ok, returning { ok: false }')
-                Exception.Throw(`Fetch error for <${ngCtrl}>: ` + JSON.stringify(response)); 
-                return { ok : false };
+                const skipThrowing = ignoreErrorsArray.some(path => ngCtrl.includes(path));
+                if (!skipThrowing) {
+                    Exception.Throw(`Fetch error for <${ngCtrl}>: ` + JSON.stringify(response));
+                }
+                return { ok: false };
             }
             
             let responseText = await response.text();
