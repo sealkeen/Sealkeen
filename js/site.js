@@ -1,7 +1,8 @@
 import { setNextComposition, setFooterPlayerSourse } from './Shared/Audio.js';
 import { _trackQueue } from './Shared/Queue.js';
 import { hasAnyClass, fromJQueryObject, 
-    displayQueuedTracks, GetCurrentCompositionsId } from './utilities.js';
+    displayQueuedTracks, GetCurrentCompositionsId, 
+    addPlayingElementStyle} from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
 import { addSideNavElements, addSidenavEventListeners } from './Page/Components/navigations/side-nav-handlers.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
@@ -25,8 +26,6 @@ import { createInfoMessage } from './Errors/fetch-errors.js';
 const RIGHT_MOUNT_BUTTON = 3;
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
-
-var cachedSongElement = null; /// Current playing song
 
 /// On document loaded event
 $(document).ready(async function () {
@@ -78,10 +77,7 @@ $(document).ready(async function () {
             if (clickedElement?.classList.contains('card-body-composition')) {
                 let result = await setFooterPlayerSourse(clickedElement);
                 if (result === true) {
-                    let closestCard = clickedElement.closest('.card');
-                    cachedSongElement?.classList?.remove('card-song-playing');
-                    cachedSongElement = closestCard;
-                    closestCard?.classList?.add('card-song-playing');
+                    addPlayingElementStyle(clickedElement);
                 }
             }
             if (target.classList.contains('album-card-div')) {

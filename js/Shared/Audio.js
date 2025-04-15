@@ -1,7 +1,7 @@
 import { replaceTrackParamInUrl } from './../Page/track-decoding.js'
 import { appendHorizontalVolumeControl } from "../Page/Components/volume-controls.js";
 import { setArtistSongNameAsync, setTitleByArtistAndTitle } from "../Page/event-handlers.js";
-import { GetCurrentCompositionsId, displayQueuedTracks, fromDOMObject } from "../utilities.js";
+import { GetCurrentCompositionsId, addPlayingCardStyle, displayQueuedTracks, fromDOMObject } from "../utilities.js";
 import { _trackQueue } from "./Queue.js";
 import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.js';
 import { safeSwitchTrack, safePlay} from './../utilities.js';
@@ -49,6 +49,17 @@ export async function loadDirect(source)
     return false;
 }
 
+function findCardByDataId(id) {
+    const cards = document.querySelectorAll('.card-columns .card');
+    for (const card of cards) {
+        const dataElement = card.querySelector('data[value]');
+        if (dataElement?.value === id) {
+            return card;
+        }
+    }
+    return null;
+}
+
 export function onCompositionSourceChanged(compId)
 {
     //bindPlayerButtons();
@@ -69,6 +80,8 @@ export function onCompositionSourceChanged(compId)
             setNextComposition(id); //from here
         };
     }
+    let cardEl = findCardByDataId(compId);
+    addPlayingCardStyle(cardEl);
 }
 
 export function setNextComposition(compId) {
@@ -128,7 +141,6 @@ export function setNextComposition(compId) {
 export async function setFooterPlayerSourse(el)
 {
     try {
-
         let source = el;
         let songInfo = el;
         if (!el.classList.contains('card-body')) { songInfo = el.parentNode; }

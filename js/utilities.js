@@ -5,6 +5,23 @@ import Exception from './Extensions/cs-exception.js';
 import { createInfoMessage } from './Errors/fetch-errors.js';
 import { getAudioNode } from './Shared/Audio.js';
 
+var cachedSongElement = null; /// Current playing song
+
+export function addPlayingElementStyle(clickedElement)
+{
+    let closestCard = clickedElement?.closest('.card');
+    addPlayingCardStyle(closestCard);
+}
+
+export function addPlayingCardStyle(closestCard)
+{
+    if (closestCard) {
+        cachedSongElement?.classList?.remove('card-song-playing');
+        cachedSongElement = closestCard;
+        closestCard?.classList?.add('card-song-playing');
+    }
+}
+
 export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
