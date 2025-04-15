@@ -20,6 +20,7 @@ import { attachDraggableEventsToQueue } from './Shared/QueueExtensions/draggable
 import { registerDependencies } from './Extensions/di-registration.js';
 import { serviceProvider } from './Services/di-container.js';
 import { usePageModifyingComponents } from './Page/index.js'
+import { createInfoMessage } from './Errors/fetch-errors.js';
 
 const RIGHT_MOUNT_BUTTON = 3;
 
@@ -76,10 +77,12 @@ $(document).ready(async function () {
 
             if (clickedElement?.classList.contains('card-body-composition')) {
                 let result = setFooterPlayerSourse(clickedElement);
+                createInfoMessage('setFooterPlayerSource: ' + result);
                 if (result === true) {
                     cachedSongElement?.classList?.remove('card-song-playing');
                     cachedSongElement = clickedElement;
                     clickedElement?.classList?.add('card-song-playing');
+                    console.log('added classList into: %j', clickedElement);
                 }
             }
             if (target.classList.contains('album-card-div')) {
