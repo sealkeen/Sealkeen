@@ -77,12 +77,11 @@ $(document).ready(async function () {
 
             if (clickedElement?.classList.contains('card-body-composition')) {
                 let result = await setFooterPlayerSourse(clickedElement);
-                console.log('setFooterPlayerSource: ' + result);
                 if (result === true) {
+                    let closestCard = clickedElement.closest('.card');
                     cachedSongElement?.classList?.remove('card-song-playing');
-                    cachedSongElement = clickedElement;
-                    clickedElement?.classList?.add('card-song-playing');
-                    console.log('added classList into: %j', clickedElement);
+                    cachedSongElement = closestCard;
+                    closestCard?.classList?.add('card-song-playing');
                 }
             }
             if (target.classList.contains('album-card-div')) {
