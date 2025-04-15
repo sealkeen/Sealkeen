@@ -162,7 +162,7 @@ export async function setFooterPlayerSourse(el)
                     let toQuery = fromDOMObject(el);
                     _trackQueue.push_front(toQuery);
                     createInfoMessage('Queued first: ' + toQuery?.artist + ' - ' + toQuery?.title)
-                    return;
+                    return false;
                 }
                 plr.load();
                 plr.play();
