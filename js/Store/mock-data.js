@@ -1,4 +1,5 @@
 import Exception from '../Extensions/cs-exception.js';
+import { hasAnyClass } from '../utilities.js';
 import { setTitleByArtistAndTitle } from './../Page/event-handlers.js';
 import { serviceProvider } from './../Services/di-container.js';
 
@@ -259,7 +260,8 @@ export function onMockDataLoaded() {
     container.addEventListener('click', function(e) {
         e.preventDefault();
         let target = e.target;
-        if (containsClasses(target, 'card-text', 'card-title')) {
+        
+        if (hasAnyClass(target, 'card-text', 'card-title')) {
             target = e.target.parentNode;
         }
         if (target.classList.contains('card-body-composition')) {

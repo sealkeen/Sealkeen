@@ -128,6 +128,7 @@ export function setNextComposition(compId) {
 export async function setFooterPlayerSourse(el)
 {
     try {
+
         let source = el;
         let songInfo = el;
         if (!el.classList.contains('card-body')) { songInfo = el.parentNode; }
@@ -136,14 +137,14 @@ export async function setFooterPlayerSourse(el)
         setTitleByArtistAndTitle(el);
         let direct = await loadDirect(source);
         if ($("#player-source-element") == null || (direct != null && direct === true) ) {
-            return; 
+            return false; 
         } else if (direct === false && source.includes(':')) {
             Exception.Throw('Direct play prevented: audio source loading failed.');
-            return;
+            return false;
         }
 
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
-
+        let result = false;
         await $.ajax({
             url: ctrl,
             type: 'GET',
@@ -153,9 +154,7 @@ export async function setFooterPlayerSourse(el)
             success: function (response) {
                 const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                 document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
-                Debug.WriteLine('setFooterPlayerSourse: Ajax returned key count: ' + Object.keys(response).length);
-                Debug.WriteLine(htmlDom.documentElement.innerHTML);
-                //id="player-source-element" src="http://localhost:8080/GetAudio?Id=9dcb0a84-f33b-44c9-9d96-45f85d2506f8"
+
                 replaceTrackParamInUrl(source);
 
                 let plr = getAudioNode();
@@ -167,6 +166,7 @@ export async function setFooterPlayerSourse(el)
                 }
                 plr.load();
                 plr.play();
+                result = true;
                 onCompositionSourceChanged(htmlDom.querySelector('#player-source-element').src);
             },
             error: async function (error_) {
@@ -174,7 +174,8 @@ export async function setFooterPlayerSourse(el)
                 onAjaxLoadError(source, safePlay); //from './../Errors/ajax-errors.js';
             }
         });
-        
+
+        return result;
     } catch (e) {
         console.log(e)
     }

@@ -9,7 +9,7 @@ export function isEmpty (val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
 
-export function containsClasses (node, ...classes) {
+export function hasAnyClass (node, ...classes) {
     return classes.some(cls => node?.classList?.contains(cls));
 }
 
@@ -17,7 +17,7 @@ export function getIdFromElementData(el) {
     let id = el.target;
     if (!event.target.classList.contains('card-body')) {
         Trace.WriteLine('contains card-body. el.children[0].value');
-        Trace.WriteLine('%j', el.target.parentNode);//.querySelector('data'));
+        Trace.WriteLine('%j', el.target.parentNode);
         Trace.WriteLine('%j', el.target.parentNode.querySelector('data').value);
         id = el.target.parentNode.querySelector('data').value;
         Trace.WriteLine('not contains card-body. el.currentTarget.parentNode.children[0].value');
@@ -32,7 +32,6 @@ export function getIdFromElementData(el) {
 }
 
 export function fromJSObject(el) {
-    //createInfoMessage('[INF] el' + el)
     createInfoMessage('[INF] el.target' + Object.keys(el.target))
     let id = el.target;
     let artist = el.target;
@@ -51,7 +50,6 @@ export function fromJSObject(el) {
         id = el.target.querySelector('data').value;
         artist = el.target.querySelector('.card-title').innerHTML;
         title = el.target.querySelector('.card-text').innerHTML;
-        //id = el.target.children[0].value;
     }
     return { id, artist, title };
 }

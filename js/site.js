@@ -1,6 +1,6 @@
 import { setNextComposition, setFooterPlayerSourse } from './Shared/Audio.js';
 import { _trackQueue } from './Shared/Queue.js';
-import { containsClasses, fromJQueryObject, 
+import { hasAnyClass, fromJQueryObject, 
     displayQueuedTracks, GetCurrentCompositionsId } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
 import { addSideNavElements, addSidenavEventListeners } from './Page/Components/navigations/side-nav-handlers.js';
@@ -24,6 +24,8 @@ import { usePageModifyingComponents } from './Page/index.js'
 const RIGHT_MOUNT_BUTTON = 3;
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
+
+var cachedSongElement = null; /// Current playing song
 
 /// On document loaded event
 $(document).ready(async function () {
@@ -60,24 +62,24 @@ $(document).ready(async function () {
 
         container.onmousedown = (e) => {
             Debug.WriteLine('site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
-            if (!containsClasses(e?.target, 'ctxmenu', 'ctxmenu__button')) {
+            if (!hasAnyClass(e?.target, 'ctxmenu', 'ctxmenu__button')) {
                 document.querySelectorAll('.ctxmenu').forEach(el => { 
-                    el.innerHTML = ''; 
+                    el.innerHTML = '';
                 })
             }
         }
 
         container.addEventListener('click', function (e) {
-            Debug.WriteLine('site.js/onclick(): ' + e.target.id + ' ' + e.target.className);
-            
-            let target = e.target;
-            if (containsClasses(target, 'card-text', 'card-title')) {
-                target = e.target.parentNode;
-            }
-            if (target.classList.contains('card-body-composition')) {
-                setFooterPlayerSourse(e.target)
-                if (e.which === RIGHT_MOUNT_BUTTON) {
-                    //onCompositionRightMouseDown(); 
+            const target = e.target;
+            const clickedElement = hasAnyClass(target, 'card-text', 'card-title')
+                ? target.parentElement : target;
+
+            if (clickedElement?.classList.contains('card-body-composition')) {
+                let result = setFooterPlayerSourse(clickedElement);
+                if (result === true) {
+                    cachedSongElement?.classList?.remove('card-song-playing');
+                    cachedSongElement = clickedElement;
+                    clickedElement?.classList?.add('card-song-playing');
                 }
             }
             if (target.classList.contains('album-card-div')) {
@@ -109,7 +111,7 @@ $(document).ready(async function () {
         /// Toggle change volume by mouse wheel for scroll on footer / absolute volume control
         document.onwheel = (e) =>
         {        
-            if (containsClasses(e.target, 'footer-volume-control', 'volume-control-absolute', 'player-audio-element') === true) {
+            if (hasAnyClass(e.target, 'footer-volume-control', 'volume-control-absolute', 'player-audio-element') === true) {
                 let target = e.target;
                 
                 let value = target.value
@@ -132,7 +134,7 @@ $(document).ready(async function () {
             Debug.WriteLine('site.js/onContentMenu' + e.target.id + ' ' + e.target.className);
             e.preventDefault();
             let target = e.target;
-            if (containsClasses(target, 'card-text', 'card-title')) {
+            if (hasAnyClass(target, 'card-text', 'card-title')) {
                 target = e.target.parentNode;
             }
             if (target.classList.contains('card-body-composition')) {
@@ -150,7 +152,7 @@ $(document).ready(async function () {
 export function onCardTapped(e)
 {
     let target = e.target;
-    if (containsClasses(target, 'card-text', 'card-title')) {
+    if (hasAnyClass(target, 'card-text', 'card-title')) {
         target = e.target.parentNode;
     }
     if (target.classList.contains('card-body-composition')) {
@@ -188,7 +190,7 @@ export function onCompositionRightMouseDown(e) {
             insertTarget = e.target.parentElement;
         if(e.target.classList.contains('card'))
             insertTarget = e.target;
-        if(containsClasses(e.target, 'card-text', 'card-title'))
+        if(hasAnyClass(e.target, 'card-text', 'card-title'))
             insertTarget = e.target.parentElement.parentElement;
         
         insertTarget.appendChild(menu);

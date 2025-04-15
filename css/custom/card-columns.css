@@ -18,6 +18,10 @@
         width: 100%;
         align-content: stretch;
     }
+    .card-song-playing {
+        background: darkgoldenrod;
+        color: floralwhite;
+    }
     @media (max-width: 720) {
         .card-title {
             margin-bottom: 0rem;
