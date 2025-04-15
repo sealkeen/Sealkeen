@@ -70,14 +70,14 @@ $(document).ready(async function () {
             }
         }
 
-        container.addEventListener('click', function (e) {
+        container.addEventListener('click', async function (e) {
             const target = e.target;
             const clickedElement = hasAnyClass(target, 'card-text', 'card-title')
                 ? target.parentElement : target;
 
             if (clickedElement?.classList.contains('card-body-composition')) {
-                let result = setFooterPlayerSourse(clickedElement);
-                createInfoMessage('setFooterPlayerSource: ' + result);
+                let result = await setFooterPlayerSourse(clickedElement);
+                console.log('setFooterPlayerSource: ' + result);
                 if (result === true) {
                     cachedSongElement?.classList?.remove('card-song-playing');
                     cachedSongElement = clickedElement;
