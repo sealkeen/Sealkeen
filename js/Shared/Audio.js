@@ -80,8 +80,7 @@ export function onCompositionSourceChanged(compId)
             Debug.WriteLine('Audio.js/onCompositionSourceChanged() id is :' + id);
             setNextComposition(id);
         };
-    }
-                
+    }      
     addPlayingCardStyle(findCardByDataId(compId));
 }
 
@@ -124,10 +123,12 @@ export function setNextComposition(compId) {
                 document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
                 Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                 Debug.WriteLine(htmlDom.documentElement.innerHTML);
+                let idExtracted = extractSongIdFromHtml(response);
+                createInfoMessage('extract id from html: ' + idExtracted);
                 let plr = getAudioNode();
                 plr.load();
                 plr.play();
-                onCompositionSourceChanged(compId); //from heres
+                onCompositionSourceChanged(idExtracted ?? compId);
             },
             error: async function (error_) {
                 Exception.Throw('Error streaming service');
@@ -137,6 +138,11 @@ export function setNextComposition(compId) {
     } catch (e) {
         console.log(e);
     } 
+}
+
+function extractSongIdFromHtml(html) {
+    const match = html.match(/GetAudio\?Id=([a-f0-9\-]+)/i);
+    return match ? match[1] : null;
 }
 
 export async function setFooterPlayerSourse(el)
