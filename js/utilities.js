@@ -86,14 +86,12 @@ export function fromJQueryObject(el) {
         id = el.target.querySelector('data').value;
         artist = el.target.querySelector('.card-title').innerHTML;
         title = el.target.querySelector('.card-text').innerHTML;
-        //id = el.target.children[0].value;
     }
     return { id, artist, title };
 }
 
 export function fromDOMObject(el) {
-    Debug.WriteLine('utilities.js/fromDOMObject() : el: ' + el)
-    //createInfoMessage('el.target: '+el.target)
+    Debug.WriteLine('utilities.js/fromDOMObject() : el: ' + el);
     let id = el;
     let artist = el;
     let title = el;
