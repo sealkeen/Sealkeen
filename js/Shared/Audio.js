@@ -76,8 +76,6 @@ export function onCompositionSourceChanged(compId)
 
             Debug.WriteLine('Audio.js/onCompositionSourceChanged() id is :' + id);
             setNextComposition(id);
-
-            addPlayingCardStyle(findCardByDataId(compId));
         };
     }
     addPlayingCardStyle(findCardByDataId(compId));
@@ -118,6 +116,7 @@ export function setNextComposition(compId) {
         $.ajax({ 
             url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true }, crossDomain: true,
             success: function (response) {
+                addPlayingCardStyle(findCardByDataId(compId));
                 const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                 document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
                 Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
