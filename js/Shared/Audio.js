@@ -62,10 +62,8 @@ function findCardByDataId(id) {
 
 export function onCompositionSourceChanged(compId)
 {
-    //bindPlayerButtons();
     setArtistSongNameAsync(); //from "../Page/event-handlers.js";
     displayQueuedTracks(_trackQueue); //from "../utilities.js";
-    // changed source - apply volume control once more
     appendHorizontalVolumeControl(); //from "../Page/Components/volume-controls.js"; 
     
     //setTitleByArtistAndTitle(el);
@@ -77,11 +75,12 @@ export function onCompositionSourceChanged(compId)
             id == null ? compId : id;
 
             Debug.WriteLine('Audio.js/onCompositionSourceChanged() id is :' + id);
-            setNextComposition(id); //from here
+            setNextComposition(id);
+
+            addPlayingCardStyle(findCardByDataId(compId));
         };
     }
-    let cardEl = findCardByDataId(compId);
-    addPlayingCardStyle(cardEl);
+    addPlayingCardStyle(findCardByDataId(compId));
 }
 
 export function setNextComposition(compId) {
