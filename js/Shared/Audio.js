@@ -50,7 +50,7 @@ export async function loadDirect(source)
 }
 
 function findCardByDataId(id) {
-    createInfoMessage('success: finding playing card...');
+    createInfoMessage('success: finding playing card...' + id);
     const cards = document.querySelectorAll('.card-columns .card');
     for (const card of cards) {
         const dataElement = card.querySelector('data[value]');
@@ -63,6 +63,8 @@ function findCardByDataId(id) {
 
 export function onCompositionSourceChanged(compId)
 {
+    createInfoMessage('onCompositionSourceChanged(' + compId + ')');
+
     setArtistSongNameAsync(); //from "../Page/event-handlers.js";
     displayQueuedTracks(_trackQueue); //from "../utilities.js";
     appendHorizontalVolumeControl(); //from "../Page/Components/volume-controls.js"; 
@@ -79,6 +81,7 @@ export function onCompositionSourceChanged(compId)
             setNextComposition(id);
         };
     }
+                
     addPlayingCardStyle(findCardByDataId(compId));
 }
 
@@ -117,8 +120,6 @@ export function setNextComposition(compId) {
         $.ajax({ 
             url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true }, crossDomain: true,
             success: function (response) {
-                createInfoMessage('success: adding playing card');
-                addPlayingCardStyle(findCardByDataId(compId));
                 const htmlDom = new DOMParser().parseFromString(response, 'text/html');
                 document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
                 Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
@@ -126,7 +127,7 @@ export function setNextComposition(compId) {
                 let plr = getAudioNode();
                 plr.load();
                 plr.play();
-                onCompositionSourceChanged(compId); //from here
+                onCompositionSourceChanged(compId); //from heres
             },
             error: async function (error_) {
                 Exception.Throw('Error streaming service');
