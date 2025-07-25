@@ -173,6 +173,34 @@ function appendQueueListItem(e, menu) {
     menu.appendChild(queue)
 }
 
+function appendDownloadItem(e, menu) {
+    if (window.isAuthorized !== true)
+        return;
+    
+    const card = e.target.closest('.card');
+    if (!card) return;
+
+    const data = card.querySelector('data');
+    if (!data || !data.value) return;
+
+    const trackId = data.value;
+    const downloadUrl = `${window.location.origin}/GetAudio?Id=${trackId}`;
+
+    const download = document.createElement("p");
+    download.className = 'ctxmenu__button';
+    download.innerHTML = "Download";
+    download.onclick = () => {
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = ''; // Let the browser decide the filename or use a specific one
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+
+    menu.appendChild(download);
+}
+
 export function onCompositionRightMouseDown(e) {
     try {
         let menu = document.createElement("div")
@@ -181,7 +209,8 @@ export function onCompositionRightMouseDown(e) {
         menu.className = "ctxmenu"
         appendPushListItem(e, menu)
         appendQueueListItem(e, menu)
-
+        appendDownloadItem(e, menu);
+        
         console.log(e.target)
         let insertTarget = {};
         if(e.target.classList.contains('card-body'))
