@@ -174,9 +174,6 @@ function appendQueueListItem(e, menu) {
 }
 
 function appendDownloadItem(e, menu) {
-    if (window.isAuthorized !== true)
-        return;
-    
     const card = e.target.closest('.card');
     if (!card) return;
 
