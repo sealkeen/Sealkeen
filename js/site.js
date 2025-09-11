@@ -189,7 +189,24 @@ function appendDownloadItem(e, menu) {
     download.onclick = () => {
         const a = document.createElement('a');
         a.href = downloadUrl;
-        a.download = ''; // Let the browser decide the filename or use a specific one
+
+        let fileName = '';
+        if (downloadUrl.includes('GetAudio')) {
+            const cardTitle = card.querySelector('.card-title');
+            const cardText = card.querySelector('.card-text');
+            
+            if (cardTitle && cardText) {
+                const artist = cardTitle.textContent.trim();
+                const title = cardText.textContent.trim();
+                
+                fileName = `${artist} – ${title}`
+                    .replace(/[<>:"/\\|?*]/g, '') // Remove invalid filename characters
+                    .replace(/\s+/g, ' ') // Collapse multiple spaces
+                    .trim() + '.mp3';
+            }
+        }
+        
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
