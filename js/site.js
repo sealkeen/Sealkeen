@@ -2,7 +2,8 @@ import { setNextComposition, setFooterPlayerSourse } from './Shared/Audio.js';
 import { _trackQueue } from './Shared/Queue.js';
 import { hasAnyClass, fromJQueryObject, 
     displayQueuedTracks, GetCurrentCompositionsId, 
-    addPlayingElementStyle} from './utilities.js';
+    addPlayingElementStyle,
+    hasClassSubstring} from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
 import { addSideNavElements, addSidenavEventListeners } from './Page/Components/navigations/side-nav-handlers.js';
 import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
@@ -129,14 +130,16 @@ $(document).ready(async function () {
         }
 
         document.querySelector('.container').oncontextmenu = (e) => {
-            Debug.WriteLine('site.js/onContentMenu' + e.target.id + ' ' + e.target.className);
-            e.preventDefault();
             let target = e.target;
-            if (hasAnyClass(target, 'card-text', 'card-title')) {
-                target = e.target.parentNode;
-            }
-            if (target.classList.contains('card-body-composition')) {
-                onCompositionRightMouseDown(e);
+            if (hasClassSubstring(target, 'card'))
+            {
+                e.preventDefault();
+                if (hasAnyClass(target, 'card-text', 'card-title')) {
+                    target = e.target.parentNode;
+                }
+                if (target.classList.contains('card-body-composition')) {
+                    onCompositionRightMouseDown(e);
+                }
             }
         }
     } catch (e) {

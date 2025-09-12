@@ -30,6 +30,13 @@ export function hasAnyClass (node, ...classes) {
     return classes.some(cls => node?.classList?.contains(cls));
 }
 
+export function hasClassSubstring(node, substring) {
+    if (!node?.classList || !substring) return false;
+    
+    const classList = Array.from(node.classList);
+    return classList.some(className => className.includes(substring));
+}
+
 export function getIdFromElementData(el) {
     let id = el.target;
     if (!event.target.classList.contains('card-body')) {
