@@ -24,7 +24,7 @@ import { serviceProvider } from './Services/di-container.js';
 import { usePageModifyingComponents } from './Page/index.js'
 import { createInfoMessage } from './Errors/fetch-errors.js';
 
-const RIGHT_MOUNT_BUTTON = 3;
+const LOW_VOLUME_THRESHOLD = 3;
 
 document.documentElement.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.clientWidth) + "px");
 
@@ -114,7 +114,7 @@ $(document).ready(async function () {
                 let target = e.target;
                 
                 let value = target.value
-                if(value > 3) {
+                if (value > LOW_VOLUME_THRESHOLD) {
                     if(-(e.deltaY) > 0)
                         target.value *= 1.2;
                     else
