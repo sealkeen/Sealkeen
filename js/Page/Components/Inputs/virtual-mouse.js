@@ -23,9 +23,8 @@ function addVirtualMouseIfMobile() {
 
         img.parentElement.insertAdjacentHTML('beforeend', `<style>
 .virtual-mouse:active{opacity:1}
-.virtual-mouse{ s
+.virtual-mouse{
 grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;
     display: grid;
     z-index: 100;
     border-radius: 5px;
