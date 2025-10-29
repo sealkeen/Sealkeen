@@ -1,14 +1,16 @@
 var g_apiPath = "/";
 var g_payload = "";
 var g_audioSelector = null;
+var g_titleSelector = "";
 
 export function useNowPlayingManager() {
     setTimeout(addNowPlayingManager, 750);
 }
 
-export function addElementSelectorThenPathAndPayLoad(audioSelector, apipath, payload) {
+export function addElementSelectorThenPathThenTitleAndPayLoad(audioSelector, apipath, titleSelector, payload) {
     g_audioSelector = audioSelector;
     g_apiPath = apipath;
+    g_titleSelector = titleSelector;
     g_payload = payload;
 }
 
@@ -77,6 +79,8 @@ class NowPlayingManager {
     updateWindowTitle(trackInfo) {
         if (trackInfo) {
             document.title = trackInfo;
+            let title = document.querySelector(g_titleSelector);
+            if (title) title.textContent = '🎵 ' + trackInfo;
         }
     }
 
