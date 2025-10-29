@@ -14,7 +14,7 @@ export function registerDependencies() {
             return check;
         }, []
     );
-    serviceProvider.register('now-playing-manager',
+    serviceProvider.register('nowPlayingManager',
         () => { return { addElementSelectorThenPathAndPayLoad, useNowPlayingManager } },
         []);
 
