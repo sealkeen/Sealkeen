@@ -28,8 +28,8 @@ function addVirtualMouseIfMobile() {
         min-width: 150px; min-height: 150px; background-color: yellow;
     }
     .virtual-mouse__button{ border-radius: 5px; opacity: 1; width: 250px; height: 64px; }
-    .lt-btn{ grid-column: 0; }
-    .rt-btn{ grid-column: 1; };
+    .lt-btn{ grid-column: 1; }
+    .rt-btn{ grid-column: 2; };
 </style>
 <div class="virtual-mouse">
   <button id="virtual-mouse-up" class="virtual-mouse__button lt-btn">up</button>
