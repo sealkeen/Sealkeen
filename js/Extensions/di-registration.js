@@ -14,9 +14,9 @@ export function registerDependencies() {
             return check;
         }, []
     );
-    serviceProvider.register('now-playing-manager', () => {
-        return { addElementSelectorThenPathAndPayLoad, useNowPlayingManager };
-    });
+    serviceProvider.register('now-playing-manager',
+        () => { return { addElementSelectorThenPathAndPayLoad, useNowPlayingManager } },
+        []);
 
     // additional configuration
     window.isMobileOrTablet = serviceProvider.resolve('tabletAndMobileCheck');
