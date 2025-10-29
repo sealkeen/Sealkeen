@@ -1,6 +1,7 @@
 import { serviceProvider } from '../Services/di-container.js';
 import MusicAPI from '../Page/url-decoding.js';
 import routes, { isNoActionPath } from '../Router/routing-table.js';
+import { addElementSelectorThenPathAndPayLoad, useNowPlayingManager } from '../Services/AudioEndpoints/nowPlayingManager.js';
 
 export function registerDependencies() {
     serviceProvider.register('nativeRouter', () => { return { routes } }, []);
@@ -13,6 +14,9 @@ export function registerDependencies() {
             return check;
         }, []
     );
+    serviceProvider.register('now-playing-manager', () => {
+        return { addElementSelectorThenPathAndPayLoad, useNowPlayingManager };
+    });
 
     // additional configuration
     window.isMobileOrTablet = serviceProvider.resolve('tabletAndMobileCheck');
