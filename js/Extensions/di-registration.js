@@ -14,9 +14,7 @@ export function registerDependencies() {
             return check;
         }, []
     );
-    serviceProvider.register('nowPlayingManager',
-        () => { return { addElementSelectorThenPathAndPayLoad, useNowPlayingManager } },
-        []);
+    serviceProvider.register('nowPlayingManager', function() { return { addElementSelectorThenPathAndPayLoad, useNowPlayingManager } }, []);
 
     // additional configuration
     window.isMobileOrTablet = serviceProvider.resolve('tabletAndMobileCheck');
@@ -26,9 +24,7 @@ function Example() {
     // Registration
     serviceProvider.register('logger', Logger, []);
     serviceProvider.register('config', function() { return { apiUrl: 'https://api.example.com', apiKey: '12345' }; }, []);
-    serviceProvider.register('userService', UserService, ['logger', 'config']);
-
-    // Resolution
+    serviceProvider.register('userService', UserService, ['logger', 'config'])    // Resolution
     var userService1 = serviceProvider.resolve('userService');
     var userService2 = serviceProvider.resolve('userService');
 
