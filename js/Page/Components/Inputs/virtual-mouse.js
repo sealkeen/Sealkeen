@@ -24,7 +24,7 @@ function addVirtualMouseIfMobile() {
         img.parentElement.insertAdjacentHTML('beforeend',
 `<style>
     .virtual-mouse:active{ opacity:1 }
-    .virtual-mouse { grid-template-columns: 50% 50%; display: grid; z-index: 100; border-radius: 5px; opacity: 0.7; bottom: 0; left: 0; width: 500px; 
+    .virtual-mouse { grid-template-columns: 1fr 1fr; display: grid; z-index: 100; border-radius: 5px; opacity: 0.7; bottom: 0; left: 0; width: 500px; 
         min-width: 150px; min-height: 150px; background-color: yellow;
     }
     .virtual-mouse__button{ border-radius: 5px; opacity: 1; width: 250px; height: 64px; }
