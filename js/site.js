@@ -197,6 +197,7 @@ function appendDownloadItem(e, menu) {
 
         let fileName = '';
         if (downloadUrl.includes('GetAudio')) {
+            const card = e.target.closest('.card');
             const cardTitle = card.querySelector('.card-title');
             const cardText = card.querySelector('.card-text');
             
@@ -228,9 +229,23 @@ function appendStreamItem(e, menu) {
     ostream.className = 'ctxmenu__button';
     ostream.innerHTML = "Open Stream";
     ostream.onclick = () => {
-        sendData(openUrl, trackId);
-        let player = document.querySelector("#player-audio-element");
-        player.src = '/api/AudioStreaming/mp3';
+        sendData(openUrl, trackId).then(() => {
+            let player = document.querySelector("#player-audio-element");
+            if (player) player.src = '/api/AudioStreaming/mp3';
+                const card = e.target.closest('.card');
+                const cardTitle = card.querySelector('.card-title');
+                const cardText = card.querySelector('.card-text');
+                if (cardTitle && cardText) {
+                    const artist = cardTitle.textContent.trim();
+                    const title = cardText.textContent.trim();
+                    
+                    document.title = `${artist} – ${title}`
+                        .replace(/[<>:"/\\|?*]/g, '') // Remove invalid filename characters
+                        .replace(/\s+/g, ' ') // Collapse multiple spaces
+                        .trim();
+                }
+                player.play();
+        });
     };
     menu.appendChild(ostream);
 }
