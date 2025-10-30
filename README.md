@@ -5,6 +5,6 @@
 - 🌱 I’m currently learning: UI/UX Design, Node.JS, Vue, Angular, Docker, ASP.Net Core, Web Design, Software Achitecture
 - 👯 I’m looking to collaborate on UI/UX Design and Sound Production
 - 🤔 I’m looking for help with Front-End development
-- 💬 Ask me about Music
-- 📫 How to reach me: about.me/sealkeen
-- ⚡ Fun fact: C# seemed to me as the worst for WEB development, but right now this is probably the main purpose of the language.
+- 💬 Ask me about my music library (https://www.last.fm/user/Lore-master)
+- 📫 How to reach me: https://sealkeen.github.io/about
+- ⚡ Fun fact: No fun facts here, but lots of them are on our telegram channel where I am a content manager (@spbguap)!
