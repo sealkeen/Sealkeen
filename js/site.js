@@ -161,7 +161,7 @@ export function onCardTapped(e)
     }
 }
 
-function appendPushListItem(e, menu ) { 
+function appendPushListItem(e, menu) { 
     let push = document.createElement("p");
     push.className = 'ctxmenu__button';
     push.innerHTML = "Add first";
@@ -176,16 +176,18 @@ function appendQueueListItem(e, menu) {
     menu.appendChild(queue)
 }
 
-function appendDownloadItem(e, menu) {
+function getTrackId(e) { 
     const card = e.target.closest('.card');
     if (!card) return;
-
     const data = card.querySelector('data');
     if (!data || !data.value) return;
+    return data.value
+}
 
-    const trackId = data.value;
-    const downloadUrl = `${window.location.origin}/GetAudio?Id=${trackId}`;
-
+function appendDownloadItem(e, menu) {
+    const trackId = getTrackId(e);
+    if(!trackId) return;
+    const downloadUrl = `${window.location.origin}/GetAudio?Id=${trackId}`; // todo: api urls
     const download = document.createElement("p");
     download.className = 'ctxmenu__button';
     download.innerHTML = "Download";
@@ -218,6 +220,21 @@ function appendDownloadItem(e, menu) {
     menu.appendChild(download);
 }
 
+function appendStreamItem(e, menu) {
+    const trackId = getTrackId(e);
+    if (!trackId) return;
+    const openUrl = `${window.location.origin}/Media`; // todo: api urls
+    const ostream = document.createElement("p");
+    ostream.className = 'ctxmenu__button';
+    ostream.innerHTML = "Open Stream";
+    ostream.onclick = () => {
+        sendData(openUrl, trackId);
+        let player = document.querySelector("#player-audio-element");
+        player.src = '/api/AudioStreaming/mp3';
+    };
+    menu.appendChild(ostream);
+}
+
 export function onCompositionRightMouseDown(e) {
     try {
         let menu = document.createElement("div")
@@ -227,14 +244,15 @@ export function onCompositionRightMouseDown(e) {
         appendPushListItem(e, menu)
         appendQueueListItem(e, menu)
         appendDownloadItem(e, menu);
+        appendStreamItem(e, menu);
         
         console.log(e.target)
         let insertTarget = {};
-        if(e.target.classList.contains('card-body'))
+        if (e.target.classList.contains('card-body'))
             insertTarget = e.target.parentElement;
-        if(e.target.classList.contains('card'))
+        if (e.target.classList.contains('card'))
             insertTarget = e.target;
-        if(hasAnyClass(e.target, 'card-text', 'card-title'))
+        if (hasAnyClass(e.target, 'card-text', 'card-title'))
             insertTarget = e.target.parentElement.parentElement;
         
         insertTarget.appendChild(menu);
@@ -262,4 +280,25 @@ export function bindPlayerButtons() {
         }
         setNextComposition(id);
     });
+}
+
+// ============ STREAM TRACK ============
+async function sendData(url, id) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify({Input: `media-command open ${id}`}),
+        });
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ message: 'Failed to parse error response' }));
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message || 'Unknown error'}`);
+        }
+        const result = await response.json();
+        console.log('Success:', result);
+        return result;
+    } catch (error) {
+        console.error('Fetch error:', error.message);
+        throw error;
+    }
 }
