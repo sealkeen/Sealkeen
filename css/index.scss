@@ -1,14 +1,16 @@
 /* SCSS Bundle */
 
-@use './modal-window/modal-window';
-@use './status-bar/status-bar';
-@use './popup/popup';
 @use './common/any-element';
 @use './common/plain-text';
 @use './common/tap-circle';
-@use './images/svg-inline';
+@use './containers/social-links';
 @use './custom/card-columns';
-@use './containers/social-links.css';
+@use './images/svg-inline';
+@use './modal-window/modal-window';
+@use './page';
+@use './popup/popup';
+@use './simulation-controls/virtual-mouse';
+@use './status-bar/status-bar';
 @use './text/text';
-@use './text/decorations/title-text-decorations.css'; // manually include
-@use './page.css';
+
+
