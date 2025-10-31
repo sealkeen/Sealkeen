@@ -1,13 +1,14 @@
 /* CSS Bundle */
 
-@import url('./modal-window/modal-window.css');
-@import url('./status-bar/status-bar.css');
-@import url('./popup/popup.css');
 @import url('./common/any-element.css');
 @import url('./common/plain-text.css');
 @import url('./common/tap-circle.css');
-@import url('./images/svg-inline.css');
-@import url('./custom/card-columns.css');
 @import url('./containers/social-links.css');
-@import url('./text/text.css');
+@import url('./custom/card-columns.css');
+@import url('./images/svg-inline.css');
+@import url('./modal-window/modal-window.css');
 @import url('./page.css');
+@import url('./popup/popup.css');
+@import url('./simulation-controls/virtual-mouse.css');
+@import url('./status-bar/status-bar.css');
+@import url('./text/text.css');

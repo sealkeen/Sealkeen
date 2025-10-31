@@ -10,7 +10,7 @@ var email = document.getElementById('Email');
 var password = document.getElementById('Password');
 var passwordCheck = document.getElementById('ConfirmPassword');
 
-if(button != null) {
+if (button != null) {
     button.addEventListener('click', (e) => {
         e.preventDefault();
         if(document.getElementById('ConfirmPassword') == null) // if login
