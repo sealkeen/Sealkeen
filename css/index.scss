@@ -11,6 +11,4 @@
 @use './popup/popup';
 @use './simulation-controls/virtual-mouse';
 @use './status-bar/status-bar';
-@use './text/text';
-
-
+@use './text/decorations/title-text-decorations.css';
