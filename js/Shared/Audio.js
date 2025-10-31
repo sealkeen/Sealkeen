@@ -91,9 +91,9 @@ export function setNextComposition(compId) {
         }
         
         console.log('[INF] setNextComposition(): compsId is ' + compId)
-        if(compId.includes('docs.google') || compId.includes(':')) {
+        if (compId.includes('docs.google') || compId.includes(':')) {
             let newUrl = compId;
-            if(_trackQueue.isEmpty()) {
+            if (_trackQueue.isEmpty()) {
                 Debug.WriteLine('setNextComposition: Query=empty');
                 newUrl = getNext(compId);
             } else {
