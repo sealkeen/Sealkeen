@@ -19,6 +19,6 @@
     grid-column: 2;
 };
 
-@media (min-width: 768px) {
-    .virtual-mouse__button { width: initial; }
+.grid-controls .virtual-mouse__button { 
+    width: initial;
 }
