@@ -1,0 +1,1 @@
+npx sass css/index.scss css/site.css
