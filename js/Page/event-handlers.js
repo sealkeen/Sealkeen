@@ -3,6 +3,7 @@ import urls from './../api.js'
 import { replaceArtistParamInUrl } from './../Page/url-decoding.js'
 import { fetchContentCrossOrigin } from "../Router/shared.js";
 import Debug from '../Extensions/cs-debug.js';
+import { updateMediaSession } from '../Services/MediaSession/media-session-service.js';
 
 const loc = urls.getLocation();
 
@@ -46,6 +47,7 @@ export function setArtistSongNameAsync() {
                     $(".track-artist-song-name").html('');
                     $(".track-artist-song-name").append(`<div class="track-artist-song-name">${artistSongHtml}</div>`);
                     document.title = artistSong;
+                    updateMediaSession(document.title);
                     preventDefaultOnArtistNameAHref();
                 },
                 error: function (error_) { console.log("[ERR] event-handlers.js/setArtistSongNameAsync() Ajax error: " + error_); }
