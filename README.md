@@ -8,5 +8,6 @@
 - 💬 Ask me about my music library (https://www.last.fm/user/Lore-master)
 - 📫 How to reach me: https://sealkeen.github.io/about
 - ⚡ Fun fact: No fun facts here, but lots of them are on our telegram channel where I am a content manager (@spbguap)!
+
 SCSS bundle build (ASP.Net core repo): ```npx sass wwwroot/css/index.scss wwwroot/css/site.css```
 SCSS bundle build (static js repo): ```npx sass css/index.scss css/site.css```
