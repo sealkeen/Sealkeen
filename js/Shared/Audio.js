@@ -117,11 +117,13 @@ export function setNextComposition(compId) {
             url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true }, crossDomain: true,
             success: function (response) {
                 const htmlDom = new DOMParser().parseFromString(response, 'text/html');
+                let plr = getAudioNode();
+                plr.removeAttribute('src');
                 document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
+
                 Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                 Debug.WriteLine(htmlDom.documentElement.innerHTML);
                 let idExtracted = extractSongIdFromHtml(response);
-                let plr = getAudioNode();
                 plr.load();
                 plr.play();
                 onCompositionSourceChanged(idExtracted ?? compId);
@@ -168,12 +170,12 @@ export async function setFooterPlayerSourse(el)
             crossDomain: true,
             success: function (response) {
                 const htmlDom = new DOMParser().parseFromString(response, 'text/html');
-                document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
+                let plr = getAudioNode();
+                plr.removeAttribute('src');
+                document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src);
 
                 replaceTrackParamInUrl(source);
-
-                let plr = getAudioNode();
-                if(isPlaying(plr) === true) {
+                if (isPlaying(plr) === true) {
                     let toQuery = fromDOMObject(el);
                     _trackQueue.push_front(toQuery);
                     createInfoMessage('Queued first: ' + toQuery?.artist + ' - ' + toQuery?.title)

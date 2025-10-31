@@ -196,7 +196,7 @@ export function ConvertToDOM(message) {
     center.appendChild(textcenter);
     insertAboutRedirect(display4);
 
-    let data = [];/*JSON.parse(fromBinary(takeStore()));*/
+    let data = [];
 
     data.forEach(element => {
         let card = document.createElement("div")
