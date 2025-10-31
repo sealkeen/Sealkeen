@@ -14,7 +14,7 @@ export function initializePlaybackState(g_audioSelector) {
             clearMediaSession();
         });
 
-        this.audioElement.addEventListener('ended', () => {
+        g_audioElement.addEventListener('ended', () => {
             g_isPlaying = false;
             clearMediaSession();
         });
