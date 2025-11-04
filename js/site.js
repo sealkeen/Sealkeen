@@ -3,16 +3,15 @@ import { _trackQueue } from './Shared/Queue.js';
 import { hasAnyClass,
     displayQueuedTracks, GetCurrentCompositionsId, 
     addPlayingElementStyle,
-    hasClassSubstring} from './utilities.js';
+    hasClassSubstring } from './utilities.js';
 import { toggleTopPageBackground, toggleBodyBackground } from './StyleHandlers/color-handlers.js';
 import { addSideNavElements, addSidenavEventListeners } from './Page/Components/navigations/side-nav-handlers.js';
-import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } 
-from './Router/click-handlers.js';
+import { addEventHandlersOnBody, setCurrentPageCompositionByArtistID, setCurrentPageCompositionByID, setCurrentPageAlbumByID } from './Router/click-handlers.js';
 import { fireOnInputValueChange } from './Page/event-handlers.js';
 import { runBackgroundHandShakes, onSiteLoadIfAuthorized } from './Router/testing.js';
 import { initializeKeyboardHook } from './Loading/keyboard-hook.js';
-import Debug from './Extensions/cs-debug.js'
-import TrackAPI from './Page/track-decoding.js'
+import Debug from './Extensions/cs-debug.js';
+import TrackAPI from './Page/track-decoding.js';
 import Exception from './Extensions/cs-exception.js';
 import { FillLocalizationStore } from './Services/Localization/fill-localization-store.js';
 import { appendHorizontalVolumeControl } from './Page/Components/volume-controls.js';
@@ -22,7 +21,6 @@ import { attachDraggableEventsToQueue } from './Shared/QueueExtensions/draggable
 import { registerDependencies } from './Extensions/di-registration.js';
 import { serviceProvider } from './Services/di-container.js';
 import { usePageModifyingComponents } from './Page/index.js'
-import { createInfoMessage } from './Errors/fetch-errors.js';
 import { onCompositionRightMouseDown } from './Page/event-handlers/mouse-down-handlers.js';
 import { initializePlaybackState } from './Services/MediaSession/media-session-service.js';
 
@@ -117,12 +115,12 @@ $(document).ready(async function () {
                 
                 let value = target.value
                 if (value > LOW_VOLUME_THRESHOLD) {
-                    if(-(e.deltaY) > 0)
+                    if (-(e.deltaY) > 0)
                         target.value *= 1.2;
                     else
                         target.value *= 0.8;
                 } else {
-                    if(-(e.deltaY) > 0)
+                    if (-(e.deltaY) > 0)
                         target.value += 1;
                     else
                         target.value -= 1;
@@ -166,10 +164,9 @@ function onCardTapped(e)
 function bindPlayerButtons() {
     Debug.WriteLine('binding player buttons...');
     if (document.querySelector('.footer-next-track-btn') == null)
-        return
+        return;
     document.querySelector('.footer-next-track-btn')?.addEventListener("click", (e) => {
         Debug.WriteLine("clicked");
-
         let id = "nextTrackId";
         if (_trackQueue.isEmpty()) {
             Debug.WriteLine('.footer-next-track-btn.click() : Track Query is Empty.');

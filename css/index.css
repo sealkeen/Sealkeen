@@ -10,5 +10,6 @@
 @import url('./page.css');
 @import url('./popup/popup.css');
 @import url('./simulation-controls/virtual-mouse.css');
+@import url('./simulation-controls/synch-piano.css');
 @import url('./status-bar/status-bar.css');
 @import url('./text/decorations/title-text-decorations.css');

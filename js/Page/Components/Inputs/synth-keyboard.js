@@ -106,8 +106,11 @@ export function useSynthKeyboard()
         let contentCenter = document.querySelector("#content-center");
         let terminalContainer = document.querySelector("#terminal-container");
         let pageBody = document.querySelector("#page-body-container");
+        let developmentBody = document.querySelector("#development-body");
         
-        if (contentCenter) {
+        if (developmentBody) {
+            developmentBody.insertAdjacentElement('beforebegin', synthPiano);
+        } else if (contentCenter) {
             contentCenter.insertAdjacentElement('afterend', synthPiano);
         } else if (terminalContainer) {
             terminalContainer.insertAdjacentElement('afterend', synthPiano);
@@ -166,25 +169,10 @@ export function useSynthKeyboard()
         });
         areEventsAdded = true;
 
-        synthPiano.insertAdjacentHTML( 'beforebegin', `
-            <style>
-            .synth-piano { width: 640px; height: 320px; min-width: 80%; max-width: 100%; position: relative; justify-self: center; top: 0; left: 0; background: black; opacity: 0.77; border-radius: 14px; display: flex }
-            .key.white { background: white; flex-grow: 1; border: 1px solid black;}
-            .key.black { font-color: white; background: black; height: 50%; width: 50%; justify-self: flex-end; }
-            .key.active { background: grey; }
-            .key { border-radius: 10px; }
-            #octave-down { height: 30px; flex-grow: 1; }
-            #octave-up { height: 30px; flex-grow: 1; }
-            #octave-display { height: 30px; flex-grow: 1; color: white; font-size: 1.45rem; text-align: center; }
-            #octave-div { display: flex; flex-direction: row; justify-self: center; min-width: 80%; max-width: 100%;}
-            <style/>`
-        );
         if (window.isMobileOrTablet) {
-            synthPiano.insertAdjacentHTML( 'beforebegin', `
-                <style>
+            synthPiano.insertAdjacentHTML('beforebegin', `<style>
                 .key.black { min-width: 75%; }
-                <style/>`
-            );
+            <style/>`);
         };
         updateOctaveDisplay();
 

@@ -29,7 +29,7 @@ export function isPlaying(plr) {
 
 export async function loadDirect(source)
 {
-    if(source.includes(':')) {
+    if (source.includes(':')) {
         Debug.WriteLine('loadDirect: getAudioNode() is %j', getAudioNode());
         $("#player-source-element")[0].setAttribute('src', source);
         let loadPromise = await getAudioNode().load();

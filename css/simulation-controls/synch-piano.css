@@ -1,0 +1,15 @@
+
+.synth-piano {
+    width: 640px; height: 320px; min-width: 80%; max-width: 100%;
+    position: relative; justify-self: center; top: 0; left: 0;
+    background: black; opacity: 0.77; border-radius: 14px; display: flex;
+}
+
+.key.white { background: white; flex-grow: 1; border: 1px solid black; }
+.key.black { color: white; background: black; height: 50%; width: 50%; justify-self: flex-end; }
+.key.active { background: grey; }
+.key { border-radius: 10px; }
+#octave-down { height: 30px; flex-grow: 1; }
+#octave-up { height: 30px; flex-grow: 1; }
+#octave-display { height: 30px; flex-grow: 1; color: white; font-size: 1.45rem; text-align: center; }
+#octave-div { display: flex; flex-direction: row; justify-self: center; min-width: 80%; max-width: 100%; }
