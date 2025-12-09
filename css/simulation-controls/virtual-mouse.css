@@ -8,8 +8,13 @@
 }
 
 .virtual-mouse__button {
-    border-radius: 5px; opacity: 1; width: 250px; height: 64px;
+    border-radius: 5px;
+    opacity: 1;
+    height: auto;
+    min-height: 64px;
     font-size: x-large;
+    background: aliceblue;
+    text-align: start;
 }
 
 .lt-btn {
