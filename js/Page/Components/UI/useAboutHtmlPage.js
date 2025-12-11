@@ -20,7 +20,7 @@ export async function setAboutHtmlPage() {
 <section class="m-title-section__padding">
 <div class="m-flex-box m-fit-content"><h1 class="page-author__name display-4 m-weight-600 m-cursive m-dark-blue">Ivan Silkin</h1></div></section>
 <section><h2 class="headline"><span class="roles"><span class="role m-dark-blue">Software Developer</span>,<!-- -->
-</br><span class="role m-dark-blue">Sound Producer</span> </span><span class="location">in <span class="location">Санкт-Петербург, Россия</span></span></h2></section></section></br>
+</br><span class="role m-dark-blue">Sound / Media Producer</span> </span><span class="location">in <span class="location">Санкт-Петербург, Россия</span></span></h2></section></section></br>
 <section class="bio inset">
 <div><p>I am a Computer Science / Engineering bachelor, software engineer,
 </br>        a digital multimedia and sound producer
