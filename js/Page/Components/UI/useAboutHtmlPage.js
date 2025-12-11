@@ -27,7 +27,14 @@ export async function setAboutHtmlPage() {
 </br>        currently living in Санкт-Петербург, Россия.</p></br>
 <h3>My Interests (professional)</h3>
 <ul class="${socialLinksCLass}">
-<li>Node.JS</li><li>Vue</li><li>Angular</li><li>Docker</li><li>ASP.Net Core</li><li>Web Design</li><li>Achitecture</li>
+<li style="color: blueviolet; font-weight: normal;">ASP.Net Core</li>
+<li style="color: green;">Node.JS</li>
+<li style="color: #8b0000bf; font-weight: lighter;">Angular</li>
+<li style="color: darkblue;">TypeScript</li>
+<li>(Web | Layout | Motion) [2D, 3D] <i>Design</i></li>
+<li>Software Achitecture</li>
+<li>Dev(Sec)Ops practices</li>
+<li>Special effects direction,  Modelling</li>
 </ul>
 <h3>My Interests (hobby)</h3>
 <ul class="${socialLinksCLass}"><li>Cycling</li><li>Guitar</li><li>Metal, *core music</li><li>Northern Europe's culture and lifestyle</li></ul>
