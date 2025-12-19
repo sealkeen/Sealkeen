@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="none" id="PlayerElements" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 100">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        filter: url(#drop-shadow-2);
+        stroke: url(#linear-gradient);
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="100" y1=".673" x2="100" y2="98.798" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#606060"/>
+      <stop offset="1" stop-color="#252122" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#000"/>
+    </linearGradient>
+    <filter id="drop-shadow-2" x="-10" y="-10" width="220" height="123" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="2"/>
+      <feGaussianBlur result="blur" stdDeviation="4"/>
+      <feFlood flood-color="#000" flood-opacity=".45"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path class="cls-1" d="M197.5,49.75v35.75c0,15-62.267,12.5-97.237,12.5-35.995,0-96.763,3.5-96.763-13.5,0-9-.63-18.181-.474-34.75.136-14.379-.526-25.25-.526-32.25C2.5-2.5,61.927,1.5,100.263,1.5c41.83,0,97.237-4,97.237,16v32.25Z"/>
+</svg>

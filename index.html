@@ -83,6 +83,37 @@
         </center>
     </div>
     <footer class="footer ninty-percent-transparency">
+        <!-- Illustrator exports go here -->
+        <div class="vista-player" >
+            <!-- Album Art -->
+            <div class="vista-player__album-art">
+                <!-- <img src="illustrator/album-art.png" alt="Album"> -->
+                <div class="track-artist-song-name">Unknown – null</div>
+            </div>
+            
+            <!-- Central Circle --> 
+            <svg class="vista-player__central-circle-svg" xmlns="http://www.w3.org/2000/svg" >
+                <!-- SVG background/image -->
+                <image href="/Images/SVG/Player/CentralCircle.svg" width="100%" height="100%"/>
+            </svg>
+            
+            <!-- Play/Pause Button (Illustrator SVG) -->
+            <button class="vista-player__play-pause">
+                <img src="/Images/SVG/Player/Play.svg"
+                    class="vista-player__play-icon vista-player__svg-icon" alt="Play" >
+                <img src="/Images/SVG/Player/Pause.svg"
+                    class="vista-player__pause-icon vista-player__svg-icon m__hidden" alt="Pause" >
+            </button>
+            
+            <!-- Control Ring -->
+            <div class="vista-player__control-ring">
+                <button class="vista-player__shuffle"><svg><!-- Illustrator --></svg></button>
+                <button class="vista-player__prev"><svg><!-- Illustrator --></svg></button>
+                <button class="vista-player__next"><svg><!-- Illustrator --></svg></button>
+                <button class="vista-player__repeat"><svg><!-- Illustrator --></svg></button>
+                <div class="vista-player__volume-slider"><!-- Illustrator track + handle --></div>
+            </div>
+        </div>
         <div class="spacer srv-status">
             <span id="srv-status-light" class="srv-status-dot srv-status-disabled"></span>
             <h3 class="lbl-srv-status stroke-shadow-h3">Server status</h3>

@@ -3,22 +3,16 @@ import { appendHorizontalVolumeControl } from "../Page/Components/volume-control
 import { setArtistSongNameAsync, setTitleByArtistAndTitle } from "../Page/event-handlers.js";
 import { GetCurrentCompositionsId, addPlayingCardStyle, displayQueuedTracks, fromDOMObject } from "../utilities.js";
 import { _trackQueue } from "./Queue.js";
-import { onAjaxLoadError, onAjaxSwitchPageError } from './../Errors/ajax-errors.js';
-import { safeSwitchTrack, safePlay} from './../utilities.js';
 import { createInfoMessage } from '../Errors/fetch-errors.js';
 import { getNext } from '../Store/mock-data.js';
 import urls from './../api.js';
 import Debug from '../Extensions/cs-debug.js';
 import Exception from '../Extensions/cs-exception.js';
+import { serviceProvider } from '../Services/di-container.js';
+
+window.loadDirect = loadDirect;
 
 const loc = urls.getLocation();
-
-export function getAudioNode()
-{
-    let res = document.querySelector("#player-audio-element");
-    if (res == null) Exception.Throw('Audio element not found.');
-    return res;
-}
 
 export function isPlaying(plr) {
     let atStart = plr.currentTime == 0 ? true : false
@@ -30,12 +24,12 @@ export function isPlaying(plr) {
 export async function loadDirect(source)
 {
     if (source.includes(':')) {
-        Debug.WriteLine('loadDirect: getAudioNode() is %j', getAudioNode());
+        Debug.WriteLine('loadDirect: serviceProvider.resolve(\'audioFooter\') is %j', serviceProvider.resolve('audioFooter'));
         $("#player-source-element")[0].setAttribute('src', source);
-        let loadPromise = await getAudioNode().load();
+        let loadPromise = await serviceProvider.resolve('audioFooter').load();
         if (loadPromise !== undefined) {
             loadPromise.then(() => {
-                getAudioNode().play();
+                serviceProvider.resolve('audioFooter').play();
                 return true;
             }).catch((error) => {
                 if (error.name === "NotAllowedError") {
@@ -67,8 +61,8 @@ export function onCompositionSourceChanged(compId)
     appendHorizontalVolumeControl(); //from "../Page/Components/volume-controls.js"; 
     
     //setTitleByArtistAndTitle(el);
-    let plr = getAudioNode();
-    if(plr != null) {
+    let plr = serviceProvider.resolve('audioFooter').audioElement;
+    if (plr != null) {
         plr.onended = function () {
             let id = GetCurrentCompositionsId(); //from "../utilities.js";
             
@@ -117,20 +111,18 @@ export function setNextComposition(compId) {
             url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true }, crossDomain: true,
             success: function (response) {
                 const htmlDom = new DOMParser().parseFromString(response, 'text/html');
-                let plr = getAudioNode();
+                let plr = serviceProvider.resolve('audioFooter').audioElement;
                 plr.removeAttribute('src');
                 document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src); 
 
                 Debug.WriteLine('setNextComposition: Ajax returned key count: ' + Object.keys(response).length);
                 Debug.WriteLine(htmlDom.documentElement.innerHTML);
                 let idExtracted = extractSongIdFromHtml(response);
-                plr.load();
-                plr.play();
+                serviceProvider.resolve('audioFooter').loadAndPlay();
                 onCompositionSourceChanged(idExtracted ?? compId);
             },
             error: async function (error_) {
                 Exception.Throw('Error streaming service');
-                onAjaxSwitchPageError(compId, safeSwitchTrack); // from './../utilities.js';
             }
         });
     } catch (e) {
@@ -170,7 +162,7 @@ export async function setFooterPlayerSourse(el)
             crossDomain: true,
             success: function (response) {
                 const htmlDom = new DOMParser().parseFromString(response, 'text/html');
-                let plr = getAudioNode();
+                let plr = serviceProvider.resolve('audioFooter').audioElement;
                 plr.removeAttribute('src');
                 document.querySelector('#player-source-element').setAttribute("src", htmlDom.querySelector('#player-source-element').src);
 
@@ -181,14 +173,14 @@ export async function setFooterPlayerSourse(el)
                     createInfoMessage('Queued first: ' + toQuery?.artist + ' - ' + toQuery?.title)
                     return false;
                 }
-                plr.load();
-                plr.play();
+                
+                serviceProvider.resolve('audioFooter').loadAndPlay();
+
                 result = true;
                 onCompositionSourceChanged(htmlDom.querySelector('#player-source-element').src);
             },
             error: async function (error_) {
                 Exception.Throw(`Error loading audio: ${error_.status} ${error_.statusText}`);
-                onAjaxLoadError(source, safePlay); //from './../Errors/ajax-errors.js';
             }
         });
 

@@ -1,3 +1,5 @@
+import { serviceProvider } from "../../../Services/di-container.js";
+
 const MIN_LENGTH = 15;
 
 export function addSidenavEventListeners()
@@ -99,19 +101,19 @@ export function closeRightNav(e) {
     rNav.style.paddingRight = "0px"; 
 }
 
-export function onPauseClicked(e)
-{    
+export function onPauseClicked()
+{
     var audio = document.querySelector("audio");
     let sourse = document.querySelector('#player-source-element');
     if (audio.paused || audio.currentTime == 0 || audio.currentTime==audio.duration) {
         //audio paused,ended or not started
-        if(sourse.src != null && sourse.src.length > MIN_LENGTH ) {
+        if (sourse.src != null && sourse.src.length > MIN_LENGTH ) {
             document.querySelector('.footer-pause-track-btn').innerHTML = "Pause";
-            audio.play();
+            serviceProvider.resolve('audioFooter').play();
         }
     } else {
         //audio is playing
-        audio.pause();
+        serviceProvider.resolve('audioFooter').pause();
         document.querySelector('.footer-pause-track-btn').innerHTML = "Play";
     }
 }

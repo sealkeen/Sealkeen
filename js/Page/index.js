@@ -15,8 +15,8 @@ export function usePageModifyingComponents() {
     appendSideNavigationBars();
     useSideNavigationsBlink();
     setTimeout( () => useVirtualMouseIfMobile(), 550 );
-
     const { handleTap } = useTempoTapper();
+
     serviceProvider.register('tempoTapper', function() { return { handleTap } }, []);
     serviceProvider.register('synthKeyboard', function() { return { activate: useSynthKeyboard } }, []);
 }

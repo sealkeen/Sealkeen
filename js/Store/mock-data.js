@@ -281,8 +281,7 @@ export function setMockFooterSourse(el) {
         let ctrl = (loc + 'GetHtmlStreamPlayer/?url=' + source);
         if ($("#player-source-element") != undefined) {
             $("#player-source-element").attr('src', source);
-            $("#player-source-element").load();
-            $("#player-source-element").play();
+            serviceProvider.resolve('audioFooter').loadAndPlay();
         }
     } catch (e) {
         alert(e)

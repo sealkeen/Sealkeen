@@ -3,7 +3,7 @@ import Debug from './Extensions/cs-debug.js';
 import Trace from './Extensions/cs-trace.js';
 import Exception from './Extensions/cs-exception.js';
 import { createInfoMessage } from './Errors/fetch-errors.js';
-import { getAudioNode } from './Shared/Audio.js';
+import { serviceProvider } from './Services/di-container.js';
 
 var cachedSongElement = null; /// Current playing song
 
@@ -63,7 +63,6 @@ export function fromJSObject(el) {
     if(el.target == null) { Exception.Throw("el.target: " + el.target) }
     if(el.target.classList == null) { Exception.Throw("el.target.classList: " + el.target.classList) }
     if (!el.target.classList.contains('card-body')) {
-
         createInfoMessage("el.target.parentNode.querySelector('data'): " + el.target.parentNode.querySelector('data'))
         createInfoMessage("el.target.parentNode.querySelector('data').value: " + el.target.parentNode.querySelector('data')?.value)
         id = el.target.parentNode.querySelector('data')?.value;
@@ -178,7 +177,7 @@ export function safePlay()
 {
     Debug.WriteLine('utilities.js/safePlay() { -> ... } ')
     try {
-        var playPromise = getAudioNode().play();
+        let playPromise = serviceProvider.resolve('audioFooter').play();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
                 // Automatic playback started!
@@ -189,7 +188,6 @@ export function safePlay()
             .catch(error => {
                 // Auto-play was prevented
                 // Show paused UI.
-                (async () => { await sleep(500); safePlay()})();
                 Exception.Throw('[ERR] utilities.js/safePlay err: player returned error on play, autoplay prevented.');
             });
         }
@@ -203,7 +201,7 @@ export function safeSwitchTrack()
     Debug.WriteLine('utilities.js/safeSwitchTrack() { -> ... }')
     displayQueuedTracks();
     try {
-        var loadPromise = getAudioNode()?.load();
+        var loadPromise = serviceProvider.resolve('audioFooter').load();
         if (loadPromise !== undefined) {
             loadPromise.then(_ => {
                 Debug.WriteLine('utilities.js/safeLoadOK: safePlaying...');
@@ -224,7 +222,7 @@ export function safeSwitchTrack()
 
 export function GetCurrentCompositionsId() { 
     try {
-        let audioSrc = getAudioNode().children[0];
+        let audioSrc = serviceProvider.resolve('audioFooter')?.audioElement?.children[0];
         if (audioSrc.src == null) {
             Debug.WriteLine('utilities.js/GetCurrentCompositionsId() error. audioSrc = null.');
             return '';

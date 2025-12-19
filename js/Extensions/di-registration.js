@@ -2,8 +2,11 @@ import { serviceProvider } from '../Services/di-container.js';
 import MusicAPI from '../Page/url-decoding.js';
 import routes, { isNoActionPath } from '../Router/routing-table.js';
 import { addElementSelectorThenPathThenTitleAndPayLoad, useNowPlayingManager } from '../Services/AudioEndpoints/nowPlayingManager.js';
+import { useAudioFooter } from '../Page/Components/Inputs/audio-footer.js';
 
 export function registerDependencies() {
+    const { play, pause, toggle, loadAndPlay, audioElement } = useAudioFooter();
+
     serviceProvider.register('nativeRouter', () => { return { routes } }, []);
     serviceProvider.register('actionPathHelper', () => { return { isNoActionPath } }, []);
     serviceProvider.register('musicApi', MusicAPI, []);
@@ -15,8 +18,9 @@ export function registerDependencies() {
         }, []
     );
     serviceProvider.register('nowPlayingManager', function() { return { addElementSelectorThenPathThenTitleAndPayLoad, useNowPlayingManager }; }, []);
+    serviceProvider.register('audioFooter', function () { return { play, pause, toggle, loadAndPlay, audioElement } }, []);
 
-    // additional configuration
+    window.audioFooter = serviceProvider.resolve('audioFooter');
     window.isMobileOrTablet = serviceProvider.resolve('tabletAndMobileCheck');
 }
 

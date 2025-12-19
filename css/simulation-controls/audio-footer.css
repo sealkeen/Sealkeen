@@ -1,0 +1,79 @@
+/* Vista Glass/Aero Effect (can't fully export from Illustrator) */
+.vista-player {
+  background: linear-gradient(145deg, 
+    rgba(42,42,42,0.9) 0%,
+    rgba(10,10,10,0.9) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    0 4px 20px rgba(0,0,0,0.5);
+  border-radius: 12px;
+  height: 200px;    
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+
+  justify-content: center; /* Horizontal center */
+  align-items: center; /* Vertical center */
+}
+
+.vista-player__control-ring {
+  display: none;
+  /* display: flex; */
+  flex-direction: row;
+}
+
+.m__hidden {
+  opacity: 0;
+  display: none;
+}
+
+/* Central Button Gloss */
+.vista-player__play-pause {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(145deg, 
+    #505050 0%, #202020 100%);
+  border: 1px solid rgba(0,0,0,0.3);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 2px 4px rgba(0,0,0,0.3);
+}
+
+.vista-player__central-circle-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+}
+
+.vista-player__play-icon.vista-player__svg-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.vista-player__central-circle {
+  display: block;
+  height: 64px;
+}
+
+/* Text Color */
+.vista-player__album-art .track-artist-song-name {
+  color: white;
+}
+
+/* Progress Ring Animation */
+.vista-player__progress-ring-fill {
+  stroke: #0078D7; /* Vista blue from Illustrator */
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
+  filter: drop-shadow(0 0 8px rgba(0,120,215,0.5));
+}
+
+/* Hover Effects */
+.vista-player__button:hover {
+  background: linear-gradient(145deg, 
+    #606060 0%, #303030 100%);
+  box-shadow: 0 0 15px rgba(0,120,215,0.3);
+}

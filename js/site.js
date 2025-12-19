@@ -62,7 +62,7 @@ $(document).ready(async function () {
         const container = document.querySelector('body');
 
         container.onmousedown = (e) => {
-            Debug.WriteLine('site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which);
+            Debug.WriteLine('site.js/onmousedown | ' + e.target.id + ' ' + e.target.className + ' | e.which: ' + e.which, e.target.className);
             if (!hasAnyClass(e?.target, 'ctxmenu', 'ctxmenu__button')) {
                 document.querySelectorAll('.ctxmenu').forEach(el => { 
                     el.innerHTML = '';

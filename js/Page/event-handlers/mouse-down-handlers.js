@@ -1,5 +1,6 @@
 import Debug from "../../Extensions/cs-debug.js";
 import Exception from "../../Extensions/cs-exception.js";
+import { serviceProvider } from "../../Services/di-container.js";
 import { updateMediaSession } from "../../Services/MediaSession/media-session-service.js";
 import { _trackQueue } from "../../Shared/Queue.js";
 import { fromJQueryObject, hasAnyClass } from "../../utilities.js";
@@ -91,6 +92,7 @@ function appendDownloadItem(e, menu) {
 
     menu.appendChild(download);
 }
+
 function appendStreamItem(e, menu) {
     const trackId = getTrackId(e);
     if (!trackId) return;
@@ -101,8 +103,8 @@ function appendStreamItem(e, menu) {
     ostream.onclick = () => {
         sendData(openUrl, trackId).then(() =>
         {
-            // TODO: getAudioNode();
-            let player = document.querySelector("#player-audio-element");
+            // TODO: use audioFooter API
+            let player = serviceProvider.resolve('audioFooter').audioElement;
             if (player) player.src = '/api/AudioStreaming/mp3';
             const card = e.target.closest('.card');
             const cardTitle = card.querySelector('.card-title');
@@ -117,7 +119,7 @@ function appendStreamItem(e, menu) {
                     .trim();
                 updateMediaSession(document.title);
             }
-            player.play();
+            serviceProvider.resolve('audioFooter').play();
         });
     };
     menu.appendChild(ostream);

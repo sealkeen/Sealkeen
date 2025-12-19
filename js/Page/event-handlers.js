@@ -23,8 +23,7 @@ export function setTitleByArtistAndTitle(el) {
 
         if (!isEmpty(artist) && !isEmpty(song)) {
             document.title = `${artist} – ${song}`;
-            $(".track-artist-song-name").html('');
-            $(".track-artist-song-name").append(`${artist} – ${song}`);
+            $(".track-artist-song-name").html(`${artist} – ${song}`);
             createArtistLink(`${artist} – ${song}`);
         }
     } catch (e) {
@@ -42,10 +41,9 @@ export function setArtistSongNameAsync() {
                 url: ctrl, type: 'GET', contentType: 'html', xhrFields: { withCredentials: true },
                 crossDomain: true,
                 success: function (response) {
-                    const artistSong = response.trim(); // remove leading/trailing whitespaces
+                    const artistSong = response.trim();
                     const artistSongHtml = createArtistLink(artistSong);
-                    $(".track-artist-song-name").html('');
-                    $(".track-artist-song-name").append(`<div class="track-artist-song-name">${artistSongHtml}</div>`);
+                    $(".track-artist-song-name").html(`<div class="track-artist-song-name">${artistSongHtml}</div>`);
                     document.title = artistSong;
                     updateMediaSession(document.title);
                     preventDefaultOnArtistNameAHref();
@@ -54,7 +52,7 @@ export function setArtistSongNameAsync() {
             });
         }
     } catch (err) {
-        console.log('[ERR] setArtistSongNameAsync error.')
+        console.log('[ERR] setArtistSongNameAsync error.');
     }
 }
 
@@ -83,11 +81,10 @@ export function preventDefaultOnArtistNameAHref()
 {
     // Override the click event of the #artist-name-hrefable link element
     const artistLinkElement = document.getElementById("artist-name-hrefable");
-    if (artistLinkElement) {
-        artistLinkElement.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent the default behavior of the link
-            const artistUrl = artistLinkElement.href;
-            fetchContentCrossOrigin(artistUrl);
-        });
-    }
+    
+    artistLinkElement?.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent the default behavior of the link
+        const artistUrl = artistLinkElement.href;
+        fetchContentCrossOrigin(artistUrl);
+    });
 }

@@ -9,7 +9,8 @@
 @use './modal-window/modal-window';
 @use './page';
 @use './popup/popup';
+@use './simulation-controls/audio-footer';
 @use './simulation-controls/virtual-mouse';
-@use './simulation-controls/synch-piano.css';
+@use './simulation-controls/synch-piano';
 @use './status-bar/status-bar';
 @use './text/decorations/title-text-decorations.css';
