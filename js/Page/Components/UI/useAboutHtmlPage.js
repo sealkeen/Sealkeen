@@ -34,13 +34,24 @@ export async function setAboutHtmlPage() {
 <li>(Web | Layout | Motion) [2D, 3D] <i>Design</i></li>
 <li>Software Achitecture</li>
 <li>Dev(Sec)Ops practices</li>
-<li>Special effects direction,  Modelling</li>
+<li>Visual FX, Hard Surface Modelling, Graphical Art Engineering</li>
 </ul>
 <h3>My Interests (hobby)</h3>
 <ul class="${socialLinksCLass}"><li>Cycling</li><li>Guitar</li><li>Metal, *core music</li><li>Northern Europe's culture and lifestyle</li></ul>
 <h3>Languages</h3><ul class="${socialLinksCLass}"><li>English. B2, Upper Intermediate (EF English First test [2018])</li><li>Swedish. Beginner (A1)</li><li>German. Beginner (A1)</li><li>Russian. Native (71/100 ЕГЭ)</li>
 </ul>
-<h3>Social Networks</h3><ul class="${socialLinksCLass}"><li><a href="https://github.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">GitHub</a></li><li><a href="https://stackoverflow.com/users/6897369/ivan-silkin" target="_blank" rel="nofollow noopener noreferrer">StackOverflow</a></li><li><a href="https://www.duolingo.com/profile/Sealkeen" target="_blank" rel="nofollow noopener noreferrer">Duolingo</a></li><li><a href="https://sealkeen.bandcamp.com/" target="_blank" rel="nofollow noopener noreferrer">BandCamp (Artist)</a></li><li><a href="https://soundcloud.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">SoundCloud</a></li><li><a href="https://www.last.fm/user/Lore-master" target="_blank" rel="nofollow noopener noreferrer">Last.fm</a></li><li><a href="https://Facebook.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">FaceBook</a></li><li><a href="https://vk.com/sealkeen_one" target="_blank" rel="nofollow noopener noreferrer">VK</a></li><li><a href="https://instagram.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">Instagram</a></li><li><a href="https://open.spotify.com/artist/0x7IOZzXXiF6kI4AAP5YOt" target="_blank" rel="nofollow noopener noreferrer">Spotify (Artist):</a></li><li><a href="https://music.yandex.ru/artist/12686654" target="_blank" rel="nofollow noopener noreferrer">Yandex.Music (Artist):</a></li>
+<h3>Social Networks</h3><ul class="${socialLinksCLass}"><li><a href="https://github.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">GitHub</a></li>
+<li><a href="https://stackoverflow.com/users/6897369/ivan-silkin" target="_blank" rel="nofollow noopener noreferrer">StackOverflow</a></li>
+<li><a href="https://www.duolingo.com/profile/Sealkeen" target="_blank" rel="nofollow noopener noreferrer">Duolingo</a></li>
+<li><a href="https://sealkeen.bandcamp.com/" target="_blank" rel="nofollow noopener noreferrer">BandCamp (Artist)</a></li>
+<li><a href="https://soundcloud.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">SoundCloud</a></li>
+<li><a href="https://www.last.fm/user/Lore-master" target="_blank" rel="nofollow noopener noreferrer">Last.fm</a></li>
+<li><a href="https://Facebook.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">FaceBook</a></li>
+<li><a href="https://vk.com/sealkeen_one" target="_blank" rel="nofollow noopener noreferrer">VK</a></li>
+<li><a href="https://instagram.com/sealkeen" target="_blank" rel="nofollow noopener noreferrer">Instagram</a></li>
+<li><a href="https://open.spotify.com/artist/0x7IOZzXXiF6kI4AAP5YOt" target="_blank" rel="nofollow noopener noreferrer">Spotify (Artist)</a></li>
+<li><a href="https://music.yandex.ru/artist/12686654" target="_blank" rel="nofollow noopener noreferrer">Yandex.Music (Artist)</a></li>
+<li><a href="https://steamcommunity.com/profiles/76561198121745374/" target="_blank" rel="nofollow noopener noreferrer">Steam (User)</a></li>
 </ul></div></section>
 <section><ul class="${socialLinksCLass}">
 <li class="schools" style="grid-column: 1 / 3;">
